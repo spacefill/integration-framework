@@ -1,0 +1,169 @@
+{
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "csvTotalColumnNumber": 133,
+    "documentation": "https://drive.google.com/file/d/1c9J_s8J-OGWR-NAn854043Nnv8TBYe73/view",
+    "filename_python_eval": "'upload/ARTICLE_{}.txt'.format(datetime.now().strftime('%Y%m%d_%H%M%S'))",
+    "properties": {
+        "Type de message": {
+            "type": "string",
+            "maxLength": 3,
+            "csvColumn": 0,
+            "value_python_eval": "'ART'"
+        },
+        "Code Client": {
+            "type": "string",
+            "csvColumn": 1,
+            "value_python_eval": "os.environ['WMS_LOGIS_EDI_WMS_SHIPPER_ID']"
+        },
+        "Code article": {
+            "type": "string",
+            "maxLength": 50,
+            "csvColumn": 2,
+            "comment": "API master_items.item_reference",
+            "value_python_eval": "master_items['item_reference']"
+        },
+        "Référence technique": {
+            "type": "string",
+            "maxLength": 100,
+            "csvColumn": 3,
+            "comment": "API master_items.item_reference",
+            "value_python_eval": "master_items['item_reference']"
+        },
+        "Description": {
+            "type": "string",
+            "maxLength": 100,
+            "csvColumn": 4,
+            "comment": "API master_items.designation",
+            "value_python_eval": "master_items['designation']"
+        },
+        "Code famille": {
+            "type": "string",
+            "csvColumn": 5,
+            "maxLength": 50,
+            "value_python_eval": "''"
+        },
+        "Code sous-famille": {
+            "type": "string",
+            "csvColumn": 6,
+            "maxLength": 50,
+            "value_python_eval": "''"
+        },
+        "Type de colis de 4ème niveau": {
+            "type": "string",
+            "csvColumn": 7,
+            "maxLength": 2,
+            "value_python_eval": "''"
+        },
+        "Nombre d'unités par colis de 4ème niveau": {
+            "type": "integer",
+            "maximum": 9999999999,
+            "csvColumn": 8,
+            "comment": "API master_items.cardboard_box_quantity_by_pallet or each_quantity_by_pallet",
+            "value_python_eval": "master_items['each_quantity_by_cardboard_box']"
+        },
+        "Nombre de colis par unité logistique": {
+            "type": "integer",
+            "maximum": 9999999999,
+            "csvColumn": 16,
+            "comment": "",
+            "value_python_eval": "master_items['each_quantity_by_pallet']"
+        },
+        "Hauteur du colis de référence": {
+            "type": "number",
+            "maximum": 999999999,
+            "multipleOfPrecision": 0.001,
+            "csvColumn": 18,
+            "comment": "",
+            "value_python_eval": "(master_items['cardboard_box_height_in_cm'] / 100) if master_items['cardboard_box_height_in_cm'] else None"
+        },
+        "Largeur du colis de référence": {
+            "type": "number",
+            "maximum": 999999999,
+            "multipleOfPrecision": 0.001,
+            "csvColumn": 19,
+            "comment": "API (master_items.each_width_in_cm or master_items.cardboard_box_width_in_cm) / 100",
+            "value_python_eval": "(master_items['cardboard_box_width_in_cm'] / 100) if master_items['cardboard_box_width_in_cm'] else None"
+        },
+        "Profondeur du colis de référence": {
+            "type": "number",
+            "maximum": 999999999,
+            "multipleOfPrecision": 0.001,
+            "csvColumn": 20,
+            "comment": "API (master_items.each_length_in_cm or master_items.cardboard_box_length_in_cm) / 100",
+            "value_python_eval": "(master_items['cardboard_box_length_in_cm'] / 100) if master_items['cardboard_box_length_in_cm'] else None"
+        },
+        "Poids brut du colis de référence": {
+            "type": "number",
+            "maximum": 9999999999999,
+            "multipleOfPrecision": 0.0001,
+            "csvColumn": 23,
+            "comment": "",
+            "value_python_eval": "master_items['cardboard_box_gross_weight_in_kg']"
+        },
+        "Poids net du colis de référence": {
+            "type": "number",
+            "maximum": 9999999999999,
+            "multipleOfPrecision": 0.0001,
+            "csvColumn": 24,
+            "comment": "",
+            "value_python_eval": "master_items['cardboard_box_net_weight_in_kg'] or master_items['cardboard_box_gross_weight_in_kg']"
+        },
+        "Code EAN": {
+            "type": "string",
+            "maxLength": 14,
+            "csvColumn": 69,
+            "comment": "",
+            "value_python_eval": "''"
+        },
+        "Code EAN colis": {
+            "type": "string",
+            "maxLength": 14,
+            "csvColumn": 70,
+            "comment": "",
+            "value_python_eval": "master_items['cardboard_box_barcode']"
+        },
+        "Code EAN palette": {
+            "type": "string",
+            "maxLength": 14,
+            "csvColumn": 71,
+            "comment": "API master_items.pallet_barcode",
+            "value_python_eval": "master_items['pallet_barcode']"
+        },
+        "Information libre 1": {
+            "type": "string",
+            "maxLength": 100,
+            "csvColumn": 76,
+            "comment": "",
+            "value_python_eval": "master_items['designation'][0:100]"
+        },
+        "Information libre 2": {
+            "type": "string",
+            "maxLength": 100,
+            "csvColumn": 77,
+            "comment": "",
+            "value_python_eval": "master_items['designation'][100:200]"
+        },
+        "Information libre 3": {
+            "type": "string",
+            "maxLength": 100,
+            "csvColumn": 78,
+            "comment": "",
+            "value_python_eval": "master_items['designation'][200:]"
+        },
+        "Type de conditionnement": {
+            "type": "string",
+            "maxLength": 20,
+            "csvColumn": 106,
+            "value_python_eval": "os.environ['WMS_LOGIS_MASTER_ITEM_PACKAGING_TYPE']"
+        }
+    },
+    "required": [
+        "Type de message",
+        "Code Client",
+        "Code article",
+        "Description",
+        "Type de conditionnement"
+    ]
+}

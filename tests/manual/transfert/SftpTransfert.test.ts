@@ -1,5 +1,5 @@
 import 'jest';
-import { SftpTransfert } from '../../src/transport/SftpTransfert';
+import { SftpTransfert } from '../../../src/transport/SftpClient';
 
 describe('SftpTransfert', () => {
     it('should get configuration', async () => {

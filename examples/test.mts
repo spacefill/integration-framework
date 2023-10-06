@@ -1,10 +1,17 @@
 #!/usr/bin/env -S npx ts-node --esm --compilerOptions '{"moduleResolution":"nodenext","module":"esnext","target":"esnext", "allowImportingTsExtensions": true}'
 
-import { $ } from 'zx'
 import { Transfert, TransfertProtocol } from '../src/transport/Transfert.ts'
-import { Configuration } from '../src/Configuration.mts'
 
 
-await $`echo ok`
+const transfert = new Transfert(TransfertProtocol.sftp,  {
+    hostname: '127.0.0.1',
+    port: 2222,
+    username: 'alice',
+    password: 'password'
+});
 
-console.log(new Transfert(TransfertProtocol.sftp), new Configuration('test').echo())
+const files=await transfert.listDirWithFilter("/home/alice/error/INV_");
+
+console.log("files", files);
+
+

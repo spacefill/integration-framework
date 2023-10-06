@@ -4,6 +4,7 @@
         "module": "esnext",
         "target": "esnext",
         "allowImportingTsExtensions": true,
-        "noEmit": true
+        "noEmit": true,
+        "esModuleInterop": true
     }
 }

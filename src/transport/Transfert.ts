@@ -1,6 +1,6 @@
 import { Stream } from "stream"
-import { TransfertConfiguration, TransfertInterface } from "./TransfertInterfaces"
-import { SftpTransfert } from "./SftpTransfert";
+import { TransfertConfiguration, TransfertInterface } from "./TransfertInterfaces.ts"
+import { SftpClient } from "./SftpClient.ts";
 
 enum TransfertProtocol {
     sftp,
@@ -22,42 +22,39 @@ class Transfert implements TransfertInterface {
 
         switch (protocol) {
             case TransfertProtocol.sftp:
-                this.client = new SftpTransfert(this.configuration);
+                this.client = new SftpClient(this.configuration);
                 break;
             default:
                 throw new Error(`Unsupported protocol ${protocol}`);
         }
     }
-    connect(): void {
-        throw new Error("Method not implemented.");
-    }
     checkStatut(): boolean {
-        throw new Error("Method not implemented.")
+        return this.client.checkStatut();
     }
     close(): void {
-        throw new Error("Method not implemented.")
+        return this.client.close();
     }
     mkdirIfNotExists(): void {
-        throw new Error("Method not implemented.")
+        return this.client.mkdirIfNotExists();
     }
     upload(data: Stream, filepath: string): void {
-        throw new Error("Method not implemented.")
+        return this.client.upload(data, filepath);
     }
-    downloadAndReadFile(filepath: string, encoding: string): Stream {
-        throw new Error("Method not implemented.")
+    downloadAndReadFile(filepath: string, encoding: string = 'utf-8'): Stream {
+        return this.client.downloadAndReadFile(filepath, encoding);
     }
-    listDirWithFilter(filepathPattern: string): string[] {
-        throw new Error("Method not implemented.")
+    listDirWithFilter(filepathPattern: string): Promise<string[]> {
+        return this.client.listDirWithFilter(filepathPattern);
     }
     deleteFile(filepath: string): void {
-        throw new Error("Method not implemented.")
+        return this.client.deleteFile(filepath);
     }
     moveFile(filepath: string): void {
-        throw new Error("Method not implemented.")
+        return this.client.moveFile(filepath);
     }
     renameFile(filepath: string): void {
-        throw new Error("Method not implemented.")
+        return this.client.renameFile(filepath);
     }
 }
 
-export {Transfert}
+export { Transfert, TransfertProtocol };
