@@ -1,10 +1,8 @@
 {
-    "compilerOptions": {
-        "moduleResolution": "bundler",
-        "module": "esnext",
-        "target": "esnext",
-        "allowImportingTsExtensions": true,
-        "noEmit": true,
-        "esModuleInterop": true
-    }
+  "compilerOptions": {
+    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "target": "esnext",
+    "allowImportingTsExtensions": true
+  }
 }
