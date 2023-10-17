@@ -1,9 +1,9 @@
 interface GenerateFileTasklnterface {
     initApiClient(): void,
-    prepareData(): Promise<Array<object>>,
-    validateData(data: object): void,
-    mapResult(data: object): Array<string>,
-    generateFile(mappedData: Array<string>): string,
+    prepareFilesData(): Promise<Array<object[]>>,
+    validateFileData(data: object[]): void,
+    mapFileData(data: object[]): object[],
+    generateFile(mappedData: object[]): string,
     sendFile(filepath: string): void,
     run(): void
 }

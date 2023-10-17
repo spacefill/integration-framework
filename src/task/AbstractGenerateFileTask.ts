@@ -9,24 +9,25 @@ export abstract class AbstractGenerateFileTask implements GenerateFileTasklnterf
   protected transfert: Transfert;
 
   initApiClient() {
-    console.log("test ", Config.spacefill_api);
+    console.log("auth ", Config.spacefillApi.apiToken);
+    console.log("server ", Config.spacefillApi.url);
     this.sdk = api('@spacefill/v1#p570f12ln978a7s');
-    this.sdk.auth(Config.spacefill_api.api_token);
-    this.sdk.server(Config.spacefill_api.url);
+    this.sdk.auth(Config.spacefillApi.apiToken);
+    this.sdk.server(Config.spacefillApi.url);
   }
-  prepareData(): Promise<Array<object>> {
+  prepareFilesData(): Promise<Array<object[]>> {
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  validateData(_data: object): void {
+  validateFileData(_data: object[]): void {
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  mapResult(_data: object): Array<string> {
+  mapFileData(_data: object[]): object[]{
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  generateFile(_mappedData: string[]): string {
+  generateFile(_mappedData: object[]): string {
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -35,21 +36,29 @@ export abstract class AbstractGenerateFileTask implements GenerateFileTasklnterf
   }
 
   async run(): Promise<void> {
+    let errorFound = false;
     try {
+      Config.validate();
       this.initApiClient();
-      const filesData = await this.prepareData();
+      const filesData = await this.prepareFilesData();
       for (const fileData of filesData) {
         try {
-          this.validateData(fileData);
-          const mappedData = this.mapResult(fileData);
+          const mappedData = this.mapFileData(fileData);
+          this.validateFileData(mappedData);
           const generatedFile = this.generateFile(mappedData);
           this.sendFile(generatedFile);
         } catch (processFileException) {
           Console.error(processFileException);
+          errorFound = true;
         }
       }
     } catch (exception) {
       Console.error(exception);
+      process.exit(1);
+    }
+
+    if (errorFound) {
+      process.exit(1);
     }
   }
 
