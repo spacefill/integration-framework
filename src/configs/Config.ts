@@ -1,8 +1,9 @@
-import Ajv from 'ajv';
-import addFormats from 'ajv-formats';
+import AjvModule from "ajv";
+import addFormatsModule from 'ajv-formats';
+const Ajv = AjvModule.default;
+const addFormats = addFormatsModule.default;
 
-import Console, { LOG_LEVEL_DEBUG, LOG_LEVEL_FATAL, LOG_LEVEL_INFO } from "../utils/Console.mts"
-
+import Console, { LOG_LEVEL_DEBUG, LOG_LEVEL_FATAL, LOG_LEVEL_INFO } from "../utils/Console.mts";
 
 export class Config {
   public static spacefillApi = {
@@ -22,7 +23,7 @@ export class Config {
   }
 
   public static log = {
-    level: process.env?.LOG_LEVEL ?? LOG_LEVEL_INFO,
+    level: parseInt(process.env?.LOG_LEVEL) ?? LOG_LEVEL_INFO,
     defaultLogLevel: LOG_LEVEL_INFO
   }
 
@@ -59,7 +60,6 @@ export class Config {
         },
         wmsShipperID: {
           type: 'string',
-          format: 'uuid',
         },
         wmsShipperAccountId: {
           type: 'string',
@@ -83,7 +83,7 @@ export class Config {
     }
     const validateEdi = ajv.compile(schemaEdi);
     if (!validateEdi(Config.edi)) {
-      Console.error('Configuration validation failed for spacefillApi', validateEdi?.errors);
+      Console.error('Configuration validation failed for edi', validateEdi?.errors);
       errorFound = true;
     }
 
@@ -101,7 +101,7 @@ export class Config {
     }
     const validateConsole = ajv.compile(schemaConsole);
     if (!validateConsole(Config.console)) {
-      Console.error('Configuration validation failed for spacefillApi', validateConsole?.errors);
+      Console.error('Configuration validation failed for console', validateConsole?.errors);
       errorFound = true;
     }
 
@@ -123,7 +123,7 @@ export class Config {
     }
     const validateLog = ajv.compile(schemaLog);
     if (!validateLog(Config.log)) {
-      Console.error('Configuration validation failed for spacefillApi', validateLog?.errors);
+      Console.error('Configuration validation failed for log', validateLog?.errors);
       errorFound = true;
     }
 
