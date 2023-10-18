@@ -1,10 +1,11 @@
 import { Config } from "../configs/Config.ts";
 import { Transfert } from "../transport/Transfert.ts";
+import { BaseCommand } from "../utils/BaseCommand.ts";
 import Console from "../utils/Console.mts";
 import { GenerateFileTasklnterface } from "./GenerateFileTasklnterfaces.ts";
 import api from 'api';
 
-export abstract class AbstractGenerateFileTask implements GenerateFileTasklnterface {
+export abstract class AbstractGenerateFileTask extends BaseCommand implements GenerateFileTasklnterface {
   protected sdk;
   protected transfert: Transfert;
 
