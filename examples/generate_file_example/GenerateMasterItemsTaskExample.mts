@@ -25,17 +25,18 @@ interface MasterItemInterface {
 export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
   async prepareFilesData(): Promise<Array<object[]>> {
     const result = await this.sdk.get_v1_logistic_management_master_item_list_v1_logistic_management_master_items__get({
-      offset: '0',
-      limit: '1000',
+      offset: 0,
+      limit: 10,
       is_transfered_to_wms: false,
-      shipper_account_id: Config.edi.wmsShipperID
+      shipper_account_id: Config.edi.wmsShipperAccountId
     })
       .then(({ data }) => {
         //console.log(data)
         return [data?.items] ?? [];
       })
       .catch(err => {
-        Console.error(err)
+        Console.error(`Status: ${err?.response?.status} - ${err?.response?.statusText}`)
+        Console.error(err?.response?.data)
         process.exit(1);
       });
 

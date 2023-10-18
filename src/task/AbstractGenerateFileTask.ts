@@ -1,20 +1,19 @@
+import { SpacefillAPIWrapperV1 } from "../api/SpacefillAPIWrapperV1.ts";
 import { Config } from "../configs/Config.ts";
 import { Transfert } from "../transport/Transfert.ts";
 import { BaseCommand } from "../utils/BaseCommand.ts";
 import Console from "../utils/Console.mts";
 import { GenerateFileTasklnterface } from "./GenerateFileTasklnterfaces.ts";
-import api from 'api';
 
 export abstract class AbstractGenerateFileTask extends BaseCommand implements GenerateFileTasklnterface {
   protected sdk;
   protected transfert: Transfert;
 
-  initApiClient() {
-    console.log("auth ", Config.spacefillApi.apiToken);
-    console.log("server ", Config.spacefillApi.url);
-    this.sdk = api('@spacefill/v1#p570f12ln978a7s');
-    this.sdk.auth(Config.spacefillApi.apiToken);
-    this.sdk.server(Config.spacefillApi.url);
+  async initApiClient() {
+    this.sdk = await SpacefillAPIWrapperV1.initClient(
+      Config.spacefillApi.url,
+      Config.spacefillApi.apiToken
+    );
   }
   prepareFilesData(): Promise<Array<object[]>> {
     throw new Error("Method not implemented.");
@@ -40,7 +39,7 @@ export abstract class AbstractGenerateFileTask extends BaseCommand implements Ge
     let errorFound = false;
     try {
       Config.validate();
-      this.initApiClient();
+      await this.initApiClient();
       const filesData = await this.prepareFilesData();
       for (const fileData of filesData) {
         try {
