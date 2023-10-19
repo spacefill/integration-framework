@@ -169,7 +169,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
         'Code EAN colis': {
           type: 'string',
           maxLength: 14,
-          //nullable: true,
+          nullable: true,
         },
         'Code EAN palette': {
           type: 'string',
