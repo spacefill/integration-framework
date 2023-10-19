@@ -1,21 +1,9 @@
-import { SpacefillAPIWrapperV1 } from "../api/SpacefillAPIWrapperV1.ts";
-import type { Client as SpacefillAPIClient } from '../api/spacefill-api-openapi.d.ts';
 import { Config } from "../configs/Config.ts";
-import { Transfert } from "../transport/Transfert.ts";
-import { BaseCommand } from "../utils/BaseCommand.ts";
 import Console from "../utils/Console.mts";
+import { AbstractTask } from "./AbstractTask.ts";
 import { GenerateFileTasklnterface } from "./GenerateFileTasklnterfaces.ts";
 
-export abstract class AbstractGenerateFileTask extends BaseCommand implements GenerateFileTasklnterface {
-  protected sdk: SpacefillAPIClient;
-  protected transfert: Transfert;
-
-  async initApiClient() {
-    this.sdk = await SpacefillAPIWrapperV1.initClient(
-      Config.spacefillApi.url,
-      Config.spacefillApi.apiToken
-    );
-  }
+export abstract class AbstractGenerateFileTask extends AbstractTask implements GenerateFileTasklnterface {
   prepareFilesData(): Promise<Array<object[]>> {
     throw new Error("Method not implemented.");
   }
