@@ -89,7 +89,7 @@ class Console {
     const firstMessage = message?.[0];
     const otherMessages = message.slice(1);
 
-    Config.console.color ? console.log(`${coloredPrefix}`, firstMessage) : console.log(firstMessage);
+    Config.console.color ? console.log(`${coloredPrefix}`, firstMessage) : console.log(prefix, firstMessage);
 
     if (otherMessages.length > 0) console.group();
     otherMessages.map((otherMessage) => console.log(otherMessage));
