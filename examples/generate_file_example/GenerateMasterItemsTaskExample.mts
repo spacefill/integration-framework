@@ -23,17 +23,43 @@ interface MasterItemInterface {
   cardboard_box_barcode: string,
   pallet_barcode: string,
 }
+
+interface InitialDataItem {
+  type: string,
+  initialData: object[]
+}
+
 export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
-  async prepareFilesData(): Promise<Array<object[]>> {
-    const result = await this.sdk.get_v1_logistic_management_master_item_list_v1_logistic_management_master_items__get({
+  initFilesGeneration(): InitialDataItem[] {
+    // @todo - développer l'idée. Génération d'une sorte de metadata permettant de savoir combien de fichier sont à générer
+    // Cette usage permettrait d'avoir un même flow pour la génération de master items et de commandes. (1 Run = 1 fichier ou n fichiers)
+    // voir si facile d'accès
+    return [
+      {
+        type: "master items generation",
+        initialData: []
+      }
+    ]
+  }
+  async prepareFileData(fileConfiguration: InitialDataItem): Promise<object[]> {
+    let masterItems = fileConfiguration?.initialData ?? [];
+
+    await this.sdk.get_v1_logistic_management_master_item_list_v1_logistic_management_master_items__get({
       offset: 0,
       limit: 10,
       is_transfered_to_wms: false,
       shipper_account_id: Config.edi.wmsShipperAccountId
     })
-      .then(({ data }) => {
-        //console.log(data)
-        return [data?.items] ?? [];
+      .then(async ({ data }) => {
+        const tmpItems = data?.items as object[];
+        masterItems = [...masterItems, ...tmpItems];
+
+        if (data?.next) {
+          masterItems = await this.prepareFileData( {
+            ...fileConfiguration,
+            initialData: masterItems
+          });
+        }
       })
       .catch(err => {
         Console.error(`Status: ${err?.response?.status} - ${err?.response?.statusText}`)
@@ -41,7 +67,9 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
         process.exit(1);
       });
 
-    return result;
+    Console.debug("Nb items", masterItems.length);
+
+    return masterItems;
   }
 
   mapFileData(rawData: MasterItemInterface[]): object[] {
@@ -82,6 +110,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
     });
   }
 
+  // @todo -  Déplacer la partie schema dans un objet à part, reprenant mapping + validation
   validateFileData(data: object[]): void {
     const itemSchema = {
       type: 'object',
