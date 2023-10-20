@@ -1,6 +1,7 @@
 #!/usr/bin/env -S npx ts-node --esm --compilerOptions '{"moduleResolution":"nodenext","module":"esnext","target":"esnext", "allowImportingTsExtensions": true}'
 
 import pointer from "json-pointer";
+import { createObjectCsvWriter } from "csv-writer";
 import AjvModule from "ajv";
 import addFormatsModule from 'ajv-formats';
 const Ajv = AjvModule.default;
@@ -9,6 +10,7 @@ const addFormats = addFormatsModule.default;
 import { Config } from '../../src/configs/Config.ts';
 import { AbstractGenerateFileTask } from '../../src/task/AbstractGenerateFileTask.ts';
 import Console from '../../src/utils/Console.mts';
+import { $ } from "zx";
 
 interface MasterItemInterface {
   item_reference: string,
@@ -73,12 +75,16 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
         process.exit(1);
       });
 
-    Console.debug("Nb items", masterItems.length);
+    Console.debug(`Nb items ${masterItems.length}`);
 
     return masterItems;
   }
 
   mapFileData(rawData: MasterItemInterface[]): object[] {
+    if (rawData.length === 0) {
+      Console.info("No data to export.");
+      process.exit(0);
+    }
     /**
      * Keys are column names in the final generated file.
      */
@@ -269,11 +275,25 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
   // A noter: validateData prend en paramètre toutes les données pour un fichier.
 
 
-  generateFile(_mappedData: object[]): string {
-    return ''
+  async generateFile(mappedData: object[], tempFilePath: string ): Promise<void> {
+    const header = Object.keys(mappedData[0]).map((key) => {
+      return {
+        id: key,
+        title: key
+      }
+    });
+
+    const csvWriter = createObjectCsvWriter({
+      path: tempFilePath,
+      header: header
+    });
+
+    await csvWriter.writeRecords(mappedData)
+
+    await $`cat ${tempFilePath}`;
   }
 
-  sendFile(): void {
+  async sendFile(): Promise<void> {
     throw new Error('Method not implemented.');
   }
 }

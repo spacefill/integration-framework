@@ -22,12 +22,16 @@ export abstract class AbstractGenerateFileTask extends AbstractTask implements G
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  generateFile(_mappedData: object[], tempFilePath: string): void{
+  async generateFile(_mappedData: object[], _tempFilePath: string): Promise<void>{
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  sendFile(_mappedData: string): void {
+  async sendFile(_tempFilePath: string): Promise<void> {
     throw new Error("Method not implemented.");
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async postAction(_rawData: object[]): Promise<void> {
+    Console.debug("No post actions");
   }
 
   async run(): Promise<void> {
@@ -44,28 +48,30 @@ export abstract class AbstractGenerateFileTask extends AbstractTask implements G
       const filesConfiguration = this.initFilesGeneration();
       for (const fileConfiguration of filesConfiguration) {
         try {
-          Console.info("Data preparation ----------------");
-          const fileData = await this.prepareFileData(fileConfiguration);
+          Console.info("Data preparation --------------------");
+          const rawData = await this.prepareFileData(fileConfiguration);
           Console.confirm("Data prepared");
 
-          Console.info("Data mapping --------------------");
-          const mappedData = this.mapFileData(fileData);
+          Console.info("Data mapping ------------------------");
+          const mappedData = this.mapFileData(rawData);
           Console.confirm("Data mapped");
 
-          Console.info("Data validation -----------------");
+          Console.info("Data validation ---------------------");
           this.validateFileData(mappedData);
           Console.confirm("Data validated");
 
-          await temporaryFileTask((tempFilePath) => {
-            Console.info("File generation -----------------");
-            this.generateFile(mappedData, tempFilePath);
+          await temporaryFileTask(async(tempFilePath) => {
+            Console.info(`Temporary file: ${tempFilePath}`)
+            Console.info("File generation ---------------------");
+            await this.generateFile(mappedData, tempFilePath);
             Console.confirm("File generated");
 
-            Console.info("File sending --------------------");
-            this.sendFile(tempFilePath);
+            Console.info("File sending ------------------------");
+            await this.sendFile(tempFilePath);
             Console.confirm("File sent");
           })
 
+          await this.postAction(rawData);
         } catch (processFileException) {
           Console.error(processFileException);
           errorFound = true;
