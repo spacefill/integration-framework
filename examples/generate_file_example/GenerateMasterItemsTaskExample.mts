@@ -30,6 +30,12 @@ interface InitialDataItem {
 }
 
 export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
+
+  protected displayUsages() {
+    Console.log("Usage: ./GenerateMasterItemsTaskExample.mts [OPTIONS]")
+    super.displayUsages();
+  }
+
   initFilesGeneration(): InitialDataItem[] {
     // @todo - développer l'idée. Génération d'une sorte de metadata permettant de savoir combien de fichier sont à générer
     // Cette usage permettrait d'avoir un même flow pour la génération de master items et de commandes. (1 Run = 1 fichier ou n fichiers)
