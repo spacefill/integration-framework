@@ -64,8 +64,5 @@ export abstract class BaseCommand {
       Console.log(Config);
       process.exit(0)
     }
-
-    Console.debug(this.argv);
-    process.exit(0)
   }
 }

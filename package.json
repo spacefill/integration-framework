@@ -12,6 +12,7 @@
     "minimist": "1.2.8",
     "openapi-client-axios": "7.3.11",
     "prompts": "2.4.2",
+    "tempy": "3.1.0",
     "ts-node": "10.9.1",
     "url-join": "5.0.0",
     "w-ftp": "1.0.12",

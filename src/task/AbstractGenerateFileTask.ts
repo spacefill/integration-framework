@@ -1,3 +1,5 @@
+import {temporaryFileTask} from 'tempy';
+
 import { Config } from "../configs/Config.ts";
 import Console from "../utils/Console.mts";
 import { AbstractTask } from "./AbstractTask.ts";
@@ -20,7 +22,7 @@ export abstract class AbstractGenerateFileTask extends AbstractTask implements G
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  generateFile(_mappedData: object[]): string {
+  generateFile(_mappedData: object[], tempFilePath: string): void{
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -54,13 +56,15 @@ export abstract class AbstractGenerateFileTask extends AbstractTask implements G
           this.validateFileData(mappedData);
           Console.confirm("Data validated");
 
-          Console.info("File generation -----------------");
-          const generatedFile = this.generateFile(mappedData);
-          Console.confirm("File generated");
+          await temporaryFileTask((tempFilePath) => {
+            Console.info("File generation -----------------");
+            this.generateFile(mappedData, tempFilePath);
+            Console.confirm("File generated");
 
-          Console.info("File sending --------------------");
-          this.sendFile(generatedFile);
-          Console.confirm("File sent");
+            Console.info("File sending --------------------");
+            this.sendFile(tempFilePath);
+            Console.confirm("File sent");
+          })
 
         } catch (processFileException) {
           Console.error(processFileException);

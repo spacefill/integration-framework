@@ -4,7 +4,7 @@ interface GenerateFileTasklnterface {
     prepareFileData(fileConfiguration: object): Promise<object[]>,
     validateFileData(data: object[]): void,
     mapFileData(data: object[]): object[],
-    generateFile(mappedData: object[]): string,
+    generateFile(mappedData: object[], tempFilePath: string): void,
     sendFile(filepath: string): void,
     run(): void
 }
