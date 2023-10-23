@@ -56,7 +56,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
       offset: 0,
       limit: 10,
       is_transfered_to_wms: false,
-      shipper_account_id: Config.edi.wmsShipperAccountId
+      shipper_account_id: Config.get().edi.wmsShipperAccountId
     })
       .then(async ({ data }) => {
         const tmpItems = data?.items as object[];
@@ -91,7 +91,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
     return rawData.map((rawDataItem) => {
       return {
         'Type de message': 'ART',
-        'Code Client': Config.edi.wmsShipperID,
+        'Code Client': Config.get().edi.wmsShipperID,
         'Code article': rawDataItem?.item_reference,
         'Référence technique': rawDataItem?.item_reference,
         'Description': rawDataItem?.designation,
@@ -117,7 +117,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
         'Information libre 1': rawDataItem?.designation.substring(0, 100),
         'Information libre 2': rawDataItem?.designation.substring(100, 200),
         'Information libre 3': rawDataItem?.designation.substring(200),
-        'Type de conditionnement': Config.edi.wmsItemPackagingType,
+        'Type de conditionnement': Config.get().edi.wmsItemPackagingType,
       };
     });
   }

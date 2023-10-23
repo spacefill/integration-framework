@@ -13,7 +13,7 @@ export class SpacefillAPIWrapperV1{
     const api = new OpenAPIClientAxios.default({
       definition: "https://dash.readme.com/api/v1/api-registry/p570f12ln978a7s",
       withServer: {
-        url: Config.spacefillApi.url
+        url: Config.get().spacefillApi.url
       },
       axiosConfigDefaults: {
         withCredentials: true,

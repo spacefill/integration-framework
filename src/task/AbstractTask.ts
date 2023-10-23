@@ -10,8 +10,8 @@ export abstract class AbstractTask extends BaseCommand {
 
   async initApiClient() {
     this.sdk = await SpacefillAPIWrapperV1.initClient(
-      Config.spacefillApi.url,
-      Config.spacefillApi.apiToken
+      Config.get().spacefillApi.url,
+      Config.get().spacefillApi.apiToken
     );
   }
 }

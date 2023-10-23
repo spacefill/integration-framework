@@ -1,32 +1,45 @@
+import * as dotenv from 'dotenv';
 import AjvModule from "ajv";
 import addFormatsModule from 'ajv-formats';
 const Ajv = AjvModule.default;
 const addFormats = addFormatsModule.default;
 
 import Console, { LOG_LEVEL_DEBUG, LOG_LEVEL_FATAL, LOG_LEVEL_INFO } from "../utils/Console.mts";
+import { fs } from 'zx';
 
 export class Config {
-  public static spacefillApi = {
-    url: process.env?.SPACEFILL_API_URL ?? 'http://localhost:5004',
-    apiToken: process.env?.SPACEFILL_API_TOKEN ?? '',
-  }
-  public static edi = {
-    wmsAgencyCode: process.env?.WMS_AGENCY_CODE,
-    wmsShipperID: process.env?.WMS_EDI_WMS_SHIPPER_ID,
-    wmsShipperAccountId: process.env?.WMS_SHIPPER_ACCOUNT_ID,
-    wmsWarehouseId: process.env?.WMS_WAREHOUSE_ID,
-    wmsItemPackagingType: process.env?.WMS_LOGIS_MASTER_ITEM_PACKAGING_TYPE,
-  }
-  public static console = {
-    color: process.env?.CONSOLE_COLOR_ENABLED == '1' ? true : false,
-    interactiveMode: process.env?.CONSOLE_INTERACTIVE_MODE == '1' ? true : false,
+
+  public static get() {
+    return {
+      spacefillApi: {
+        url: process.env?.SPACEFILL_API_URL ?? 'http://localhost:5004',
+        apiToken: process.env?.SPACEFILL_API_TOKEN ?? '',
+      },
+      edi: {
+        wmsAgencyCode: process.env?.WMS_AGENCY_CODE,
+        wmsShipperID: process.env?.WMS_EDI_WMS_SHIPPER_ID,
+        wmsShipperAccountId: process.env?.WMS_SHIPPER_ACCOUNT_ID,
+        wmsWarehouseId: process.env?.WMS_WAREHOUSE_ID,
+        wmsItemPackagingType: process.env?.WMS_LOGIS_MASTER_ITEM_PACKAGING_TYPE,
+      },
+      console: {
+        color: process.env?.CONSOLE_COLOR_ENABLED == '1' ? true : false,
+        interactiveMode: process.env?.CONSOLE_INTERACTIVE_MODE == '1' ? true : false,
+      },
+      log: {
+        level: parseInt(process.env?.LOG_LEVEL) ?? LOG_LEVEL_INFO,
+        defaultLogLevel: LOG_LEVEL_INFO
+      }
+    }
   }
 
-  public static log = {
-    level: parseInt(process.env?.LOG_LEVEL) ?? LOG_LEVEL_INFO,
-    defaultLogLevel: LOG_LEVEL_INFO
+  public static reloadConfig(envFile: string) {
+    if (fs.existsSync(envFile)) {
+      dotenv.config({ path: envFile });
+    } else {
+      throw new Error(`Cannot find env file ${envFile}`);
+    }
   }
-
 
   public static validate() {
     const ajv = new Ajv();
@@ -47,7 +60,7 @@ export class Config {
       required: ['url', 'apiToken']
     };
     const validateSpacefillApi = ajv.compile(schemaSpacefillApi);
-    if (!validateSpacefillApi(Config.spacefillApi)) {
+    if (!validateSpacefillApi(Config.get().spacefillApi)) {
       Console.error('Configuration validation failed for spacefillApi', validateSpacefillApi?.errors);
       errorFound = true;
     }
@@ -82,7 +95,7 @@ export class Config {
       ]
     }
     const validateEdi = ajv.compile(schemaEdi);
-    if (!validateEdi(Config.edi)) {
+    if (!validateEdi(Config.get().edi)) {
       Console.error('Configuration validation failed for edi', validateEdi?.errors);
       errorFound = true;
     }
@@ -100,7 +113,7 @@ export class Config {
       required: ['color', 'interactiveMode']
     }
     const validateConsole = ajv.compile(schemaConsole);
-    if (!validateConsole(Config.console)) {
+    if (!validateConsole(Config.get().console)) {
       Console.error('Configuration validation failed for console', validateConsole?.errors);
       errorFound = true;
     }
@@ -122,7 +135,7 @@ export class Config {
       required: ['level', 'defaultLogLevel']
     }
     const validateLog = ajv.compile(schemaLog);
-    if (!validateLog(Config.log)) {
+    if (!validateLog(Config.get().log)) {
       Console.error('Configuration validation failed for log', validateLog?.errors);
       errorFound = true;
     }

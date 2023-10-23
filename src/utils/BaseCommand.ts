@@ -1,6 +1,4 @@
-import { fs } from "zx";
 import minimist from "minimist";
-import * as dotenv from 'dotenv';
 import Console, { LOG_LEVEL_DEBUG } from "./Console.mts";
 import { Config } from "../configs/Config.ts";
 
@@ -44,11 +42,7 @@ export abstract class BaseCommand {
     this.argv = minimist(process.argv.slice(2));
 
     if (this.argv?.env) {
-      if (fs.existsSync(this.argv.env)) {
-        dotenv.config({ path: this.argv.env });
-      } else {
-        throw new Error(`Cannot find env file ${this.argv.env}`);
-      }
+      Config.reloadConfig(this.argv.env);
     }
 
     if (this.argv?.h || this.argv?.help) {

@@ -22,7 +22,7 @@ const logLevelOrder = {
 
 class Console {
   static prompts(...args) {
-    if (!Config.console.interactiveMode) {
+    if (!Config.get().console.interactiveMode) {
       throw new Error("Prompts is only allowed with interactive mode enabled.")
     }
     return prompts(args);
@@ -40,14 +40,14 @@ class Console {
   }
 
   static debug(...message) {
-    if (logLevelOrder[Config.log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_DEBUG) {
+    if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_DEBUG) {
       return;
     }
     console.log(message);
   }
 
   static info(...message) {
-    if (logLevelOrder[Config.log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_INFO) {
+    if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_INFO) {
       return;
     }
     const infoGradient = gradient(['#084C61', '#177E89', '#084C61']);
@@ -55,7 +55,7 @@ class Console {
   }
 
   static warn(...message) {
-    if (logLevelOrder[Config.log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_WARN) {
+    if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_WARN) {
       return;
     }
     const infoGradient = gradient(['#d08025', '#e67b00']);
@@ -63,7 +63,7 @@ class Console {
   }
 
   static error(...message) {
-    if (logLevelOrder[Config.log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_ERROR) {
+    if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_ERROR) {
       return;
     }
     const errorGradient = gradient(['#ff0025', 'purple']);
@@ -89,7 +89,7 @@ class Console {
     const firstMessage = message?.[0];
     const otherMessages = message.slice(1);
 
-    Config.console.color ? console.log(`${coloredPrefix}`, firstMessage) : console.log(`${prefix}\t`, firstMessage);
+    Config.get().console.color ? console.log(`${coloredPrefix}`, firstMessage) : console.log(`${prefix}\t`, firstMessage);
 
     if (otherMessages.length > 0) console.group();
     otherMessages.map((otherMessage) => console.log(otherMessage));
