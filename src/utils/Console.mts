@@ -43,7 +43,8 @@ class Console {
     if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_DEBUG) {
       return;
     }
-    console.log(message);
+    const infoGradient = gradient(['#177E89','#aaa', '#177E89']);
+    Console.printGradient(infoGradient, '[Debug]', ...message);
   }
 
   static info(...message) {

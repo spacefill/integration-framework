@@ -18,12 +18,24 @@ export class Config {
           ? parseInt(process.env?.SPACEFILL_API_DEFAULT_PAGINATION_LIMIT)
           : 50,
       },
+      transfert: {
+        protocol: process.env?.WMS_TRANSFERT_PROTOCOL,
+        hostname: process.env?.WMS_TRANSFERT_HOST,
+        port: process.env?.WMS_TRANSFERT_PORT ? parseInt(process.env?.WMS_TRANSFERT_PORT) : undefined,
+        username: process.env?.WMS_TRANSFERT_USER,
+        password: process.env?.WMS_TRANSFERT_PASSWORD,
+        autoAddPolicy: process.env?.WMS_TRANSFERT_SFTP_AUTOADDPOLICY == '1' ? true : false,
+      },
       edi: {
         wmsAgencyCode: process.env?.WMS_AGENCY_CODE,
         wmsShipperID: process.env?.WMS_EDI_WMS_SHIPPER_ID,
         wmsShipperAccountId: process.env?.WMS_SHIPPER_ACCOUNT_ID,
         wmsWarehouseId: process.env?.WMS_WAREHOUSE_ID,
         wmsItemPackagingType: process.env?.WMS_MASTER_ITEM_PACKAGING_TYPE,
+        wmsPathWmsToSpacefillDir: process.env?.WMS_PATH_WMS_TO_SPACEFILL_DIR,
+        wmsPathSpacefillToWmsDir: process.env?.WMS_PATH_SPACEFILL_TO_WMS_DIR,
+        wmsPathArchiveDir: process.env?.WMS_PATH_ARCHIVE_DIR,
+        wmsPathErrorDir: process.env?.WMS_PATH_ERROR_DIR,
       },
       console: {
         color: process.env?.CONSOLE_COLOR_ENABLED == '1' ? true : false,
@@ -58,13 +70,58 @@ export class Config {
         },
         apiToken: {
           type: 'string',
+        },
+        defaultPaginationLimit: {
+          type: 'number',
+          minimum: 1,
+          maximum: 1000
         }
       },
-      required: ['url', 'apiToken']
+      required: ['url', 'apiToken', 'defaultPaginationLimit']
     };
     const validateSpacefillApi = ajv.compile(schemaSpacefillApi);
     if (!validateSpacefillApi(Config.get().spacefillApi)) {
       Console.error('Configuration validation failed for spacefillApi', validateSpacefillApi?.errors);
+      errorFound = true;
+    }
+
+    const schemaTransfert = {
+      type: 'object',
+      properties: {
+        protocol: {
+          type: 'string',
+          enum: ['local', 'sftp', 'ftp']
+        },
+        hostname: {
+          type: 'string',
+          oneOf: [
+            {format: 'hostname'},
+            {format: 'ipv4'},
+            {format: 'ipv6'}
+          ],
+        },
+        port: {
+          type: 'number',
+          minimum: 0,
+          maximum: 65535
+        },
+        username: {
+          type: 'string'
+        },
+        password: {
+          type: 'string'
+        },
+        autoAddPolicy: {
+          type: 'boolean'
+        }
+      },
+      if: {properties: {protocol: {enum: ['sftp', 'ftp']}}},
+      then: {required: ['protocol', 'hostname', 'port', 'username', 'password']},
+      else: {required: ['protocol']}
+    };
+    const validateTransfert = ajv.compile(schemaTransfert);
+    if (!validateTransfert(Config.get().transfert)) {
+      Console.error('Configuration validation failed for transfert', validateTransfert?.errors);
       errorFound = true;
     }
 
@@ -88,13 +145,29 @@ export class Config {
         wmsItemPackagingType: {
           type: 'string',
           enum: ['EACH', 'CARDBOARD_BOX', 'PALLET']
-        }
+        },
+        wmsPathWmsToSpacefillDir: {
+          type: 'string',
+        },
+        wmsPathSpacefillToWmsDir: {
+          type: 'string',
+        },
+        wmsPathArchiveDir: {
+          type: 'string',
+        },
+        wmsPathErrorDir: {
+          type: 'string',
+        },
       },
       required: [
         'wmsShipperID',
         'wmsShipperAccountId',
         'wmsWarehouseId',
-        'wmsItemPackagingType'
+        'wmsItemPackagingType',
+        'wmsPathWmsToSpacefillDir',
+        'wmsPathSpacefillToWmsDir',
+        'wmsPathArchiveDir',
+        'wmsPathErrorDir',
       ]
     }
     const validateEdi = ajv.compile(schemaEdi);

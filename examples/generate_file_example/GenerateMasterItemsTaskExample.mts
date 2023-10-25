@@ -1,6 +1,7 @@
 #!/usr/bin/env -S npx ts-node --esm --compilerOptions '{"moduleResolution":"nodenext","module":"esnext","target":"esnext", "allowImportingTsExtensions": true}'
 
 import pointer from "json-pointer";
+import { DateTime } from "luxon";
 import { createObjectCsvWriter } from "csv-writer";
 import AjvModule from "ajv";
 import addFormatsModule from 'ajv-formats';
@@ -10,9 +11,10 @@ const addFormats = addFormatsModule.default;
 import { Config } from '../../src/configs/Config.ts';
 import { AbstractGenerateFileTask } from '../../src/task/AbstractGenerateFileTask.ts';
 import Console from '../../src/utils/Console.mts';
-import { $ } from "zx";
+import { InitialDataItem } from "../../src/task/GenerateFileTasklnterfaces.ts";
 
 interface MasterItemInterface {
+  id: number,
   item_reference: string,
   designation: string,
   each_quantity_by_cardboard_box: number,
@@ -24,11 +26,6 @@ interface MasterItemInterface {
   cardboard_box_net_weight_in_kg: number,
   cardboard_box_barcode: string,
   pallet_barcode: string,
-}
-
-interface InitialDataItem {
-  type: string,
-  initialData: object[]
 }
 
 export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
@@ -49,8 +46,8 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
       }
     ]
   }
-  async prepareFileData(fileConfiguration: InitialDataItem, offset: number = 0): Promise<object[]> {
-    let masterItems = fileConfiguration?.initialData ?? [];
+  async prepareFileData(offset: number = 0): Promise<object[]> {
+    let masterItems = this.currentFileConfiguration?.initialData ?? [];
 
     await this.sdk.get_v1_logistic_management_master_item_list_v1_logistic_management_master_items__get({
       offset: offset,
@@ -63,13 +60,11 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
         masterItems = [...masterItems, ...tmpItems];
 
         if (data?.next) {
-          masterItems = await this.prepareFileData(
-            {
-              ...fileConfiguration,
-              initialData: masterItems
-            },
-            (offset + Config.get().spacefillApi.defaultPaginationLimit)
-          );
+          this.currentFileConfiguration = {
+            ...this.currentFileConfiguration,
+            initialData: masterItems
+          }
+          masterItems = await this.prepareFileData(offset + Config.get().spacefillApi.defaultPaginationLimit);
         }
       })
       .catch(err => {
@@ -77,8 +72,6 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
         Console.error(err?.response?.data)
         process.exit(1);
       });
-
-    Console.debug(`Nb items ${masterItems.length}`);
 
     return masterItems;
   }
@@ -278,7 +271,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
   // A noter: validateData prend en paramètre toutes les données pour un fichier.
 
 
-  async generateFile(mappedData: object[], tempFilePath: string ): Promise<void> {
+  async generateFile(mappedData: object[], tempFilePath: string): Promise<void> {
     const header = Object.keys(mappedData[0]).map((key) => {
       return {
         id: key,
@@ -288,16 +281,30 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
 
     const csvWriter = createObjectCsvWriter({
       path: tempFilePath,
-      header: header
+      header: header,
+      fieldDelimiter: ';'
     });
 
     await csvWriter.writeRecords(mappedData)
-
-    await $`cat ${tempFilePath}`;
   }
 
-  async sendFile(): Promise<void> {
-    throw new Error('Method not implemented.');
+  // @todo
+  // Se servir des variables de path pour upload le fichier au bon endroit
+  // Ajouter une option qui permet de vérifier si un fichier existe déjà
+  async sendFile(tempFilePath: string): Promise<string> {
+    const targetFileName = `${Config.get().edi.wmsPathSpacefillToWmsDir}/ARTICLE_${DateTime.now().toFormat('yyyymmdd_HHmmss')}.txt`;
+    this.transfert.upload(tempFilePath, targetFileName);
+    return targetFileName;
+  }
+
+  async postAction(): Promise<void> {
+    this.currentFileConfiguration.initialData.forEach((item) => {
+      this.sdk.patch_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___patch({
+        master_item_id: item['id']
+      },{
+        transfered_to_wms_at: DateTime.now().toFormat('yyyymmdd_HHmmss')
+      })
+    });
   }
 }
 

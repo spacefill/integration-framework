@@ -4,7 +4,7 @@ interface TransfertInterface {
     checkStatut(): boolean,
     close(): void,
     mkdirIfNotExists(): void,
-    upload(data: Stream, filepath: string): void,
+    upload(localPath: string, remotePath: string): void,
     downloadAndReadFile(filepath: string, encoding: string): Stream,
     listDirWithFilter(filepathPattern: string): Promise<string[]>,
     deleteFile(filepath: string): void,

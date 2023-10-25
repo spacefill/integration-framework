@@ -3,14 +3,16 @@ import {temporaryFileTask} from 'tempy';
 import { Config } from "../configs/Config.ts";
 import Console from "../utils/Console.mts";
 import { AbstractTask } from "./AbstractTask.ts";
-import { GenerateFileTasklnterface } from "./GenerateFileTasklnterfaces.ts";
+import { GenerateFileTasklnterface, InitialDataItem } from "./GenerateFileTasklnterfaces.ts";
 
 export abstract class AbstractGenerateFileTask extends AbstractTask implements GenerateFileTasklnterface {
-  initFilesGeneration(): object[] {
+
+  protected currentFileConfiguration: InitialDataItem;
+
+  initFilesGeneration(): InitialDataItem[] {
     throw new Error("Method not implemented.");
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  prepareFileData(_fileConfiguration: object): Promise<object[]> {
+  prepareFileData(): Promise<object[]> {
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -26,11 +28,11 @@ export abstract class AbstractGenerateFileTask extends AbstractTask implements G
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async sendFile(_tempFilePath: string): Promise<void> {
+  async sendFile(_tempFilePath: string): Promise<string> {
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async postAction(_rawData: object[]): Promise<void> {
+  async postAction(): Promise<void> {
     Console.debug("No post actions");
   }
 
@@ -48,11 +50,13 @@ export abstract class AbstractGenerateFileTask extends AbstractTask implements G
       const filesConfiguration = this.initFilesGeneration();
       for (const fileConfiguration of filesConfiguration) {
         try {
+          this.currentFileConfiguration = fileConfiguration;
           Console.info("Data preparation --------------------");
-          const rawData = await this.prepareFileData(fileConfiguration);
+          const rawData = await this.prepareFileData();
           Console.confirm("Data prepared");
 
           Console.info("Data mapping ------------------------");
+          Console.debug(`${rawData?.length} items to map.`);
           const mappedData = this.mapFileData(rawData);
           Console.confirm("Data mapped");
 
@@ -67,11 +71,14 @@ export abstract class AbstractGenerateFileTask extends AbstractTask implements G
             Console.confirm("File generated");
 
             Console.info("File sending ------------------------");
-            await this.sendFile(tempFilePath);
-            Console.confirm("File sent");
-          })
+            const sentFile = await this.sendFile(tempFilePath);
+            Console.confirm(`File ${sentFile} well sent.`);
+          });
 
-          await this.postAction(rawData);
+          Console.info("Post action ---------------------");
+          await this.postAction();
+          Console.confirm("Data action done");
+
         } catch (processFileException) {
           Console.error(processFileException);
           errorFound = true;

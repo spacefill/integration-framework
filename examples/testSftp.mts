@@ -1,6 +1,6 @@
 #!/usr/bin/env -S npx ts-node --esm --compilerOptions '{"moduleResolution":"nodenext","module":"esnext","target":"esnext", "allowImportingTsExtensions": true}'
 
-import { Transfert, TransfertProtocol } from '../src/transport/Transfert.ts'
+import { Transfert, TransfertProtocol } from '../src/transport/Transfert.js'
 
 
 const transfert = new Transfert(TransfertProtocol.sftp,  {
