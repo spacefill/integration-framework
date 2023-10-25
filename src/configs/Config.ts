@@ -20,7 +20,7 @@ export class Config {
         wmsShipperID: process.env?.WMS_EDI_WMS_SHIPPER_ID,
         wmsShipperAccountId: process.env?.WMS_SHIPPER_ACCOUNT_ID,
         wmsWarehouseId: process.env?.WMS_WAREHOUSE_ID,
-        wmsItemPackagingType: process.env?.WMS_LOGIS_MASTER_ITEM_PACKAGING_TYPE,
+        wmsItemPackagingType: process.env?.WMS_MASTER_ITEM_PACKAGING_TYPE,
       },
       console: {
         color: process.env?.CONSOLE_COLOR_ENABLED == '1' ? true : false,
