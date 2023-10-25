@@ -49,12 +49,12 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
       }
     ]
   }
-  async prepareFileData(fileConfiguration: InitialDataItem): Promise<object[]> {
+  async prepareFileData(fileConfiguration: InitialDataItem, offset: number = 0): Promise<object[]> {
     let masterItems = fileConfiguration?.initialData ?? [];
 
     await this.sdk.get_v1_logistic_management_master_item_list_v1_logistic_management_master_items__get({
-      offset: 0,
-      limit: 10,
+      offset: offset,
+      limit: Config.get().spacefillApi.defaultPaginationLimit,
       is_transfered_to_wms: false,
       shipper_account_id: Config.get().edi.wmsShipperAccountId
     })
@@ -63,10 +63,13 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
         masterItems = [...masterItems, ...tmpItems];
 
         if (data?.next) {
-          masterItems = await this.prepareFileData( {
-            ...fileConfiguration,
-            initialData: masterItems
-          });
+          masterItems = await this.prepareFileData(
+            {
+              ...fileConfiguration,
+              initialData: masterItems
+            },
+            (offset + Config.get().spacefillApi.defaultPaginationLimit)
+          );
         }
       })
       .catch(err => {

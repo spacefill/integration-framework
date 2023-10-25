@@ -14,6 +14,9 @@ export class Config {
       spacefillApi: {
         url: process.env?.SPACEFILL_API_URL ?? 'http://localhost:5004',
         apiToken: process.env?.SPACEFILL_API_TOKEN ?? '',
+        defaultPaginationLimit: process.env?.SPACEFILL_API_DEFAULT_PAGINATION_LIMIT
+          ? parseInt(process.env?.SPACEFILL_API_DEFAULT_PAGINATION_LIMIT)
+          : 50,
       },
       edi: {
         wmsAgencyCode: process.env?.WMS_AGENCY_CODE,
