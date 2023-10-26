@@ -35,7 +35,8 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage ci/*",
+    "test-manual": "jest --coverage manual/*",
     "test:watch": "jest --watch"
   }
 }
