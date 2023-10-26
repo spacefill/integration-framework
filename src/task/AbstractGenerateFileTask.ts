@@ -5,22 +5,14 @@ import Console from "../utils/Console.mts";
 import { AbstractTask } from "./AbstractTask.ts";
 import { GenerateFileTasklnterface, InitialDataItem } from "./GenerateFileTasklnterfaces.ts";
 
-export abstract class AbstractGenerateFileTask extends AbstractTask implements GenerateFileTasklnterface {
+export abstract class AbstractGenerateFileTask<T> extends AbstractTask implements GenerateFileTasklnterface<T> {
 
-  protected currentFileConfiguration: InitialDataItem;
+  protected currentFileConfiguration: InitialDataItem<T>;
 
-  initFilesGeneration(): InitialDataItem[] {
+  initFilesGeneration(): InitialDataItem<T>[] {
     throw new Error("Method not implemented.");
   }
-  prepareFileData(): Promise<object[]> {
-    throw new Error("Method not implemented.");
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  validateFileData(_data: object[]): void {
-    throw new Error("Method not implemented.");
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  mapFileData(_data: object[]): object[]{
+  prepareFileData(): Promise<T[]> {
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -39,11 +31,14 @@ export abstract class AbstractGenerateFileTask extends AbstractTask implements G
   async run(): Promise<void> {
     let errorFound = false;
     try {
-      Console.info("Config validation -------------------")
+      this.beforeRun();
+
+      Console.info(`Starting new task, type: ${this.constructor.name}`);
+      Console.info("Config validation -------------------");
       Config.validate();
       Console.confirm("Config validated");
 
-      Console.info("Api init ----------------------------")
+      Console.info("Api init ----------------------------");
       await this.initApiClient();
       Console.confirm("Api initialized");
 
@@ -51,17 +46,23 @@ export abstract class AbstractGenerateFileTask extends AbstractTask implements G
       for (const fileConfiguration of filesConfiguration) {
         try {
           this.currentFileConfiguration = fileConfiguration;
+
           Console.info("Data preparation --------------------");
           const rawData = await this.prepareFileData();
           Console.confirm("Data prepared");
 
+          if (rawData.length === 0) {
+            Console.confirm("No data to export. Exit.");
+            continue;
+          }
+
           Console.info("Data mapping ------------------------");
           Console.debug(`${rawData?.length} items to map.`);
-          const mappedData = this.mapFileData(rawData);
+          const mappedData = this.currentFileConfiguration.schema.mapFileData(rawData);
           Console.confirm("Data mapped");
 
           Console.info("Data validation ---------------------");
-          this.validateFileData(mappedData);
+          this.currentFileConfiguration.schema.validateFileData(mappedData);
           Console.confirm("Data validated");
 
           await temporaryFileTask(async(tempFilePath) => {
@@ -86,8 +87,12 @@ export abstract class AbstractGenerateFileTask extends AbstractTask implements G
       }
     } catch (exception) {
       Console.error(exception);
+      this.afterRun();
       process.exit(1);
     }
+
+    Console.confirm("Task completed with success");
+    this.afterRun();
 
     if (errorFound) {
       process.exit(1);

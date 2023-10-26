@@ -1,19 +1,19 @@
-interface GenerateFileTasklnterface {
+import { SchemaInterface } from "../data_mapping/SchemaInterface.ts";
+
+interface GenerateFileTasklnterface<T> {
     initApiClient(): void,
-    initFilesGeneration(): InitialDataItem[],
-    prepareFileData(): Promise<object[]>,
-    validateFileData(data: object[]): void,
-    mapFileData(data: object[]): object[],
+    initFilesGeneration(): InitialDataItem<T>[],
+    prepareFileData(): Promise<T[]>,
     generateFile(mappedData: object[], tempFilePath: string): Promise<void>,
     sendFile(tempFilePath: string): Promise<string>,
     postAction(): Promise<void>,
     run(): void
 }
 
-interface InitialDataItem {
-  type: string,
+interface InitialDataItem<T> {
+  schema: SchemaInterface<T>,
   targetFileName?: string,
-  initialData: object[]
+  initialData: T[]
 }
 
 export { GenerateFileTasklnterface, InitialDataItem };

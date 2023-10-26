@@ -1,17 +1,14 @@
 #!/usr/bin/env -S npx ts-node --esm --compilerOptions '{"moduleResolution":"nodenext","module":"esnext","target":"esnext", "allowImportingTsExtensions": true}'
 
-import pointer from "json-pointer";
 import { DateTime } from "luxon";
 import { createObjectCsvWriter } from "csv-writer";
-import AjvModule from "ajv";
-import addFormatsModule from 'ajv-formats';
-const Ajv = AjvModule.default;
-const addFormats = addFormatsModule.default;
+
 
 import { Config } from '../../src/configs/Config.ts';
 import { AbstractGenerateFileTask } from '../../src/task/AbstractGenerateFileTask.ts';
 import Console from '../../src/utils/Console.mts';
 import { InitialDataItem } from "../../src/task/GenerateFileTasklnterfaces.ts";
+import { DefaultGenerateMasterItemsSchema } from "./schemas/DefaultGenerateMasterItemsSchema.ts";
 
 interface MasterItemInterface {
   id: number,
@@ -28,25 +25,24 @@ interface MasterItemInterface {
   pallet_barcode: string,
 }
 
-export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
+export { MasterItemInterface };
+export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<MasterItemInterface> {
 
   protected displayUsages() {
     Console.log("Usage: ./GenerateMasterItemsTaskExample.mts [OPTIONS]")
     super.displayUsages();
   }
 
-  initFilesGeneration(): InitialDataItem[] {
-    // @todo - développer l'idée. Génération d'une sorte de metadata permettant de savoir combien de fichier sont à générer
-    // Cette usage permettrait d'avoir un même flow pour la génération de master items et de commandes. (1 Run = 1 fichier ou n fichiers)
-    // voir si facile d'accès
+  initFilesGeneration(): InitialDataItem<MasterItemInterface>[] {
+    const schema = new DefaultGenerateMasterItemsSchema();
     return [
       {
-        type: "master items generation",
+        schema: schema,
         initialData: []
       }
     ]
   }
-  async prepareFileData(offset: number = 0): Promise<object[]> {
+  async prepareFileData(offset: number = 0): Promise<MasterItemInterface[]> {
     let masterItems = this.currentFileConfiguration?.initialData ?? [];
 
     await this.sdk.get_v1_logistic_management_master_item_list_v1_logistic_management_master_items__get({
@@ -56,14 +52,15 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
       shipper_account_id: Config.get().edi.wmsShipperAccountId
     })
       .then(async ({ data }) => {
-        const tmpItems = data?.items as object[];
+        const tmpItems = data?.items as unknown as MasterItemInterface[];
         masterItems = [...masterItems, ...tmpItems];
 
+        this.currentFileConfiguration = {
+          ...this.currentFileConfiguration,
+          initialData: masterItems
+        }
+
         if (data?.next) {
-          this.currentFileConfiguration = {
-            ...this.currentFileConfiguration,
-            initialData: masterItems
-          }
           masterItems = await this.prepareFileData(offset + Config.get().spacefillApi.defaultPaginationLimit);
         }
       })
@@ -73,203 +70,8 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
         process.exit(1);
       });
 
-    return masterItems;
+    return masterItems as MasterItemInterface[];
   }
-
-  mapFileData(rawData: MasterItemInterface[]): object[] {
-    if (rawData.length === 0) {
-      Console.info("No data to export.");
-      process.exit(0);
-    }
-    /**
-     * Keys are column names in the final generated file.
-     */
-    return rawData.map((rawDataItem) => {
-      return {
-        'Type de message': 'ART',
-        'Code Client': Config.get().edi.wmsShipperID,
-        'Code article': rawDataItem?.item_reference,
-        'Référence technique': rawDataItem?.item_reference,
-        'Description': rawDataItem?.designation,
-        'Code famille': '',
-        'Code sous-famille': '',
-        'Type de colis de 4ème niveau': '',
-        'Nombre d\'unités par colis de 4ème niveau': rawDataItem?.each_quantity_by_cardboard_box,
-        'Nombre de colis par unité logistique': rawDataItem?.each_quantity_by_pallet,
-        'Hauteur du colis de référence': rawDataItem?.cardboard_box_height_in_cm
-          ? (rawDataItem?.cardboard_box_height_in_cm / 100)
-          : null,
-        'Largeur du colis de référence': rawDataItem?.cardboard_box_width_in_cm
-          ? (rawDataItem?.cardboard_box_width_in_cm / 100)
-          : null,
-        'Profondeur du colis de référence': rawDataItem?.cardboard_box_length_in_cm
-          ? (rawDataItem?.cardboard_box_length_in_cm / 100)
-          : null,
-        'Poids brut du colis de référence': rawDataItem?.cardboard_box_gross_weight_in_kg,
-        'Poids net du colis de référence': rawDataItem?.cardboard_box_net_weight_in_kg ?? rawDataItem?.cardboard_box_gross_weight_in_kg,
-        'Code EAN': '',
-        'Code EAN colis': rawDataItem?.cardboard_box_barcode,
-        'Code EAN palette': rawDataItem?.pallet_barcode,
-        'Information libre 1': rawDataItem?.designation.substring(0, 100),
-        'Information libre 2': rawDataItem?.designation.substring(100, 200),
-        'Information libre 3': rawDataItem?.designation.substring(200),
-        'Type de conditionnement': Config.get().edi.wmsItemPackagingType,
-      };
-    });
-  }
-
-  // @todo -  Déplacer la partie schema dans un objet à part, reprenant mapping + validation
-  validateFileData(data: object[]): void {
-    const itemSchema = {
-      type: 'object',
-      properties: {
-        'Type de message': {
-          type: 'string',
-          maxLength: 3,
-        },
-        'Code Client': {
-          type: 'string',
-        },
-        'Code article': {
-          type: 'string',
-          maxLength: 50,
-        },
-        'Référence technique': {
-          type: 'string',
-          maxLength: 100,
-          nullable: true,
-        },
-        'Description': {
-          type: 'string',
-          maxLength: 100,
-        },
-        'Code famille': {
-          type: 'string',
-          maxLength: 50,
-          nullable: true,
-        },
-        'Code sous-famille': {
-          type: 'string',
-          maxLength: 50,
-          nullable: true,
-        },
-        'Type de colis de 4ème niveau': {
-          type: 'string',
-          maxLength: 2,
-          nullable: true,
-        },
-        'Nombre d\'unités par colis de 4ème niveau': {
-          type: 'integer',
-          maximum: 9999999999,
-          nullable: true,
-        },
-        'Nombre de colis par unité logistique': {
-          type: 'integer',
-          maximum: 9999999999,
-          nullable: true,
-        },
-        'Hauteur du colis de référence': {
-          type: 'number',
-          maximum: 999999999,
-          nullable: true,
-          // "multipleOfPrecision": 0.001, -- todo: find a solution to check precision
-        },
-        'Largeur du colis de référence': {
-          type: 'number',
-          maximum: 999999999,
-          nullable: true,
-          // "multipleOfPrecision": 0.001, -- todo: find a solution to check precision
-        },
-        'Profondeur du colis de référence': {
-          type: 'number',
-          maximum: 999999999,
-          nullable: true,
-          // "multipleOfPrecision": 0.001, -- todo: find a solution to check precision
-        },
-        'Poids brut du colis de référence': {
-          type: 'number',
-          maximum: 9999999999999,
-          nullable: true,
-          // "multipleOfPrecision": 0.0001, -- todo: find a solution to check precision
-        },
-        'Poids net du colis de référence': {
-          type: 'number',
-          maximum: 9999999999999,
-          nullable: true,
-          // "multipleOfPrecision": 0.0001, -- todo: find a solution to check precision
-        },
-        'Code EAN': {
-          type: 'string',
-          maxLength: 14,
-          nullable: true,
-        },
-        'Code EAN colis': {
-          type: 'string',
-          maxLength: 14,
-          nullable: true,
-        },
-        'Code EAN palette': {
-          type: 'string',
-          maxLength: 14,
-          nullable: true,
-        },
-        'Information libre 1': {
-          type: 'string',
-          maxLength: 100,
-          nullable: true,
-        },
-        'Information libre 2': {
-          type: 'string',
-          maxLength: 100,
-          nullable: true,
-        },
-        'Information libre 3': {
-          type: 'string',
-          maxLength: 100,
-          nullable: true,
-        },
-        'Type de conditionnement': {
-          type: 'string',
-          maxLength: 20,
-        }
-      },
-      required: [
-        'Type de message',
-        'Code Client',
-        'Code article',
-        'Description',
-        'Type de conditionnement'
-      ]
-    };
-
-    const schema = {
-      type: "array",
-      items: itemSchema
-    };
-
-    // @todo - déplacer cette section dans la classe abstraite
-    const ajv = new Ajv();
-    addFormats(ajv);
-
-    const validate = ajv.compile(schema);
-    if (!validate(data)) {
-      validate?.errors.forEach((validationError) => {
-
-        Console.error("Validation error",
-          {
-            ...validationError,
-            checkedItem: pointer.get(data, `/${validationError.instancePath.split("/")[1]}`) // @todo: Vérifier s'il y a mieux pour extraire le path vers l'item en erreur vs la clé de l'item
-          }
-        );
-      })
-      throw new Error('Configuration validation failed for spacefillApi');
-    }
-  }
-
-  // @todo
-  // Utiliser MapFieldInterface.ts et Schema.ts pour pouvoir charger un schema de données et effectuer la partie validation.
-  // A noter: validateData prend en paramètre toutes les données pour un fichier.
-
 
   async generateFile(mappedData: object[], tempFilePath: string): Promise<void> {
     const header = Object.keys(mappedData[0]).map((key) => {
@@ -288,9 +90,6 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
     await csvWriter.writeRecords(mappedData)
   }
 
-  // @todo
-  // Se servir des variables de path pour upload le fichier au bon endroit
-  // Ajouter une option qui permet de vérifier si un fichier existe déjà
   async sendFile(tempFilePath: string): Promise<string> {
     const targetFileName = `${Config.get().edi.wmsPathSpacefillToWmsDir}/ARTICLE_${DateTime.now().toFormat('yyyymmdd_HHmmss')}.txt`;
     this.transfert.upload(tempFilePath, targetFileName);
@@ -299,11 +98,10 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask {
 
   async postAction(): Promise<void> {
     this.currentFileConfiguration.initialData.forEach((item) => {
-      this.sdk.patch_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___patch({
-        master_item_id: item['id']
-      },{
-        transfered_to_wms_at: DateTime.now().toFormat('yyyymmdd_HHmmss')
-      })
+      this.sdk.patch_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___patch(
+        { master_item_id: `${item.id}`},
+        { transfered_to_wms_at: DateTime.now().toFormat('yyyymmdd_HHmmss') }
+      )
     });
   }
 }
