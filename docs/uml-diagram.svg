@@ -1,0 +1,703 @@
+<svg version="1.1" baseProfile="full" width="6342.0" height="1209.0" viewbox="0 0 6342 1209" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+<desc >#.interface: fill=lightblue
+#.enumeration: fill=lightgreen
+#.type: fill=lightgray
+[&lt;interface&gt;OperationMethods||+get_v1_logistic_management_master_item_list_v1_logistic_management_master_items__get(): OperationResponse&lt;PaginationResponseModelOutputListMasterItem&gt;;+post_v1_logistic_management_master_item_v1_logistic_management_master_items__post(): OperationResponse&lt;OutputMasterItem&gt;;+get_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___get(): OperationResponse&lt;OutputMasterItem&gt;;+put_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___put(): OperationResponse&lt;OutputPutMasterItem&gt;;+patch_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___patch(): OperationResponse&lt;OutputPatchMasterItem&gt;;+get_v1_logistic_management_batch_list_v1_logistic_management_batches__get(): OperationResponse&lt;PaginationResponseModelOutputBatch&gt;;+post_v1_logistic_management_batch_v1_logistic_management_batches__post(): OperationResponse&lt;OutputBatch&gt;;+get_v1_logistic_management_batch_v1_logistic_management_batches__batch_id___get(): OperationResponse&lt;OutputBatchWithStock&gt;;+get_v1_logistic_management_order_list_v1_logistic_management_orders__get(): OperationResponse&lt;PaginationResponseModelOutputOrder&gt;;+get_v1_logistic_management_order_v1_logistic_management_orders__order_id___get(): OperationResponse&lt;OutputOrderEmbedded&gt;;+patch_v1_logistic_management_order_v1_logistic_management_orders__order_id___patch(): OperationResponse&lt;OutputOrder&gt;;+get_v1_logistic_management_order_documents_list_v1_logistic_management_orders__order_id__documents_get(): OperationResponse&lt;PaginationResponseModelOutputOrderDocument&gt;;+get_v1_logistic_management_order_download_document_v1_logistic_management_orders__order_id__documents__document_id__download_get(): OperationResponse&lt;any&gt;;+post_v1_logistic_management_order_upload_document_v1_logistic_management_orders__order_id__documents__post(): OperationResponse&lt;OutputOrderDocument&gt;;+get_v1_logistic_management_inventory_adjustement_list_v1_logistic_management_inventory_adjustments__get(): OperationResponse&lt;PaginationResponseModelOutputInventoryAdjustement&gt;;+get_v1_logistic_management_inventory_adjustement_v1_logistic_management_inventory_adjustments__inventory_adjustment_id___get(): OperationResponse&lt;OutputInventoryAdjustement&gt;;+get_v1_logistic_management_sscc_list_v1_logistic_management_serial_shipping_container_codes__get(): OperationResponse&lt;PaginationResponseModelOutputSscc&gt;;+get_v1_logistic_management_sscc_total_in_stock_v1_logistic_management_sscc_total_in_stock__get(): OperationResponse&lt;OutputTotalSsccInStock&gt;]
+[&lt;interface&gt;PathsDictionary|+/v1/logistic_management/master_items/: { get(parameters?: Parameters&lt;QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;PaginationResponseModelOutputListMasterItem&gt;; post(parameters?: Parameters&lt;...&gt;, data?: InputPostMasterItem, config?: AxiosRequestConfig): OperationResponse&lt;...&gt;; };+/v1/logistic_management/master_items/{master_item_id}/: { get(parameters?: Parameters&lt;PathParameters &amp; QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;OutputMasterItem&gt;; put(parameters?: Parameters&lt;...&gt;, data?: InputPutMasterItem, config?: AxiosRequestConfig): OperationResponse&lt;...&gt;; patch(parameters?: Parameters&lt;...&gt;, data?: InputPatchMaste...;+/v1/logistic_management/batches/: { get(parameters?: Parameters&lt;QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;PaginationResponseModelOutputBatch&gt;; post(parameters?: Parameters&lt;...&gt;, data?: InputPostBatch, config?: AxiosRequestConfig): OperationResponse&lt;...&gt;; };+/v1/logistic_management/batches/{batch_id}/: { get(parameters?: Parameters&lt;PathParameters &amp; QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;OutputBatchWithStock&gt;; };+/v1/logistic_management/orders/: { get(parameters?: Parameters&lt;QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;PaginationResponseModelOutputOrder&gt;; };+/v1/logistic_management/orders/{order_id}/: { get(parameters?: Parameters&lt;PathParameters &amp; QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;OutputOrderEmbedded&gt;; patch(parameters?: Parameters&lt;...&gt;, data?: InputOrderPatch, config?: AxiosRequestConfig): OperationResponse&lt;...&gt;; };+/v1/logistic_management/orders/{order_id}/documents: { get(parameters?: Parameters&lt;PathParameters &amp; QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;PaginationResponseModelOutputOrderDocument&gt;; };+/v1/logistic_management/orders/{order_id}/documents/{document_id}/download: { get(parameters?: Parameters&lt;PathParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;any&gt;; };+/v1/logistic_management/orders/{order_id}/documents/: { post(parameters?: Parameters&lt;PathParameters&gt;, data?: BodyPostV1LogisticManagementOrderUploadDocumentV1LogisticManagementOrdersOrderIdDocumentsPost, config?: AxiosRequestConfig): OperationResponse&lt;...&gt;; };+/v1/logistic_management/inventory_adjustments/: { get(parameters?: Parameters&lt;QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;PaginationResponseModelOutputInventoryAdjustement&gt;; };+/v1/logistic_management/inventory_adjustments/{inventory_adjustment_id}/: { get(parameters?: Parameters&lt;PathParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;OutputInventoryAdjustement&gt;; };+/v1/logistic_management/serial_shipping_container_codes/: { get(parameters?: Parameters&lt;QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;PaginationResponseModelOutputSscc&gt;; };+/v1/logistic_management/sscc_total_in_stock/: { get(parameters?: Parameters&lt;QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;OutputTotalSsccInStock&gt;; }|]
+[SpacefillAPIWrapperV1||+static initClient(): Promise&lt;any&gt;]
+[Config||+static get(): object;+static reloadConfig(): void;+static validate(): void]
+[AbstractSchema&lt;T&gt;|+itemSchemaValidation: object|+mapFileData(): object\[\];+validateFileData(): void]
+[SchemaInterface&lt;T&gt;]&lt;:--[AbstractSchema&lt;T&gt;]
+[&lt;interface&gt;SchemaInterface&lt;T&gt;|+itemSchemaValidation: object|+mapFileData(): object\[\];+validateFileData(): void]
+[AbstractGenerateFileTask&lt;T&gt;|\#currentFileConfiguration: InitialDataItem&lt;T&gt;|+initFilesGeneration(): InitialDataItem&lt;T&gt;\[\];+prepareFileData(): Promise&lt;T\[\]&gt;;+generateFile(): Promise&lt;void&gt;;+sendFile(): Promise&lt;string&gt;;+postAction(): Promise&lt;void&gt;;+run(): Promise&lt;void&gt;]
+[AbstractTask]&lt;:-[AbstractGenerateFileTask&lt;T&gt;]
+[GenerateFileTasklnterface&lt;T&gt;]&lt;:--[AbstractGenerateFileTask&lt;T&gt;]
+[AbstractTask|\#sdk: Client;\#transfert: Transfert|+initApiClient(): Promise&lt;void&gt;]
+[BaseCommand]&lt;:-[AbstractTask]
+[AbstractTask]  -  [OperationMethods]
+[&lt;interface&gt;GenerateFileTasklnterface&lt;T&gt;||+initApiClient(): void;+initFilesGeneration(): InitialDataItem&lt;T&gt;\[\];+prepareFileData(): Promise&lt;T\[\]&gt;;+generateFile(): Promise&lt;void&gt;;+sendFile(): Promise&lt;string&gt;;+postAction(): Promise&lt;void&gt;;+run(): void]
+[&lt;interface&gt;InitialDataItem&lt;T&gt;|+schema: SchemaInterface&lt;T&gt;;+targetFileName?: string;+initialData: T\[\]|]
+[LocalClient||+checkStatut(): boolean;+close(): void;+mkdirIfNotExists(): void;+upload(): void;+downloadAndReadFile(): Stream;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+deleteFile(): void;+moveFile(): void;+renameFile(): void]
+[TransfertInterface]&lt;:--[LocalClient]
+[SftpClient|-configuration: SSH2TransfertConfiguration|+checkStatut(): boolean;+close(): void;+mkdirIfNotExists(): void;+upload(): void;+downloadAndReadFile(): Stream;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+deleteFile(): void;+moveFile(): void;+renameFile(): void]
+[&lt;interface&gt;SSH2TransfertConfiguration|+hostname: string;+port: number;+username: string;+password: string;+transportation: string|]
+[&lt;interface&gt;FileObject|+name: string|]
+[TransfertInterface]&lt;:--[SftpClient]
+[Transfert|\#protocol: TransfertProtocol;\#configuration: TransfertConfiguration;\#client: TransfertInterface|+checkStatut(): boolean;+close(): void;+mkdirIfNotExists(): void;+upload(): void;+downloadAndReadFile(): Stream;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+deleteFile(): void;+moveFile(): void;+renameFile(): void]
+[&lt;enumeration&gt;TransfertProtocol|sftp;ftp;local]
+[TransfertInterface]&lt;:--[Transfert]
+[&lt;interface&gt;TransfertInterface||+checkStatut(): boolean;+close(): void;+mkdirIfNotExists(): void;+upload(): void;+downloadAndReadFile(): Stream;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+deleteFile(): void;+moveFile(): void;+renameFile(): void]
+[&lt;interface&gt;TransfertConfiguration|+hostname: string;+port: number;+username: string;+password: string|]
+[BaseCommand|\#argv: ParsedArgs;\#statistics: CommandStatistic|\#getArgsList(): { argName: string; argDescription: string; }\[\];\#displayUsages(): void;\#displayStatistics(): void;\#parseArgs(): void;\#beforeRun(): void;\#afterRun(): void]
+[&lt;interface&gt;CommandStatistic|+startTimeMs?: number;+endTimeMs?: number;+startCpuUsage?: CpuUsage;+finalCpuUsage?: CpuUsage;+startMemoryUsage?: number;+finalMemoryUsage?: number|]
+[Console||+static prompts(): Promise&lt;Answers&lt;string&gt;&gt;;+static log(): void;+static debug(): void;+static info(): void;+static warn(): void;+static error(): void;+static confirm(): void;+static printError(): void;+static printGradient(): void]</desc>
+<g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="normal" font-style="normal">
+<g font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
+<g stroke="transparent" fill="transparent">
+<rect x="0.0" y="0.0" height="1209.0" width="6342.0" stroke="none"></rect>
+</g>
+<g transform="translate(8, 8)" fill="#33322E">
+<g transform="translate(20, 20)" fill="#eee8d5" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal">
+<g stroke-dasharray="6 6">
+<path d="M2998.5 319.8 L2998.5 525 L2998.5 612.5 L2998.5 612.5 " fill="none"></path>
+</g>
+<path d="M3003.8 319.8 L2998.5 319.8 L2993.2 319.8 L2998.5 306.5 Z"></path>
+<path d="M3446.8 706.5 L3806.75 808 L3899.4479452054793 906.5 L3899.4 906.5 " fill="none"></path>
+<path d="M3448.3 701.4 L3446.8 706.5 L3445.4 711.6 L3434.0 702.9 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M3998.5 759.8 L3998.5 808 L3987.705479452055 906.5 L3987.7 906.5 " fill="none"></path>
+</g>
+<path d="M4003.8 759.8 L3998.5 759.8 L3993.2 759.8 L3998.5 746.5 Z"></path>
+<path d="M3305.0 372.3 L3305 525 L3305 612.5 L3305.0 612.5 " fill="none"></path>
+<path d="M3310.3 372.3 L3305.0 372.3 L3299.7 372.3 L3305.0 359.0 Z"></path>
+<path d="M3179.1 720.5 L2975 808 L2975 828 L2975.0 828.0 " fill="none"></path>
+<g stroke-dasharray="6 6">
+<path d="M4723.0 332.6 L5117 525 L5117 571.5 L5117.0 571.5 " fill="none"></path>
+</g>
+<path d="M4725.3 327.8 L4723.0 332.6 L4720.6 337.4 L4711.0 326.7 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M4632.1 358.5 L4747 525 L4747 560 L4747.0 560.0 " fill="none"></path>
+</g>
+<path d="M4636.5 355.4 L4632.1 358.5 L4627.7 361.5 L4624.5 347.5 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M4485.9 358.5 L4371 525 L4371 545 L4371.0 545.0 " fill="none"></path>
+</g>
+<path d="M4490.3 361.5 L4485.9 358.5 L4481.5 355.4 L4493.5 347.5 Z"></path>
+<g data-name="OperationMethods">
+<g fill="lightblue" stroke="#33322E" data-name="OperationMethods">
+<rect x="2196.0" y="828.0" height="325.0" width="1558.0" data-name="OperationMethods"></rect>
+<path d="M2196.0 859.0 L3754.0 859.0" fill="none" data-name="OperationMethods"></path>
+<path d="M2196.0 867.0 L3754.0 867.0" fill="none" data-name="OperationMethods"></path>
+</g>
+<g transform="translate(2196, 828)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OperationMethods">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OperationMethods">
+<a id="../src/api/spacefill-api-openapi.ts.OperationMethods" xlink:href="../src/api/spacefill-api-openapi.ts"><text x="771.0" y="13.5" stroke="none" text-anchor="middle" data-name="OperationMethods">OperationMethods</text></a>
+
+</g>
+</g>
+<g transform="translate(2196, 859)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OperationMethods">
+<g transform="translate(8, 8)" fill="#33322E" data-name="OperationMethods">
+
+</g>
+</g>
+<g transform="translate(2196, 867)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OperationMethods">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OperationMethods">
+<text x="0.0" y="13.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_master_item_list_v1_logistic_management_master_items__get(): OperationResponse&lt;PaginationResponseModelOutputListMasterItem&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="OperationMethods">+post_v1_logistic_management_master_item_v1_logistic_management_master_items__post(): OperationResponse&lt;OutputMasterItem&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___get(): OperationResponse&lt;OutputMasterItem&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="OperationMethods">+put_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___put(): OperationResponse&lt;OutputPutMasterItem&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="OperationMethods">+patch_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___patch(): OperationResponse&lt;OutputPatchMasterItem&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_batch_list_v1_logistic_management_batches__get(): OperationResponse&lt;PaginationResponseModelOutputBatch&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="OperationMethods">+post_v1_logistic_management_batch_v1_logistic_management_batches__post(): OperationResponse&lt;OutputBatch&gt;</text>
+<text x="0.0" y="118.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_batch_v1_logistic_management_batches__batch_id___get(): OperationResponse&lt;OutputBatchWithStock&gt;</text>
+<text x="0.0" y="133.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_order_list_v1_logistic_management_orders__get(): OperationResponse&lt;PaginationResponseModelOutputOrder&gt;</text>
+<text x="0.0" y="148.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_order_v1_logistic_management_orders__order_id___get(): OperationResponse&lt;OutputOrderEmbedded&gt;</text>
+<text x="0.0" y="163.5" stroke="none" data-name="OperationMethods">+patch_v1_logistic_management_order_v1_logistic_management_orders__order_id___patch(): OperationResponse&lt;OutputOrder&gt;</text>
+<text x="0.0" y="178.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_order_documents_list_v1_logistic_management_orders__order_id__documents_get(): OperationResponse&lt;PaginationResponseModelOutputOrderDocument&gt;</text>
+<text x="0.0" y="193.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_order_download_document_v1_logistic_management_orders__order_id__documents__document_id__download_get(): OperationResponse&lt;any&gt;</text>
+<text x="0.0" y="208.5" stroke="none" data-name="OperationMethods">+post_v1_logistic_management_order_upload_document_v1_logistic_management_orders__order_id__documents__post(): OperationResponse&lt;OutputOrderDocument&gt;</text>
+<text x="0.0" y="223.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_inventory_adjustement_list_v1_logistic_management_inventory_adjustments__get(): OperationResponse&lt;PaginationResponseModelOutputInventoryAdjustement&gt;</text>
+<text x="0.0" y="238.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_inventory_adjustement_v1_logistic_management_inventory_adjustments__inventory_adjustment_id___get(): OperationResponse&lt;OutputInventoryAdjustement&gt;</text>
+<text x="0.0" y="253.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_sscc_list_v1_logistic_management_serial_shipping_container_codes__get(): OperationResponse&lt;PaginationResponseModelOutputSscc&gt;</text>
+<text x="0.0" y="268.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_sscc_total_in_stock_v1_logistic_management_sscc_total_in_stock__get(): OperationResponse&lt;OutputTotalSsccInStock&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="PathsDictionary">
+<g fill="lightblue" stroke="#33322E" data-name="PathsDictionary">
+<rect x="0.0" y="0.0" height="505.0" width="2244.0" data-name="PathsDictionary"></rect>
+<path d="M0.0 31.0 L2244.0 31.0" fill="none" data-name="PathsDictionary"></path>
+<path d="M0.0 497.0 L2244.0 497.0" fill="none" data-name="PathsDictionary"></path>
+</g>
+<g transform="translate(0, 0)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PathsDictionary">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="PathsDictionary">
+<a id="../src/api/spacefill-api-openapi.ts.PathsDictionary" xlink:href="../src/api/spacefill-api-openapi.ts"><text x="1114.0" y="13.5" stroke="none" text-anchor="middle" data-name="PathsDictionary">PathsDictionary</text></a>
+
+</g>
+</g>
+<g transform="translate(0, 31)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PathsDictionary">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="PathsDictionary">
+<text x="0.0" y="13.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/master_items/: { get(parameters?: Parameters&lt;QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;PaginationResponseModelOutputListMasterItem&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="PathsDictionary">post(parameters?: Parameters&lt;...&gt;, data?: InputPostMasterItem, config?: AxiosRequestConfig): OperationResponse&lt;...&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="PathsDictionary">}</text>
+<text x="0.0" y="58.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/master_items/{master_item_id}/: { get(parameters?: Parameters&lt;PathParameters &amp; QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;OutputMasterItem&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="PathsDictionary">put(parameters?: Parameters&lt;...&gt;, data?: InputPutMasterItem, config?: AxiosRequestConfig): OperationResponse&lt;...&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="PathsDictionary">patch(parameters?: Parameters&lt;...&gt;, data?: InputPatchMaste...</text>
+<text x="0.0" y="103.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/batches/: { get(parameters?: Parameters&lt;QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;PaginationResponseModelOutputBatch&gt;</text>
+<text x="0.0" y="118.5" stroke="none" data-name="PathsDictionary">post(parameters?: Parameters&lt;...&gt;, data?: InputPostBatch, config?: AxiosRequestConfig): OperationResponse&lt;...&gt;</text>
+<text x="0.0" y="133.5" stroke="none" data-name="PathsDictionary">}</text>
+<text x="0.0" y="148.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/batches/{batch_id}/: { get(parameters?: Parameters&lt;PathParameters &amp; QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;OutputBatchWithStock&gt;</text>
+<text x="0.0" y="163.5" stroke="none" data-name="PathsDictionary">}</text>
+<text x="0.0" y="178.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/orders/: { get(parameters?: Parameters&lt;QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;PaginationResponseModelOutputOrder&gt;</text>
+<text x="0.0" y="193.5" stroke="none" data-name="PathsDictionary">}</text>
+<text x="0.0" y="208.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/orders/{order_id}/: { get(parameters?: Parameters&lt;PathParameters &amp; QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;OutputOrderEmbedded&gt;</text>
+<text x="0.0" y="223.5" stroke="none" data-name="PathsDictionary">patch(parameters?: Parameters&lt;...&gt;, data?: InputOrderPatch, config?: AxiosRequestConfig): OperationResponse&lt;...&gt;</text>
+<text x="0.0" y="238.5" stroke="none" data-name="PathsDictionary">}</text>
+<text x="0.0" y="253.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/orders/{order_id}/documents: { get(parameters?: Parameters&lt;PathParameters &amp; QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;PaginationResponseModelOutputOrderDocument&gt;</text>
+<text x="0.0" y="268.5" stroke="none" data-name="PathsDictionary">}</text>
+<text x="0.0" y="283.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/orders/{order_id}/documents/{document_id}/download: { get(parameters?: Parameters&lt;PathParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;any&gt;</text>
+<text x="0.0" y="298.5" stroke="none" data-name="PathsDictionary">}</text>
+<text x="0.0" y="313.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/orders/{order_id}/documents/: { post(parameters?: Parameters&lt;PathParameters&gt;, data?: BodyPostV1LogisticManagementOrderUploadDocumentV1LogisticManagementOrdersOrderIdDocumentsPost, config?: AxiosRequestConfig): OperationResponse&lt;...&gt;</text>
+<text x="0.0" y="328.5" stroke="none" data-name="PathsDictionary">}</text>
+<text x="0.0" y="343.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/inventory_adjustments/: { get(parameters?: Parameters&lt;QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;PaginationResponseModelOutputInventoryAdjustement&gt;</text>
+<text x="0.0" y="358.5" stroke="none" data-name="PathsDictionary">}</text>
+<text x="0.0" y="373.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/inventory_adjustments/{inventory_adjustment_id}/: { get(parameters?: Parameters&lt;PathParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;OutputInventoryAdjustement&gt;</text>
+<text x="0.0" y="388.5" stroke="none" data-name="PathsDictionary">}</text>
+<text x="0.0" y="403.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/serial_shipping_container_codes/: { get(parameters?: Parameters&lt;QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;PaginationResponseModelOutputSscc&gt;</text>
+<text x="0.0" y="418.5" stroke="none" data-name="PathsDictionary">}</text>
+<text x="0.0" y="433.5" stroke="none" data-name="PathsDictionary">+/v1/logistic_management/sscc_total_in_stock/: { get(parameters?: Parameters&lt;QueryParameters&gt;, data?: any, config?: AxiosRequestConfig): OperationResponse&lt;OutputTotalSsccInStock&gt;</text>
+<text x="0.0" y="448.5" stroke="none" data-name="PathsDictionary">}</text>
+
+</g>
+</g>
+<g transform="translate(0, 497)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="PathsDictionary">
+<g transform="translate(8, 8)" fill="#33322E" data-name="PathsDictionary">
+
+</g>
+</g>
+</g>
+<g data-name="SpacefillAPIWrapperV1">
+<g fill="#eee8d5" stroke="#33322E" data-name="SpacefillAPIWrapperV1">
+<rect x="2284.0" y="217.5" height="70.0" width="276.0" data-name="SpacefillAPIWrapperV1"></rect>
+<path d="M2284.0 248.5 L2560.0 248.5" fill="none" data-name="SpacefillAPIWrapperV1"></path>
+<path d="M2284.0 256.5 L2560.0 256.5" fill="none" data-name="SpacefillAPIWrapperV1"></path>
+</g>
+<g transform="translate(2284, 217.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SpacefillAPIWrapperV1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SpacefillAPIWrapperV1">
+<a id="../src/api/SpacefillAPIWrapperV1.ts.SpacefillAPIWrapperV1" xlink:href="../src/api/SpacefillAPIWrapperV1.ts"><text x="130.0" y="13.5" stroke="none" text-anchor="middle" data-name="SpacefillAPIWrapperV1">SpacefillAPIWrapperV1</text></a>
+
+</g>
+</g>
+<g transform="translate(2284, 248.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SpacefillAPIWrapperV1">
+<g transform="translate(8, 8)" fill="#33322E" data-name="SpacefillAPIWrapperV1">
+
+</g>
+</g>
+<g transform="translate(2284, 256.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SpacefillAPIWrapperV1">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SpacefillAPIWrapperV1">
+<text x="0.0" y="13.5" stroke="none" data-name="SpacefillAPIWrapperV1">+static initClient(): Promise&lt;any&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="Config">
+<g fill="#eee8d5" stroke="#33322E" data-name="Config">
+<rect x="2600.0" y="202.5" height="100.0" width="229.0" data-name="Config"></rect>
+<path d="M2600.0 233.5 L2829.0 233.5" fill="none" data-name="Config"></path>
+<path d="M2600.0 241.5 L2829.0 241.5" fill="none" data-name="Config"></path>
+</g>
+<g transform="translate(2600, 202.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Config">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Config">
+<a id="../src/configs/Config.ts.Config" xlink:href="../src/configs/Config.ts"><text x="106.5" y="13.5" stroke="none" text-anchor="middle" data-name="Config">Config</text></a>
+
+</g>
+</g>
+<g transform="translate(2600, 233.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Config">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Config">
+
+</g>
+</g>
+<g transform="translate(2600, 241.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Config">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Config">
+<text x="0.0" y="13.5" stroke="none" data-name="Config">+static get(): object</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Config">+static reloadConfig(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="Config">+static validate(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="AbstractSchema&lt;T&gt;">
+<g fill="#eee8d5" stroke="#33322E" data-name="AbstractSchema&lt;T&gt;">
+<rect x="2869.0" y="612.5" height="108.0" width="259.0" data-name="AbstractSchema&lt;T&gt;"></rect>
+<path d="M2869.0 643.5 L3128.0 643.5" fill="none" data-name="AbstractSchema&lt;T&gt;"></path>
+<path d="M2869.0 674.5 L3128.0 674.5" fill="none" data-name="AbstractSchema&lt;T&gt;"></path>
+</g>
+<g transform="translate(2869, 612.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractSchema&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AbstractSchema&lt;T&gt;">
+<a id="../src/data_mapping/AbstractSchema.ts.AbstractSchema&lt;T&gt;" xlink:href="../src/data_mapping/AbstractSchema.ts"><text x="121.5" y="13.5" stroke="none" text-anchor="middle" data-name="AbstractSchema&lt;T&gt;">AbstractSchema&lt;T&gt;</text></a>
+
+</g>
+</g>
+<g transform="translate(2869, 643.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractSchema&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractSchema&lt;T&gt;">
+<text x="0.0" y="13.5" stroke="none" data-name="AbstractSchema&lt;T&gt;">+itemSchemaValidation: object</text>
+
+</g>
+</g>
+<g transform="translate(2869, 674.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractSchema&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractSchema&lt;T&gt;">
+<text x="0.0" y="13.5" stroke="none" data-name="AbstractSchema&lt;T&gt;">+mapFileData(): object[]</text>
+<text x="0.0" y="28.5" stroke="none" data-name="AbstractSchema&lt;T&gt;">+validateFileData(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="SchemaInterface&lt;T&gt;">
+<g fill="lightblue" stroke="#33322E" data-name="SchemaInterface&lt;T&gt;">
+<rect x="2869.0" y="198.5" height="108.0" width="259.0" data-name="SchemaInterface&lt;T&gt;"></rect>
+<path d="M2869.0 229.5 L3128.0 229.5" fill="none" data-name="SchemaInterface&lt;T&gt;"></path>
+<path d="M2869.0 260.5 L3128.0 260.5" fill="none" data-name="SchemaInterface&lt;T&gt;"></path>
+</g>
+<g transform="translate(2869, 198.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SchemaInterface&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SchemaInterface&lt;T&gt;">
+<a id="../src/data_mapping/SchemaInterface.ts.SchemaInterface&lt;T&gt;" xlink:href="../src/data_mapping/SchemaInterface.ts"><text x="121.5" y="13.5" stroke="none" text-anchor="middle" data-name="SchemaInterface&lt;T&gt;">SchemaInterface&lt;T&gt;</text></a>
+
+</g>
+</g>
+<g transform="translate(2869, 229.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SchemaInterface&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SchemaInterface&lt;T&gt;">
+<text x="0.0" y="13.5" stroke="none" data-name="SchemaInterface&lt;T&gt;">+itemSchemaValidation: object</text>
+
+</g>
+</g>
+<g transform="translate(2869, 260.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SchemaInterface&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SchemaInterface&lt;T&gt;">
+<text x="0.0" y="13.5" stroke="none" data-name="SchemaInterface&lt;T&gt;">+mapFileData(): object[]</text>
+<text x="0.0" y="28.5" stroke="none" data-name="SchemaInterface&lt;T&gt;">+validateFileData(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="AbstractGenerateFileTask&lt;T&gt;">
+<g fill="#eee8d5" stroke="#33322E" data-name="AbstractGenerateFileTask&lt;T&gt;">
+<rect x="3794.0" y="906.5" height="168.0" width="369.0" data-name="AbstractGenerateFileTask&lt;T&gt;"></rect>
+<path d="M3794.0 937.5 L4163.0 937.5" fill="none" data-name="AbstractGenerateFileTask&lt;T&gt;"></path>
+<path d="M3794.0 968.5 L4163.0 968.5" fill="none" data-name="AbstractGenerateFileTask&lt;T&gt;"></path>
+</g>
+<g transform="translate(3794, 906.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractGenerateFileTask&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AbstractGenerateFileTask&lt;T&gt;">
+<a id="../src/task/AbstractGenerateFileTask.ts.AbstractGenerateFileTask&lt;T&gt;" xlink:href="../src/task/AbstractGenerateFileTask.ts"><text x="176.5" y="13.5" stroke="none" text-anchor="middle" data-name="AbstractGenerateFileTask&lt;T&gt;">AbstractGenerateFileTask&lt;T&gt;</text></a>
+
+</g>
+</g>
+<g transform="translate(3794, 937.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractGenerateFileTask&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractGenerateFileTask&lt;T&gt;">
+<text x="0.0" y="13.5" stroke="none" data-name="AbstractGenerateFileTask&lt;T&gt;">#currentFileConfiguration: InitialDataItem&lt;T&gt;</text>
+
+</g>
+</g>
+<g transform="translate(3794, 968.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractGenerateFileTask&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractGenerateFileTask&lt;T&gt;">
+<text x="0.0" y="13.5" stroke="none" data-name="AbstractGenerateFileTask&lt;T&gt;">+initFilesGeneration(): InitialDataItem&lt;T&gt;[]</text>
+<text x="0.0" y="28.5" stroke="none" data-name="AbstractGenerateFileTask&lt;T&gt;">+prepareFileData(): Promise&lt;T[]&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="AbstractGenerateFileTask&lt;T&gt;">+generateFile(): Promise&lt;void&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="AbstractGenerateFileTask&lt;T&gt;">+sendFile(): Promise&lt;string&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="AbstractGenerateFileTask&lt;T&gt;">+postAction(): Promise&lt;void&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="AbstractGenerateFileTask&lt;T&gt;">+run(): Promise&lt;void&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="AbstractTask">
+<g fill="#eee8d5" stroke="#33322E" data-name="AbstractTask">
+<rect x="3176.0" y="612.5" height="108.0" width="258.0" data-name="AbstractTask"></rect>
+<path d="M3176.0 643.5 L3434.0 643.5" fill="none" data-name="AbstractTask"></path>
+<path d="M3176.0 689.5 L3434.0 689.5" fill="none" data-name="AbstractTask"></path>
+</g>
+<g transform="translate(3176, 612.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractTask">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AbstractTask">
+<a id="../src/task/AbstractTask.ts.AbstractTask" xlink:href="../src/task/AbstractTask.ts"><text x="121.0" y="13.5" stroke="none" text-anchor="middle" data-name="AbstractTask">AbstractTask</text></a>
+
+</g>
+</g>
+<g transform="translate(3176, 643.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractTask">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractTask">
+<text x="0.0" y="13.5" stroke="none" data-name="AbstractTask">#sdk: Client</text>
+<text x="0.0" y="28.5" stroke="none" data-name="AbstractTask">#transfert: Transfert</text>
+
+</g>
+</g>
+<g transform="translate(3176, 689.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractTask">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractTask">
+<text x="0.0" y="13.5" stroke="none" data-name="AbstractTask">+initApiClient(): Promise&lt;void&gt;</text>
+
+</g>
+</g>
+</g>
+<g data-name="GenerateFileTasklnterface&lt;T&gt;">
+<g fill="lightblue" stroke="#33322E" data-name="GenerateFileTasklnterface&lt;T&gt;">
+<rect x="3824.0" y="586.5" height="160.0" width="349.0" data-name="GenerateFileTasklnterface&lt;T&gt;"></rect>
+<path d="M3824.0 617.5 L4173.0 617.5" fill="none" data-name="GenerateFileTasklnterface&lt;T&gt;"></path>
+<path d="M3824.0 625.5 L4173.0 625.5" fill="none" data-name="GenerateFileTasklnterface&lt;T&gt;"></path>
+</g>
+<g transform="translate(3824, 586.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileTasklnterface&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GenerateFileTasklnterface&lt;T&gt;">
+<a id="../src/task/GenerateFileTasklnterfaces.ts.GenerateFileTasklnterface&lt;T&gt;" xlink:href="../src/task/GenerateFileTasklnterfaces.ts"><text x="166.5" y="13.5" stroke="none" text-anchor="middle" data-name="GenerateFileTasklnterface&lt;T&gt;">GenerateFileTasklnterface&lt;T&gt;</text></a>
+
+</g>
+</g>
+<g transform="translate(3824, 617.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileTasklnterface&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GenerateFileTasklnterface&lt;T&gt;">
+
+</g>
+</g>
+<g transform="translate(3824, 625.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileTasklnterface&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GenerateFileTasklnterface&lt;T&gt;">
+<text x="0.0" y="13.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+initApiClient(): void</text>
+<text x="0.0" y="28.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+initFilesGeneration(): InitialDataItem&lt;T&gt;[]</text>
+<text x="0.0" y="43.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+prepareFileData(): Promise&lt;T[]&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+generateFile(): Promise&lt;void&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+sendFile(): Promise&lt;string&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+postAction(): Promise&lt;void&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+run(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="BaseCommand">
+<g fill="#eee8d5" stroke="#33322E" data-name="BaseCommand">
+<rect x="3168.0" y="146.0" height="213.0" width="274.0" data-name="BaseCommand"></rect>
+<path d="M3168.0 177.0 L3442.0 177.0" fill="none" data-name="BaseCommand"></path>
+<path d="M3168.0 223.0 L3442.0 223.0" fill="none" data-name="BaseCommand"></path>
+</g>
+<g transform="translate(3168, 146)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="BaseCommand">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="BaseCommand">
+<a id="../src/utils/BaseCommand.ts.BaseCommand" xlink:href="../src/utils/BaseCommand.ts"><text x="129.0" y="13.5" stroke="none" text-anchor="middle" data-name="BaseCommand">BaseCommand</text></a>
+
+</g>
+</g>
+<g transform="translate(3168, 177)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="BaseCommand">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="BaseCommand">
+<text x="0.0" y="13.5" stroke="none" data-name="BaseCommand">#argv: ParsedArgs</text>
+<text x="0.0" y="28.5" stroke="none" data-name="BaseCommand">#statistics: CommandStatistic</text>
+
+</g>
+</g>
+<g transform="translate(3168, 223)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="BaseCommand">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="BaseCommand">
+<text x="0.0" y="13.5" stroke="none" data-name="BaseCommand">#getArgsList(): { argName: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="BaseCommand">argDescription: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="BaseCommand">}[]</text>
+<text x="0.0" y="58.5" stroke="none" data-name="BaseCommand">#displayUsages(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="BaseCommand">#displayStatistics(): void</text>
+<text x="0.0" y="88.5" stroke="none" data-name="BaseCommand">#parseArgs(): void</text>
+<text x="0.0" y="103.5" stroke="none" data-name="BaseCommand">#beforeRun(): void</text>
+<text x="0.0" y="118.5" stroke="none" data-name="BaseCommand">#afterRun(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="InitialDataItem&lt;T&gt;">
+<g fill="lightblue" stroke="#33322E" data-name="InitialDataItem&lt;T&gt;">
+<rect x="3874.5" y="202.5" height="100.0" width="262.0" data-name="InitialDataItem&lt;T&gt;"></rect>
+<path d="M3874.5 233.5 L4136.5 233.5" fill="none" data-name="InitialDataItem&lt;T&gt;"></path>
+<path d="M3874.5 294.5 L4136.5 294.5" fill="none" data-name="InitialDataItem&lt;T&gt;"></path>
+</g>
+<g transform="translate(3874.5, 202.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="InitialDataItem&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="InitialDataItem&lt;T&gt;">
+<a id="../src/task/GenerateFileTasklnterfaces.ts.InitialDataItem&lt;T&gt;" xlink:href="../src/task/GenerateFileTasklnterfaces.ts"><text x="123.0" y="13.5" stroke="none" text-anchor="middle" data-name="InitialDataItem&lt;T&gt;">InitialDataItem&lt;T&gt;</text></a>
+
+</g>
+</g>
+<g transform="translate(3874.5, 233.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="InitialDataItem&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="InitialDataItem&lt;T&gt;">
+<text x="0.0" y="13.5" stroke="none" data-name="InitialDataItem&lt;T&gt;">+schema: SchemaInterface&lt;T&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="InitialDataItem&lt;T&gt;">+targetFileName?: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="InitialDataItem&lt;T&gt;">+initialData: T[]</text>
+
+</g>
+</g>
+<g transform="translate(3874.5, 294.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="InitialDataItem&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" data-name="InitialDataItem&lt;T&gt;">
+
+</g>
+</g>
+</g>
+<g data-name="LocalClient">
+<g fill="#eee8d5" stroke="#33322E" data-name="LocalClient">
+<rect x="4965.0" y="571.5" height="190.0" width="304.0" data-name="LocalClient"></rect>
+<path d="M4965.0 602.5 L5269.0 602.5" fill="none" data-name="LocalClient"></path>
+<path d="M4965.0 610.5 L5269.0 610.5" fill="none" data-name="LocalClient"></path>
+</g>
+<g transform="translate(4965, 571.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="LocalClient">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="LocalClient">
+<a id="../src/transport/LocalClient.ts.LocalClient" xlink:href="../src/transport/LocalClient.ts"><text x="144.0" y="13.5" stroke="none" text-anchor="middle" data-name="LocalClient">LocalClient</text></a>
+
+</g>
+</g>
+<g transform="translate(4965, 602.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LocalClient">
+<g transform="translate(8, 8)" fill="#33322E" data-name="LocalClient">
+
+</g>
+</g>
+<g transform="translate(4965, 610.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LocalClient">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="LocalClient">
+<text x="0.0" y="13.5" stroke="none" data-name="LocalClient">+checkStatut(): boolean</text>
+<text x="0.0" y="28.5" stroke="none" data-name="LocalClient">+close(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="LocalClient">+mkdirIfNotExists(): void</text>
+<text x="0.0" y="58.5" stroke="none" data-name="LocalClient">+upload(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="LocalClient">+downloadAndReadFile(): Stream</text>
+<text x="0.0" y="88.5" stroke="none" data-name="LocalClient">+listDirWithFilter(): Promise&lt;string[]&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="LocalClient">+deleteFile(): void</text>
+<text x="0.0" y="118.5" stroke="none" data-name="LocalClient">+moveFile(): void</text>
+<text x="0.0" y="133.5" stroke="none" data-name="LocalClient">+renameFile(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="TransfertInterface">
+<g fill="lightblue" stroke="#33322E" data-name="TransfertInterface">
+<rect x="4407.0" y="157.5" height="190.0" width="304.0" data-name="TransfertInterface"></rect>
+<path d="M4407.0 188.5 L4711.0 188.5" fill="none" data-name="TransfertInterface"></path>
+<path d="M4407.0 196.5 L4711.0 196.5" fill="none" data-name="TransfertInterface"></path>
+</g>
+<g transform="translate(4407, 157.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertInterface">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TransfertInterface">
+<a id="../src/transport/TransfertInterfaces.ts.TransfertInterface" xlink:href="../src/transport/TransfertInterfaces.ts"><text x="144.0" y="13.5" stroke="none" text-anchor="middle" data-name="TransfertInterface">TransfertInterface</text></a>
+
+</g>
+</g>
+<g transform="translate(4407, 188.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertInterface">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TransfertInterface">
+
+</g>
+</g>
+<g transform="translate(4407, 196.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertInterface">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TransfertInterface">
+<text x="0.0" y="13.5" stroke="none" data-name="TransfertInterface">+checkStatut(): boolean</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TransfertInterface">+close(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TransfertInterface">+mkdirIfNotExists(): void</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TransfertInterface">+upload(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="TransfertInterface">+downloadAndReadFile(): Stream</text>
+<text x="0.0" y="88.5" stroke="none" data-name="TransfertInterface">+listDirWithFilter(): Promise&lt;string[]&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="TransfertInterface">+deleteFile(): void</text>
+<text x="0.0" y="118.5" stroke="none" data-name="TransfertInterface">+moveFile(): void</text>
+<text x="0.0" y="133.5" stroke="none" data-name="TransfertInterface">+renameFile(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="SftpClient">
+<g fill="#eee8d5" stroke="#33322E" data-name="SftpClient">
+<rect x="4569.0" y="560.0" height="213.0" width="356.0" data-name="SftpClient"></rect>
+<path d="M4569.0 591.0 L4925.0 591.0" fill="none" data-name="SftpClient"></path>
+<path d="M4569.0 622.0 L4925.0 622.0" fill="none" data-name="SftpClient"></path>
+</g>
+<g transform="translate(4569, 560)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SftpClient">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SftpClient">
+<a id="../src/transport/SftpClient.ts.SftpClient" xlink:href="../src/transport/SftpClient.ts"><text x="170.0" y="13.5" stroke="none" text-anchor="middle" data-name="SftpClient">SftpClient</text></a>
+
+</g>
+</g>
+<g transform="translate(4569, 591)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SftpClient">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SftpClient">
+<text x="0.0" y="13.5" stroke="none" data-name="SftpClient">-configuration: SSH2TransfertConfiguration</text>
+
+</g>
+</g>
+<g transform="translate(4569, 622)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SftpClient">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SftpClient">
+<text x="0.0" y="13.5" stroke="none" data-name="SftpClient">+checkStatut(): boolean</text>
+<text x="0.0" y="28.5" stroke="none" data-name="SftpClient">+close(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="SftpClient">+mkdirIfNotExists(): void</text>
+<text x="0.0" y="58.5" stroke="none" data-name="SftpClient">+upload(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="SftpClient">+downloadAndReadFile(): Stream</text>
+<text x="0.0" y="88.5" stroke="none" data-name="SftpClient">+listDirWithFilter(): Promise&lt;string[]&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="SftpClient">+deleteFile(): void</text>
+<text x="0.0" y="118.5" stroke="none" data-name="SftpClient">+moveFile(): void</text>
+<text x="0.0" y="133.5" stroke="none" data-name="SftpClient">+renameFile(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="SSH2TransfertConfiguration">
+<g fill="lightblue" stroke="#33322E" data-name="SSH2TransfertConfiguration">
+<rect x="4751.0" y="187.5" height="130.0" width="237.0" data-name="SSH2TransfertConfiguration"></rect>
+<path d="M4751.0 218.5 L4988.0 218.5" fill="none" data-name="SSH2TransfertConfiguration"></path>
+<path d="M4751.0 309.5 L4988.0 309.5" fill="none" data-name="SSH2TransfertConfiguration"></path>
+</g>
+<g transform="translate(4751, 187.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransfertConfiguration">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SSH2TransfertConfiguration">
+<a id="../src/transport/SftpClient.ts.SSH2TransfertConfiguration" xlink:href="../src/transport/SftpClient.ts"><text x="110.5" y="13.5" stroke="none" text-anchor="middle" data-name="SSH2TransfertConfiguration">SSH2TransfertConfiguration</text></a>
+
+</g>
+</g>
+<g transform="translate(4751, 218.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransfertConfiguration">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SSH2TransfertConfiguration">
+<text x="0.0" y="13.5" stroke="none" data-name="SSH2TransfertConfiguration">+hostname: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="SSH2TransfertConfiguration">+port: number</text>
+<text x="0.0" y="43.5" stroke="none" data-name="SSH2TransfertConfiguration">+username: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="SSH2TransfertConfiguration">+password: string</text>
+<text x="0.0" y="73.5" stroke="none" data-name="SSH2TransfertConfiguration">+transportation: string</text>
+
+</g>
+</g>
+<g transform="translate(4751, 309.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransfertConfiguration">
+<g transform="translate(8, 8)" fill="#33322E" data-name="SSH2TransfertConfiguration">
+
+</g>
+</g>
+</g>
+<g data-name="FileObject">
+<g fill="lightblue" stroke="#33322E" data-name="FileObject">
+<rect x="5028.0" y="217.5" height="70.0" width="124.0" data-name="FileObject"></rect>
+<path d="M5028.0 248.5 L5152.0 248.5" fill="none" data-name="FileObject"></path>
+<path d="M5028.0 279.5 L5152.0 279.5" fill="none" data-name="FileObject"></path>
+</g>
+<g transform="translate(5028, 217.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="FileObject">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="FileObject">
+<a id="../src/transport/SftpClient.ts.FileObject" xlink:href="../src/transport/SftpClient.ts"><text x="54.0" y="13.5" stroke="none" text-anchor="middle" data-name="FileObject">FileObject</text></a>
+
+</g>
+</g>
+<g transform="translate(5028, 248.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="FileObject">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="FileObject">
+<text x="0.0" y="13.5" stroke="none" data-name="FileObject">+name: string</text>
+
+</g>
+</g>
+<g transform="translate(5028, 279.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="FileObject">
+<g transform="translate(8, 8)" fill="#33322E" data-name="FileObject">
+
+</g>
+</g>
+</g>
+<g data-name="Transfert">
+<g fill="#eee8d5" stroke="#33322E" data-name="Transfert">
+<rect x="4213.0" y="545.0" height="243.0" width="316.0" data-name="Transfert"></rect>
+<path d="M4213.0 576.0 L4529.0 576.0" fill="none" data-name="Transfert"></path>
+<path d="M4213.0 637.0 L4529.0 637.0" fill="none" data-name="Transfert"></path>
+</g>
+<g transform="translate(4213, 545)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Transfert">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Transfert">
+<a id="../src/transport/Transfert.ts.Transfert" xlink:href="../src/transport/Transfert.ts"><text x="150.0" y="13.5" stroke="none" text-anchor="middle" data-name="Transfert">Transfert</text></a>
+
+</g>
+</g>
+<g transform="translate(4213, 576)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Transfert">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Transfert">
+<text x="0.0" y="13.5" stroke="none" data-name="Transfert">#protocol: TransfertProtocol</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Transfert">#configuration: TransfertConfiguration</text>
+<text x="0.0" y="43.5" stroke="none" data-name="Transfert">#client: TransfertInterface</text>
+
+</g>
+</g>
+<g transform="translate(4213, 637)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Transfert">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Transfert">
+<text x="0.0" y="13.5" stroke="none" data-name="Transfert">+checkStatut(): boolean</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Transfert">+close(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="Transfert">+mkdirIfNotExists(): void</text>
+<text x="0.0" y="58.5" stroke="none" data-name="Transfert">+upload(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="Transfert">+downloadAndReadFile(): Stream</text>
+<text x="0.0" y="88.5" stroke="none" data-name="Transfert">+listDirWithFilter(): Promise&lt;string[]&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="Transfert">+deleteFile(): void</text>
+<text x="0.0" y="118.5" stroke="none" data-name="Transfert">+moveFile(): void</text>
+<text x="0.0" y="133.5" stroke="none" data-name="Transfert">+renameFile(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="TransfertProtocol">
+<g fill="lightgreen" stroke="#33322E" data-name="TransfertProtocol">
+<rect x="5192.0" y="206.5" height="92.0" width="152.0" data-name="TransfertProtocol"></rect>
+<path d="M5192.0 237.5 L5344.0 237.5" fill="none" data-name="TransfertProtocol"></path>
+</g>
+<g transform="translate(5192, 206.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertProtocol">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TransfertProtocol">
+<a id="../src/transport/Transfert.ts.TransfertProtocol" xlink:href="../src/transport/Transfert.ts"><text x="68.0" y="13.5" stroke="none" text-anchor="middle" data-name="TransfertProtocol">TransfertProtocol</text></a>
+
+</g>
+</g>
+<g transform="translate(5192, 237.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertProtocol">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TransfertProtocol">
+<text x="0.0" y="13.5" stroke="none" data-name="TransfertProtocol">sftp</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TransfertProtocol">ftp</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TransfertProtocol">local</text>
+
+</g>
+</g>
+</g>
+<g data-name="TransfertConfiguration">
+<g fill="lightblue" stroke="#33322E" data-name="TransfertConfiguration">
+<rect x="5384.0" y="195.0" height="115.0" width="193.0" data-name="TransfertConfiguration"></rect>
+<path d="M5384.0 226.0 L5577.0 226.0" fill="none" data-name="TransfertConfiguration"></path>
+<path d="M5384.0 302.0 L5577.0 302.0" fill="none" data-name="TransfertConfiguration"></path>
+</g>
+<g transform="translate(5384, 195)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertConfiguration">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TransfertConfiguration">
+<a id="../src/transport/TransfertInterfaces.ts.TransfertConfiguration" xlink:href="../src/transport/TransfertInterfaces.ts"><text x="88.5" y="13.5" stroke="none" text-anchor="middle" data-name="TransfertConfiguration">TransfertConfiguration</text></a>
+
+</g>
+</g>
+<g transform="translate(5384, 226)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertConfiguration">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TransfertConfiguration">
+<text x="0.0" y="13.5" stroke="none" data-name="TransfertConfiguration">+hostname: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TransfertConfiguration">+port: number</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TransfertConfiguration">+username: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TransfertConfiguration">+password: string</text>
+
+</g>
+</g>
+<g transform="translate(5384, 302)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertConfiguration">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TransfertConfiguration">
+
+</g>
+</g>
+</g>
+<g data-name="CommandStatistic">
+<g fill="lightblue" stroke="#33322E" data-name="CommandStatistic">
+<rect x="5617.0" y="180.0" height="145.0" width="255.0" data-name="CommandStatistic"></rect>
+<path d="M5617.0 211.0 L5872.0 211.0" fill="none" data-name="CommandStatistic"></path>
+<path d="M5617.0 317.0 L5872.0 317.0" fill="none" data-name="CommandStatistic"></path>
+</g>
+<g transform="translate(5617, 180)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CommandStatistic">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CommandStatistic">
+<a id="../src/utils/BaseCommand.ts.CommandStatistic" xlink:href="../src/utils/BaseCommand.ts"><text x="119.5" y="13.5" stroke="none" text-anchor="middle" data-name="CommandStatistic">CommandStatistic</text></a>
+
+</g>
+</g>
+<g transform="translate(5617, 211)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CommandStatistic">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CommandStatistic">
+<text x="0.0" y="13.5" stroke="none" data-name="CommandStatistic">+startTimeMs?: number</text>
+<text x="0.0" y="28.5" stroke="none" data-name="CommandStatistic">+endTimeMs?: number</text>
+<text x="0.0" y="43.5" stroke="none" data-name="CommandStatistic">+startCpuUsage?: CpuUsage</text>
+<text x="0.0" y="58.5" stroke="none" data-name="CommandStatistic">+finalCpuUsage?: CpuUsage</text>
+<text x="0.0" y="73.5" stroke="none" data-name="CommandStatistic">+startMemoryUsage?: number</text>
+<text x="0.0" y="88.5" stroke="none" data-name="CommandStatistic">+finalMemoryUsage?: number</text>
+
+</g>
+</g>
+<g transform="translate(5617, 317)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CommandStatistic">
+<g transform="translate(8, 8)" fill="#33322E" data-name="CommandStatistic">
+
+</g>
+</g>
+</g>
+<g data-name="Console">
+<g fill="#eee8d5" stroke="#33322E" data-name="Console">
+<rect x="5912.0" y="157.5" height="190.0" width="374.0" data-name="Console"></rect>
+<path d="M5912.0 188.5 L6286.0 188.5" fill="none" data-name="Console"></path>
+<path d="M5912.0 196.5 L6286.0 196.5" fill="none" data-name="Console"></path>
+</g>
+<g transform="translate(5912, 157.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Console">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Console">
+<a id="../src/utils/Console.ts.Console" xlink:href="../src/utils/Console.ts"><text x="179.0" y="13.5" stroke="none" text-anchor="middle" data-name="Console">Console</text></a>
+
+</g>
+</g>
+<g transform="translate(5912, 188.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Console">
+<g transform="translate(8, 8)" fill="#33322E" data-name="Console">
+
+</g>
+</g>
+<g transform="translate(5912, 196.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Console">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Console">
+<text x="0.0" y="13.5" stroke="none" data-name="Console">+static prompts(): Promise&lt;Answers&lt;string&gt;&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Console">+static log(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="Console">+static debug(): void</text>
+<text x="0.0" y="58.5" stroke="none" data-name="Console">+static info(): void</text>
+<text x="0.0" y="73.5" stroke="none" data-name="Console">+static warn(): void</text>
+<text x="0.0" y="88.5" stroke="none" data-name="Console">+static error(): void</text>
+<text x="0.0" y="103.5" stroke="none" data-name="Console">+static confirm(): void</text>
+<text x="0.0" y="118.5" stroke="none" data-name="Console">+static printError(): void</text>
+<text x="0.0" y="133.5" stroke="none" data-name="Console">+static printGradient(): void</text>
+
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>
