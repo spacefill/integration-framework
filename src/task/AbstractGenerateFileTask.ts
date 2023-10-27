@@ -38,14 +38,15 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
       Config.validate();
       Console.confirm("Config validated");
 
-      Console.info("Api init ----------------------------");
-      await this.initApiClient();
-      Console.confirm("Api initialized");
-
       const filesConfiguration = this.initFilesGeneration();
       for (const fileConfiguration of filesConfiguration) {
         try {
           this.currentFileConfiguration = fileConfiguration;
+
+          Console.info("Api init ----------------------------");
+          await this.initApiClient(this.currentFileConfiguration.workflowType);
+          this.sdk.dataSource = 'API';
+          Console.confirm("Api initialized");
 
           Console.info("Data preparation --------------------");
           const rawData = await this.prepareFileData();

@@ -741,6 +741,13 @@
   resolved "https://registry.yarnpkg.com/@types/bytes/-/bytes-3.1.3.tgz#929ce4acb29f6a9eb59b1842f079a50abad0d9d2"
   integrity sha512-eEgZiWn6cjG8tc+AkI3FIa9ub9zhLMSRHqbecHe5yffqws+848zoHdbgFYxvUks4RElfJB9cupvqcd1gvDFQig==
 
+"@types/debug@^4.0.0":
+  version "4.1.10"
+  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.10.tgz#f23148a6eb771a34c466a4fc28379d8101e84494"
+  integrity sha512-tOSCru6s732pofZ+sMv9o4o3Zc+Sa8l3bxd/tweTQudFn06vAzb13ZX46Zi6m6EJ+RUbRTHvgQJ1gBtSgkaUYA==
+  dependencies:
+    "@types/ms" "*"
+
 "@types/fs-extra@^11.0.1":
   version "11.0.2"
   resolved "https://registry.npmjs.org/@types/fs-extra/-/fs-extra-11.0.2.tgz"
@@ -828,6 +835,11 @@
   version "1.2.3"
   resolved "https://registry.npmjs.org/@types/minimist/-/minimist-1.2.3.tgz"
   integrity sha512-ZYFzrvyWUNhaPomn80dsMNgMeXxNWZBdkuG/hWlUvXvbdUH8ZERNBGXnU87McuGcWDsyzX2aChCv/SVN348k3A==
+
+"@types/ms@*":
+  version "0.7.33"
+  resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.33.tgz#80bf1da64b15f21fd8c1dc387c31929317d99ee9"
+  integrity sha512-AuHIyzR5Hea7ij0P9q7vx7xu4z0C28ucwjAZC0ja7JhINyCnOw8/DnvAPQQ9TfOlCtZAmCERKQX9+o1mgQhuOQ==
 
 "@types/node@*", "@types/node@20.8.2":
   version "20.8.2"
@@ -1095,6 +1107,14 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
+
+axios-debug-log@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/axios-debug-log/-/axios-debug-log-1.0.0.tgz#e0f1246d440170cae8c67777b61023e9a5c9487f"
+  integrity sha512-ZjMaEBEij9w+Vbk2Uc3XflchTT7j9rZdYD/snN+XQ5FRDq1QjZNhh0Izb3KSyarU5vTkiCvJyg1xDiQBHZZB9w==
+  dependencies:
+    "@types/debug" "^4.0.0"
+    debug "^4.0.0"
 
 axios@1.5.1, axios@>=0.25.0:
   version "1.5.1"
@@ -1500,7 +1520,7 @@ dayjs@^1.11.10, dayjs@^1.11.9:
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.10.tgz#68acea85317a6e164457d6d6947564029a6a16a0"
   integrity sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==
 
-debug@4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4:
+debug@4, debug@^4.0.0, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4:
   version "4.3.4"
   resolved "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
   integrity sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==

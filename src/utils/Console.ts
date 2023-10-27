@@ -2,15 +2,17 @@ import gradient from 'gradient-string';
 import prompts from 'prompts';
 import { Config } from '../configs/Config.js';
 
-const LOG_LEVEL_FATAL=1;
-const LOG_LEVEL_ERROR=2;
-const LOG_LEVEL_WARN=3;
-const LOG_LEVEL_INFO=4;
-const LOG_LEVEL_DEBUG=5;
+const LOG_LEVEL_FATAL = 1;
+const LOG_LEVEL_ERROR = 2;
+const LOG_LEVEL_WARN = 3;
+const LOG_LEVEL_INFO = 4;
+const LOG_LEVEL_DEBUG = 5;
+const LOG_LEVEL_TRACE = 6;
 
-const DEFAULT_LOG_LEVEL=LOG_LEVEL_WARN;
+const DEFAULT_LOG_LEVEL = LOG_LEVEL_WARN;
 
 const logLevelOrder = {
+  trace: LOG_LEVEL_TRACE,
   debug: LOG_LEVEL_DEBUG,
   info: LOG_LEVEL_INFO,
   warn: LOG_LEVEL_WARN,
@@ -37,11 +39,19 @@ class Console {
     if (otherMessages.length > 0) console.groupEnd();
   }
 
+  static trace(...message) {
+    if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_TRACE) {
+      return;
+    }
+    const infoGradient = gradient(['#666666', '#aaa', '#666666']);
+    Console.printGradient(infoGradient, '[Trace]', ...message);
+  }
+
   static debug(...message) {
     if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_DEBUG) {
       return;
     }
-    const infoGradient = gradient(['#177E89','#aaa', '#177E89']);
+    const infoGradient = gradient(['#177E89', '#aaa', '#177E89']);
     Console.printGradient(infoGradient, '[Debug]', ...message);
   }
 
@@ -96,5 +106,5 @@ class Console {
   }
 }
 
-export {LOG_LEVEL_DEBUG, LOG_LEVEL_INFO, LOG_LEVEL_WARN, LOG_LEVEL_ERROR, LOG_LEVEL_FATAL};
+export { LOG_LEVEL_TRACE, LOG_LEVEL_DEBUG, LOG_LEVEL_INFO, LOG_LEVEL_WARN, LOG_LEVEL_ERROR, LOG_LEVEL_FATAL, logLevelOrder };
 export default Console;

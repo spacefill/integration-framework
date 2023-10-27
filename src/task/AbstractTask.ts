@@ -1,11 +1,11 @@
+import { WorkflowType } from "../api/APIContext.ts";
 import { SpacefillAPIWrapperV1 } from "../api/SpacefillAPIWrapperV1.ts";
-import type { Client as SpacefillAPIClient } from '../api/spacefill-api-openapi.d.ts';
 import { Config } from "../configs/Config.ts";
 import { Transfert, TransfertProtocol } from "../transport/Transfert.ts";
 import { BaseCommand } from "../utils/BaseCommand.ts";
 
 export abstract class AbstractTask extends BaseCommand {
-  protected sdk: SpacefillAPIClient;
+  protected sdk: SpacefillAPIWrapperV1;
   protected transfert: Transfert;
 
   public constructor() {
@@ -21,10 +21,12 @@ export abstract class AbstractTask extends BaseCommand {
     )
   }
 
-  async initApiClient() {
-    this.sdk = await SpacefillAPIWrapperV1.initClient(
+  async initApiClient(workflowType: WorkflowType) {
+    this.sdk = new SpacefillAPIWrapperV1();
+    await this.sdk.initClient(
       Config.get().spacefillApi.url,
-      Config.get().spacefillApi.apiToken
+      Config.get().spacefillApi.apiToken,
+      workflowType
     );
   }
 }

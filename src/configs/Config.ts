@@ -5,7 +5,8 @@ import addFormatsModule from 'ajv-formats';
 const Ajv = AjvModule.default;
 const addFormats = addFormatsModule.default;
 
-import Console, { LOG_LEVEL_DEBUG, LOG_LEVEL_FATAL, LOG_LEVEL_INFO } from "../utils/Console.ts";
+import Console, { logLevelOrder } from "../utils/Console.ts";
+import { ClientTransport, ClientType } from '../api/APIContext.ts';
 
 export class Config {
 
@@ -17,6 +18,12 @@ export class Config {
         defaultPaginationLimit: process.env?.SPACEFILL_API_DEFAULT_PAGINATION_LIMIT
           ? parseInt(process.env?.SPACEFILL_API_DEFAULT_PAGINATION_LIMIT)
           : 50,
+        context: {
+          serviceSource: process.env?.SPACEFILL_API_CONTEXT_SERVICE_SOURCE,
+          serviceVersion: process.env?.SPACEFILL_API_CONTEXT_SERVICE_VERSION,
+          transport: process.env?.SPACEFILL_API_CONTEXT_TRANSPORT,
+          clientType: process.env?.SPACEFILL_API_CONTEXT_CLIENT_TYPE,
+        }
       },
       transfert: {
         protocol: process.env?.WMS_TRANSFERT_PROTOCOL,
@@ -42,8 +49,8 @@ export class Config {
         interactiveMode: process.env?.CONSOLE_INTERACTIVE_MODE == '1' ? true : false,
       },
       log: {
-        level: parseInt(process.env?.LOG_LEVEL) ?? LOG_LEVEL_INFO,
-        defaultLogLevel: LOG_LEVEL_INFO
+        level: process.env?.LOG_LEVEL ?? 'info',
+        defaultLogLevel: 'info'
       }
     }
   }
@@ -75,6 +82,27 @@ export class Config {
           type: 'number',
           minimum: 1,
           maximum: 1000
+        },
+        context: {
+          type: 'object',
+          properties: {
+            serviceSource: {
+              type: 'string',
+            },
+            serviceVersion: {
+              type: 'string',
+              pattern: '^([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+)?$'
+            },
+            transport: {
+              type: 'string',
+              enum: Object.values(ClientTransport)
+            },
+            clientType: {
+              type: 'string',
+              enum: Object.values(ClientType)
+            }
+          },
+          required: ['serviceSource', 'serviceVersion', 'transport', 'clientType']
         }
       },
       required: ['url', 'apiToken', 'defaultPaginationLimit']
@@ -198,14 +226,12 @@ export class Config {
       type: 'object',
       properties: {
         level: {
-          type: 'number',
-          minimum: LOG_LEVEL_FATAL,
-          maximum: LOG_LEVEL_DEBUG
+          type: 'string',
+          enum: Object.keys(logLevelOrder)
         },
         defaultLogLevel: {
-          type: 'number',
-          minimum: LOG_LEVEL_FATAL,
-          maximum: LOG_LEVEL_DEBUG
+          type: 'string',
+          enum: Object.keys(logLevelOrder)
         }
       },
       required: ['level', 'defaultLogLevel']
