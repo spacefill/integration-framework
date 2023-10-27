@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx ts-node --esm --compilerOptions '{"moduleResolution":"nodenext","module":"esnext","target":"esnext", "allowImportingTsExtensions": true}'
+#!/usr/bin/env -S npx ts-node --esm --transpile-only --compilerOptions '{"moduleResolution":"nodenext","module":"NodeNext","target":"esnext", "allowImportingTsExtensions": true}'
 
 import { DateTime } from "luxon";
 import { createObjectCsvWriter } from "csv-writer";
@@ -6,7 +6,7 @@ import { createObjectCsvWriter } from "csv-writer";
 
 import { Config } from '../../src/configs/Config.ts';
 import { AbstractGenerateFileTask } from '../../src/task/AbstractGenerateFileTask.ts';
-import Console from '../../src/utils/Console.mts';
+import Console from '../../src/utils/Console.ts';
 import { InitialDataItem } from "../../src/task/GenerateFileTasklnterfaces.ts";
 import { DefaultGenerateMasterItemsSchema } from "./schemas/DefaultGenerateMasterItemsSchema.ts";
 
