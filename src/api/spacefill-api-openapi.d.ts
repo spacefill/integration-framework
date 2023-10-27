@@ -4,7 +4,7 @@ import type {
   UnknownParamsObject,
   OperationResponse,
   AxiosRequestConfig,
-} from 'openapi-client-axios'; 
+} from 'openapi-client-axios';
 
 declare namespace Components {
     namespace Schemas {
@@ -13,6 +13,15 @@ declare namespace Components {
          * An enumeration.
          */
         export type ArchivedFilterEnum = "yes" | "all" | "no";
+        /**
+         * AsyncResponse
+         */
+        export interface AsyncResponse {
+            /**
+             * Status
+             */
+            status?: string;
+        }
         /**
          * BarcodeTypeEnum
          * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
@@ -26,6 +35,48 @@ declare namespace Components {
              * File
              */
             file: string; // binary
+        }
+        /**
+         * Body_post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action_v1_logistic_management_orders__order_id__warehouse_acknowledges_receipt_of_order_action_post
+         */
+        export interface BodyPostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderActionV1LogisticManagementOrdersOrderIdWarehouseAcknowledgesReceiptOfOrderActionPost {
+            /**
+             * Order Items
+             * List of order items with information (reference, batch, packaging type, expected quantity).
+             */
+            order_items: /* InputWarehouseAcknowledgesReceiptOfOrderActionOrderItem */ InputWarehouseAcknowledgesReceiptOfOrderActionOrderItem[];
+            /**
+             * Order Effective Executed At
+             * Effective date of the completion.
+             */
+            order_effective_executed_at: string; // date-time
+            /**
+             * Comment
+             * Comment regarding the order.
+             */
+            comment?: string;
+        }
+        /**
+         * Body_post_v1_logistic_management_warehouse_adjust_stock_after_order_is_completed_action_v1_logistic_management_orders__order_id__warehouse_adjust_stock_after_order_is_completed_action_post
+         */
+        export interface BodyPostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedActionV1LogisticManagementOrdersOrderIdWarehouseAdjustStockAfterOrderIsCompletedActionPost {
+            /**
+             * Order Items
+             */
+            order_items: /* InputOrderItem */ InputOrderItem[];
+            /**
+             * Additional Order Items
+             */
+            additional_order_items: /* InputOrderItem */ InputOrderItem[];
+            /**
+             * Order Effective Executed At
+             * Effective date of the completion.
+             */
+            order_effective_executed_at: string; // date-time
+            /**
+             * Comment
+             */
+            comment?: string;
         }
         /**
          * DateTimeRange
@@ -46,6 +97,26 @@ declare namespace Components {
             datetime_to?: string; // date-time
         }
         /**
+         * EventData
+         */
+        export interface EventData {
+            /**
+             * Shipper Account Id
+             * Main identifier of the associated shipper.
+             */
+            shipper_account_id: string; // uuid
+            /**
+             * Warehouse Id
+             * Main identifier of the associated warehouse.
+             */
+            warehouse_id: string; // uuid
+        }
+        /**
+         * EventTypeEnum
+         * Type of event
+         */
+        export type EventTypeEnum = "STARTED" | "SUCCESS" | "NO_CONTENT_SUCCESS" | "PARTIAL_SUCCESS" | "PRECONDITION_FAILED_ERROR" | "INVALID_REQUEST_DATA_ERROR" | "INVALID_REQUEST_FORMAT_ERROR" | "UNKNOWN_ERROR" | "NETWORK_ERROR" | "IO_ERROR" | "INTERNAL_ERROR" | "TEST";
+        /**
          * HTTPValidationError
          */
         export interface HTTPValidationError {
@@ -53,6 +124,1168 @@ declare namespace Components {
              * Detail
              */
             detail?: /* ValidationError */ ValidationError[];
+        }
+        /**
+         * InputInventoryAdjustementItem
+         */
+        export interface InputInventoryAdjustementItem {
+            /**
+             * Master Item Id
+             * Technical reference identifer.
+             */
+            master_item_id?: string; // uuid
+            /**
+             * Item Reference
+             * Unique reference code associated.
+             */
+            item_reference?: string;
+            /**
+             * Batch Id
+             * Technical batch identifer.
+             */
+            batch_id?: string; // uuid
+            /**
+             * Batch Name
+             * Name of the batch.
+             */
+            batch_name?: string;
+            /**
+             * Batch Edi Erp Id
+             * Batch identifier used in the ERP software.
+             */
+            batch_edi_erp_id?: string;
+            /**
+             * Batch Edi Wms Id
+             * Batch identifier used in the WMS software.
+             */
+            batch_edi_wms_id?: string;
+            /**
+             * Batch Edi Tms Id
+             * Batch identifier used in the TMS software.
+             */
+            batch_edi_tms_id?: string;
+            /**
+             * Pallet Sscc
+             * Deprecated, serial Shipping Container Code. More info [here](https://www.gs1.org/standards/id-keys/sscc).
+             */
+            pallet_sscc?: string;
+            /**
+             * Sscc Id
+             * Technical 'Serial Shipping Container Code' identifier
+             */
+            sscc_id?: string; // uuid
+            /**
+             * Serial Shipping Container Code
+             * Serial Shipping Container Code. More info [here](https://www.gs1.org/standards/id-keys/sscc).
+             */
+            serial_shipping_container_code?: string;
+            /**
+             * Position
+             * Position of the item in the queue.
+             */
+            position?: number;
+            /**
+             * ItemPackagingTypeEnum
+             * Packaging type used for the quantity.
+             */
+            item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+            /**
+             * Actual Quantity In Stock
+             * Actual quantity in stock inside the warehouse,if current Spacefill actual quantity in stock equal the actual_quantity_in_stock field value then inventory adjustement item will not be created
+             */
+            actual_quantity_in_stock?: number;
+            /**
+             * Actual Difference Quantity
+             * Actual difference between current quantity in stock, if actual_difference_quantity field value = 0 then inventory adjustement item will not be created
+             */
+            actual_difference_quantity?: number;
+        }
+        /**
+         * InputOrderDraft
+         * example:
+         * {
+         *   "id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "order_type": "ENTRY",
+         *   "shipper_order_reference": "REF_01",
+         *   "warehouse_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "comment": "Additional comment",
+         *   "planned_execution_datetime_range": {
+         *     "datetime_from": "2025-09-28T14:12:41.538Z",
+         *     "datetime_to": "2025-09-28T15:12:41.538Z"
+         *   },
+         *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "entry_expeditor": "string",
+         *   "entry_expeditor_address_line1": "string",
+         *   "entry_expeditor_address_line2": "string",
+         *   "entry_expeditor_address_line3": "string",
+         *   "entry_expeditor_address_zip": "string",
+         *   "entry_expeditor_address_details": "string",
+         *   "entry_expeditor_address_city": "string",
+         *   "entry_expeditor_address_country_code": "string",
+         *   "entry_expeditor_address_lat": "12.0001",
+         *   "entry_expeditor_address_lng": "12.0001",
+         *   "entry_expeditor_planned_datetime_range": {
+         *     "datetime_from": "2025-09-28T14:12:41.538Z",
+         *     "datetime_to": "2025-09-28T15:12:41.538Z"
+         *   },
+         *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_erp_warehouse_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_wms_warehouse_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_tms_warehouse_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
+         *   "metadata": {
+         *     "key": "value"
+         *   },
+         *   "order_items": [
+         *     {
+         *       "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "item_packaging_type": "PALLET",
+         *       "expected_quantity": 1,
+         *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+         *       "serial_shipping_container_code": "xxxxxxxx",
+         *       "custom_fields": {
+         *         "key1": "Value",
+         *         "key2": "Value"
+         *       }
+         *     }
+         *   ]
+         * }
+         */
+        export interface InputOrderDraft {
+            /**
+             * Id
+             * Order main identifier.
+             */
+            id?: string; // uuid
+            /**
+             * OrderTypeEnum
+             * Type of the order.
+             */
+            order_type: "ENTRY" | "EXIT";
+            /**
+             * Shipper Order Reference
+             * Unique reference code.
+             */
+            shipper_order_reference?: string;
+            /**
+             * Warehouse Id
+             * Main identifier of the associated warehouse.
+             */
+            warehouse_id?: string;
+            /**
+             * Edi Erp Warehouse Id
+             * Warehouse identifier used in the ERP software.
+             */
+            edi_erp_warehouse_id?: string;
+            /**
+             * Edi Wms Warehouse Id
+             * Warehouse identifier used in the WMS software.
+             */
+            edi_wms_warehouse_id?: string;
+            /**
+             * Edi Tms Warehouse Id
+             * Warehouse identifier used in the TMS software.
+             */
+            edi_tms_warehouse_id?: string;
+            /**
+             * Edi Erp Shipper Id
+             * Shipper identifier used in the ERP software.
+             */
+            edi_erp_shipper_id?: string;
+            /**
+             * Edi Wms Shipper Id
+             * Shipper identifier used in the WMS software.
+             */
+            edi_wms_shipper_id?: string;
+            /**
+             * Edi Tms Shipper Id
+             * Shipper identifier used in the TMS software.
+             */
+            edi_tms_shipper_id?: string;
+            /**
+             * Comment
+             * Any comment regarding the order.
+             */
+            comment?: string;
+            /**
+             * Planned Execution Datetime Range
+             * Date range for the execution of the planned order.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            planned_execution_datetime_range?: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Transport Phone Number
+             * Transport unit phone number
+             */
+            transport_phone_number?: string; // ^\+[1-9]\d{1,14}$
+            /**
+             * Transport Name
+             * Transport unit name
+             */
+            transport_name?: string;
+            /**
+             * Transport Carrier Id
+             * Identifier of carrier company in charge of transport
+             */
+            transport_carrier_id?: string; // uuid
+            /**
+             * Entry Expeditor Planned Datetime Range
+             * Sender's collection date range.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            entry_expeditor_planned_datetime_range?: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Metadata
+             * Metadata is used to pass your internal information. Metadata is passed in a JSON key:value format.
+             */
+            metadata?: {
+                [key: string]: any;
+            };
+            /**
+             * Order Items
+             * List of order items with information (reference, batch, packaging type, expected quantity).
+             */
+            order_items?: /**
+             * InputOrderItemEntryAndExit
+             * example:
+             * {
+             *   "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "item_packaging_type": "PALLET",
+             *   "expected_quantity": 1,
+             *   "batch_name": "batch nb0001",
+             *   "batch_edi_erp_id": "11ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "batch_edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "batch_edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *   "serial_shipping_container_code": "xxxxxxxx",
+             *   "custom_fields": {
+             *     "custom_field_1": "value 001",
+             *     "custom_field_2": "value 002"
+             *   }
+             * }
+             */
+            InputOrderItemEntryAndExit[];
+            /**
+             * Edi Erp Id
+             * Order identifier used in the ERP software.
+             */
+            edi_erp_id?: string;
+            /**
+             * Edi Wms Id
+             * Order identifier used in the WMS software.
+             */
+            edi_wms_id?: string;
+            /**
+             * Edi Tms Id
+             * Order identifier used in the TMS software.
+             */
+            edi_tms_id?: string;
+            /**
+             * Transfered To Erp At
+             * Date of the transfer of the reference in the ERP software.
+             */
+            transfered_to_erp_at?: string; // date-time
+            /**
+             * Transfered To Wms At
+             * Date of the transfer of the reference in the WMS software.
+             */
+            transfered_to_wms_at?: string; // date-time
+            /**
+             * Transfered To Tms At
+             * Date of the transfer of the reference in the TMS software.
+             */
+            transfered_to_tms_at?: string; // date-time
+            /**
+             * Entry Expeditor
+             * Address name for the sender.
+             */
+            entry_expeditor?: string;
+            /**
+             * Entry Expeditor Address Line1
+             * Line of the sender's address.
+             */
+            entry_expeditor_address_line1?: string;
+            /**
+             * Entry Expeditor Address Zip
+             * Postal code of the sender's address.
+             */
+            entry_expeditor_address_zip?: string;
+            /**
+             * Entry Expeditor Address Details
+             * Sender's contact information.
+             */
+            entry_expeditor_address_details?: string;
+            /**
+             * Entry Expeditor Address City
+             * City of the sender's address.
+             */
+            entry_expeditor_address_city?: string;
+            /**
+             * Entry Expeditor Address Country
+             * Country of the sender's address.<br />Deprecated, use `entry_expeditor_address_country_code` instead.
+             */
+            entry_expeditor_address_country?: string;
+            /**
+             * Entry Expeditor Address Country Code
+             * Country code (ISO 3166-1 alpha-2) of the sender's address.
+             */
+            entry_expeditor_address_country_code?: string; // ^[A-Z]{2}$
+            /**
+             * Entry Expeditor Address Lat
+             * Latitude of the sender's address.
+             */
+            entry_expeditor_address_lat?: string;
+            /**
+             * Entry Expeditor Address Lng
+             * Longitude of the sender's address.
+             */
+            entry_expeditor_address_lng?: string;
+            /**
+             * Entry Expeditor Customer Address Id
+             * Sender's address main identifier.
+             */
+            entry_expeditor_customer_address_id?: string;
+            /**
+             * Exit Final Recipient
+             * Address name for the recipient.
+             */
+            exit_final_recipient?: string;
+            /**
+             * Exit Final Recipient Address Line1
+             * Line of the recipient's address.
+             */
+            exit_final_recipient_address_line1?: string;
+            /**
+             * Exit Final Recipient Address Zip
+             * ZIP code of the recipient's address.
+             */
+            exit_final_recipient_address_zip?: string;
+            /**
+             * Exit Final Recipient Address Details
+             * Recipient's contact information.
+             */
+            exit_final_recipient_address_details?: string;
+            /**
+             * Exit Final Recipient Address City
+             * City of the recipient's address.
+             */
+            exit_final_recipient_address_city?: string;
+            /**
+             * Exit Final Recipient Address Country
+             * Country of the recipient's address.<br >Deprecated, use `exit_final_recipient_address_country_code` instead.
+             */
+            exit_final_recipient_address_country?: string;
+            /**
+             * Exit Final Recipient Address Country Code
+             * Country code (ISO 3166-1 alpha-2) of the recipient's address.
+             */
+            exit_final_recipient_address_country_code?: string; // ^[A-Z]{2}$
+            /**
+             * Exit Final Recipient Address Lat
+             * Latitude of the recipient's address.
+             */
+            exit_final_recipient_address_lat?: string;
+            /**
+             * Exit Final Recipient Address Lng
+             * Longitude of the recipient's address.
+             */
+            exit_final_recipient_address_lng?: string;
+            /**
+             * Exit Final Recipient Planned Datetime Range
+             * Recipient's reception date range.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            exit_final_recipient_planned_datetime_range?: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Exit Final Recipient Customer Address Id
+             */
+            exit_final_recipient_customer_address_id?: string;
+            /**
+             * Carrier Id
+             * Deprecated, use transport_carrier_id instead
+             */
+            carrier_id?: string; // uuid
+            /**
+             * Carrier Name
+             * Deprecated, use transport_name instead
+             */
+            carrier_name?: string;
+            /**
+             * Carrier Phone Number
+             * Deprecated, use transport_phone_number instead
+             */
+            carrier_phone_number?: string; // ^\+[1-9]\d{1,14}$
+            /**
+             * OrderTransportManagementOwnerEnum
+             * Deprecated, use transport_carrier_id instead
+             */
+            transport_management_owner?: "PROVIDER" | "SHIPPER";
+        }
+        /**
+         * InputOrderEntry
+         * example:
+         * {
+         *   "id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "shipper_order_reference": "REF_01",
+         *   "warehouse_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_erp_warehouse_id": "string",
+         *   "edi_wms_warehouse_id": "string",
+         *   "edi_tms_warehouse_id": "string",
+         *   "comment": "Additional comment",
+         *   "planned_execution_datetime_range": {
+         *     "datetime_from": "2025-09-28T14:12:41.538Z",
+         *     "datetime_to": "2025-09-28T15:12:41.538Z"
+         *   },
+         *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "entry_expeditor": "string",
+         *   "entry_expeditor_address_line1": "string",
+         *   "entry_expeditor_address_zip": "string",
+         *   "entry_expeditor_address_details": "string",
+         *   "entry_expeditor_address_city": "string",
+         *   "entry_expeditor_address_country_code": "string",
+         *   "entry_expeditor_address_lat": "12.0001",
+         *   "entry_expeditor_address_lng": "12.0001",
+         *   "entry_expeditor_planned_datetime_range": {
+         *     "datetime_from": "2025-09-28T14:12:41.538Z",
+         *     "datetime_to": "2025-09-28T15:12:41.538Z"
+         *   },
+         *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
+         *   "metadata": {
+         *     "key": "value"
+         *   },
+         *   "order_items": [
+         *     {
+         *       "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_name": "batch nb 0001",
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "item_packaging_type": "PALLET",
+         *       "expected_quantity": 1,
+         *       "custom_fields": {
+         *         "key1": "Value",
+         *         "key2": "Value"
+         *       }
+         *     }
+         *   ]
+         * }
+         */
+        export interface InputOrderEntry {
+            /**
+             * Id
+             * Order main identifier.
+             */
+            id?: string; // uuid
+            /**
+             * Shipper Order Reference
+             * Unique reference code.
+             */
+            shipper_order_reference?: string;
+            /**
+             * Warehouse Id
+             * Main identifier of the associated warehouse.
+             */
+            warehouse_id?: string; // uuid
+            /**
+             * Edi Erp Warehouse Id
+             * Warehouse identifier used in the ERP software.
+             */
+            edi_erp_warehouse_id?: string;
+            /**
+             * Edi Wms Warehouse Id
+             * Warehouse identifier used in the WMS software.
+             */
+            edi_wms_warehouse_id?: string;
+            /**
+             * Edi Tms Warehouse Id
+             * Warehouse identifier used in the TMS software.
+             */
+            edi_tms_warehouse_id?: string;
+            /**
+             * Comment
+             * Any comment regarding the order.
+             */
+            comment?: string;
+            /**
+             * Planned Execution Datetime Range
+             * Date range for the execution of the planned order.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            planned_execution_datetime_range: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Transport Phone Number
+             * Transport unit phone number
+             */
+            transport_phone_number?: string; // ^\+[1-9]\d{1,14}$
+            /**
+             * Transport Name
+             * Transport unit name
+             */
+            transport_name?: string;
+            /**
+             * Transport Carrier Id
+             * Identifier of carrier company in charge of transport
+             */
+            transport_carrier_id?: string; // uuid
+            /**
+             * Entry Expeditor
+             * Address name for the sender.
+             */
+            entry_expeditor?: string;
+            /**
+             * Entry Expeditor Address Line1
+             * Line of the sender's address.
+             */
+            entry_expeditor_address_line1?: string;
+            /**
+             * Entry Expeditor Address Zip
+             * Postal code of the sender's address.
+             */
+            entry_expeditor_address_zip?: string;
+            /**
+             * Entry Expeditor Address Details
+             * Sender's contact information.
+             */
+            entry_expeditor_address_details?: string;
+            /**
+             * Entry Expeditor Address City
+             * City of the sender's address.
+             */
+            entry_expeditor_address_city?: string;
+            /**
+             * Entry Expeditor Address Country
+             * Country of the sender's address.<br />Deprecated, use `entry_expeditor_address_country_code` instead.
+             */
+            entry_expeditor_address_country?: string;
+            /**
+             * Entry Expeditor Address Country Code
+             * Country code (ISO 3166-1 alpha-2) of the sender's address.
+             */
+            entry_expeditor_address_country_code?: string; // ^[A-Z]{2}$
+            /**
+             * Entry Expeditor Address Lat
+             * Latitude of the sender's address.
+             */
+            entry_expeditor_address_lat?: string;
+            /**
+             * Entry Expeditor Address Lng
+             * Longitude of the sender's address.
+             */
+            entry_expeditor_address_lng?: string;
+            /**
+             * Entry Expeditor Planned Datetime Range
+             * Sender's collection date range.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            entry_expeditor_planned_datetime_range?: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Metadata
+             * Metadata is used to pass your internal information. Metadata is passed in a JSON key:value format.
+             */
+            metadata?: {
+                [key: string]: any;
+            };
+            /**
+             * Order Items
+             * List of order items with information (reference, batch, packaging type, expected quantity).
+             */
+            order_items?: /**
+             * InputOrderItemEntryAndExit
+             * example:
+             * {
+             *   "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "item_packaging_type": "PALLET",
+             *   "expected_quantity": 1,
+             *   "batch_name": "batch nb0001",
+             *   "batch_edi_erp_id": "11ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "batch_edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "batch_edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *   "serial_shipping_container_code": "xxxxxxxx",
+             *   "custom_fields": {
+             *     "custom_field_1": "value 001",
+             *     "custom_field_2": "value 002"
+             *   }
+             * }
+             */
+            InputOrderItemEntryAndExit[];
+            /**
+             * Edi Erp Id
+             * Order identifier used in the ERP software.
+             */
+            edi_erp_id?: string;
+            /**
+             * Edi Wms Id
+             * Order identifier used in the WMS software.
+             */
+            edi_wms_id?: string;
+            /**
+             * Edi Tms Id
+             * Order identifier used in the TMS software.
+             */
+            edi_tms_id?: string;
+            /**
+             * Transfered To Erp At
+             * Date of the transfer of the reference in the ERP software.
+             */
+            transfered_to_erp_at?: string; // date-time
+            /**
+             * Transfered To Wms At
+             * Date of the transfer of the reference in the WMS software.
+             */
+            transfered_to_wms_at?: string; // date-time
+            /**
+             * Transfered To Tms At
+             * Date of the transfer of the reference in the TMS software.
+             */
+            transfered_to_tms_at?: string; // date-time
+            /**
+             * Carrier Id
+             * Deprecated, use transport_carrier_id instead
+             */
+            carrier_id?: string; // uuid
+            /**
+             * Carrier Name
+             * Deprecated, use transport_name instead
+             */
+            carrier_name?: string;
+            /**
+             * Carrier Phone Number
+             * Deprecated, use transport_phone_number instead
+             */
+            carrier_phone_number?: string; // ^\+[1-9]\d{1,14}$
+            /**
+             * OrderTransportManagementOwnerEnum
+             * Deprecated, use transport_carrier_id instead
+             */
+            transport_management_owner?: "PROVIDER" | "SHIPPER";
+        }
+        /**
+         * InputOrderExit
+         * example:
+         * {
+         *   "id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "shipper_order_reference": "REF_01",
+         *   "warehouse_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_erp_warehouse_id": "string",
+         *   "edi_wms_warehouse_id": "string",
+         *   "edi_tms_warehouse_id": "string",
+         *   "comment": "Additional comment",
+         *   "planned_execution_datetime_range": {
+         *     "datetime_from": "2025-09-28T15:12:41.538Z",
+         *     "datetime_to": "2025-09-28T15:12:41.538Z"
+         *   },
+         *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "exit_final_recipient": "string",
+         *   "exit_final_recipient_address_line1": "string",
+         *   "exit_final_recipient_address_zip": "string",
+         *   "exit_final_recipient_address_details": "string",
+         *   "exit_final_recipient_address_city": "string",
+         *   "exit_final_recipient_address_country_code": "string",
+         *   "exit_final_recipient_address_lat": "12.34",
+         *   "exit_final_recipient_address_lng": "2.34",
+         *   "exit_final_recipient_planned_datetime_range": {
+         *     "datetime_from": "2025-09-28T15:12:41.538Z",
+         *     "datetime_to": "2025-09-28T15:12:41.538Z"
+         *   },
+         *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
+         *   "metadata": {
+         *     "key": "value"
+         *   },
+         *   "order_items": [
+         *     {
+         *       "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_name": "batch nb0001",
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "item_packaging_type": "PALLET",
+         *       "expected_quantity": 1,
+         *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+         *       "serial_shipping_container_code": "xxxxxxxx",
+         *       "custom_fields": {
+         *         "key1": "Value",
+         *         "key2": "Value"
+         *       }
+         *     }
+         *   ]
+         * }
+         */
+        export interface InputOrderExit {
+            /**
+             * Id
+             * Order main identifier.
+             */
+            id?: string; // uuid
+            /**
+             * Shipper Order Reference
+             * Unique reference code.
+             */
+            shipper_order_reference?: string;
+            /**
+             * Warehouse Id
+             * Main identifier of the associated warehouse.
+             */
+            warehouse_id?: string; // uuid
+            /**
+             * Edi Erp Warehouse Id
+             * Warehouse identifier used in the ERP software.
+             */
+            edi_erp_warehouse_id?: string;
+            /**
+             * Edi Wms Warehouse Id
+             * Warehouse identifier used in the WMS software.
+             */
+            edi_wms_warehouse_id?: string;
+            /**
+             * Edi Tms Warehouse Id
+             * Warehouse identifier used in the TMS software.
+             */
+            edi_tms_warehouse_id?: string;
+            /**
+             * Tms Status
+             * Status in the TMS software.
+             */
+            tms_status?: string;
+            /**
+             * Comment
+             * Any comment regarding the order.
+             */
+            comment?: string;
+            /**
+             * Planned Execution Datetime Range
+             * Date range for the execution of the planned order.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            planned_execution_datetime_range: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Transport Phone Number
+             * Transport unit phone number
+             */
+            transport_phone_number?: string; // ^\+[1-9]\d{1,14}$
+            /**
+             * Transport Name
+             * Transport unit name
+             */
+            transport_name?: string;
+            /**
+             * Transport Carrier Id
+             * Identifier of carrier company in charge of transport
+             */
+            transport_carrier_id?: string; // uuid
+            /**
+             * Exit Final Recipient
+             * Address name for the recipient.
+             */
+            exit_final_recipient?: string;
+            /**
+             * Exit Final Recipient Address Line1
+             * Line of the recipient's address.
+             */
+            exit_final_recipient_address_line1?: string;
+            /**
+             * Exit Final Recipient Address Zip
+             * ZIP code of the recipient's address.
+             */
+            exit_final_recipient_address_zip?: string;
+            /**
+             * Exit Final Recipient Address Details
+             * Recipient's contact information.
+             */
+            exit_final_recipient_address_details?: string;
+            /**
+             * Exit Final Recipient Address City
+             * City of the recipient's address.
+             */
+            exit_final_recipient_address_city?: string;
+            /**
+             * Exit Final Recipient Address Country
+             * Country of the recipient's address. Deprecated, use `exit_final_recipient_address_country_code` instead
+             */
+            exit_final_recipient_address_country?: string;
+            /**
+             * Exit Final Recipient Address Country Code
+             * Country code (ISO 3166-1 alpha-2) of the recipient's address.
+             */
+            exit_final_recipient_address_country_code?: string; // ^[A-Z]{2}$
+            /**
+             * Exit Final Recipient Address Lat
+             * Latitude of the recipient's address.
+             */
+            exit_final_recipient_address_lat?: string;
+            /**
+             * Exit Final Recipient Address Lng
+             * Longitude of the recipient's address.
+             */
+            exit_final_recipient_address_lng?: string;
+            /**
+             * Exit Final Recipient Planned Datetime Range
+             * Recipient's reception date range.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            exit_final_recipient_planned_datetime_range?: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Metadata
+             * Metadata is used to pass your internal information. Metadata is passed in a JSON key:value format.
+             */
+            metadata?: {
+                [key: string]: any;
+            };
+            /**
+             * Order Items
+             * List of order items with information (reference, batch, packaging type, expected quantity).
+             */
+            order_items?: /**
+             * InputOrderItemEntryAndExit
+             * example:
+             * {
+             *   "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "item_packaging_type": "PALLET",
+             *   "expected_quantity": 1,
+             *   "batch_name": "batch nb0001",
+             *   "batch_edi_erp_id": "11ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "batch_edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "batch_edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *   "serial_shipping_container_code": "xxxxxxxx",
+             *   "custom_fields": {
+             *     "custom_field_1": "value 001",
+             *     "custom_field_2": "value 002"
+             *   }
+             * }
+             */
+            InputOrderItemEntryAndExit[];
+            /**
+             * Edi Erp Id
+             * Order identifier used in the ERP software.
+             */
+            edi_erp_id?: string;
+            /**
+             * Edi Wms Id
+             * Order identifier used in the WMS software.
+             */
+            edi_wms_id?: string;
+            /**
+             * Edi Tms Id
+             * Order identifier used in the TMS software.
+             */
+            edi_tms_id?: string;
+            /**
+             * Transfered To Erp At
+             * Date of the transfer of the reference in the ERP software.
+             */
+            transfered_to_erp_at?: string; // date-time
+            /**
+             * Transfered To Wms At
+             * Date of the transfer of the reference in the WMS software.
+             */
+            transfered_to_wms_at?: string; // date-time
+            /**
+             * Transfered To Tms At
+             * Date of the transfer of the reference in the TMS software.
+             */
+            transfered_to_tms_at?: string; // date-time
+            /**
+             * Carrier Id
+             * Deprecated, use transport_carrier_id instead
+             */
+            carrier_id?: string; // uuid
+            /**
+             * Carrier Name
+             * Deprecated, use transport_name instead
+             */
+            carrier_name?: string;
+            /**
+             * Carrier Phone Number
+             * Deprecated, use transport_phone_number instead
+             */
+            carrier_phone_number?: string; // ^\+[1-9]\d{1,14}$
+            /**
+             * OrderTransportManagementOwnerEnum
+             * Deprecated, use transport_carrier_id instead
+             */
+            transport_management_owner?: "PROVIDER" | "SHIPPER";
+        }
+        /**
+         * InputOrderItem
+         */
+        export interface InputOrderItem {
+            /**
+             * Id
+             */
+            id?: string; // uuid
+            /**
+             * Master Item Id
+             * Technical reference identifer.
+             */
+            master_item_id?: string; // uuid
+            /**
+             * Batch Id
+             * Technical batch identifer.
+             */
+            batch_id?: string; // uuid
+            /**
+             * Batch Name
+             * Name of the batch.
+             */
+            batch_name?: string;
+            /**
+             * Position
+             * Position of the item in the queue.
+             */
+            position?: number;
+            /**
+             * ItemPackagingTypeEnum
+             * Packaging type used for the quantity.
+             */
+            item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+            /**
+             * Expected Quantity
+             * Expected quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed the quantity in pallet.
+             */
+            expected_quantity: number;
+            /**
+             * Actual Quantity
+             * Actual quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed in pallets.
+             */
+            actual_quantity?: number;
+            /**
+             * Sscc Id
+             * Technical sscc identifer.
+             */
+            sscc_id?: string; // uuid
+            /**
+             * Serial Shipping Container Code
+             * Name of the sscc
+             */
+            serial_shipping_container_code?: string;
+            /**
+             * Custom Fields
+             * Custom fields on order items are used to store additional information about the items in your orders. Custom fields are passed in a JSON key:value format.
+             */
+            custom_fields?: {
+                [key: string]: any;
+            };
+        }
+        /**
+         * InputOrderItemEntryAndExit
+         * example:
+         * {
+         *   "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "item_packaging_type": "PALLET",
+         *   "expected_quantity": 1,
+         *   "batch_name": "batch nb0001",
+         *   "batch_edi_erp_id": "11ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "batch_edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "batch_edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+         *   "serial_shipping_container_code": "xxxxxxxx",
+         *   "custom_fields": {
+         *     "custom_field_1": "value 001",
+         *     "custom_field_2": "value 002"
+         *   }
+         * }
+         */
+        export interface InputOrderItemEntryAndExit {
+            /**
+             * Master Item Id
+             * Technical reference identifer.
+             */
+            master_item_id?: string; // uuid
+            /**
+             * Item Reference
+             * Unique reference code.
+             */
+            item_reference?: string;
+            /**
+             * Edi Erp Id
+             * Reference identifier used in the ERP software.
+             */
+            edi_erp_id?: string;
+            /**
+             * Edi Wms Id
+             * Reference identifier used in the WMS software.
+             */
+            edi_wms_id?: string;
+            /**
+             * Edi Tms Id
+             * Reference identifier used in the TMS software.
+             */
+            edi_tms_id?: string;
+            /**
+             * Batch Id
+             * Technical batch identifer.
+             */
+            batch_id?: string; // uuid
+            /**
+             * Batch Name
+             * Name of the batch.
+             */
+            batch_name?: string;
+            /**
+             * Batch Edi Erp Id
+             * Batch identifier used in the ERP software.
+             */
+            batch_edi_erp_id?: string;
+            /**
+             * Batch Edi Wms Id
+             * Batch identifier used in the WMS software.
+             */
+            batch_edi_wms_id?: string;
+            /**
+             * Batch Edi Tms Id
+             * Batch identifier used in the TMS software.
+             */
+            batch_edi_tms_id?: string;
+            /**
+             * Pallet Sscc
+             * Deprecated, serial Shipping Container Code. More info [here](https://www.gs1.org/standards/id-keys/sscc).
+             */
+            pallet_sscc?: string;
+            /**
+             * ItemPackagingTypeEnum
+             * Packaging type used for the quantity.
+             */
+            item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+            /**
+             * Order Id
+             * Order main identifier.
+             */
+            order_id?: string; // uuid
+            /**
+             * Expected Quantity
+             * Expected quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed the quantity in pallet.
+             */
+            expected_quantity: number;
+            /**
+             * Sscc Id
+             * Technical sscc identifer.
+             */
+            sscc_id?: string; // uuid
+            /**
+             * Serial Shipping Container Code
+             * Name of the sscc
+             */
+            serial_shipping_container_code?: string;
+            /**
+             * Custom Fields
+             * Custom fields on order items are used to store additional information about the items in your orders. Custom fields are passed in a JSON key:value format.
+             */
+            custom_fields?: {
+                [key: string]: any;
+            };
         }
         /**
          * InputOrderPatch
@@ -366,6 +1599,148 @@ declare namespace Components {
             batch_edi_tms_id?: string;
         }
         /**
+         * InputPostEvent
+         */
+        export interface InputPostEvent {
+            /**
+             * EventTypeEnum
+             * Type of the event.
+             */
+            type?: "STARTED" | "SUCCESS" | "NO_CONTENT_SUCCESS" | "PARTIAL_SUCCESS" | "PRECONDITION_FAILED_ERROR" | "INVALID_REQUEST_DATA_ERROR" | "INVALID_REQUEST_FORMAT_ERROR" | "UNKNOWN_ERROR" | "NETWORK_ERROR" | "IO_ERROR" | "INTERNAL_ERROR" | "TEST";
+            /**
+             * Message
+             * Message of the event.
+             */
+            message?: string;
+            /**
+             * Data
+             * The data of the event.
+             */
+            data: {
+                /**
+                 * Shipper Account Id
+                 * Main identifier of the associated shipper.
+                 */
+                shipper_account_id: string; // uuid
+                /**
+                 * Warehouse Id
+                 * Main identifier of the associated warehouse.
+                 */
+                warehouse_id: string; // uuid
+            };
+            /**
+             * Meta
+             * Extra data.
+             */
+            meta?: {
+                [key: string]: any;
+            };
+        }
+        /**
+         * InputPostInventoryAdjustement
+         * example:
+         * {
+         *   "shipper_account_id": "2f8b8f84-dedd-43d7-9b3d-54a6aa32dfce",
+         *   "warehouse_id": "33505a58-7875-40a4-8fb9-ff4ca591e1a6",
+         *   "edi_erp_warehouse_id": "string",
+         *   "edi_wms_warehouse_id": "string",
+         *   "edi_tms_warehouse_id": "string",
+         *   "edi_erp_shipper_id": "string",
+         *   "edi_wms_shipper_id": "string",
+         *   "edi_tms_shipper_id": "string",
+         *   "comment": "Some products have been found and other have been lost",
+         *   "inventory_adjustement_items": [
+         *     {
+         *       "master_item_id": "7df9d108-ad99-47f8-92fd-25cf46babf16",
+         *       "batch_name": "batch nb 0001",
+         *       "position": 1,
+         *       "item_packaging_type": "PALLET",
+         *       "actual_quantity_in_stock": 3,
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "sscc_id": "df549cb3-4c37-4010-ac5f-361ed5185d30"
+         *     },
+         *     {
+         *       "master_item_id": "b0ab07d8-c1eb-4ca9-9175-df3a76c79608",
+         *       "batch_id": "7ebfea97-648e-4623-82d7-e5b76805cf6b",
+         *       "batch_name": "batch nb 0001",
+         *       "position": 2,
+         *       "item_packaging_type": "EACH",
+         *       "actual_difference_quantity": 32,
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "sscc_id": "c1398ccc-708f-4cb0-b0c6-b741818af782"
+         *     },
+         *     {
+         *       "master_item_id": "5d01237d-6f0e-419b-a919-9bd969884e95",
+         *       "batch_id": "3f49f7fe-fe71-4375-85cd-9dfda8905114",
+         *       "batch_name": "batch nb 0001",
+         *       "position": 3,
+         *       "item_packaging_type": "EACH",
+         *       "actual_difference_quantity": -7,
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "sscc_id": "dec6583c-5ac7-46c8-b61f-75e89b51d03d"
+         *     }
+         *   ]
+         * }
+         */
+        export interface InputPostInventoryAdjustement {
+            /**
+             * Shipper Account Id
+             * Main identifier of the associated shipper.
+             */
+            shipper_account_id?: string; // uuid
+            /**
+             * Warehouse Id
+             * Warehouse main identifier.
+             */
+            warehouse_id?: string; // uuid
+            /**
+             * Edi Erp Shipper Id
+             * Shipper identifier used in the ERP software.
+             */
+            edi_erp_shipper_id?: string;
+            /**
+             * Edi Wms Shipper Id
+             * Shipper identifier used in the WMS software.
+             */
+            edi_wms_shipper_id?: string;
+            /**
+             * Edi Tms Shipper Id
+             * Shipper identifier used in the TMS software.
+             */
+            edi_tms_shipper_id?: string;
+            /**
+             * Edi Erp Warehouse Id
+             * Warehouse identifier used in the ERP software.
+             */
+            edi_erp_warehouse_id?: string;
+            /**
+             * Edi Wms Warehouse Id
+             * Warehouse identifier used in the WMS software.
+             */
+            edi_wms_warehouse_id?: string;
+            /**
+             * Edi Tms Warehouse Id
+             * Warehouse identifier used in the TMS software.
+             */
+            edi_tms_warehouse_id?: string;
+            /**
+             * Comment
+             * Add any comment regarding the inventory adjustment here.
+             */
+            comment?: string;
+            /**
+             * Inventory Adjustement Items
+             * List of inventory adjustment items with information (reference, batch, SSCC, actual quantity, difference ).
+             */
+            inventory_adjustement_items?: /* InputInventoryAdjustementItem */ InputInventoryAdjustementItem[];
+        }
+        /**
          * InputPostMasterItem
          * example:
          * {
@@ -648,6 +2023,38 @@ declare namespace Components {
             };
         }
         /**
+         * InputPutBatch
+         * example:
+         * {
+         *   "name": "batch nb0001",
+         *   "batch_edi_erp_id": "BAT-E0001",
+         *   "batch_edi_wms_id": "BAT-W0001",
+         *   "batch_edi_tms_id": "BAT-T0001"
+         * }
+         */
+        export interface InputPutBatch {
+            /**
+             * Name
+             * Name of the batch.
+             */
+            name: string;
+            /**
+             * Batch Edi Erp Id
+             * Batch identifier used in the ERP software.
+             */
+            batch_edi_erp_id?: string;
+            /**
+             * Batch Edi Wms Id
+             * Batch identifier used in the WMS software.
+             */
+            batch_edi_wms_id?: string;
+            /**
+             * Batch Edi Tms Id
+             * Batch identifier used in the TMS software.
+             */
+            batch_edi_tms_id?: string;
+        }
+        /**
          * InputPutMasterItem
          * example:
          * {
@@ -905,6 +2312,917 @@ declare namespace Components {
              * Date of the archive of the reference.
              */
             archived_at?: string; // date-time
+        }
+        /**
+         * InputShipperUpdateOrderAction
+         * example:
+         * {
+         *   "entry_expeditor_planned_datetime_range": {
+         *     "datetime_from": "2022-05-27T13:22:47.917Z",
+         *     "datetime_to": "2022-05-27T13:22:47.917Z"
+         *   },
+         *   "exit_final_recipient_planned_datetime_range": {
+         *     "datetime_from": "2022-04-28T15:05:55.935Z",
+         *     "datetime_to": "2022-04-28T15:05:55.935Z"
+         *   },
+         *   "comment": "string",
+         *   "tms_status": "string",
+         *   "shipper_order_reference": "string",
+         *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
+         *   "order_items": {
+         *     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+         *     "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+         *     "item_packaging_type": "PALLET",
+         *     "expected_quantity": 1,
+         *     "custom_fields": {
+         *       "key1": "value1",
+         *       "key2": "value2"
+         *     }
+         *   }
+         * }
+         */
+        export interface InputShipperUpdateOrderAction {
+            /**
+             * Shipper Order Reference
+             * Unique reference code.
+             */
+            shipper_order_reference?: string;
+            /**
+             * Comment
+             * Any comment regarding the order.
+             */
+            comment?: string;
+            /**
+             * Planned Execution Datetime Range
+             * Date range for the execution of the planned order.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            planned_execution_datetime_range?: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Transport Phone Number
+             * Transport unit phone number
+             */
+            transport_phone_number?: string; // ^\+[1-9]\d{1,14}$
+            /**
+             * Transport Name
+             * Transport unit name
+             */
+            transport_name?: string;
+            /**
+             * Transport Carrier Id
+             * Identifier of carrier company in charge of transport
+             */
+            transport_carrier_id?: string; // uuid
+            /**
+             * Entry Expeditor
+             * Address name for the sender.
+             */
+            entry_expeditor?: string;
+            /**
+             * Entry Expeditor Address Line1
+             * Line of the sender's address.
+             */
+            entry_expeditor_address_line1?: string;
+            /**
+             * Entry Expeditor Address Zip
+             * Postal code of the sender's address.
+             */
+            entry_expeditor_address_zip?: string;
+            /**
+             * Entry Expeditor Address Details
+             * Sender's contact information.
+             */
+            entry_expeditor_address_details?: string;
+            /**
+             * Entry Expeditor Address City
+             * City of the sender's address.
+             */
+            entry_expeditor_address_city?: string;
+            /**
+             * Entry Expeditor Address Country
+             * Country of the sender's address.<br />Deprecated, use `entry_expeditor_address_country_code` instead
+             */
+            entry_expeditor_address_country?: string;
+            /**
+             * Entry Expeditor Address Country Code
+             * Country code (ISO 3166-1 alpha-2) of the sender's address.
+             */
+            entry_expeditor_address_country_code?: string; // ^[A-Z]{2}$
+            /**
+             * Entry Expeditor Address Lat
+             * Latitude of the sender's address.
+             */
+            entry_expeditor_address_lat?: string;
+            /**
+             * Entry Expeditor Address Lng
+             * Longitude of the sender's address.
+             */
+            entry_expeditor_address_lng?: string;
+            /**
+             * Entry Expeditor Planned Datetime Range
+             * Sender's collection date range.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            entry_expeditor_planned_datetime_range?: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Exit Final Recipient
+             * Address name for the recipient.
+             */
+            exit_final_recipient?: string;
+            /**
+             * Exit Final Recipient Address Line1
+             * Line of the recipient's address.
+             */
+            exit_final_recipient_address_line1?: string;
+            /**
+             * Exit Final Recipient Address Zip
+             * ZIP code of the recipient's address.
+             */
+            exit_final_recipient_address_zip?: string;
+            /**
+             * Exit Final Recipient Address Details
+             * Recipient's contact information.
+             */
+            exit_final_recipient_address_details?: string;
+            /**
+             * Exit Final Recipient Address City
+             * City of the recipient's address.
+             */
+            exit_final_recipient_address_city?: string;
+            /**
+             * Exit Final Recipient Address Country
+             * Country of the recipient's address.<br />Deprecated, use `exit_final_recipient_address_country_code` instead.
+             */
+            exit_final_recipient_address_country?: string;
+            /**
+             * Exit Final Recipient Address Country Code
+             * Country code (ISO 3166-1 alpha-2) of the recipient's address.
+             */
+            exit_final_recipient_address_country_code?: string; // ^[A-Z]{2}$
+            /**
+             * Exit Final Recipient Address Lat
+             * Latitude of the recipient's address.
+             */
+            exit_final_recipient_address_lat?: string;
+            /**
+             * Exit Final Recipient Address Lng
+             * Longitude of the recipient's address.
+             */
+            exit_final_recipient_address_lng?: string;
+            /**
+             * Exit Final Recipient Planned Datetime Range
+             * Recipient's reception date range.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            exit_final_recipient_planned_datetime_range?: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Transfered To Erp At
+             * Date of the transfer of the reference in the ERP software.
+             */
+            transfered_to_erp_at?: string; // date-time
+            /**
+             * Transfered To Wms At
+             * Date of the transfer of the reference in the WMS software.
+             */
+            transfered_to_wms_at?: string; // date-time
+            /**
+             * Transfered To Tms At
+             * Date of the transfer of the reference in the TMS software.
+             */
+            transfered_to_tms_at?: string; // date-time
+            /**
+             * Order Items
+             * List of order items with information (reference, batch, packaging type, expected quantity).
+             */
+            order_items?: /**
+             * InputShipperUpdateOrderActionOrderItem
+             * example:
+             * {
+             *   "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "item_packaging_type": "PALLET",
+             *   "expected_quantity": 1,
+             *   "batch_name": "batch nb0001",
+             *   "batch_edi_erp_id": "11ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "batch_edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "batch_edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd"
+             * }
+             */
+            InputShipperUpdateOrderActionOrderItem[];
+            /**
+             * Tms Status
+             * Status in the TMS software.
+             */
+            tms_status?: string;
+            /**
+             * Carrier Id
+             * Deprecated, use transport_carrier_id instead
+             */
+            carrier_id?: string; // uuid
+            /**
+             * Carrier Name
+             * Deprecated, use transport_name instead
+             */
+            carrier_name?: string;
+            /**
+             * Carrier Phone Number
+             * Deprecated, use transport_phone_number instead
+             */
+            carrier_phone_number?: string; // ^\+[1-9]\d{1,14}$
+            /**
+             * OrderTransportManagementOwnerEnum
+             * Deprecated, use transport_carrier_id instead
+             */
+            transport_management_owner?: "PROVIDER" | "SHIPPER";
+        }
+        /**
+         * InputShipperUpdateOrderActionOrderItem
+         * example:
+         * {
+         *   "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "item_packaging_type": "PALLET",
+         *   "expected_quantity": 1,
+         *   "batch_name": "batch nb0001",
+         *   "batch_edi_erp_id": "11ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "batch_edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "batch_edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd"
+         * }
+         */
+        export interface InputShipperUpdateOrderActionOrderItem {
+            /**
+             * Master Item Id
+             * Technical reference identifer.
+             */
+            master_item_id: string; // uuid
+            /**
+             * Batch Id
+             * Technical batch identifer.
+             */
+            batch_id?: string; // uuid
+            /**
+             * Batch Name
+             * Name of the batch.
+             */
+            batch_name?: string;
+            /**
+             * Batch Edi Erp Id
+             * Batch identifier used in the ERP software.
+             */
+            batch_edi_erp_id?: string;
+            /**
+             * Batch Edi Wms Id
+             * Batch identifier used in the WMS software.
+             */
+            batch_edi_wms_id?: string;
+            /**
+             * Batch Edi Tms Id
+             * Batch identifier used in the TMS software.
+             */
+            batch_edi_tms_id?: string;
+            /**
+             * Pallet Sscc
+             * Deprecated, serial Shipping Container Code. More info [here](https://www.gs1.org/standards/id-keys/sscc).
+             */
+            pallet_sscc?: string;
+            /**
+             * ItemPackagingTypeEnum
+             * Packaging type used for the quantity.
+             */
+            item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+            /**
+             * Expected Quantity
+             * Expected quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed the quantity in pallet.
+             */
+            expected_quantity: number;
+            /**
+             * Sscc Id
+             * Technical sscc identifer.
+             */
+            sscc_id?: string; // uuid
+            /**
+             * Serial Shipping Container Code
+             * Name of the sscc
+             */
+            serial_shipping_container_code?: string;
+            /**
+             * Custom Fields
+             * Custom fields on order items are used to store additional information about the items in your orders. Custom fields are passed in a JSON key:value format.
+             */
+            custom_fields?: {
+                [key: string]: any;
+            };
+        }
+        /**
+         * InputTransportModel
+         * example:
+         * {
+         *   "status": "AT_PICKUP_LOCATION",
+         *   "status_updated_at": "2021-01-01T00:00:00Z"
+         * }
+         */
+        export interface InputTransportModel {
+            status: /**
+             * TransportStatusEnum
+             * Transport status enum.
+             */
+            RessourcesTransportsModelsTransportStatusEnum;
+            /**
+             * Status Updated At
+             */
+            status_updated_at?: string; // date-time
+        }
+        /**
+         * InputWarehouseAcknowledgesReceiptOfOrderActionOrderItem
+         */
+        export interface InputWarehouseAcknowledgesReceiptOfOrderActionOrderItem {
+            /**
+             * Id
+             */
+            id?: string; // uuid
+            /**
+             * Master Item Id
+             * Technical reference identifer.
+             */
+            master_item_id?: string; // uuid
+            /**
+             * Item Reference
+             * Unique reference code.
+             */
+            item_reference?: string;
+            /**
+             * Edi Erp Id
+             * Reference identifier used in the ERP software.
+             */
+            edi_erp_id?: string;
+            /**
+             * Edi Wms Id
+             * Reference identifier used in the WMS software.
+             */
+            edi_wms_id?: string;
+            /**
+             * Edi Tms Id
+             * Reference identifier used in the TMS software.
+             */
+            edi_tms_id?: string;
+            /**
+             * Batch Id
+             * Technical batch identifer.
+             */
+            batch_id?: string; // uuid
+            /**
+             * Batch Name
+             * Name of the batch.
+             */
+            batch_name?: string;
+            /**
+             * Batch Edi Erp Id
+             * Batch identifier used in the ERP software.
+             */
+            batch_edi_erp_id?: string;
+            /**
+             * Batch Edi Wms Id
+             * Batch identifier used in the WMS software.
+             */
+            batch_edi_wms_id?: string;
+            /**
+             * Batch Edi Tms Id
+             * Batch identifier used in the TMS software.
+             */
+            batch_edi_tms_id?: string;
+            /**
+             * Pallet Sscc
+             * Deprecated, serial Shipping Container Code. More info [here](https://www.gs1.org/standards/id-keys/sscc).
+             */
+            pallet_sscc?: string;
+            /**
+             * ItemPackagingTypeEnum
+             * Packaging type used for the quantity.
+             */
+            item_packaging_type?: "PALLET" | "CARDBOARD_BOX" | "EACH";
+            /**
+             * Actual Quantity
+             * Actual quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed in pallets.
+             */
+            actual_quantity?: number;
+            /**
+             * Sscc Id
+             * Technical sscc identifer.
+             */
+            sscc_id?: string; // uuid
+            /**
+             * Serial Shipping Container Code
+             * Name of the sscc
+             */
+            serial_shipping_container_code?: string;
+            /**
+             * Custom Fields
+             * Custom fields on order items are used to store additional information about the items in your orders. Custom fields are passed in a JSON key:value format.
+             */
+            custom_fields?: {
+                [key: string]: any;
+            };
+        }
+        /**
+         * InputWarehouseCreatesOrderAction
+         * example:
+         * {
+         *   "id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "shipper_account_id": "1de9c987-08ab-32fe-e218-89c124cd0001",
+         *   "warehouse_id": "d8bdc728-242b-4039-99a3-0aa239650001",
+         *   "planned_execution_datetime_range": {
+         *     "datetime_from": "2022-05-11T06:00:00.000Z",
+         *     "datetime_to": "2022-05-11T10:00:00.000Z"
+         *   },
+         *   "order_type": "ENTRY",
+         *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "comment": "string",
+         *   "shipper_order_reference": "string",
+         *   "entry_expeditor_planned_datetime_range": {
+         *     "datetime_from": "2022-05-11T06:00:00.000Z",
+         *     "datetime_to": "2022-05-11T10:00:00.000Z"
+         *   },
+         *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_erp_warehouse_id": "string",
+         *   "edi_wms_warehouse_id": "string",
+         *   "edi_tms_warehouse_id": "string",
+         *   "edi_erp_shipper_id": "string",
+         *   "edi_wms_shipper_id": "string",
+         *   "edi_tms_shipper_id": "string",
+         *   "entry_expeditor": "Name 0001",
+         *   "entry_expeditor_address_line1": "29 rue poissonière",
+         *   "entry_expeditor_address_zip": "75009",
+         *   "entry_expeditor_address_details": "some details about the customer address",
+         *   "entry_expeditor_address_city": "Paris",
+         *   "entry_expeditor_address_country_code": "FR",
+         *   "entry_expeditor_address_lat": "48.843900",
+         *   "entry_expeditor_address_lng": "2.358800",
+         *   "entry_expeditor_customer_address_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "exit_final_recipient": "Name 0001",
+         *   "exit_final_recipient_address_line1": "29 rue poissonière",
+         *   "exit_final_recipient_address_zip": "75009",
+         *   "exit_final_recipient_address_details": "some details about the customer address",
+         *   "exit_final_recipient_address_city": "Paris",
+         *   "exit_final_recipient_address_country_code": "FR",
+         *   "exit_final_recipient_address_lat": "48.843900",
+         *   "exit_final_recipient_address_lng": "2.358800",
+         *   "exit_final_recipient_customer_address_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "order_items": [
+         *     {
+         *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+         *       "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_name": "batch nb 1",
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "item_packaging_type": "PALLET",
+         *       "expected_quantity": 10,
+         *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+         *       "serial_shipping_container_code": "xxxxxxxx",
+         *       "custom_fields": {
+         *         "key1": "Value",
+         *         "key2": "Value"
+         *       }
+         *     },
+         *     {
+         *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+         *       "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_name": "batch nb 1",
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "item_packaging_type": "CARDBOARD_BOX",
+         *       "expected_quantity": 5,
+         *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+         *       "serial_shipping_container_code": "xxxxxxxx",
+         *       "custom_fields": {
+         *         "key1": "Value",
+         *         "key2": "Value"
+         *       }
+         *     },
+         *     {
+         *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+         *       "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_name": "batch nb 1",
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "item_packaging_type": "EACH",
+         *       "expected_quantity": 1,
+         *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+         *       "serial_shipping_container_code": "xxxxxxxx",
+         *       "custom_fields": {
+         *         "key1": "Value",
+         *         "key2": "Value"
+         *       }
+         *     }
+         *   ]
+         * }
+         */
+        export interface InputWarehouseCreatesOrderAction {
+            /**
+             * Id
+             * Order main identifier.
+             */
+            id?: string; // uuid
+            /**
+             * Shipper Account Id
+             * Main identifier of the associated shipper.
+             */
+            shipper_account_id?: string; // uuid
+            /**
+             * Warehouse Id
+             * Main identifier of the associated warehouse.
+             */
+            warehouse_id?: string; // uuid
+            /**
+             * Edi Erp Shipper Id
+             * Shipper identifier used in the ERP software.
+             */
+            edi_erp_shipper_id?: string;
+            /**
+             * Edi Wms Shipper Id
+             * Shipper identifier used in the WMS software.
+             */
+            edi_wms_shipper_id?: string;
+            /**
+             * Edi Tms Shipper Id
+             * Shipper identifier used in the TMS software.
+             */
+            edi_tms_shipper_id?: string;
+            /**
+             * Edi Erp Warehouse Id
+             * Warehouse identifier used in the ERP software.
+             */
+            edi_erp_warehouse_id?: string;
+            /**
+             * Edi Wms Warehouse Id
+             * Warehouse identifier used in the WMS software.
+             */
+            edi_wms_warehouse_id?: string;
+            /**
+             * Edi Tms Warehouse Id
+             * Warehouse identifier used in the TMS software.
+             */
+            edi_tms_warehouse_id?: string;
+            /**
+             * OrderTypeEnum
+             * Type of the order.
+             */
+            order_type: "ENTRY" | "EXIT";
+            /**
+             * Comment
+             * Any comment regarding the order.
+             */
+            comment?: string;
+            /**
+             * Shipper Order Reference
+             * Unique reference code.
+             */
+            shipper_order_reference: string;
+            /**
+             * Planned Execution Datetime Range
+             * Date range for the execution of the planned order.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            planned_execution_datetime_range: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Transport Phone Number
+             * Transport unit phone number
+             */
+            transport_phone_number?: string; // ^\+[1-9]\d{1,14}$
+            /**
+             * Transport Name
+             * Transport unit name
+             */
+            transport_name?: string;
+            /**
+             * Transport Carrier Id
+             * Identifier of carrier company in charge of transport
+             */
+            transport_carrier_id?: string; // uuid
+            /**
+             * Edi Erp Id
+             * Order identifier used in the ERP software.
+             */
+            edi_erp_id?: string;
+            /**
+             * Edi Wms Id
+             * Order identifier used in the WMS software.
+             */
+            edi_wms_id?: string;
+            /**
+             * Edi Tms Id
+             * Order identifier used in the TMS software.
+             */
+            edi_tms_id?: string;
+            /**
+             * Entry Expeditor
+             * Address name for the sender.
+             */
+            entry_expeditor?: string;
+            /**
+             * Entry Expeditor Address Line1
+             * Line of the sender's address.
+             */
+            entry_expeditor_address_line1?: string;
+            /**
+             * Entry Expeditor Address Zip
+             * Postal code of the sender's address.
+             */
+            entry_expeditor_address_zip?: string;
+            /**
+             * Entry Expeditor Address Details
+             * Sender's contact information.
+             */
+            entry_expeditor_address_details?: string;
+            /**
+             * Entry Expeditor Address City
+             * City of the sender's address.
+             */
+            entry_expeditor_address_city?: string;
+            /**
+             * Entry Expeditor Address Country
+             * Country of the sender's address.<br />Deprecated, use `entry_expeditor_address_country_code` instead.
+             */
+            entry_expeditor_address_country?: string;
+            /**
+             * Entry Expeditor Address Country Code
+             * Country code (ISO 3166-1 alpha-2) of the sender's address.
+             */
+            entry_expeditor_address_country_code?: string; // ^[A-Z]{2}$
+            /**
+             * Entry Expeditor Address Lat
+             * Latitude of the sender's address.
+             */
+            entry_expeditor_address_lat?: string;
+            /**
+             * Entry Expeditor Address Lng
+             * Longitude of the sender's address.
+             */
+            entry_expeditor_address_lng?: string;
+            /**
+             * Entry Expeditor Customer Address Id
+             * Sender's address main identifier.
+             */
+            entry_expeditor_customer_address_id?: string; // uuid
+            /**
+             * Exit Final Recipient
+             * Address name for the recipient.
+             */
+            exit_final_recipient?: string;
+            /**
+             * Exit Final Recipient Address Line1
+             * Line of the recipient's address.
+             */
+            exit_final_recipient_address_line1?: string;
+            /**
+             * Exit Final Recipient Address Zip
+             * ZIP code of the recipient's address.
+             */
+            exit_final_recipient_address_zip?: string;
+            /**
+             * Exit Final Recipient Address Details
+             * Recipient's contact information.
+             */
+            exit_final_recipient_address_details?: string;
+            /**
+             * Exit Final Recipient Address City
+             * City of the recipient's address.
+             */
+            exit_final_recipient_address_city?: string;
+            /**
+             * Exit Final Recipient Address Country
+             * Country of the recipient's address.<br />Deprecated, use `exit_final_recipient_address_country_code` instead.
+             */
+            exit_final_recipient_address_country?: string;
+            /**
+             * Exit Final Recipient Address Country Code
+             * Country code (ISO 3166-1 alpha-2) of the recipient's address.
+             */
+            exit_final_recipient_address_country_code?: string; // ^[A-Z]{2}$
+            /**
+             * Exit Final Recipient Address Lat
+             * Latitude of the recipient's address.
+             */
+            exit_final_recipient_address_lat?: string;
+            /**
+             * Exit Final Recipient Address Lng
+             * Longitude of the recipient's address.
+             */
+            exit_final_recipient_address_lng?: string;
+            /**
+             * Exit Final Recipient Customer Address Id
+             * Recipient's address main identifier.
+             */
+            exit_final_recipient_customer_address_id?: string; // uuid
+            /**
+             * Entry Expeditor Planned Datetime Range
+             * Sender's collection date range.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            entry_expeditor_planned_datetime_range?: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Exit Final Recipient Planned Datetime Range
+             * Recipient's reception date range.
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            exit_final_recipient_planned_datetime_range?: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Order Items
+             * List of order items with information (reference, batch, packaging type, expected quantity).
+             */
+            order_items?: /* InputWarehouseCreatesOrderActionOrderItem */ InputWarehouseCreatesOrderActionOrderItem[];
+            /**
+             * Carrier Id
+             * Deprecated, use transport_carrier_id instead
+             */
+            carrier_id?: string; // uuid
+            /**
+             * Carrier Name
+             * Deprecated, use transport_name instead
+             */
+            carrier_name?: string;
+            /**
+             * Carrier Phone Number
+             * Deprecated, use transport_phone_number instead
+             */
+            carrier_phone_number?: string; // ^\+[1-9]\d{1,14}$
+            /**
+             * OrderTransportManagementOwnerEnum
+             * Deprecated, use transport_carrier_id instead
+             */
+            transport_management_owner?: "PROVIDER" | "SHIPPER";
+        }
+        /**
+         * InputWarehouseCreatesOrderActionOrderItem
+         */
+        export interface InputWarehouseCreatesOrderActionOrderItem {
+            /**
+             * Master Item Id
+             * Technical reference identifer.
+             */
+            master_item_id?: string; // uuid
+            /**
+             * Batch Id
+             * Technical batch identifer.
+             */
+            batch_id?: string; // uuid
+            /**
+             * Batch Name
+             * Name of the batch.
+             */
+            batch_name?: string;
+            /**
+             * Batch Edi Erp Id
+             * Batch identifier used in the ERP software.
+             */
+            batch_edi_erp_id?: string;
+            /**
+             * Batch Edi Wms Id
+             * Batch identifier used in the WMS software.
+             */
+            batch_edi_wms_id?: string;
+            /**
+             * Batch Edi Tms Id
+             * Batch identifier used in the TMS software.
+             */
+            batch_edi_tms_id?: string;
+            /**
+             * Item Reference
+             * Unique reference code.
+             */
+            item_reference?: string;
+            /**
+             * Edi Erp Id
+             * Reference identifier used in the ERP software.
+             */
+            edi_erp_id?: string;
+            /**
+             * Edi Wms Id
+             * Reference identifier used in the WMS software.
+             */
+            edi_wms_id?: string;
+            /**
+             * Edi Tms Id
+             * Reference identifier used in the TMS software.
+             */
+            edi_tms_id?: string;
+            /**
+             * ItemPackagingTypeEnum
+             * Packaging type used for the quantity.
+             */
+            item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+            /**
+             * Expected Quantity
+             * Expected quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed the quantity in pallet.
+             */
+            expected_quantity: number;
+            /**
+             * Order Id
+             * Order main identifier.
+             */
+            order_id?: string; // uuid
+            /**
+             * Sscc Id
+             * Technical sscc identifer.
+             */
+            sscc_id?: string; // uuid
+            /**
+             * Serial Shipping Container Code
+             * Name of the sscc
+             */
+            serial_shipping_container_code?: string;
+            /**
+             * Custom Fields
+             * Custom fields on order items are used to store additional information about the items in your orders. Custom fields are passed in a JSON key:value format.
+             */
+            custom_fields?: {
+                [key: string]: any;
+            };
         }
         /**
          * ItemPackagingTypeEnum
@@ -1241,6 +3559,84 @@ declare namespace Components {
              * Forecasted global stock by warehouse by batch.
              */
             forecasted_stock_by_warehouse_by_batch?: /* OutputBatchForecastedStockByWarehouse */ OutputBatchForecastedStockByWarehouse[];
+        }
+        /**
+         * OutputCarrier
+         * example:
+         * {
+         *   "id": "45a1d586-2615-4137-a59b-e2bf1ac6db12",
+         *   "company": "Compagny 001",
+         *   "siret": "07325009000013",
+         *   "address_line1": "7 rue Bernard Palissy",
+         *   "address_city": "Toulouse",
+         *   "address_zip": "31000",
+         *   "address_country": "France",
+         *   "address_lat": "43.546600",
+         *   "address_lng": "1.444700"
+         * }
+         */
+        export interface OutputCarrier {
+            /**
+             * Id
+             * Carrier main identifier.
+             */
+            id: string; // uuid
+            /**
+             * Company
+             * Name of the company.
+             */
+            company?: string;
+            /**
+             * Siret
+             * SIRET identifier of the company.
+             */
+            siret?: string;
+            /**
+             * Address Line1
+             * Address, street and number
+             */
+            address_line1?: string;
+            /**
+             * Address City
+             * City name
+             */
+            address_city?: string;
+            /**
+             * Address Zip
+             * ZIP code, postal code
+             */
+            address_zip?: string;
+            /**
+             * Address Country
+             * Country name.
+             */
+            address_country?: string;
+            /**
+             * Address Lng
+             * Longitude of the location
+             */
+            address_lng?: string;
+            /**
+             * Address Lat
+             * Latitude of the location.
+             */
+            address_lat?: string;
+            /**
+             * Created At
+             */
+            created_at: string; // date-time
+            /**
+             * Created By
+             */
+            created_by?: string; // uuid
+            /**
+             * Updated At
+             */
+            updated_at?: string; // date-time
+            /**
+             * Updated By
+             */
+            updated_by?: string; // uuid
         }
         /**
          * OutputGlobalStockByBatch
@@ -5009,6 +7405,238 @@ declare namespace Components {
             total: number;
         }
         /**
+         * OutputTransport
+         * example:
+         * {
+         *   "id": "5ac167e9-08c9-4b69-b8dc-3ab5bc500001",
+         *   "status": "AT_PICKUP_LOCATION",
+         *   "comment": "Comment",
+         *   "carrier_id": "5ac167e9-08c9-4b69-b8dc-3ab5bc500001",
+         *   "carrier_name": "Carrier 001",
+         *   "carrier_phone_number": "+33600000000",
+         *   "pickup_address_name": "Pickup address name",
+         *   "pickup_address_company": "Pickup address company",
+         *   "pickup_address_address_line_1": "Pickup address line 1",
+         *   "pickup_address_zip_code": "75001",
+         *   "pickup_address_details": "Pickup address details",
+         *   "pickup_address_city": "Paris",
+         *   "pickup_address_country": "France",
+         *   "pickup_address_country_code": "FR",
+         *   "pickup_address_latitude": "48.856614",
+         *   "pickup_address_longitude": "2.3522219",
+         *   "delivery_address_name": "Delivery address name",
+         *   "delivery_address_company": "Delivery address company",
+         *   "delivery_address_address_line_1": "Delivery address line 1",
+         *   "delivery_address_zip_code": "75001",
+         *   "delivery_address_details": "Delivery address details",
+         *   "delivery_address_city": "Paris",
+         *   "delivery_address_country": "France",
+         *   "delivery_address_country_code": "FR",
+         *   "delivery_address_latitude": "48.856614",
+         *   "delivery_address_longitude": "2.3522219",
+         *   "pickup_planned_datetime_range": {
+         *     "datetime_from": "2021-01-01T00:00:00Z",
+         *     "datetime_to": "2021-01-01T00:00:00Z"
+         *   },
+         *   "delivery_planned_datetime_range": {
+         *     "datetime_from": "2021-01-01T00:00:00Z",
+         *     "datetime_to": "2021-01-01T00:00:00Z"
+         *   },
+         *   "pickup_effective_execution_date": "2021-01-01T00:00:00Z",
+         *   "delivery_effective_execution_date": "2021-01-01T00:00:00Z",
+         *   "created_at": "2021-01-01T00:00:00Z",
+         *   "updated_at": "2021-01-01T00:00:00Z"
+         * }
+         */
+        export interface OutputTransport {
+            /**
+             * Id
+             * The transport ID
+             */
+            id?: string; // uuid
+            status: /**
+             * TransportStatusEnum
+             * Transport status enum.
+             */
+            RessourcesTransportsModelsTransportStatusEnum;
+            /**
+             * Comment
+             * The transport comment
+             */
+            comment?: string;
+            /**
+             * Carrier Id
+             * The carrier ID
+             */
+            carrier_id?: string; // uuid
+            /**
+             * Carrier Name
+             */
+            carrier_name?: string;
+            /**
+             * Carrier Phone Number
+             */
+            carrier_phone_number?: string;
+            /**
+             * Pickup Address Name
+             * Address name for the pickup location
+             */
+            pickup_address_name?: string;
+            /**
+             * Pickup Address Company
+             * Company name of the pickup address.
+             */
+            pickup_address_company?: string;
+            /**
+             * Pickup Address Address Line 1
+             * Line of the pickup address.
+             */
+            pickup_address_address_line_1?: string;
+            /**
+             * Pickup Address Zip Code
+             * Postal code of the pickup address.
+             */
+            pickup_address_zip_code?: string;
+            /**
+             * Pickup Address Details
+             * Pickup contact information.
+             */
+            pickup_address_details?: string;
+            /**
+             * Pickup Address City
+             * City of the pickup address.
+             */
+            pickup_address_city?: string;
+            /**
+             * Pickup Address Country
+             * Country of the pickup address.<br />Deprecated, use `pickup_address_country_code` instead.
+             */
+            pickup_address_country?: string;
+            /**
+             * Pickup Address Country Code
+             * Country code (ISO 3166-1 alpha-2) of the pickup address.
+             */
+            pickup_address_country_code?: string; // ^[A-Z]{2}$
+            /**
+             * Pickup Address Latitude
+             * Latitude of the pickup address.
+             */
+            pickup_address_latitude?: string;
+            /**
+             * Pickup Address Longitude
+             * Longitude of the pickup address.
+             */
+            pickup_address_longitude?: string;
+            /**
+             * Delivery Address Name
+             * Address name for the delivery location
+             */
+            delivery_address_name?: string;
+            /**
+             * Delivery Address Company
+             * Company name of the pickup address.
+             */
+            delivery_address_company?: string;
+            /**
+             * Delivery Address Address Line 1
+             * Line of the delivery address.
+             */
+            delivery_address_address_line_1?: string;
+            /**
+             * Delivery Address Zip Code
+             * Postal code of the delivery address.
+             */
+            delivery_address_zip_code?: string;
+            /**
+             * Delivery Address Details
+             * Delivery contact information.
+             */
+            delivery_address_details?: string;
+            /**
+             * Delivery Address City
+             * City of the delivery address.
+             */
+            delivery_address_city?: string;
+            /**
+             * Delivery Address Country
+             * Country of the delivery address.<br />Deprecated, use `delivery_address_country_code` instead.
+             */
+            delivery_address_country?: string;
+            /**
+             * Delivery Address Country Code
+             * Country code (ISO 3166-1 alpha-2) of the delivery address.
+             */
+            delivery_address_country_code?: string; // ^[A-Z]{2}$
+            /**
+             * Delivery Address Latitude
+             * Latitude of the delivery address.
+             */
+            delivery_address_latitude?: string;
+            /**
+             * Delivery Address Longitude
+             * Longitude of the delivery address.
+             */
+            delivery_address_longitude?: string;
+            /**
+             * Pickup Planned Datetime Range
+             * The pickup planned datetime range
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            pickup_planned_datetime_range?: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Delivery Planned Datetime Range
+             * The delivery planned datetime range
+             * example:
+             * {
+             *   "datetime_from": "2021-05-31T12:00:00.000Z",
+             *   "datetime_to": "2021-05-31T16:00:00.000Z"
+             * }
+             */
+            delivery_planned_datetime_range?: {
+                /**
+                 * Datetime From
+                 */
+                datetime_from?: string; // date-time
+                /**
+                 * Datetime To
+                 */
+                datetime_to?: string; // date-time
+            };
+            /**
+             * Pickup Effective Execution Date
+             * The pickup effective execution date
+             */
+            pickup_effective_execution_date?: string; // date-time
+            /**
+             * Delivery Effective Execution Date
+             * The delivery effective execution date
+             */
+            delivery_effective_execution_date?: string; // date-time
+            /**
+             * Created At
+             * The transport creation date
+             */
+            created_at?: string; // date-time
+            /**
+             * Updated At
+             * The transport last update date
+             */
+            updated_at?: string; // date-time
+        }
+        /**
          * OutputWarehouseMasterItemStock
          */
         export interface OutputWarehouseMasterItemStock {
@@ -5152,6 +7780,50 @@ declare namespace Components {
              * }
              */
             OutputBatch[];
+        }
+        /**
+         * PaginationResponseModel[OutputCarrier]
+         */
+        export interface PaginationResponseModelOutputCarrier {
+            /**
+             * Total
+             */
+            total: number;
+            /**
+             * First
+             */
+            first?: string;
+            /**
+             * Last
+             */
+            last?: string;
+            /**
+             * Next
+             */
+            next?: string;
+            /**
+             * Prev
+             */
+            prev?: string;
+            /**
+             * Items
+             */
+            items: /**
+             * OutputCarrier
+             * example:
+             * {
+             *   "id": "45a1d586-2615-4137-a59b-e2bf1ac6db12",
+             *   "company": "Compagny 001",
+             *   "siret": "07325009000013",
+             *   "address_line1": "7 rue Bernard Palissy",
+             *   "address_city": "Toulouse",
+             *   "address_zip": "31000",
+             *   "address_country": "France",
+             *   "address_lat": "43.546600",
+             *   "address_lng": "1.444700"
+             * }
+             */
+            OutputCarrier[];
         }
         /**
          * PaginationResponseModel[OutputInventoryAdjustement]
@@ -5535,10 +8207,88 @@ declare namespace Components {
             items: /* OutputSscc */ OutputSscc[];
         }
         /**
+         * PaginationResponseModel[OutputTransport]
+         */
+        export interface PaginationResponseModelOutputTransport {
+            /**
+             * Total
+             */
+            total: number;
+            /**
+             * First
+             */
+            first?: string;
+            /**
+             * Last
+             */
+            last?: string;
+            /**
+             * Next
+             */
+            next?: string;
+            /**
+             * Prev
+             */
+            prev?: string;
+            /**
+             * Items
+             */
+            items: /**
+             * OutputTransport
+             * example:
+             * {
+             *   "id": "5ac167e9-08c9-4b69-b8dc-3ab5bc500001",
+             *   "status": "AT_PICKUP_LOCATION",
+             *   "comment": "Comment",
+             *   "carrier_id": "5ac167e9-08c9-4b69-b8dc-3ab5bc500001",
+             *   "carrier_name": "Carrier 001",
+             *   "carrier_phone_number": "+33600000000",
+             *   "pickup_address_name": "Pickup address name",
+             *   "pickup_address_company": "Pickup address company",
+             *   "pickup_address_address_line_1": "Pickup address line 1",
+             *   "pickup_address_zip_code": "75001",
+             *   "pickup_address_details": "Pickup address details",
+             *   "pickup_address_city": "Paris",
+             *   "pickup_address_country": "France",
+             *   "pickup_address_country_code": "FR",
+             *   "pickup_address_latitude": "48.856614",
+             *   "pickup_address_longitude": "2.3522219",
+             *   "delivery_address_name": "Delivery address name",
+             *   "delivery_address_company": "Delivery address company",
+             *   "delivery_address_address_line_1": "Delivery address line 1",
+             *   "delivery_address_zip_code": "75001",
+             *   "delivery_address_details": "Delivery address details",
+             *   "delivery_address_city": "Paris",
+             *   "delivery_address_country": "France",
+             *   "delivery_address_country_code": "FR",
+             *   "delivery_address_latitude": "48.856614",
+             *   "delivery_address_longitude": "2.3522219",
+             *   "pickup_planned_datetime_range": {
+             *     "datetime_from": "2021-01-01T00:00:00Z",
+             *     "datetime_to": "2021-01-01T00:00:00Z"
+             *   },
+             *   "delivery_planned_datetime_range": {
+             *     "datetime_from": "2021-01-01T00:00:00Z",
+             *     "datetime_to": "2021-01-01T00:00:00Z"
+             *   },
+             *   "pickup_effective_execution_date": "2021-01-01T00:00:00Z",
+             *   "delivery_effective_execution_date": "2021-01-01T00:00:00Z",
+             *   "created_at": "2021-01-01T00:00:00Z",
+             *   "updated_at": "2021-01-01T00:00:00Z"
+             * }
+             */
+            OutputTransport[];
+        }
+        /**
          * TransportStatusEnum
          * Transport status enum.
          */
         export type RessourcesSharedTransportStatusEnum = "NOT_MANAGED_BY_SPACEFILL" | "DRAFT" | "SCHEDULED" | "DELIVERED" | "AT_PICKUP_LOCATION" | "PICKUP_COMPLETED" | "DELIVERY_IN_PROGRESS" | "AT_DELIVERY_LOCATION" | "PICKUP_MISSED" | "DELIVERY_MISSED" | "CANCELED";
+        /**
+         * TransportStatusEnum
+         * Transport status enum.
+         */
+        export type RessourcesTransportsModelsTransportStatusEnum = "NOT_MANAGED_BY_SPACEFILL" | "DRAFT" | "SCHEDULED" | "DELIVERED" | "AT_PICKUP_LOCATION" | "PICKUP_COMPLETED" | "DELIVERY_IN_PROGRESS" | "AT_DELIVERY_LOCATION" | "PICKUP_MISSED" | "DELIVERY_MISSED" | "CANCELED";
         /**
          * ValidationError
          */
@@ -5559,6 +8309,36 @@ declare namespace Components {
     }
 }
 declare namespace Paths {
+    namespace GetV1CarrierListV1TransportManagementCarriersGet {
+        namespace Parameters {
+            /**
+             * Limit
+             * The number of records to retrieve.
+             */
+            export type Limit = number;
+            /**
+             * Offset
+             * Starting position or index of the first record to be retrieved in a result.
+             */
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            offset?: /**
+             * Offset
+             * Starting position or index of the first record to be retrieved in a result.
+             */
+            Parameters.Offset;
+            limit?: /**
+             * Limit
+             * The number of records to retrieve.
+             */
+            Parameters.Limit;
+        }
+        namespace Responses {
+            export type $200 = /* PaginationResponseModel[OutputCarrier] */ Components.Schemas.PaginationResponseModelOutputCarrier;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
     namespace GetV1LogisticManagementBatchListV1LogisticManagementBatchesGet {
         namespace Parameters {
             /**
@@ -6721,6 +9501,423 @@ declare namespace Paths {
             export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
         }
     }
+    namespace GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentActionV1LogisticManagementOrdersOrderIdShipperAcknowledgesReceiptOfAdjustmentActionPost {
+        namespace Parameters {
+            /**
+             * Order Id
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /* Order Id */ Parameters.OrderId /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace GetV1LogisticManagementShipperRescheduleOrderActionV1LogisticManagementOrdersOrderIdShipperRescheduleOrderActionPost {
+        namespace Parameters {
+            /**
+             * Order Id
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /* Order Id */ Parameters.OrderId /* uuid */;
+        }
+        export type RequestBody = /**
+         * DateTimeRange
+         * example:
+         * {
+         *   "datetime_from": "2021-05-31T12:00:00.000Z",
+         *   "datetime_to": "2021-05-31T16:00:00.000Z"
+         * }
+         */
+        Components.Schemas.DateTimeRange;
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace GetV1LogisticManagementShipperSuggestsPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdShipperSuggestsPlannedExecutionDateActionPost {
+        namespace Parameters {
+            /**
+             * Order Id
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /* Order Id */ Parameters.OrderId /* uuid */;
+        }
+        export type RequestBody = /**
+         * DateTimeRange
+         * example:
+         * {
+         *   "datetime_from": "2021-05-31T12:00:00.000Z",
+         *   "datetime_to": "2021-05-31T16:00:00.000Z"
+         * }
+         */
+        Components.Schemas.DateTimeRange;
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
     namespace GetV1LogisticManagementSsccListV1LogisticManagementSerialShippingContainerCodesGet {
         namespace Parameters {
             /**
@@ -6936,6 +10133,314 @@ declare namespace Paths {
             export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
         }
     }
+    namespace GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdWarehouseConfirmsPlannedExecutionDatePost {
+        namespace Parameters {
+            /**
+             * Order Id
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /* Order Id */ Parameters.OrderId /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdWarehouseDeclinesPlannedExecutionDateActionPost {
+        namespace Parameters {
+            /**
+             * Comment
+             */
+            export type Comment = string;
+            /**
+             * Order Id
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /* Order Id */ Parameters.OrderId /* uuid */;
+        }
+        export interface QueryParameters {
+            comment: /* Comment */ Parameters.Comment;
+        }
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace GetV1PingV1PingGet {
+        namespace Responses {
+            export type $200 = any;
+        }
+    }
+    namespace GetV1TransportsV1TransportManagementTransportsGet {
+        namespace Parameters {
+            /**
+             * Limit
+             * The number of records to retrieve.
+             */
+            export type Limit = number;
+            /**
+             * Offset
+             * Starting position or index of the first record to be retrieved in a result.
+             */
+            export type Offset = number;
+        }
+        export interface QueryParameters {
+            offset?: /**
+             * Offset
+             * Starting position or index of the first record to be retrieved in a result.
+             */
+            Parameters.Offset;
+            limit?: /**
+             * Limit
+             * The number of records to retrieve.
+             */
+            Parameters.Limit;
+        }
+        namespace Responses {
+            export type $200 = /* PaginationResponseModel[OutputTransport] */ Components.Schemas.PaginationResponseModelOutputTransport;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
     namespace PatchV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPatch {
         namespace Parameters {
             /**
@@ -7147,6 +10652,152 @@ declare namespace Paths {
             export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
         }
     }
+    namespace PatchV1TransportStatusV1TransportManagementTransportsTransportIdPatch {
+        namespace Parameters {
+            /**
+             * Transport Id
+             * The transport ID
+             */
+            export type TransportId = string; // uuid
+        }
+        export interface PathParameters {
+            transport_id: /**
+             * Transport Id
+             * The transport ID
+             */
+            Parameters.TransportId /* uuid */;
+        }
+        export type RequestBody = /**
+         * InputTransportModel
+         * example:
+         * {
+         *   "status": "AT_PICKUP_LOCATION",
+         *   "status_updated_at": "2021-01-01T00:00:00Z"
+         * }
+         */
+        Components.Schemas.InputTransportModel;
+        namespace Responses {
+            export type $200 = /**
+             * OutputTransport
+             * example:
+             * {
+             *   "id": "5ac167e9-08c9-4b69-b8dc-3ab5bc500001",
+             *   "status": "AT_PICKUP_LOCATION",
+             *   "comment": "Comment",
+             *   "carrier_id": "5ac167e9-08c9-4b69-b8dc-3ab5bc500001",
+             *   "carrier_name": "Carrier 001",
+             *   "carrier_phone_number": "+33600000000",
+             *   "pickup_address_name": "Pickup address name",
+             *   "pickup_address_company": "Pickup address company",
+             *   "pickup_address_address_line_1": "Pickup address line 1",
+             *   "pickup_address_zip_code": "75001",
+             *   "pickup_address_details": "Pickup address details",
+             *   "pickup_address_city": "Paris",
+             *   "pickup_address_country": "France",
+             *   "pickup_address_country_code": "FR",
+             *   "pickup_address_latitude": "48.856614",
+             *   "pickup_address_longitude": "2.3522219",
+             *   "delivery_address_name": "Delivery address name",
+             *   "delivery_address_company": "Delivery address company",
+             *   "delivery_address_address_line_1": "Delivery address line 1",
+             *   "delivery_address_zip_code": "75001",
+             *   "delivery_address_details": "Delivery address details",
+             *   "delivery_address_city": "Paris",
+             *   "delivery_address_country": "France",
+             *   "delivery_address_country_code": "FR",
+             *   "delivery_address_latitude": "48.856614",
+             *   "delivery_address_longitude": "2.3522219",
+             *   "pickup_planned_datetime_range": {
+             *     "datetime_from": "2021-01-01T00:00:00Z",
+             *     "datetime_to": "2021-01-01T00:00:00Z"
+             *   },
+             *   "delivery_planned_datetime_range": {
+             *     "datetime_from": "2021-01-01T00:00:00Z",
+             *     "datetime_to": "2021-01-01T00:00:00Z"
+             *   },
+             *   "pickup_effective_execution_date": "2021-01-01T00:00:00Z",
+             *   "delivery_effective_execution_date": "2021-01-01T00:00:00Z",
+             *   "created_at": "2021-01-01T00:00:00Z",
+             *   "updated_at": "2021-01-01T00:00:00Z"
+             * }
+             */
+            Components.Schemas.OutputTransport;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1AsyncLogisticManagementInventoryAdjustementV1AsyncLogisticManagementInventoryAdjustmentsPost {
+        namespace Parameters {
+            /**
+             * Set To Zero Missing Master Items
+             * Set this parameter to true to set all master_items in stock not in inventory_adjustement_items field list to zero
+             */
+            export type SetToZeroMissingMasterItems = boolean;
+        }
+        export interface QueryParameters {
+            set_to_zero_missing_master_items?: /**
+             * Set To Zero Missing Master Items
+             * Set this parameter to true to set all master_items in stock not in inventory_adjustement_items field list to zero
+             */
+            Parameters.SetToZeroMissingMasterItems;
+        }
+        export type RequestBody = /**
+         * InputPostInventoryAdjustement
+         * example:
+         * {
+         *   "shipper_account_id": "2f8b8f84-dedd-43d7-9b3d-54a6aa32dfce",
+         *   "warehouse_id": "33505a58-7875-40a4-8fb9-ff4ca591e1a6",
+         *   "edi_erp_warehouse_id": "string",
+         *   "edi_wms_warehouse_id": "string",
+         *   "edi_tms_warehouse_id": "string",
+         *   "edi_erp_shipper_id": "string",
+         *   "edi_wms_shipper_id": "string",
+         *   "edi_tms_shipper_id": "string",
+         *   "comment": "Some products have been found and other have been lost",
+         *   "inventory_adjustement_items": [
+         *     {
+         *       "master_item_id": "7df9d108-ad99-47f8-92fd-25cf46babf16",
+         *       "batch_name": "batch nb 0001",
+         *       "position": 1,
+         *       "item_packaging_type": "PALLET",
+         *       "actual_quantity_in_stock": 3,
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "sscc_id": "df549cb3-4c37-4010-ac5f-361ed5185d30"
+         *     },
+         *     {
+         *       "master_item_id": "b0ab07d8-c1eb-4ca9-9175-df3a76c79608",
+         *       "batch_id": "7ebfea97-648e-4623-82d7-e5b76805cf6b",
+         *       "batch_name": "batch nb 0001",
+         *       "position": 2,
+         *       "item_packaging_type": "EACH",
+         *       "actual_difference_quantity": 32,
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "sscc_id": "c1398ccc-708f-4cb0-b0c6-b741818af782"
+         *     },
+         *     {
+         *       "master_item_id": "5d01237d-6f0e-419b-a919-9bd969884e95",
+         *       "batch_id": "3f49f7fe-fe71-4375-85cd-9dfda8905114",
+         *       "batch_name": "batch nb 0001",
+         *       "position": 3,
+         *       "item_packaging_type": "EACH",
+         *       "actual_difference_quantity": -7,
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "sscc_id": "dec6583c-5ac7-46c8-b61f-75e89b51d03d"
+         *     }
+         *   ]
+         * }
+         */
+        Components.Schemas.InputPostInventoryAdjustement;
+        namespace Responses {
+            export type $200 = /* AsyncResponse */ Components.Schemas.AsyncResponse;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
     namespace PostV1LogisticManagementBatchV1LogisticManagementBatchesPost {
         export type RequestBody = /**
          * InputPostBatch
@@ -7182,6 +10833,167 @@ declare namespace Paths {
              * }
              */
             Components.Schemas.OutputBatch;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementCreateWebhookWebhookV1LogisticManagementOrdersHooksPost {
+        namespace Parameters {
+            /**
+             * Target Url
+             */
+            export type TargetUrl = string;
+        }
+        export interface QueryParameters {
+            target_url: /* Target Url */ Parameters.TargetUrl;
+        }
+        namespace Responses {
+            export type $200 = any;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementEventV1LogisticManagementEventsPost {
+        export type RequestBody = /* InputPostEvent */ Components.Schemas.InputPostEvent;
+        namespace Responses {
+            /**
+             * Response Post V1 Logistic Management Event V1 Logistic Management Events  Post
+             */
+            export interface $200 {
+            }
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementInventoryAdjustementV1LogisticManagementInventoryAdjustmentsPost {
+        namespace Parameters {
+            /**
+             * Set To Zero Missing Master Items
+             * Set this parameter to true to set all master_items in stock not in inventory_adjustement_items field list to zero
+             */
+            export type SetToZeroMissingMasterItems = boolean;
+        }
+        export interface QueryParameters {
+            set_to_zero_missing_master_items?: /**
+             * Set To Zero Missing Master Items
+             * Set this parameter to true to set all master_items in stock not in inventory_adjustement_items field list to zero
+             */
+            Parameters.SetToZeroMissingMasterItems;
+        }
+        export type RequestBody = /**
+         * InputPostInventoryAdjustement
+         * example:
+         * {
+         *   "shipper_account_id": "2f8b8f84-dedd-43d7-9b3d-54a6aa32dfce",
+         *   "warehouse_id": "33505a58-7875-40a4-8fb9-ff4ca591e1a6",
+         *   "edi_erp_warehouse_id": "string",
+         *   "edi_wms_warehouse_id": "string",
+         *   "edi_tms_warehouse_id": "string",
+         *   "edi_erp_shipper_id": "string",
+         *   "edi_wms_shipper_id": "string",
+         *   "edi_tms_shipper_id": "string",
+         *   "comment": "Some products have been found and other have been lost",
+         *   "inventory_adjustement_items": [
+         *     {
+         *       "master_item_id": "7df9d108-ad99-47f8-92fd-25cf46babf16",
+         *       "batch_name": "batch nb 0001",
+         *       "position": 1,
+         *       "item_packaging_type": "PALLET",
+         *       "actual_quantity_in_stock": 3,
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "sscc_id": "df549cb3-4c37-4010-ac5f-361ed5185d30"
+         *     },
+         *     {
+         *       "master_item_id": "b0ab07d8-c1eb-4ca9-9175-df3a76c79608",
+         *       "batch_id": "7ebfea97-648e-4623-82d7-e5b76805cf6b",
+         *       "batch_name": "batch nb 0001",
+         *       "position": 2,
+         *       "item_packaging_type": "EACH",
+         *       "actual_difference_quantity": 32,
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "sscc_id": "c1398ccc-708f-4cb0-b0c6-b741818af782"
+         *     },
+         *     {
+         *       "master_item_id": "5d01237d-6f0e-419b-a919-9bd969884e95",
+         *       "batch_id": "3f49f7fe-fe71-4375-85cd-9dfda8905114",
+         *       "batch_name": "batch nb 0001",
+         *       "position": 3,
+         *       "item_packaging_type": "EACH",
+         *       "actual_difference_quantity": -7,
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "sscc_id": "dec6583c-5ac7-46c8-b61f-75e89b51d03d"
+         *     }
+         *   ]
+         * }
+         */
+        Components.Schemas.InputPostInventoryAdjustement;
+        namespace Responses {
+            export type $200 = /**
+             * OutputInventoryAdjustement
+             * example:
+             * {
+             *   "id": "6f726d52-e1dc-4870-b0ed-7a777e83ba3e",
+             *   "iid": "ADJ-20220504-001",
+             *   "shipper_account_id": "2f8b8f84-dedd-43d7-9b3d-54a6aa32dfce",
+             *   "warehouse_id": "33505a58-7875-40a4-8fb9-ff4ca591e1a6",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "comment": "Some products have been found and other have been lost",
+             *   "adjustment_date": "2022-05-04 17:00:00",
+             *   "created_at": "2022-05-04 17:00.00",
+             *   "created_by": "08a55b13-6844-42d4-aad6-6d296d6d893c",
+             *   "updated_at": "2022-04-27T15:03:07.845Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "inventory_adjustement_items": [
+             *     {
+             *       "id": "81d6e772-3268-4d15-bfe0-7dd6da32ec0a",
+             *       "master_item_id": "7df9d108-ad99-47f8-92fd-25cf46babf16",
+             *       "edi_erp_id": "third erp master item is",
+             *       "edi_wms_id": "third wms master item is",
+             *       "edi_tms_id": "third tms master item is",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "initial_quantity": 3,
+             *       "difference_quantity": 1,
+             *       "sscc_id": "2cb7587b-6c9e-48a6-b0aa-d39f640276ce"
+             *     },
+             *     {
+             *       "id": "b77b5d64-e765-496d-beb5-0f0add15ffab",
+             *       "master_item_id": "b0ab07d8-c1eb-4ca9-9175-df3a76c79608",
+             *       "edi_erp_id": "third erp master item is",
+             *       "edi_wms_id": "third wms master item is",
+             *       "edi_tms_id": "third tms master item is",
+             *       "batch_id": "7ebfea97-648e-4623-82d7-e5b76805cf6b",
+             *       "position": 2,
+             *       "item_packaging_type": "EACH",
+             *       "initial_quantity": 40,
+             *       "difference_quantity": 72,
+             *       "sscc_id": "649e09cf-0ff2-43f2-ac17-a51eec7ff815"
+             *     },
+             *     {
+             *       "id": "f2d4d94e-2dac-4167-a66c-37010fec5e25",
+             *       "master_item_id": "5d01237d-6f0e-419b-a919-9bd969884e95",
+             *       "edi_erp_id": "third erp master item is",
+             *       "edi_wms_id": "third wms master item is",
+             *       "edi_tms_id": "third tms master item is",
+             *       "batch_id": "3f49f7fe-fe71-4375-85cd-9dfda8905114",
+             *       "position": 3,
+             *       "item_packaging_type": "EACH",
+             *       "initial_quantity": 10,
+             *       "difference_quantity": 3,
+             *       "sscc_id": "a896670c-7b15-475a-b632-414dc2bf0fa6"
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputInventoryAdjustement;
             export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
         }
     }
@@ -7381,6 +11193,2235 @@ declare namespace Paths {
             export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
         }
     }
+    namespace PostV1LogisticManagementShipperCancelsOrderActionV1LogisticManagementOrdersOrderIdShipperCancelsOrderActionPost {
+        namespace Parameters {
+            /**
+             * Order Id
+             * Order main identifier.
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /**
+             * Order Id
+             * Order main identifier.
+             */
+            Parameters.OrderId /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementShipperCreateEntryOrderActionV1LogisticManagementOrdersEntryPost {
+        export type RequestBody = /**
+         * InputOrderEntry
+         * example:
+         * {
+         *   "id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "shipper_order_reference": "REF_01",
+         *   "warehouse_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_erp_warehouse_id": "string",
+         *   "edi_wms_warehouse_id": "string",
+         *   "edi_tms_warehouse_id": "string",
+         *   "comment": "Additional comment",
+         *   "planned_execution_datetime_range": {
+         *     "datetime_from": "2025-09-28T14:12:41.538Z",
+         *     "datetime_to": "2025-09-28T15:12:41.538Z"
+         *   },
+         *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "entry_expeditor": "string",
+         *   "entry_expeditor_address_line1": "string",
+         *   "entry_expeditor_address_zip": "string",
+         *   "entry_expeditor_address_details": "string",
+         *   "entry_expeditor_address_city": "string",
+         *   "entry_expeditor_address_country_code": "string",
+         *   "entry_expeditor_address_lat": "12.0001",
+         *   "entry_expeditor_address_lng": "12.0001",
+         *   "entry_expeditor_planned_datetime_range": {
+         *     "datetime_from": "2025-09-28T14:12:41.538Z",
+         *     "datetime_to": "2025-09-28T15:12:41.538Z"
+         *   },
+         *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
+         *   "metadata": {
+         *     "key": "value"
+         *   },
+         *   "order_items": [
+         *     {
+         *       "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_name": "batch nb 0001",
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "item_packaging_type": "PALLET",
+         *       "expected_quantity": 1,
+         *       "custom_fields": {
+         *         "key1": "Value",
+         *         "key2": "Value"
+         *       }
+         *     }
+         *   ]
+         * }
+         */
+        Components.Schemas.InputOrderEntry;
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementShipperCreateOrUpdateDraftOrderActionV1LogisticManagementOrdersShipperCreateOrUpdateDraftOrderActionPost {
+        export type RequestBody = /**
+         * InputOrderDraft
+         * example:
+         * {
+         *   "id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "order_type": "ENTRY",
+         *   "shipper_order_reference": "REF_01",
+         *   "warehouse_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "comment": "Additional comment",
+         *   "planned_execution_datetime_range": {
+         *     "datetime_from": "2025-09-28T14:12:41.538Z",
+         *     "datetime_to": "2025-09-28T15:12:41.538Z"
+         *   },
+         *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "entry_expeditor": "string",
+         *   "entry_expeditor_address_line1": "string",
+         *   "entry_expeditor_address_line2": "string",
+         *   "entry_expeditor_address_line3": "string",
+         *   "entry_expeditor_address_zip": "string",
+         *   "entry_expeditor_address_details": "string",
+         *   "entry_expeditor_address_city": "string",
+         *   "entry_expeditor_address_country_code": "string",
+         *   "entry_expeditor_address_lat": "12.0001",
+         *   "entry_expeditor_address_lng": "12.0001",
+         *   "entry_expeditor_planned_datetime_range": {
+         *     "datetime_from": "2025-09-28T14:12:41.538Z",
+         *     "datetime_to": "2025-09-28T15:12:41.538Z"
+         *   },
+         *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_erp_warehouse_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_wms_warehouse_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_tms_warehouse_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
+         *   "metadata": {
+         *     "key": "value"
+         *   },
+         *   "order_items": [
+         *     {
+         *       "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "item_packaging_type": "PALLET",
+         *       "expected_quantity": 1,
+         *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+         *       "serial_shipping_container_code": "xxxxxxxx",
+         *       "custom_fields": {
+         *         "key1": "Value",
+         *         "key2": "Value"
+         *       }
+         *     }
+         *   ]
+         * }
+         */
+        Components.Schemas.InputOrderDraft;
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementShipperCreatesOrderExitActionV1LogisticManagementOrdersExitPost {
+        export type RequestBody = /**
+         * InputOrderExit
+         * example:
+         * {
+         *   "id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "shipper_order_reference": "REF_01",
+         *   "warehouse_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_erp_warehouse_id": "string",
+         *   "edi_wms_warehouse_id": "string",
+         *   "edi_tms_warehouse_id": "string",
+         *   "comment": "Additional comment",
+         *   "planned_execution_datetime_range": {
+         *     "datetime_from": "2025-09-28T15:12:41.538Z",
+         *     "datetime_to": "2025-09-28T15:12:41.538Z"
+         *   },
+         *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "exit_final_recipient": "string",
+         *   "exit_final_recipient_address_line1": "string",
+         *   "exit_final_recipient_address_zip": "string",
+         *   "exit_final_recipient_address_details": "string",
+         *   "exit_final_recipient_address_city": "string",
+         *   "exit_final_recipient_address_country_code": "string",
+         *   "exit_final_recipient_address_lat": "12.34",
+         *   "exit_final_recipient_address_lng": "2.34",
+         *   "exit_final_recipient_planned_datetime_range": {
+         *     "datetime_from": "2025-09-28T15:12:41.538Z",
+         *     "datetime_to": "2025-09-28T15:12:41.538Z"
+         *   },
+         *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
+         *   "metadata": {
+         *     "key": "value"
+         *   },
+         *   "order_items": [
+         *     {
+         *       "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_name": "batch nb0001",
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "item_packaging_type": "PALLET",
+         *       "expected_quantity": 1,
+         *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+         *       "serial_shipping_container_code": "xxxxxxxx",
+         *       "custom_fields": {
+         *         "key1": "Value",
+         *         "key2": "Value"
+         *       }
+         *     }
+         *   ]
+         * }
+         */
+        Components.Schemas.InputOrderExit;
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementShipperUpdatesOrderActionV1LogisticManagementOrdersOrderIdShipperUpdatesOrderActionPost {
+        namespace Parameters {
+            /**
+             * Order Id
+             * Order main identifier.
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /**
+             * Order Id
+             * Order main identifier.
+             */
+            Parameters.OrderId /* uuid */;
+        }
+        export type RequestBody = /**
+         * InputShipperUpdateOrderAction
+         * example:
+         * {
+         *   "entry_expeditor_planned_datetime_range": {
+         *     "datetime_from": "2022-05-27T13:22:47.917Z",
+         *     "datetime_to": "2022-05-27T13:22:47.917Z"
+         *   },
+         *   "exit_final_recipient_planned_datetime_range": {
+         *     "datetime_from": "2022-04-28T15:05:55.935Z",
+         *     "datetime_to": "2022-04-28T15:05:55.935Z"
+         *   },
+         *   "comment": "string",
+         *   "tms_status": "string",
+         *   "shipper_order_reference": "string",
+         *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
+         *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
+         *   "order_items": {
+         *     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+         *     "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+         *     "item_packaging_type": "PALLET",
+         *     "expected_quantity": 1,
+         *     "custom_fields": {
+         *       "key1": "value1",
+         *       "key2": "value2"
+         *     }
+         *   }
+         * }
+         */
+        Components.Schemas.InputShipperUpdateOrderAction;
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementShipperValidateDraftOrderActionV1LogisticManagementOrdersOrderIdShipperValidateDraftOrderActionPost {
+        namespace Parameters {
+            /**
+             * Order Id
+             * Order main identifier.
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /**
+             * Order Id
+             * Order main identifier.
+             */
+            Parameters.OrderId /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderActionV1LogisticManagementOrdersOrderIdWarehouseAcknowledgesReceiptOfOrderActionPost {
+        namespace Parameters {
+            /**
+             * Order Id
+             * Order main identifier.
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /**
+             * Order Id
+             * Order main identifier.
+             */
+            Parameters.OrderId /* uuid */;
+        }
+        export type RequestBody = /* Body_post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action_v1_logistic_management_orders__order_id__warehouse_acknowledges_receipt_of_order_action_post */ Components.Schemas.BodyPostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderActionV1LogisticManagementOrdersOrderIdWarehouseAcknowledgesReceiptOfOrderActionPost;
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedActionV1LogisticManagementOrdersOrderIdWarehouseAdjustStockAfterOrderIsCompletedActionPost {
+        namespace Parameters {
+            /**
+             * Order Id
+             * Order main identifier.
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /**
+             * Order Id
+             * Order main identifier.
+             */
+            Parameters.OrderId /* uuid */;
+        }
+        export type RequestBody = /* Body_post_v1_logistic_management_warehouse_adjust_stock_after_order_is_completed_action_v1_logistic_management_orders__order_id__warehouse_adjust_stock_after_order_is_completed_action_post */ Components.Schemas.BodyPostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedActionV1LogisticManagementOrdersOrderIdWarehouseAdjustStockAfterOrderIsCompletedActionPost;
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementWarehouseCreatesOrderActionV1LogisticManagementOrdersWarehouseCreatesOrderActionPost {
+        export type RequestBody = /**
+         * InputWarehouseCreatesOrderAction
+         * example:
+         * {
+         *   "id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "shipper_account_id": "1de9c987-08ab-32fe-e218-89c124cd0001",
+         *   "warehouse_id": "d8bdc728-242b-4039-99a3-0aa239650001",
+         *   "planned_execution_datetime_range": {
+         *     "datetime_from": "2022-05-11T06:00:00.000Z",
+         *     "datetime_to": "2022-05-11T10:00:00.000Z"
+         *   },
+         *   "order_type": "ENTRY",
+         *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "comment": "string",
+         *   "shipper_order_reference": "string",
+         *   "entry_expeditor_planned_datetime_range": {
+         *     "datetime_from": "2022-05-11T06:00:00.000Z",
+         *     "datetime_to": "2022-05-11T10:00:00.000Z"
+         *   },
+         *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "edi_erp_warehouse_id": "string",
+         *   "edi_wms_warehouse_id": "string",
+         *   "edi_tms_warehouse_id": "string",
+         *   "edi_erp_shipper_id": "string",
+         *   "edi_wms_shipper_id": "string",
+         *   "edi_tms_shipper_id": "string",
+         *   "entry_expeditor": "Name 0001",
+         *   "entry_expeditor_address_line1": "29 rue poissonière",
+         *   "entry_expeditor_address_zip": "75009",
+         *   "entry_expeditor_address_details": "some details about the customer address",
+         *   "entry_expeditor_address_city": "Paris",
+         *   "entry_expeditor_address_country_code": "FR",
+         *   "entry_expeditor_address_lat": "48.843900",
+         *   "entry_expeditor_address_lng": "2.358800",
+         *   "entry_expeditor_customer_address_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "exit_final_recipient": "Name 0001",
+         *   "exit_final_recipient_address_line1": "29 rue poissonière",
+         *   "exit_final_recipient_address_zip": "75009",
+         *   "exit_final_recipient_address_details": "some details about the customer address",
+         *   "exit_final_recipient_address_city": "Paris",
+         *   "exit_final_recipient_address_country_code": "FR",
+         *   "exit_final_recipient_address_lat": "48.843900",
+         *   "exit_final_recipient_address_lng": "2.358800",
+         *   "exit_final_recipient_customer_address_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *   "order_items": [
+         *     {
+         *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+         *       "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_name": "batch nb 1",
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "item_packaging_type": "PALLET",
+         *       "expected_quantity": 10,
+         *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+         *       "serial_shipping_container_code": "xxxxxxxx",
+         *       "custom_fields": {
+         *         "key1": "Value",
+         *         "key2": "Value"
+         *       }
+         *     },
+         *     {
+         *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+         *       "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_name": "batch nb 1",
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "item_packaging_type": "CARDBOARD_BOX",
+         *       "expected_quantity": 5,
+         *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+         *       "serial_shipping_container_code": "xxxxxxxx",
+         *       "custom_fields": {
+         *         "key1": "Value",
+         *         "key2": "Value"
+         *       }
+         *     },
+         *     {
+         *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+         *       "batch_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+         *       "batch_name": "batch nb 1",
+         *       "batch_edi_erp_id": "BAT-E0001",
+         *       "batch_edi_wms_id": "BAT-W0001",
+         *       "batch_edi_tms_id": "BAT-T0001",
+         *       "item_packaging_type": "EACH",
+         *       "expected_quantity": 1,
+         *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+         *       "serial_shipping_container_code": "xxxxxxxx",
+         *       "custom_fields": {
+         *         "key1": "Value",
+         *         "key2": "Value"
+         *       }
+         *     }
+         *   ]
+         * }
+         */
+        Components.Schemas.InputWarehouseCreatesOrderAction;
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorActionV1LogisticManagementOrdersOrderIdWarehouseEmitsOrderReceiptErrorActionPost {
+        namespace Parameters {
+            /**
+             * Comment
+             */
+            export type Comment = string;
+            /**
+             * Order Id
+             * Order main identifier.
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /**
+             * Order Id
+             * Order main identifier.
+             */
+            Parameters.OrderId /* uuid */;
+        }
+        export interface QueryParameters {
+            comment?: /* Comment */ Parameters.Comment;
+        }
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementWarehouseFinishesPreparationActionV1LogisticManagementOrdersOrderIdWarehouseFinishesPreparationActionPost {
+        namespace Parameters {
+            /**
+             * Order Id
+             * Order main identifier.
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /**
+             * Order Id
+             * Order main identifier.
+             */
+            Parameters.OrderId /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementWarehouseFinishesUnloadingActionV1LogisticManagementOrdersOrderIdWarehouseFinishesUnloadingActionPost {
+        namespace Parameters {
+            /**
+             * Order Id
+             * Order main identifier.
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /**
+             * Order Id
+             * Order main identifier.
+             */
+            Parameters.OrderId /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementWarehouseStartsPreparationActionV1LogisticManagementOrdersOrderIdWarehouseStartsPreparationActionPost {
+        namespace Parameters {
+            /**
+             * Order Id
+             * Order main identifier.
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /**
+             * Order Id
+             * Order main identifier.
+             */
+            Parameters.OrderId /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PostV1LogisticManagementWarehouseStartsUnloadingActionV1LogisticManagementOrdersOrderIdWarehouseStartsUnloadingActionPost {
+        namespace Parameters {
+            /**
+             * Order Id
+             * Order main identifier.
+             */
+            export type OrderId = string; // uuid
+        }
+        export interface PathParameters {
+            order_id: /**
+             * Order Id
+             * Order main identifier.
+             */
+            Parameters.OrderId /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = /**
+             * OutputOrder
+             * example:
+             * {
+             *   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "iid": "string",
+             *   "shipper_order_reference": "string",
+             *   "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "warehouse_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_shipper_id": "string",
+             *   "edi_wms_shipper_id": "string",
+             *   "edi_tms_shipper_id": "string",
+             *   "edi_erp_warehouse_id": "string",
+             *   "edi_wms_warehouse_id": "string",
+             *   "edi_tms_warehouse_id": "string",
+             *   "order_type": "ENTRY",
+             *   "status": "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE",
+             *   "comment": "string",
+             *   "planned_execution_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "effective_executed_at": "2022-05-17T09:37:15.337Z",
+             *   "transport_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_phone_number": "+33611111111",
+             *   "transport_name": "John Doe",
+             *   "transport_status": "SCHEDULED",
+             *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "transport_carrier_company": "ACME",
+             *   "transport_carrier_phone_number": "+33611111111",
+             *   "transport_carrier_email": "support@acme.example",
+             *   "entry_expeditor": "string",
+             *   "entry_expeditor_company": "string",
+             *   "entry_expeditor_address_line1": "string",
+             *   "entry_expeditor_address_zip": "string",
+             *   "entry_expeditor_address_details": "string",
+             *   "entry_expeditor_address_city": "string",
+             *   "entry_expeditor_address_country_code": "string",
+             *   "entry_expeditor_address_lat": "string",
+             *   "entry_expeditor_address_lng": "string",
+             *   "entry_expeditor_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "exit_final_recipient": "string",
+             *   "exit_final_recipient_company": "string",
+             *   "exit_final_recipient_address_line1": "string",
+             *   "exit_final_recipient_address_zip": "string",
+             *   "exit_final_recipient_address_details": "string",
+             *   "exit_final_recipient_address_city": "string",
+             *   "exit_final_recipient_address_country_code": "string",
+             *   "exit_final_recipient_address_lat": "string",
+             *   "exit_final_recipient_address_lng": "string",
+             *   "exit_final_recipient_planned_datetime_range": {
+             *     "datetime_from": "2022-05-17T09:37:15.337Z",
+             *     "datetime_to": "2022-05-17T09:37:15.337Z"
+             *   },
+             *   "edi_erp_id": "string",
+             *   "edi_wms_id": "string",
+             *   "edi_tms_id": "string",
+             *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
+             *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
+             *   "created_at": "2022-05-17T09:37:15.337Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-05-17T09:37:15.337Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "metadata": {},
+             *   "documents": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "name": "string",
+             *       "type": [
+             *         "string"
+             *       ],
+             *       "created_at": "2022-05-17T09:37:15.337Z"
+             *     }
+             *   ],
+             *   "is_unfulfillable": false,
+             *   "order_items": [
+             *     {
+             *       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *       "master_item_id": "13acc10a-a6ab-4099-b600-fb33fa6c0001",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "batch_name": "batch nb 0004",
+             *       "batch_edi_erp_id": "BAT-E0004",
+             *       "batch_edi_wms_id": "BAT-W0004",
+             *       "batch_edi_tms_id": "BAT-T0004",
+             *       "batch_id": "2a701f4a-0de9-46d2-bdb2-6c45af2df334",
+             *       "position": 1,
+             *       "item_packaging_type": "PALLET",
+             *       "expected_quantity": 1,
+             *       "actual_quantity": 0,
+             *       "custom_fields": {
+             *         "key1": "Value",
+             *         "key2": "Value"
+             *       }
+             *     },
+             *     {
+             *       "id": "dd16a6fb-e940-4fd8-a5a0-7276bcf3dd12",
+             *       "master_item_id": "0d64acd0-e8b2-406c-891f-e5df8d01d5b0",
+             *       "edi_erp_id": "third erp master item id",
+             *       "edi_wms_id": "third wms master item id",
+             *       "edi_tms_id": "third tms master item id",
+             *       "position": 2,
+             *       "item_packaging_type": "CARDBOARD_BOX",
+             *       "expected_quantity": 1,
+             *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
+             *       "serial_shipping_container_code": "xxxxxxxx",
+             *       "custom_fields": {
+             *         "key2": "Value"
+             *       }
+             *     }
+             *   ]
+             * }
+             */
+            Components.Schemas.OutputOrder;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
+    namespace PutV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdPut {
+        namespace Parameters {
+            /**
+             * Batch Id
+             */
+            export type BatchId = string; // uuid
+        }
+        export interface PathParameters {
+            batch_id: /* Batch Id */ Parameters.BatchId /* uuid */;
+        }
+        export type RequestBody = /**
+         * InputPutBatch
+         * example:
+         * {
+         *   "name": "batch nb0001",
+         *   "batch_edi_erp_id": "BAT-E0001",
+         *   "batch_edi_wms_id": "BAT-W0001",
+         *   "batch_edi_tms_id": "BAT-T0001"
+         * }
+         */
+        Components.Schemas.InputPutBatch;
+        namespace Responses {
+            export type $200 = /**
+             * OutputBatch
+             * example:
+             * {
+             *   "id": "6f726d52-e1dc-4870-b0ed-7a777e83ba3e",
+             *   "name": "batch nb0001",
+             *   "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+             *   "created_at": "2022-04-27T15:02:42.599Z",
+             *   "created_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "updated_at": "2022-04-27T15:03:07.845Z",
+             *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+             *   "edi_erp_id": "BAT-E0001",
+             *   "edi_wms_id": "BAT-W0001",
+             *   "edi_tms_id": "BAT-T0001"
+             * }
+             */
+            Components.Schemas.OutputBatch;
+            export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+        }
+    }
     namespace PutV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPut {
         namespace Parameters {
             /**
@@ -7506,79 +13547,101 @@ declare namespace Paths {
             export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
         }
     }
+    namespace RootRedirectGet {
+        namespace Responses {
+            export interface $307 {
+            }
+        }
+    }
 }
 
 export interface OperationMethods {
   /**
+   * root_redirect__get - Redirect to docs
+   */
+  'root_redirect__get'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<any>
+  /**
+   * get_v1_ping_v1_ping_get - Ping API Rest
+   */
+  'get_v1_ping_v1_ping_get'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.GetV1PingV1PingGet.Responses.$200>
+  /**
    * get_v1_logistic_management_master_item_list_v1_logistic_management_master_items__get - List references
-   * 
+   *
    * List and filter <<glossary:reference>>s.
    */
   'get_v1_logistic_management_master_item_list_v1_logistic_management_master_items__get'(
     parameters?: Parameters<Paths.GetV1LogisticManagementMasterItemListV1LogisticManagementMasterItemsGet.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementMasterItemListV1LogisticManagementMasterItemsGet.Responses.$200>
   /**
    * post_v1_logistic_management_master_item_v1_logistic_management_master_items__post - Create a reference
-   * 
+   *
    * Create a <<glossary:reference>>.
-   * 
+   *
    * > 🚧 Avoiding conflict:
    * >
    * > Setting a value for the `each_quantity_by_pallet` field conflicts with the values of the `cardboard_box_quantity_by_pallet` and `each_quantity_by_cardboard_box` fields.
    * > Furthermore, you should set a value to `each_quantity_by_cardboard_box` when setting a value to `cardboard_box_quantity_by_pallet`.
-   * 
+   *
    * > Reference creation is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly to prevent anomalies.
    */
   'post_v1_logistic_management_master_item_v1_logistic_management_master_items__post'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementMasterItemV1LogisticManagementMasterItemsPost.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementMasterItemV1LogisticManagementMasterItemsPost.Responses.$200>
   /**
    * get_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___get - View a reference
-   * 
+   *
    * View the details of a <<glossary:reference>> with current and forecasted stock quantities.
    */
   'get_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___get'(
     parameters?: Parameters<Paths.GetV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdGet.PathParameters & Paths.GetV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdGet.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdGet.Responses.$200>
   /**
    * put_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___put - Replace a reference
-   * 
+   *
    * Replace all the fields of a <<glossary:reference>>, if the transfered_to_xxx_at and metadata fields are missing, it will be replaced by null.
-   * 
+   *
    * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
    */
   'put_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___put'(
     parameters?: Parameters<Paths.PutV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPut.PathParameters> | null,
     data?: Paths.PutV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPut.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PutV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPut.Responses.$200>
   /**
    * patch_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___patch - Update a reference
-   * 
+   *
    * Update one or several fields of a <<glossary:reference>> without overwriting existing fields.
-   * 
+   *
    * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
    */
   'patch_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___patch'(
     parameters?: Parameters<Paths.PatchV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPatch.PathParameters> | null,
     data?: Paths.PatchV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPatch.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PatchV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPatch.Responses.$200>
   /**
    * get_v1_logistic_management_batch_list_v1_logistic_management_batches__get - List batches
-   * 
+   *
    * List and filter <<glossary:batch>>es.
    */
   'get_v1_logistic_management_batch_list_v1_logistic_management_batches__get'(
     parameters?: Parameters<Paths.GetV1LogisticManagementBatchListV1LogisticManagementBatchesGet.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementBatchListV1LogisticManagementBatchesGet.Responses.$200>
   /**
    * post_v1_logistic_management_batch_v1_logistic_management_batches__post - Create a batch
@@ -7586,55 +13649,107 @@ export interface OperationMethods {
   'post_v1_logistic_management_batch_v1_logistic_management_batches__post'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementBatchV1LogisticManagementBatchesPost.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementBatchV1LogisticManagementBatchesPost.Responses.$200>
   /**
    * get_v1_logistic_management_batch_v1_logistic_management_batches__batch_id___get - View a batch
-   * 
+   *
    * View the details of a <<glossary:batch>> with current stock quantities.
    */
   'get_v1_logistic_management_batch_v1_logistic_management_batches__batch_id___get'(
     parameters?: Parameters<Paths.GetV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdGet.PathParameters & Paths.GetV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdGet.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdGet.Responses.$200>
   /**
+   * put_v1_logistic_management_batch_v1_logistic_management_batches__batch_id___put - Replace Batch resource
+   */
+  'put_v1_logistic_management_batch_v1_logistic_management_batches__batch_id___put'(
+    parameters?: Parameters<Paths.PutV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdPut.PathParameters> | null,
+    data?: Paths.PutV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdPut.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PutV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdPut.Responses.$200>
+  /**
    * get_v1_logistic_management_order_list_v1_logistic_management_orders__get - List orders
-   * 
+   *
    * List and filter <<glossary:order>>s.
    */
   'get_v1_logistic_management_order_list_v1_logistic_management_orders__get'(
     parameters?: Parameters<Paths.GetV1LogisticManagementOrderListV1LogisticManagementOrdersGet.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementOrderListV1LogisticManagementOrdersGet.Responses.$200>
   /**
    * get_v1_logistic_management_order_v1_logistic_management_orders__order_id___get - View an order
-   * 
+   *
    * View the details of an order and all order items associated.
    */
   'get_v1_logistic_management_order_v1_logistic_management_orders__order_id___get'(
     parameters?: Parameters<Paths.GetV1LogisticManagementOrderV1LogisticManagementOrdersOrderIdGet.PathParameters & Paths.GetV1LogisticManagementOrderV1LogisticManagementOrdersOrderIdGet.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementOrderV1LogisticManagementOrdersOrderIdGet.Responses.$200>
   /**
    * patch_v1_logistic_management_order_v1_logistic_management_orders__order_id___patch - Update an order
-   * 
+   *
    * Update one or several fields of <<glossary:order>>.
    */
   'patch_v1_logistic_management_order_v1_logistic_management_orders__order_id___patch'(
     parameters?: Parameters<Paths.PatchV1LogisticManagementOrderV1LogisticManagementOrdersOrderIdPatch.PathParameters> | null,
     data?: Paths.PatchV1LogisticManagementOrderV1LogisticManagementOrdersOrderIdPatch.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PatchV1LogisticManagementOrderV1LogisticManagementOrdersOrderIdPatch.Responses.$200>
+  /**
+   * post_v1_logistic_management_shipper_create_entry_order_action_v1_logistic_management_orders_entry__post - Create an entry order
+   *
+   * Create an <<glossary:entry order>>.
+   * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
+   *
+   * ```
+   * entry_expeditor
+   * entry_expeditor_address_line1
+   * entry_expeditor_address_zip
+   * entry_expeditor_address_city
+   * entry_expeditor_address_country
+   * entry_expeditor_address_country_code
+   * ```
+   *
+   * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
+   */
+  'post_v1_logistic_management_shipper_create_entry_order_action_v1_logistic_management_orders_entry__post'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: Paths.PostV1LogisticManagementShipperCreateEntryOrderActionV1LogisticManagementOrdersEntryPost.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateEntryOrderActionV1LogisticManagementOrdersEntryPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_shipper_creates_order_exit_action_v1_logistic_management_orders_exit__post - Create an exit order
+   *
+   * Create an <<glossary:exit order>>.
+   * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
+   *
+   * ```
+   * exit_final_recipient
+   * exit_final_recipient_address_line1
+   * exit_final_recipient_address_zip
+   * exit_final_recipient_address_city
+   * exit_final_recipient_address_country
+   * exit_final_recipient_address_country_code
+   * ```
+   *
+   * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
+   */
+  'post_v1_logistic_management_shipper_creates_order_exit_action_v1_logistic_management_orders_exit__post'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: Paths.PostV1LogisticManagementShipperCreatesOrderExitActionV1LogisticManagementOrdersExitPost.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementShipperCreatesOrderExitActionV1LogisticManagementOrdersExitPost.Responses.$200>
   /**
    * get_v1_logistic_management_order_documents_list_v1_logistic_management_orders__order_id__documents_get - List order documents
    */
   'get_v1_logistic_management_order_documents_list_v1_logistic_management_orders__order_id__documents_get'(
     parameters?: Parameters<Paths.GetV1LogisticManagementOrderDocumentsListV1LogisticManagementOrdersOrderIdDocumentsGet.PathParameters & Paths.GetV1LogisticManagementOrderDocumentsListV1LogisticManagementOrdersOrderIdDocumentsGet.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementOrderDocumentsListV1LogisticManagementOrdersOrderIdDocumentsGet.Responses.$200>
   /**
    * get_v1_logistic_management_order_download_document_v1_logistic_management_orders__order_id__documents__document_id__download_get - Download a document
@@ -7642,7 +13757,7 @@ export interface OperationMethods {
   'get_v1_logistic_management_order_download_document_v1_logistic_management_orders__order_id__documents__document_id__download_get'(
     parameters?: Parameters<Paths.GetV1LogisticManagementOrderDownloadDocumentV1LogisticManagementOrdersOrderIdDocumentsDocumentIdDownloadGet.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementOrderDownloadDocumentV1LogisticManagementOrdersOrderIdDocumentsDocumentIdDownloadGet.Responses.$200>
   /**
    * post_v1_logistic_management_order_upload_document_v1_logistic_management_orders__order_id__documents__post - Attach document to an order
@@ -7650,23 +13765,284 @@ export interface OperationMethods {
   'post_v1_logistic_management_order_upload_document_v1_logistic_management_orders__order_id__documents__post'(
     parameters?: Parameters<Paths.PostV1LogisticManagementOrderUploadDocumentV1LogisticManagementOrdersOrderIdDocumentsPost.PathParameters> | null,
     data?: Paths.PostV1LogisticManagementOrderUploadDocumentV1LogisticManagementOrdersOrderIdDocumentsPost.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementOrderUploadDocumentV1LogisticManagementOrdersOrderIdDocumentsPost.Responses.$200>
+  /**
+   * get_v1_logistic_management_warehouse_confirms_planned_execution_date_action_v1_logistic_management_orders__order_id__warehouse_confirms_planned_execution_date_post - With this endpoint, the warehouse/logistic-provider user can confirm the planned execution date proposed by the shipper user
+   */
+  'get_v1_logistic_management_warehouse_confirms_planned_execution_date_action_v1_logistic_management_orders__order_id__warehouse_confirms_planned_execution_date_post'(
+    parameters?: Parameters<Paths.GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdWarehouseConfirmsPlannedExecutionDatePost.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdWarehouseConfirmsPlannedExecutionDatePost.Responses.$200>
+  /**
+   * post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action_v1_logistic_management_orders__order_id__warehouse_acknowledges_receipt_of_order_action_post - Acknowledge reception of an order
+   *
+   * Confirm receipt or exit of the <<glossary:order>> to the <<glossary:Shipper>>.
+   */
+  'post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action_v1_logistic_management_orders__order_id__warehouse_acknowledges_receipt_of_order_action_post'(
+    parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderActionV1LogisticManagementOrdersOrderIdWarehouseAcknowledgesReceiptOfOrderActionPost.PathParameters> | null,
+    data?: Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderActionV1LogisticManagementOrdersOrderIdWarehouseAcknowledgesReceiptOfOrderActionPost.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderActionV1LogisticManagementOrdersOrderIdWarehouseAcknowledgesReceiptOfOrderActionPost.Responses.$200>
+  /**
+   * get_v1_logistic_management_shipper_acknowledges_receipt_of_adjustment_action_v1_logistic_management_orders__order_id__shipper_acknowledges_receipt_of_adjustment_action_post - With this endpoint, a shipper-user can acknowledge that the order items have been updated by the warehouse after order completion
+   */
+  'get_v1_logistic_management_shipper_acknowledges_receipt_of_adjustment_action_v1_logistic_management_orders__order_id__shipper_acknowledges_receipt_of_adjustment_action_post'(
+    parameters?: Parameters<Paths.GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentActionV1LogisticManagementOrdersOrderIdShipperAcknowledgesReceiptOfAdjustmentActionPost.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentActionV1LogisticManagementOrdersOrderIdShipperAcknowledgesReceiptOfAdjustmentActionPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_shipper_cancels_order_action_v1_logistic_management_orders__order_id__shipper_cancels_order_action_post - Cancel an order
+   */
+  'post_v1_logistic_management_shipper_cancels_order_action_v1_logistic_management_orders__order_id__shipper_cancels_order_action_post'(
+    parameters?: Parameters<Paths.PostV1LogisticManagementShipperCancelsOrderActionV1LogisticManagementOrdersOrderIdShipperCancelsOrderActionPost.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementShipperCancelsOrderActionV1LogisticManagementOrdersOrderIdShipperCancelsOrderActionPost.Responses.$200>
+  /**
+   * get_v1_logistic_management_shipper_reschedule_order_action_v1_logistic_management_orders__order_id__shipper_reschedule_order_action_post - With this endpoint, a shipper-user can reschedule a planned order
+   */
+  'get_v1_logistic_management_shipper_reschedule_order_action_v1_logistic_management_orders__order_id__shipper_reschedule_order_action_post'(
+    parameters?: Parameters<Paths.GetV1LogisticManagementShipperRescheduleOrderActionV1LogisticManagementOrdersOrderIdShipperRescheduleOrderActionPost.PathParameters> | null,
+    data?: Paths.GetV1LogisticManagementShipperRescheduleOrderActionV1LogisticManagementOrdersOrderIdShipperRescheduleOrderActionPost.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.GetV1LogisticManagementShipperRescheduleOrderActionV1LogisticManagementOrdersOrderIdShipperRescheduleOrderActionPost.Responses.$200>
+  /**
+   * get_v1_logistic_management_shipper_suggests_planned_execution_date_action_v1_logistic_management_orders__order_id__shipper_suggests_planned_execution_date_action_post - With this endpoint, a shipper-user can reschedule an order whose previous planned execution date has been refused by the warehouse/logistic-provider-user
+   */
+  'get_v1_logistic_management_shipper_suggests_planned_execution_date_action_v1_logistic_management_orders__order_id__shipper_suggests_planned_execution_date_action_post'(
+    parameters?: Parameters<Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdShipperSuggestsPlannedExecutionDateActionPost.PathParameters> | null,
+    data?: Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdShipperSuggestsPlannedExecutionDateActionPost.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdShipperSuggestsPlannedExecutionDateActionPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_shipper_updates_order_action_v1_logistic_management_orders__order_id__shipper_updates_order_action_post - Update an order
+   *
+   * Update an <<glossary:entry order>> or <<glossary:exit order>>. You will be able to validate the draft later.
+   *
+   * The accepted fields depend on the `order_type` field:
+   *
+   * - If you need to update an <<glossary:entry order>>, please use the dedicated fields that start with `entry_expeditor_` to specify the sender information.
+   *
+   * - If you need to update an <<glossary:exit order>>, please use the dedicated fields that start with `exit_final_recipient_` to specify the final recipient information.
+   *
+   * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
+   *
+   * ```
+   * entry_expeditor
+   * entry_expeditor_address_line1
+   * entry_expeditor_address_zip
+   * entry_expeditor_address_city
+   * entry_expeditor_address_country
+   * entry_expeditor_address_country_code
+   * ```
+   *
+   * OR
+   *
+   * ```
+   * exit_final_recipient
+   * exit_final_recipient_address_line1
+   * exit_final_recipient_address_zip
+   * exit_final_recipient_address_city
+   * exit_final_recipient_address_country
+   * ```
+   *
+   * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
+   */
+  'post_v1_logistic_management_shipper_updates_order_action_v1_logistic_management_orders__order_id__shipper_updates_order_action_post'(
+    parameters?: Parameters<Paths.PostV1LogisticManagementShipperUpdatesOrderActionV1LogisticManagementOrdersOrderIdShipperUpdatesOrderActionPost.PathParameters> | null,
+    data?: Paths.PostV1LogisticManagementShipperUpdatesOrderActionV1LogisticManagementOrdersOrderIdShipperUpdatesOrderActionPost.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementShipperUpdatesOrderActionV1LogisticManagementOrdersOrderIdShipperUpdatesOrderActionPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_warehouse_adjust_stock_after_order_is_completed_action_v1_logistic_management_orders__order_id__warehouse_adjust_stock_after_order_is_completed_action_post - Adjust stock after order completion
+   */
+  'post_v1_logistic_management_warehouse_adjust_stock_after_order_is_completed_action_v1_logistic_management_orders__order_id__warehouse_adjust_stock_after_order_is_completed_action_post'(
+    parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedActionV1LogisticManagementOrdersOrderIdWarehouseAdjustStockAfterOrderIsCompletedActionPost.PathParameters> | null,
+    data?: Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedActionV1LogisticManagementOrdersOrderIdWarehouseAdjustStockAfterOrderIsCompletedActionPost.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedActionV1LogisticManagementOrdersOrderIdWarehouseAdjustStockAfterOrderIsCompletedActionPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_warehouse_creates_order_action_v1_logistic_management_orders_warehouse_creates_order_action_post - Create an order
+   *
+   * Create an <<glossary:order>>. The accepted fields depend on the `order_type` field:
+   * - If you need to create an <<glossary:entry order>>, you need to use the fields that start with `entry_expeditor_` to specify the sender information.
+   * - If you need to create an <<glossary:exit order>>, you need to use the fields that start with `exit_final_recipient_` to specify the final recipient information.
+   *
+   * If the following fields correspond to an existing address in the shipper [address-book](https://app.spacefill.fr/settings/address-book/):
+   *
+   * ```
+   * entry_expeditor_address_line1
+   * entry_expeditor_address_zip
+   * entry_expeditor_address_city
+   * entry_expeditor_address_country
+   * entry_expeditor_address_country_code
+   * ```
+   *
+   * OR
+   *
+   * ```
+   * exit_final_recipient_address_line1
+   * exit_final_recipient_address_zip
+   * exit_final_recipient_address_city
+   * exit_final_recipient_address_country
+   * exit_final_recipient_address_country_code
+   * ```
+   *
+   * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
+   */
+  'post_v1_logistic_management_warehouse_creates_order_action_v1_logistic_management_orders_warehouse_creates_order_action_post'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: Paths.PostV1LogisticManagementWarehouseCreatesOrderActionV1LogisticManagementOrdersWarehouseCreatesOrderActionPost.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementWarehouseCreatesOrderActionV1LogisticManagementOrdersWarehouseCreatesOrderActionPost.Responses.$200>
+  /**
+   * get_v1_logistic_management_warehouse_declines_planned_execution_date_action_v1_logistic_management_orders__order_id__warehouse_declines_planned_execution_date_action_post - With this endpoint, the warehouse/logistic-provider user can notify the shipper-user that the planned execution date is not available
+   */
+  'get_v1_logistic_management_warehouse_declines_planned_execution_date_action_v1_logistic_management_orders__order_id__warehouse_declines_planned_execution_date_action_post'(
+    parameters?: Parameters<Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdWarehouseDeclinesPlannedExecutionDateActionPost.PathParameters & Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdWarehouseDeclinesPlannedExecutionDateActionPost.QueryParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdWarehouseDeclinesPlannedExecutionDateActionPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_warehouse_emits_order_receipt_error_action_v1_logistic_management_orders__order_id__warehouse_emits_order_receipt_error_action_post - Order not received
+   *
+   * Inform the <<glossary:shipper>> that the <<glossary:order>> has not been received.
+   */
+  'post_v1_logistic_management_warehouse_emits_order_receipt_error_action_v1_logistic_management_orders__order_id__warehouse_emits_order_receipt_error_action_post'(
+    parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorActionV1LogisticManagementOrdersOrderIdWarehouseEmitsOrderReceiptErrorActionPost.PathParameters & Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorActionV1LogisticManagementOrdersOrderIdWarehouseEmitsOrderReceiptErrorActionPost.QueryParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorActionV1LogisticManagementOrdersOrderIdWarehouseEmitsOrderReceiptErrorActionPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_create_webhook_webhook_v1_logistic_management_orders_hooks_post - Create a order webhook
+   */
+  'post_v1_logistic_management_create_webhook_webhook_v1_logistic_management_orders_hooks_post'(
+    parameters?: Parameters<Paths.PostV1LogisticManagementCreateWebhookWebhookV1LogisticManagementOrdersHooksPost.QueryParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementCreateWebhookWebhookV1LogisticManagementOrdersHooksPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_warehouse_starts_unloading_action_v1_logistic_management_orders__order_id__warehouse_starts_unloading_action_post - Order unloading has begun
+   *
+   * Inform the <<glossary:shipper>> that the <<glossary:order>> unloading has begun.
+   */
+  'post_v1_logistic_management_warehouse_starts_unloading_action_v1_logistic_management_orders__order_id__warehouse_starts_unloading_action_post'(
+    parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseStartsUnloadingActionV1LogisticManagementOrdersOrderIdWarehouseStartsUnloadingActionPost.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementWarehouseStartsUnloadingActionV1LogisticManagementOrdersOrderIdWarehouseStartsUnloadingActionPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_warehouse_finishes_unloading_action_v1_logistic_management_orders__order_id__warehouse_finishes_unloading_action_post - Order unloading has ended
+   *
+   * Inform the <<glossary:shipper>> that the <<glossary:order>> unloading has ended.
+   */
+  'post_v1_logistic_management_warehouse_finishes_unloading_action_v1_logistic_management_orders__order_id__warehouse_finishes_unloading_action_post'(
+    parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesUnloadingActionV1LogisticManagementOrdersOrderIdWarehouseFinishesUnloadingActionPost.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesUnloadingActionV1LogisticManagementOrdersOrderIdWarehouseFinishesUnloadingActionPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_warehouse_starts_preparation_action_v1_logistic_management_orders__order_id__warehouse_starts_preparation_action_post - Order preparation has begun
+   *
+   * Inform the <<glossary:shipper>> that the <<glossary:order>> preparation has begun.
+   */
+  'post_v1_logistic_management_warehouse_starts_preparation_action_v1_logistic_management_orders__order_id__warehouse_starts_preparation_action_post'(
+    parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseStartsPreparationActionV1LogisticManagementOrdersOrderIdWarehouseStartsPreparationActionPost.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementWarehouseStartsPreparationActionV1LogisticManagementOrdersOrderIdWarehouseStartsPreparationActionPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_warehouse_finishes_preparation_action_v1_logistic_management_orders__order_id__warehouse_finishes_preparation_action_post - Order preparation has ended
+   *
+   * Inform the <<glossary:shipper>> that the <<glossary:order>> preparation has ended.
+   */
+  'post_v1_logistic_management_warehouse_finishes_preparation_action_v1_logistic_management_orders__order_id__warehouse_finishes_preparation_action_post'(
+    parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesPreparationActionV1LogisticManagementOrdersOrderIdWarehouseFinishesPreparationActionPost.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesPreparationActionV1LogisticManagementOrdersOrderIdWarehouseFinishesPreparationActionPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_shipper_create_or_update_draft_order_action_v1_logistic_management_orders_shipper_create_or_update_draft_order_action_post - Create/update a draft order
+   *
+   * Create/update a draft entry or exit order. You will be able to validate the draft later.
+   *
+   * The accepted fields depend on the `order_type` field:
+   *
+   * - If you need to write an <<glossary:entry order>>, please use the dedicated fields that start with `entry_expeditor_` to specify the sender information.
+   *
+   * - If you need to write an <<glossary:exit order>>, please use the dedicated fields that start with `exit_final_recipient_` to specify the final recipient information.
+   *
+   * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
+   *
+   * ```
+   * entry_expeditor
+   * entry_expeditor_address_line1
+   * entry_expeditor_address_zip
+   * entry_expeditor_address_city
+   * entry_expeditor_address_country
+   * entry_expeditor_address_country_code
+   * ```
+   *
+   * or
+   *
+   * ```
+   * exit_final_recipient
+   * exit_final_recipient_address_line1
+   * exit_final_recipient_address_zip
+   * exit_final_recipient_address_city
+   * exit_final_recipient_address_country
+   * exit_final_recipient_address_country_code
+   * ```
+   *
+   * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
+   */
+  'post_v1_logistic_management_shipper_create_or_update_draft_order_action_v1_logistic_management_orders_shipper_create_or_update_draft_order_action_post'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderActionV1LogisticManagementOrdersShipperCreateOrUpdateDraftOrderActionPost.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderActionV1LogisticManagementOrdersShipperCreateOrUpdateDraftOrderActionPost.Responses.$200>
+  /**
+   * post_v1_logistic_management_shipper_validate_draft_order_action_v1_logistic_management_orders__order_id__shipper_validate_draft_order_action_post - Validate a draft order
+   */
+  'post_v1_logistic_management_shipper_validate_draft_order_action_v1_logistic_management_orders__order_id__shipper_validate_draft_order_action_post'(
+    parameters?: Parameters<Paths.PostV1LogisticManagementShipperValidateDraftOrderActionV1LogisticManagementOrdersOrderIdShipperValidateDraftOrderActionPost.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementShipperValidateDraftOrderActionV1LogisticManagementOrdersOrderIdShipperValidateDraftOrderActionPost.Responses.$200>
   /**
    * get_v1_logistic_management_inventory_adjustement_list_v1_logistic_management_inventory_adjustments__get - List inventory adjustments
    */
   'get_v1_logistic_management_inventory_adjustement_list_v1_logistic_management_inventory_adjustments__get'(
     parameters?: Parameters<Paths.GetV1LogisticManagementInventoryAdjustementListV1LogisticManagementInventoryAdjustmentsGet.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementInventoryAdjustementListV1LogisticManagementInventoryAdjustmentsGet.Responses.$200>
+  /**
+   * post_v1_logistic_management_inventory_adjustement_v1_logistic_management_inventory_adjustments__post - Create an inventory adjustment
+   */
+  'post_v1_logistic_management_inventory_adjustement_v1_logistic_management_inventory_adjustments__post'(
+    parameters?: Parameters<Paths.PostV1LogisticManagementInventoryAdjustementV1LogisticManagementInventoryAdjustmentsPost.QueryParameters> | null,
+    data?: Paths.PostV1LogisticManagementInventoryAdjustementV1LogisticManagementInventoryAdjustmentsPost.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementInventoryAdjustementV1LogisticManagementInventoryAdjustmentsPost.Responses.$200>
+  /**
+   * post_v1_async_logistic_management_inventory_adjustement_v1_async_logistic_management_inventory_adjustments__post - Create an inventory adjustment (asynchronously)
+   */
+  'post_v1_async_logistic_management_inventory_adjustement_v1_async_logistic_management_inventory_adjustments__post'(
+    parameters?: Parameters<Paths.PostV1AsyncLogisticManagementInventoryAdjustementV1AsyncLogisticManagementInventoryAdjustmentsPost.QueryParameters> | null,
+    data?: Paths.PostV1AsyncLogisticManagementInventoryAdjustementV1AsyncLogisticManagementInventoryAdjustmentsPost.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1AsyncLogisticManagementInventoryAdjustementV1AsyncLogisticManagementInventoryAdjustmentsPost.Responses.$200>
   /**
    * get_v1_logistic_management_inventory_adjustement_v1_logistic_management_inventory_adjustments__inventory_adjustment_id___get - View an inventory adjustment
    */
   'get_v1_logistic_management_inventory_adjustement_v1_logistic_management_inventory_adjustments__inventory_adjustment_id___get'(
     parameters?: Parameters<Paths.GetV1LogisticManagementInventoryAdjustementV1LogisticManagementInventoryAdjustmentsInventoryAdjustmentIdGet.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementInventoryAdjustementV1LogisticManagementInventoryAdjustmentsInventoryAdjustmentIdGet.Responses.$200>
   /**
    * get_v1_logistic_management_sscc_list_v1_logistic_management_serial_shipping_container_codes__get - List SSCC informations and stock
@@ -7674,7 +14050,7 @@ export interface OperationMethods {
   'get_v1_logistic_management_sscc_list_v1_logistic_management_serial_shipping_container_codes__get'(
     parameters?: Parameters<Paths.GetV1LogisticManagementSsccListV1LogisticManagementSerialShippingContainerCodesGet.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementSsccListV1LogisticManagementSerialShippingContainerCodesGet.Responses.$200>
   /**
    * get_v1_logistic_management_sscc_total_in_stock_v1_logistic_management_sscc_total_in_stock__get - Get total of SSCC currently in stock
@@ -7682,86 +14058,144 @@ export interface OperationMethods {
   'get_v1_logistic_management_sscc_total_in_stock_v1_logistic_management_sscc_total_in_stock__get'(
     parameters?: Parameters<Paths.GetV1LogisticManagementSsccTotalInStockV1LogisticManagementSsccTotalInStockGet.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementSsccTotalInStockV1LogisticManagementSsccTotalInStockGet.Responses.$200>
+  /**
+   * get_v1_carrier_list_v1_transport_management_carriers__get - List carriers from carriers book and from LSP
+   */
+  'get_v1_carrier_list_v1_transport_management_carriers__get'(
+    parameters?: Parameters<Paths.GetV1CarrierListV1TransportManagementCarriersGet.QueryParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.GetV1CarrierListV1TransportManagementCarriersGet.Responses.$200>
+  /**
+   * get_v1_transports_v1_transport_management_transports_get - Get V1 Transports
+   *
+   * Return all transports for a given carrier
+   */
+  'get_v1_transports_v1_transport_management_transports_get'(
+    parameters?: Parameters<Paths.GetV1TransportsV1TransportManagementTransportsGet.QueryParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.GetV1TransportsV1TransportManagementTransportsGet.Responses.$200>
+  /**
+   * patch_v1_transport_status_v1_transport_management_transports__transport_id__patch - Patch V1 Transport Status
+   *
+   * Update a transport
+   */
+  'patch_v1_transport_status_v1_transport_management_transports__transport_id__patch'(
+    parameters?: Parameters<Paths.PatchV1TransportStatusV1TransportManagementTransportsTransportIdPatch.PathParameters> | null,
+    data?: Paths.PatchV1TransportStatusV1TransportManagementTransportsTransportIdPatch.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PatchV1TransportStatusV1TransportManagementTransportsTransportIdPatch.Responses.$200>
+  /**
+   * post_v1_logistic_management_event_v1_logistic_management_events__post - Post an event
+   *
+   * Post an event.
+   */
+  'post_v1_logistic_management_event_v1_logistic_management_events__post'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: Paths.PostV1LogisticManagementEventV1LogisticManagementEventsPost.RequestBody,
+    config?: AxiosRequestConfig
+  ): OperationResponse<Paths.PostV1LogisticManagementEventV1LogisticManagementEventsPost.Responses.$200>
 }
 
 export interface PathsDictionary {
+  ['/']: {
+    /**
+     * root_redirect__get - Redirect to docs
+     */
+    'get'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<any>
+  }
+  ['/v1/ping']: {
+    /**
+     * get_v1_ping_v1_ping_get - Ping API Rest
+     */
+    'get'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.GetV1PingV1PingGet.Responses.$200>
+  }
   ['/v1/logistic_management/master_items/']: {
     /**
      * get_v1_logistic_management_master_item_list_v1_logistic_management_master_items__get - List references
-     * 
+     *
      * List and filter <<glossary:reference>>s.
      */
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementMasterItemListV1LogisticManagementMasterItemsGet.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementMasterItemListV1LogisticManagementMasterItemsGet.Responses.$200>
     /**
      * post_v1_logistic_management_master_item_v1_logistic_management_master_items__post - Create a reference
-     * 
+     *
      * Create a <<glossary:reference>>.
-     * 
+     *
      * > 🚧 Avoiding conflict:
      * >
      * > Setting a value for the `each_quantity_by_pallet` field conflicts with the values of the `cardboard_box_quantity_by_pallet` and `each_quantity_by_cardboard_box` fields.
      * > Furthermore, you should set a value to `each_quantity_by_cardboard_box` when setting a value to `cardboard_box_quantity_by_pallet`.
-     * 
+     *
      * > Reference creation is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly to prevent anomalies.
      */
     'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementMasterItemV1LogisticManagementMasterItemsPost.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementMasterItemV1LogisticManagementMasterItemsPost.Responses.$200>
   }
   ['/v1/logistic_management/master_items/{master_item_id}/']: {
     /**
      * get_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___get - View a reference
-     * 
+     *
      * View the details of a <<glossary:reference>> with current and forecasted stock quantities.
      */
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdGet.PathParameters & Paths.GetV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdGet.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdGet.Responses.$200>
     /**
      * put_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___put - Replace a reference
-     * 
+     *
      * Replace all the fields of a <<glossary:reference>>, if the transfered_to_xxx_at and metadata fields are missing, it will be replaced by null.
-     * 
+     *
      * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
      */
     'put'(
       parameters?: Parameters<Paths.PutV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPut.PathParameters> | null,
       data?: Paths.PutV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPut.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PutV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPut.Responses.$200>
     /**
      * patch_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___patch - Update a reference
-     * 
+     *
      * Update one or several fields of a <<glossary:reference>> without overwriting existing fields.
-     * 
+     *
      * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
      */
     'patch'(
       parameters?: Parameters<Paths.PatchV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPatch.PathParameters> | null,
       data?: Paths.PatchV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPatch.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PatchV1LogisticManagementMasterItemV1LogisticManagementMasterItemsMasterItemIdPatch.Responses.$200>
   }
   ['/v1/logistic_management/batches/']: {
     /**
      * get_v1_logistic_management_batch_list_v1_logistic_management_batches__get - List batches
-     * 
+     *
      * List and filter <<glossary:batch>>es.
      */
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementBatchListV1LogisticManagementBatchesGet.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementBatchListV1LogisticManagementBatchesGet.Responses.$200>
     /**
      * post_v1_logistic_management_batch_v1_logistic_management_batches__post - Create a batch
@@ -7769,54 +14203,110 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementBatchV1LogisticManagementBatchesPost.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementBatchV1LogisticManagementBatchesPost.Responses.$200>
   }
   ['/v1/logistic_management/batches/{batch_id}/']: {
     /**
      * get_v1_logistic_management_batch_v1_logistic_management_batches__batch_id___get - View a batch
-     * 
+     *
      * View the details of a <<glossary:batch>> with current stock quantities.
      */
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdGet.PathParameters & Paths.GetV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdGet.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdGet.Responses.$200>
+    /**
+     * put_v1_logistic_management_batch_v1_logistic_management_batches__batch_id___put - Replace Batch resource
+     */
+    'put'(
+      parameters?: Parameters<Paths.PutV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdPut.PathParameters> | null,
+      data?: Paths.PutV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdPut.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PutV1LogisticManagementBatchV1LogisticManagementBatchesBatchIdPut.Responses.$200>
   }
   ['/v1/logistic_management/orders/']: {
     /**
      * get_v1_logistic_management_order_list_v1_logistic_management_orders__get - List orders
-     * 
+     *
      * List and filter <<glossary:order>>s.
      */
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementOrderListV1LogisticManagementOrdersGet.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementOrderListV1LogisticManagementOrdersGet.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/']: {
     /**
      * get_v1_logistic_management_order_v1_logistic_management_orders__order_id___get - View an order
-     * 
+     *
      * View the details of an order and all order items associated.
      */
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementOrderV1LogisticManagementOrdersOrderIdGet.PathParameters & Paths.GetV1LogisticManagementOrderV1LogisticManagementOrdersOrderIdGet.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementOrderV1LogisticManagementOrdersOrderIdGet.Responses.$200>
     /**
      * patch_v1_logistic_management_order_v1_logistic_management_orders__order_id___patch - Update an order
-     * 
+     *
      * Update one or several fields of <<glossary:order>>.
      */
     'patch'(
       parameters?: Parameters<Paths.PatchV1LogisticManagementOrderV1LogisticManagementOrdersOrderIdPatch.PathParameters> | null,
       data?: Paths.PatchV1LogisticManagementOrderV1LogisticManagementOrdersOrderIdPatch.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PatchV1LogisticManagementOrderV1LogisticManagementOrdersOrderIdPatch.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/entry/']: {
+    /**
+     * post_v1_logistic_management_shipper_create_entry_order_action_v1_logistic_management_orders_entry__post - Create an entry order
+     *
+     * Create an <<glossary:entry order>>.
+     * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
+     *
+     * ```
+     * entry_expeditor
+     * entry_expeditor_address_line1
+     * entry_expeditor_address_zip
+     * entry_expeditor_address_city
+     * entry_expeditor_address_country
+     * entry_expeditor_address_country_code
+     * ```
+     *
+     * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
+     */
+    'post'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: Paths.PostV1LogisticManagementShipperCreateEntryOrderActionV1LogisticManagementOrdersEntryPost.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateEntryOrderActionV1LogisticManagementOrdersEntryPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/exit/']: {
+    /**
+     * post_v1_logistic_management_shipper_creates_order_exit_action_v1_logistic_management_orders_exit__post - Create an exit order
+     *
+     * Create an <<glossary:exit order>>.
+     * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
+     *
+     * ```
+     * exit_final_recipient
+     * exit_final_recipient_address_line1
+     * exit_final_recipient_address_zip
+     * exit_final_recipient_address_city
+     * exit_final_recipient_address_country
+     * exit_final_recipient_address_country_code
+     * ```
+     *
+     * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
+     */
+    'post'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: Paths.PostV1LogisticManagementShipperCreatesOrderExitActionV1LogisticManagementOrdersExitPost.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementShipperCreatesOrderExitActionV1LogisticManagementOrdersExitPost.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/documents']: {
     /**
@@ -7825,7 +14315,7 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementOrderDocumentsListV1LogisticManagementOrdersOrderIdDocumentsGet.PathParameters & Paths.GetV1LogisticManagementOrderDocumentsListV1LogisticManagementOrdersOrderIdDocumentsGet.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementOrderDocumentsListV1LogisticManagementOrdersOrderIdDocumentsGet.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/documents/{document_id}/download']: {
@@ -7835,7 +14325,7 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementOrderDownloadDocumentV1LogisticManagementOrdersOrderIdDocumentsDocumentIdDownloadGet.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementOrderDownloadDocumentV1LogisticManagementOrdersOrderIdDocumentsDocumentIdDownloadGet.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/documents/']: {
@@ -7845,8 +14335,289 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementOrderUploadDocumentV1LogisticManagementOrdersOrderIdDocumentsPost.PathParameters> | null,
       data?: Paths.PostV1LogisticManagementOrderUploadDocumentV1LogisticManagementOrdersOrderIdDocumentsPost.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementOrderUploadDocumentV1LogisticManagementOrdersOrderIdDocumentsPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/warehouse_confirms_planned_execution_date']: {
+    /**
+     * get_v1_logistic_management_warehouse_confirms_planned_execution_date_action_v1_logistic_management_orders__order_id__warehouse_confirms_planned_execution_date_post - With this endpoint, the warehouse/logistic-provider user can confirm the planned execution date proposed by the shipper user
+     */
+    'post'(
+      parameters?: Parameters<Paths.GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdWarehouseConfirmsPlannedExecutionDatePost.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdWarehouseConfirmsPlannedExecutionDatePost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/warehouse_acknowledges_receipt_of_order_action']: {
+    /**
+     * post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action_v1_logistic_management_orders__order_id__warehouse_acknowledges_receipt_of_order_action_post - Acknowledge reception of an order
+     *
+     * Confirm receipt or exit of the <<glossary:order>> to the <<glossary:Shipper>>.
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderActionV1LogisticManagementOrdersOrderIdWarehouseAcknowledgesReceiptOfOrderActionPost.PathParameters> | null,
+      data?: Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderActionV1LogisticManagementOrdersOrderIdWarehouseAcknowledgesReceiptOfOrderActionPost.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderActionV1LogisticManagementOrdersOrderIdWarehouseAcknowledgesReceiptOfOrderActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/shipper_acknowledges_receipt_of_adjustment_action']: {
+    /**
+     * get_v1_logistic_management_shipper_acknowledges_receipt_of_adjustment_action_v1_logistic_management_orders__order_id__shipper_acknowledges_receipt_of_adjustment_action_post - With this endpoint, a shipper-user can acknowledge that the order items have been updated by the warehouse after order completion
+     */
+    'post'(
+      parameters?: Parameters<Paths.GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentActionV1LogisticManagementOrdersOrderIdShipperAcknowledgesReceiptOfAdjustmentActionPost.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentActionV1LogisticManagementOrdersOrderIdShipperAcknowledgesReceiptOfAdjustmentActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/shipper_cancels_order_action']: {
+    /**
+     * post_v1_logistic_management_shipper_cancels_order_action_v1_logistic_management_orders__order_id__shipper_cancels_order_action_post - Cancel an order
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1LogisticManagementShipperCancelsOrderActionV1LogisticManagementOrdersOrderIdShipperCancelsOrderActionPost.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementShipperCancelsOrderActionV1LogisticManagementOrdersOrderIdShipperCancelsOrderActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/shipper_reschedule_order_action']: {
+    /**
+     * get_v1_logistic_management_shipper_reschedule_order_action_v1_logistic_management_orders__order_id__shipper_reschedule_order_action_post - With this endpoint, a shipper-user can reschedule a planned order
+     */
+    'post'(
+      parameters?: Parameters<Paths.GetV1LogisticManagementShipperRescheduleOrderActionV1LogisticManagementOrdersOrderIdShipperRescheduleOrderActionPost.PathParameters> | null,
+      data?: Paths.GetV1LogisticManagementShipperRescheduleOrderActionV1LogisticManagementOrdersOrderIdShipperRescheduleOrderActionPost.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.GetV1LogisticManagementShipperRescheduleOrderActionV1LogisticManagementOrdersOrderIdShipperRescheduleOrderActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/shipper_suggests_planned_execution_date_action']: {
+    /**
+     * get_v1_logistic_management_shipper_suggests_planned_execution_date_action_v1_logistic_management_orders__order_id__shipper_suggests_planned_execution_date_action_post - With this endpoint, a shipper-user can reschedule an order whose previous planned execution date has been refused by the warehouse/logistic-provider-user
+     */
+    'post'(
+      parameters?: Parameters<Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdShipperSuggestsPlannedExecutionDateActionPost.PathParameters> | null,
+      data?: Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdShipperSuggestsPlannedExecutionDateActionPost.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdShipperSuggestsPlannedExecutionDateActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/shipper_updates_order_action']: {
+    /**
+     * post_v1_logistic_management_shipper_updates_order_action_v1_logistic_management_orders__order_id__shipper_updates_order_action_post - Update an order
+     *
+     * Update an <<glossary:entry order>> or <<glossary:exit order>>. You will be able to validate the draft later.
+     *
+     * The accepted fields depend on the `order_type` field:
+     *
+     * - If you need to update an <<glossary:entry order>>, please use the dedicated fields that start with `entry_expeditor_` to specify the sender information.
+     *
+     * - If you need to update an <<glossary:exit order>>, please use the dedicated fields that start with `exit_final_recipient_` to specify the final recipient information.
+     *
+     * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
+     *
+     * ```
+     * entry_expeditor
+     * entry_expeditor_address_line1
+     * entry_expeditor_address_zip
+     * entry_expeditor_address_city
+     * entry_expeditor_address_country
+     * entry_expeditor_address_country_code
+     * ```
+     *
+     * OR
+     *
+     * ```
+     * exit_final_recipient
+     * exit_final_recipient_address_line1
+     * exit_final_recipient_address_zip
+     * exit_final_recipient_address_city
+     * exit_final_recipient_address_country
+     * ```
+     *
+     * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1LogisticManagementShipperUpdatesOrderActionV1LogisticManagementOrdersOrderIdShipperUpdatesOrderActionPost.PathParameters> | null,
+      data?: Paths.PostV1LogisticManagementShipperUpdatesOrderActionV1LogisticManagementOrdersOrderIdShipperUpdatesOrderActionPost.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementShipperUpdatesOrderActionV1LogisticManagementOrdersOrderIdShipperUpdatesOrderActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/warehouse_adjust_stock_after_order_is_completed_action']: {
+    /**
+     * post_v1_logistic_management_warehouse_adjust_stock_after_order_is_completed_action_v1_logistic_management_orders__order_id__warehouse_adjust_stock_after_order_is_completed_action_post - Adjust stock after order completion
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedActionV1LogisticManagementOrdersOrderIdWarehouseAdjustStockAfterOrderIsCompletedActionPost.PathParameters> | null,
+      data?: Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedActionV1LogisticManagementOrdersOrderIdWarehouseAdjustStockAfterOrderIsCompletedActionPost.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedActionV1LogisticManagementOrdersOrderIdWarehouseAdjustStockAfterOrderIsCompletedActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/warehouse_creates_order_action']: {
+    /**
+     * post_v1_logistic_management_warehouse_creates_order_action_v1_logistic_management_orders_warehouse_creates_order_action_post - Create an order
+     *
+     * Create an <<glossary:order>>. The accepted fields depend on the `order_type` field:
+     * - If you need to create an <<glossary:entry order>>, you need to use the fields that start with `entry_expeditor_` to specify the sender information.
+     * - If you need to create an <<glossary:exit order>>, you need to use the fields that start with `exit_final_recipient_` to specify the final recipient information.
+     *
+     * If the following fields correspond to an existing address in the shipper [address-book](https://app.spacefill.fr/settings/address-book/):
+     *
+     * ```
+     * entry_expeditor_address_line1
+     * entry_expeditor_address_zip
+     * entry_expeditor_address_city
+     * entry_expeditor_address_country
+     * entry_expeditor_address_country_code
+     * ```
+     *
+     * OR
+     *
+     * ```
+     * exit_final_recipient_address_line1
+     * exit_final_recipient_address_zip
+     * exit_final_recipient_address_city
+     * exit_final_recipient_address_country
+     * exit_final_recipient_address_country_code
+     * ```
+     *
+     * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
+     */
+    'post'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: Paths.PostV1LogisticManagementWarehouseCreatesOrderActionV1LogisticManagementOrdersWarehouseCreatesOrderActionPost.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementWarehouseCreatesOrderActionV1LogisticManagementOrdersWarehouseCreatesOrderActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/warehouse_declines_planned_execution_date_action']: {
+    /**
+     * get_v1_logistic_management_warehouse_declines_planned_execution_date_action_v1_logistic_management_orders__order_id__warehouse_declines_planned_execution_date_action_post - With this endpoint, the warehouse/logistic-provider user can notify the shipper-user that the planned execution date is not available
+     */
+    'post'(
+      parameters?: Parameters<Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdWarehouseDeclinesPlannedExecutionDateActionPost.PathParameters & Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdWarehouseDeclinesPlannedExecutionDateActionPost.QueryParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateActionV1LogisticManagementOrdersOrderIdWarehouseDeclinesPlannedExecutionDateActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/warehouse_emits_order_receipt_error_action']: {
+    /**
+     * post_v1_logistic_management_warehouse_emits_order_receipt_error_action_v1_logistic_management_orders__order_id__warehouse_emits_order_receipt_error_action_post - Order not received
+     *
+     * Inform the <<glossary:shipper>> that the <<glossary:order>> has not been received.
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorActionV1LogisticManagementOrdersOrderIdWarehouseEmitsOrderReceiptErrorActionPost.PathParameters & Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorActionV1LogisticManagementOrdersOrderIdWarehouseEmitsOrderReceiptErrorActionPost.QueryParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorActionV1LogisticManagementOrdersOrderIdWarehouseEmitsOrderReceiptErrorActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/hooks']: {
+    /**
+     * post_v1_logistic_management_create_webhook_webhook_v1_logistic_management_orders_hooks_post - Create a order webhook
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1LogisticManagementCreateWebhookWebhookV1LogisticManagementOrdersHooksPost.QueryParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementCreateWebhookWebhookV1LogisticManagementOrdersHooksPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/warehouse_starts_unloading_action']: {
+    /**
+     * post_v1_logistic_management_warehouse_starts_unloading_action_v1_logistic_management_orders__order_id__warehouse_starts_unloading_action_post - Order unloading has begun
+     *
+     * Inform the <<glossary:shipper>> that the <<glossary:order>> unloading has begun.
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseStartsUnloadingActionV1LogisticManagementOrdersOrderIdWarehouseStartsUnloadingActionPost.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementWarehouseStartsUnloadingActionV1LogisticManagementOrdersOrderIdWarehouseStartsUnloadingActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/warehouse_finishes_unloading_action']: {
+    /**
+     * post_v1_logistic_management_warehouse_finishes_unloading_action_v1_logistic_management_orders__order_id__warehouse_finishes_unloading_action_post - Order unloading has ended
+     *
+     * Inform the <<glossary:shipper>> that the <<glossary:order>> unloading has ended.
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesUnloadingActionV1LogisticManagementOrdersOrderIdWarehouseFinishesUnloadingActionPost.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesUnloadingActionV1LogisticManagementOrdersOrderIdWarehouseFinishesUnloadingActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/warehouse_starts_preparation_action']: {
+    /**
+     * post_v1_logistic_management_warehouse_starts_preparation_action_v1_logistic_management_orders__order_id__warehouse_starts_preparation_action_post - Order preparation has begun
+     *
+     * Inform the <<glossary:shipper>> that the <<glossary:order>> preparation has begun.
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseStartsPreparationActionV1LogisticManagementOrdersOrderIdWarehouseStartsPreparationActionPost.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementWarehouseStartsPreparationActionV1LogisticManagementOrdersOrderIdWarehouseStartsPreparationActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/warehouse_finishes_preparation_action']: {
+    /**
+     * post_v1_logistic_management_warehouse_finishes_preparation_action_v1_logistic_management_orders__order_id__warehouse_finishes_preparation_action_post - Order preparation has ended
+     *
+     * Inform the <<glossary:shipper>> that the <<glossary:order>> preparation has ended.
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesPreparationActionV1LogisticManagementOrdersOrderIdWarehouseFinishesPreparationActionPost.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesPreparationActionV1LogisticManagementOrdersOrderIdWarehouseFinishesPreparationActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/shipper_create_or_update_draft_order_action']: {
+    /**
+     * post_v1_logistic_management_shipper_create_or_update_draft_order_action_v1_logistic_management_orders_shipper_create_or_update_draft_order_action_post - Create/update a draft order
+     *
+     * Create/update a draft entry or exit order. You will be able to validate the draft later.
+     *
+     * The accepted fields depend on the `order_type` field:
+     *
+     * - If you need to write an <<glossary:entry order>>, please use the dedicated fields that start with `entry_expeditor_` to specify the sender information.
+     *
+     * - If you need to write an <<glossary:exit order>>, please use the dedicated fields that start with `exit_final_recipient_` to specify the final recipient information.
+     *
+     * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
+     *
+     * ```
+     * entry_expeditor
+     * entry_expeditor_address_line1
+     * entry_expeditor_address_zip
+     * entry_expeditor_address_city
+     * entry_expeditor_address_country
+     * entry_expeditor_address_country_code
+     * ```
+     *
+     * or
+     *
+     * ```
+     * exit_final_recipient
+     * exit_final_recipient_address_line1
+     * exit_final_recipient_address_zip
+     * exit_final_recipient_address_city
+     * exit_final_recipient_address_country
+     * exit_final_recipient_address_country_code
+     * ```
+     *
+     * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
+     */
+    'post'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderActionV1LogisticManagementOrdersShipperCreateOrUpdateDraftOrderActionPost.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderActionV1LogisticManagementOrdersShipperCreateOrUpdateDraftOrderActionPost.Responses.$200>
+  }
+  ['/v1/logistic_management/orders/{order_id}/shipper_validate_draft_order_action']: {
+    /**
+     * post_v1_logistic_management_shipper_validate_draft_order_action_v1_logistic_management_orders__order_id__shipper_validate_draft_order_action_post - Validate a draft order
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1LogisticManagementShipperValidateDraftOrderActionV1LogisticManagementOrdersOrderIdShipperValidateDraftOrderActionPost.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementShipperValidateDraftOrderActionV1LogisticManagementOrdersOrderIdShipperValidateDraftOrderActionPost.Responses.$200>
   }
   ['/v1/logistic_management/inventory_adjustments/']: {
     /**
@@ -7855,8 +14626,26 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementInventoryAdjustementListV1LogisticManagementInventoryAdjustmentsGet.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementInventoryAdjustementListV1LogisticManagementInventoryAdjustmentsGet.Responses.$200>
+    /**
+     * post_v1_logistic_management_inventory_adjustement_v1_logistic_management_inventory_adjustments__post - Create an inventory adjustment
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1LogisticManagementInventoryAdjustementV1LogisticManagementInventoryAdjustmentsPost.QueryParameters> | null,
+      data?: Paths.PostV1LogisticManagementInventoryAdjustementV1LogisticManagementInventoryAdjustmentsPost.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementInventoryAdjustementV1LogisticManagementInventoryAdjustmentsPost.Responses.$200>
+  }
+  ['/v1/async/logistic_management/inventory_adjustments/']: {
+    /**
+     * post_v1_async_logistic_management_inventory_adjustement_v1_async_logistic_management_inventory_adjustments__post - Create an inventory adjustment (asynchronously)
+     */
+    'post'(
+      parameters?: Parameters<Paths.PostV1AsyncLogisticManagementInventoryAdjustementV1AsyncLogisticManagementInventoryAdjustmentsPost.QueryParameters> | null,
+      data?: Paths.PostV1AsyncLogisticManagementInventoryAdjustementV1AsyncLogisticManagementInventoryAdjustmentsPost.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1AsyncLogisticManagementInventoryAdjustementV1AsyncLogisticManagementInventoryAdjustmentsPost.Responses.$200>
   }
   ['/v1/logistic_management/inventory_adjustments/{inventory_adjustment_id}/']: {
     /**
@@ -7865,7 +14654,7 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementInventoryAdjustementV1LogisticManagementInventoryAdjustmentsInventoryAdjustmentIdGet.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementInventoryAdjustementV1LogisticManagementInventoryAdjustmentsInventoryAdjustmentIdGet.Responses.$200>
   }
   ['/v1/logistic_management/serial_shipping_container_codes/']: {
@@ -7875,7 +14664,7 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementSsccListV1LogisticManagementSerialShippingContainerCodesGet.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementSsccListV1LogisticManagementSerialShippingContainerCodesGet.Responses.$200>
   }
   ['/v1/logistic_management/sscc_total_in_stock/']: {
@@ -7885,8 +14674,54 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementSsccTotalInStockV1LogisticManagementSsccTotalInStockGet.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementSsccTotalInStockV1LogisticManagementSsccTotalInStockGet.Responses.$200>
+  }
+  ['/v1/transport_management/carriers/']: {
+    /**
+     * get_v1_carrier_list_v1_transport_management_carriers__get - List carriers from carriers book and from LSP
+     */
+    'get'(
+      parameters?: Parameters<Paths.GetV1CarrierListV1TransportManagementCarriersGet.QueryParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.GetV1CarrierListV1TransportManagementCarriersGet.Responses.$200>
+  }
+  ['/v1/transport_management/transports']: {
+    /**
+     * get_v1_transports_v1_transport_management_transports_get - Get V1 Transports
+     *
+     * Return all transports for a given carrier
+     */
+    'get'(
+      parameters?: Parameters<Paths.GetV1TransportsV1TransportManagementTransportsGet.QueryParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.GetV1TransportsV1TransportManagementTransportsGet.Responses.$200>
+  }
+  ['/v1/transport_management/transports/{transport_id}']: {
+    /**
+     * patch_v1_transport_status_v1_transport_management_transports__transport_id__patch - Patch V1 Transport Status
+     *
+     * Update a transport
+     */
+    'patch'(
+      parameters?: Parameters<Paths.PatchV1TransportStatusV1TransportManagementTransportsTransportIdPatch.PathParameters> | null,
+      data?: Paths.PatchV1TransportStatusV1TransportManagementTransportsTransportIdPatch.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PatchV1TransportStatusV1TransportManagementTransportsTransportIdPatch.Responses.$200>
+  }
+  ['/v1/logistic_management/events/']: {
+    /**
+     * post_v1_logistic_management_event_v1_logistic_management_events__post - Post an event
+     *
+     * Post an event.
+     */
+    'post'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: Paths.PostV1LogisticManagementEventV1LogisticManagementEventsPost.RequestBody,
+      config?: AxiosRequestConfig
+    ): OperationResponse<Paths.PostV1LogisticManagementEventV1LogisticManagementEventsPost.Responses.$200>
   }
 }
 
