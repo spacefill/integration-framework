@@ -5,7 +5,7 @@ const Ajv = AjvModule.default;
 const addFormats = addFormatsModule.default;
 
 import { SchemaInterface } from "./SchemaInterface.ts";
-import Console from "../utils/Console.mts";
+import Console from "../utils/Console.ts";
 
 export abstract class AbstractSchema<T> implements SchemaInterface<T> {
   itemSchemaValidation: object = {};
@@ -20,7 +20,6 @@ export abstract class AbstractSchema<T> implements SchemaInterface<T> {
       items: this.itemSchemaValidation
     };
 
-    // @todo - déplacer cette section dans la classe abstraite
     const ajv = new Ajv();
     addFormats(ajv);
 

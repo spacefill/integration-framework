@@ -1,7 +1,7 @@
 import {temporaryFileTask} from 'tempy';
 
 import { Config } from "../configs/Config.ts";
-import Console from "../utils/Console.mts";
+import Console from "../utils/Console.ts";
 import { AbstractTask } from "./AbstractTask.ts";
 import { GenerateFileTasklnterface, InitialDataItem } from "./GenerateFileTasklnterfaces.ts";
 

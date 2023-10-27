@@ -9,6 +9,8 @@ import type { Client as SpacefillAPIClient } from './spacefill-api-openapi.d.ts'
  */
 
 export class SpacefillAPIWrapperV1{
+
+  // @todo ajouter les context edi.
   public static async initClient(url: string, bearerToken: string) {
     const api = new OpenAPIClientAxios.default({
       definition: "https://dash.readme.com/api/v1/api-registry/p570f12ln978a7s",

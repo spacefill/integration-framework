@@ -1,11 +1,11 @@
+import { fs } from 'zx';
 import * as dotenv from 'dotenv';
 import AjvModule from "ajv";
 import addFormatsModule from 'ajv-formats';
 const Ajv = AjvModule.default;
 const addFormats = addFormatsModule.default;
 
-import Console, { LOG_LEVEL_DEBUG, LOG_LEVEL_FATAL, LOG_LEVEL_INFO } from "../utils/Console.mts";
-import { fs } from 'zx';
+import Console, { LOG_LEVEL_DEBUG, LOG_LEVEL_FATAL, LOG_LEVEL_INFO } from "../utils/Console.ts";
 
 export class Config {
 

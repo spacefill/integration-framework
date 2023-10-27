@@ -1,8 +1,6 @@
-#!/usr/bin/env zx
-
 import gradient from 'gradient-string';
 import prompts from 'prompts';
-import { Config } from '../configs/Config.ts';
+import { Config } from '../configs/Config.js';
 
 const LOG_LEVEL_FATAL=1;
 const LOG_LEVEL_ERROR=2;
