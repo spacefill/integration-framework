@@ -57,7 +57,7 @@ export class SpacefillAPIWrapperV1{
         Console.trace('Response data', JSON.stringify(config.data));
       },
       error(_debug, error) {
-        Console.error(`axios: ${error.message} (${error.config.method} ${error.config.url})`, JSON.stringify(error.response.data))
+        Console.error(`axios: ${error.message} (${error.config.method} ${error.config.url})`, JSON.stringify(error.response?.data))
       },
     });
     axiosDebug.addLogger(api.getAxiosInstance());
