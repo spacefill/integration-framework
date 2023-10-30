@@ -3,6 +3,7 @@ import * as axiosDebug from "axios-debug-log";
 import type { Client as SpacefillAPIClient } from './spacefill-api-openapi.d.ts';
 import APIContext, { WorkflowType } from "./APIContext.ts";
 import Console from "../utils/Console.ts";
+import EdiEvent from "./EdiEvent.ts";
 
 /**
  * This wrapper is using openapi-stack client
@@ -12,6 +13,10 @@ import Console from "../utils/Console.ts";
 export class SpacefillAPIWrapperV1{
 
   public client: SpacefillAPIClient;
+  /**
+   * Helper that manages the sending of api edi events.
+   */
+  public ediEvent: EdiEvent;
   /**
    * Data source used in API Context
    */
@@ -53,11 +58,11 @@ export class SpacefillAPIWrapperV1{
         })
       },
       response: (_debug, config) => {
-        Console.debug(`axios: ${config.status} ${config.statusText} (${config.config.method} ${config.config.url})`);
+        Console.debug(`Axios: ${config.status} ${config.statusText} (${config.config.method} ${config.config.url})`);
         Console.trace('Response data', JSON.stringify(config.data));
       },
       error(_debug, error) {
-        Console.error(`axios: ${error.message} (${error.config.method} ${error.config.url})`, JSON.stringify(error.response?.data))
+        Console.error(`Axios: ${error.message} (${error.config.method} ${error.config.url})`, JSON.stringify(error.response?.data))
       },
     });
     axiosDebug.addLogger(api.getAxiosInstance());
