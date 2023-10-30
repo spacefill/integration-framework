@@ -46,7 +46,12 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
           Console.info("Api init ----------------------------");
           await this.initApiClient(this.currentFileConfiguration.workflowType);
           this.sdk.dataSource = 'API';
-          Console.confirm("Api initialized");
+          await this.sdk.client.get_v1_ping_v1_ping_get().then(() => {
+            Console.confirm("Api initialized");
+          }).catch(() => {
+            Console.error("Cannot reach api. Exit.");
+            process.exit(1);
+          })
 
           Console.info("Data preparation --------------------");
           const rawData = await this.prepareFileData();
