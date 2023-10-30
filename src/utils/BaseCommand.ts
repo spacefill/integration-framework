@@ -48,9 +48,11 @@ export abstract class BaseCommand {
 
   protected displayUsages() {
     const prefixTab = "\t";
+    const optionMaxLenght = 30;
     Console.log(`\nOptions:`);
     this.getArgsList().forEach((args) => {
-      Console.log(`${prefixTab}${args.argName}\t\t\t${args.argDescription}`);
+      const separator = " ".repeat(Math.round(optionMaxLenght-args.argName.length));
+      Console.log(`${prefixTab}${args.argName}${separator}${args.argDescription}`);
     })
   }
 
