@@ -30,7 +30,7 @@ export default class APIContext {
       'Spacefill-Ctx-Service-Version': Config.get().spacefillApi.context.serviceVersion,
       'Spacefill-Ctx-Client-Type': Config.get().spacefillApi.context.clientType,
       'Spacefill-Ctx-Transport': Config.get().spacefillApi.context.transport,
-      'Spacefill-Ctx-Session-Id': `${Config.get().spacefillApi.context.serviceSource}_${randomUUID()}`
+      'Spacefill-Ctx-Session-Id': `${Config.get().spacefillApi.context.serviceSource}_${randomUUID()}` // @todo: remplacer par le job id de windmill, conserver la valeur actuelle par défaut.
     };
   }
   public static getWorkflowHeader(workflowType: WorkflowType): object {

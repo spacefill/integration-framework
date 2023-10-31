@@ -18,7 +18,7 @@ interface Argument {
   argDescription: string
 }
 
-export { Argument};
+export { Argument };
 
 export abstract class BaseCommand {
   protected argv: minimist.ParsedArgs;
@@ -54,13 +54,17 @@ export abstract class BaseCommand {
   }
 
   protected displayUsages() {
-    const prefixTab = "\t";
-    const optionMaxLenght = 30;
+    const prefixTab = "  ";
+    const optionMaxLenght = 40;
     Console.log(`\nOptions:`);
-    this.getArgsList().forEach((args) => {
-      const separator = " ".repeat(Math.round(optionMaxLenght-args.argName.length));
+    for (const args of this.getArgsList()) {
+      let nbSpaces = Math.round(optionMaxLenght - args.argName.length);
+      if (nbSpaces < 1){
+        nbSpaces = 1;
+      }
+      const separator = " ".repeat(nbSpaces);
       Console.log(`${prefixTab}${args.argName}${separator}${args.argDescription}`);
-    })
+    }
   }
 
   protected displayStatistics() {
@@ -94,7 +98,7 @@ export abstract class BaseCommand {
     }
 
     if (this.argv?.debug) {
-      process.env.LOG_LEVEL = `${LOG_LEVEL_DEBUG}`;
+      process.env.LOG_LEVEL = 'debug';
     }
 
     if (this.argv?.['print-config']) {

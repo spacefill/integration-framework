@@ -98,6 +98,7 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
               await this.generateFile(mappedData, tempFilePath);
               Console.confirm("File generated");
             } catch (ioException) {
+              Console.error(ioException);
               throw new IoError(`Error during generating file ${tempFilePath}`);
             }
 
@@ -106,6 +107,7 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
               const sentFile = await this.sendFile(tempFilePath);
               Console.confirm(`File ${sentFile} well sent.`);
             } catch (networkException) {
+              Console.error(networkException);
               throw new NetWorkError(`Error during sending file`);
             }
           });

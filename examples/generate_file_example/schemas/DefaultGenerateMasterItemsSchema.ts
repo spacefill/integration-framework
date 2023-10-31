@@ -1,7 +1,7 @@
 import { SchemaInterface } from "../../../src/data_mapping/SchemaInterface.ts";
 import { MasterItemInterface } from "../GenerateMasterItemsTaskExample.mts";
 import { Config } from "../../../src/configs/Config.ts";
-import { AbstractSchema } from "../../../src/data_mapping/AbstractSchema.ts";
+import { AbstractSchema, FileDescriptor } from "../../../src/data_mapping/AbstractSchema.ts";
 
 
 export class DefaultGenerateMasterItemsSchema extends AbstractSchema<MasterItemInterface> implements SchemaInterface<MasterItemInterface> {
@@ -55,31 +55,31 @@ export class DefaultGenerateMasterItemsSchema extends AbstractSchema<MasterItemI
       },
       'Hauteur du colis de référence': {
         type: 'number',
-        maximum: 999999999,
+        maximum: 999.999999,
         nullable: true,
         // "multipleOfPrecision": 0.001, -- todo: find a solution to check precision
       },
       'Largeur du colis de référence': {
         type: 'number',
-        maximum: 999999999,
+        maximum: 999.999999,
         nullable: true,
         // "multipleOfPrecision": 0.001, -- todo: find a solution to check precision
       },
       'Profondeur du colis de référence': {
         type: 'number',
-        maximum: 999999999,
+        maximum: 999.999999,
         nullable: true,
         // "multipleOfPrecision": 0.001, -- todo: find a solution to check precision
       },
       'Poids brut du colis de référence': {
         type: 'number',
-        maximum: 9999999999999,
+        maximum: 9999999.999999,
         nullable: true,
         // "multipleOfPrecision": 0.0001, -- todo: find a solution to check precision
       },
       'Poids net du colis de référence': {
         type: 'number',
-        maximum: 9999999999999,
+        maximum: 9999999.999999,
         nullable: true,
         // "multipleOfPrecision": 0.0001, -- todo: find a solution to check precision
       },
@@ -127,6 +127,34 @@ export class DefaultGenerateMasterItemsSchema extends AbstractSchema<MasterItemI
     ]
   };
 
+  fileDescriptor: FileDescriptor = {
+    csvTotalColumnNumber: 133,
+    columnsPosition: {
+      'Type de message': 0,
+      'Code Client': 1,
+      'Code article': 2,
+      'Référence technique': 3,
+      'Description': 4,
+      'Code famille': 5,
+      'Code sous-famille': 6,
+      'Type de colis de 4ème niveau': 7,
+      'Nombre d\'unités par colis de 4ème niveau': 8,
+      'Nombre de colis par unité logistique': 16,
+      'Hauteur du colis de référence': 18,
+      'Largeur du colis de référence': 19,
+      'Profondeur du colis de référence': 20,
+      'Poids brut du colis de référence': 23,
+      'Poids net du colis de référence': 24,
+      'Code EAN': 69,
+      'Code EAN colis': 70,
+      'Code EAN palette': 71,
+      'Information libre 1': 76,
+      'Information libre 2': 77,
+      'Information libre 3': 78,
+      'Type de conditionnement': 106,
+    }
+  };
+
   mapFileData(rawData: MasterItemInterface[]): object[] {
     /**
      * Keys are column names in the final generated file.
@@ -141,19 +169,21 @@ export class DefaultGenerateMasterItemsSchema extends AbstractSchema<MasterItemI
         'Code famille': '',
         'Code sous-famille': '',
         'Type de colis de 4ème niveau': '',
-        'Nombre d\'unités par colis de 4ème niveau': rawDataItem?.each_quantity_by_cardboard_box,
-        'Nombre de colis par unité logistique': rawDataItem?.each_quantity_by_pallet,
+        'Nombre d\'unités par colis de 4ème niveau': Number(rawDataItem?.each_quantity_by_cardboard_box),
+        'Nombre de colis par unité logistique': Number(rawDataItem?.each_quantity_by_pallet),
         'Hauteur du colis de référence': rawDataItem?.cardboard_box_height_in_cm
-          ? (rawDataItem?.cardboard_box_height_in_cm / 100)
+          ? parseFloat(Number(rawDataItem?.cardboard_box_height_in_cm / 100).toFixed(6))
           : null,
         'Largeur du colis de référence': rawDataItem?.cardboard_box_width_in_cm
-          ? (rawDataItem?.cardboard_box_width_in_cm / 100)
+          ? parseFloat(Number(rawDataItem?.cardboard_box_width_in_cm / 100).toFixed(6))
           : null,
         'Profondeur du colis de référence': rawDataItem?.cardboard_box_length_in_cm
-          ? (rawDataItem?.cardboard_box_length_in_cm / 100)
+          ? parseFloat(Number(rawDataItem?.cardboard_box_length_in_cm / 100).toFixed(6))
           : null,
-        'Poids brut du colis de référence': rawDataItem?.cardboard_box_gross_weight_in_kg,
-        'Poids net du colis de référence': rawDataItem?.cardboard_box_net_weight_in_kg ?? rawDataItem?.cardboard_box_gross_weight_in_kg,
+        'Poids brut du colis de référence': parseFloat(Number(rawDataItem?.cardboard_box_gross_weight_in_kg)?.toFixed(6)),
+        'Poids net du colis de référence': rawDataItem?.cardboard_box_net_weight_in_kg
+          ? parseFloat(Number(rawDataItem?.cardboard_box_net_weight_in_kg).toFixed(6))
+          : parseFloat(Number(rawDataItem?.cardboard_box_gross_weight_in_kg).toFixed(6)),
         'Code EAN': '',
         'Code EAN colis': rawDataItem?.cardboard_box_barcode,
         'Code EAN palette': rawDataItem?.pallet_barcode,

@@ -7,8 +7,17 @@ const addFormats = addFormatsModule.default;
 import { SchemaInterface } from "./SchemaInterface.ts";
 import Console from "../utils/Console.ts";
 
+interface FileDescriptor {
+  csvTotalColumnNumber?: number,
+  columnsPosition: object
+}
+
+export {FileDescriptor};
+
 export abstract class AbstractSchema<T> implements SchemaInterface<T> {
   itemSchemaValidation: object = {};
+  fileDescriptor: FileDescriptor;
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   mapFileData(_rawData: T[]): object[] {
     throw new Error("Method not implemented.");

@@ -1,7 +1,7 @@
 #!/usr/bin/env -S npx ts-node --esm --transpile-only --compilerOptions '{"moduleResolution":"nodenext","module":"NodeNext","target":"esnext", "allowImportingTsExtensions": true}'
 
 import { DateTime } from "luxon";
-import { createObjectCsvWriter } from "csv-writer";
+import * as csv from 'fast-csv';
 
 import { Config } from '../../src/configs/Config.ts';
 import { AbstractGenerateFileTask } from '../../src/task/AbstractGenerateFileTask.ts';
@@ -10,6 +10,8 @@ import { InitialDataItem } from "../../src/task/GenerateFileTasklnterfaces.ts";
 import { DefaultGenerateMasterItemsSchema } from "./schemas/DefaultGenerateMasterItemsSchema.ts";
 import { WorkflowType } from "../../src/api/APIContext.ts";
 import InternalError from "../../src/exceptions/InternalError.ts";
+import { Argument } from "../../src/task/BaseCommand.ts";
+import { fs } from "zx";
 
 interface MasterItemInterface {
   id: number,
@@ -34,6 +36,24 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
     super.displayUsages();
   }
 
+  /**
+   * Overload common arguments
+   * @returns Argument[]
+   */
+  protected getArgsList(): Argument[] {
+    return [
+      ...super.getArgsList(),
+      {
+        argName: '--disable-is-transfered-to-wms-update',
+        argDescription: '[Test Only] Disable the update of transfered_to_wms_at field, to run the script multiple times.'
+      },
+      {
+        argName: '--headers',
+        argDescription: '[Test Only] Add headers in file output.'
+      }
+    ];
+  }
+
   getWorkflowType(): WorkflowType {
     return WorkflowType.EXPORT_ITEM_REFERENCES;
   }
@@ -41,12 +61,14 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
   initFilesGeneration(): InitialDataItem<MasterItemInterface>[] {
     const schema = new DefaultGenerateMasterItemsSchema();
     return [
+      // Only one file to be generated, so only one object returned.
       {
         schema: schema,
         initialData: []
       }
     ]
   }
+
   async prepareFileData(offset: number = 0): Promise<MasterItemInterface[]> {
     let masterItems = this.currentFileConfiguration?.initialData ?? [];
 
@@ -79,20 +101,46 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
   }
 
   async generateFile(mappedData: object[], tempFilePath: string): Promise<void> {
-    const header = Object.keys(mappedData[0]).map((key) => {
-      return {
-        id: key,
-        title: key
+
+    const csvStream = csv.format({
+      headers: this.argv?.['headers'] ? true : false,
+      delimiter: ';'
+    });
+
+    const writeStream = fs.createWriteStream(tempFilePath);
+
+    return await new Promise<void>((resolve, reject) => {
+      csvStream.pipe(writeStream)
+        .once('finish', () => {
+          Console.debug(`Write stream end for ${tempFilePath}`);
+          resolve();
+        })
+        .once('error', (error) => {
+          Console.error(error);
+          reject(error);
+        });
+
+      const fileDescriptor = this.currentFileConfiguration.schema.fileDescriptor;
+
+      if (this.argv?.['headers']) {
+        const headersLine = new Array(fileDescriptor.csvTotalColumnNumber);
+        for (const field of Object.keys(fileDescriptor.columnsPosition)) {
+          headersLine[fileDescriptor.columnsPosition[field]] = field;
+        }
+        csvStream.write(headersLine);
       }
-    });
 
-    const csvWriter = createObjectCsvWriter({
-      path: tempFilePath,
-      header: header,
-      fieldDelimiter: ';'
-    });
+      for (const mappedItem of mappedData) {
+        // Init line from max number of columns
+        const line = new Array(fileDescriptor.csvTotalColumnNumber);
 
-    await csvWriter.writeRecords(mappedData)
+        for (const field in mappedItem) {
+          line[fileDescriptor.columnsPosition[field]] = mappedItem[field];
+        }
+        csvStream.write(line);
+      }
+      csvStream.end();
+    });
   }
 
   async sendFile(tempFilePath: string): Promise<string> {
@@ -103,9 +151,15 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
 
   async postAction(): Promise<void> {
     let errorFound = false;
-    for( const item of this.currentFileConfiguration.initialData) {
+
+    if (this.argv?.['disable-is-transfered-to-wms-update']) {
+      Console.debug("Skip transfered_to_wms_at update");
+      return;
+    }
+
+    for (const item of this.currentFileConfiguration.initialData) {
       await this.sdk.client.patch_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___patch(
-        { master_item_id: `${item.id}`},
+        { master_item_id: `${item.id}` },
         { transfered_to_wms_at: DateTime.now().toFormat('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'') }
       ).catch(() => {
         Console.error(`Failed to patch transfered to wms at for master_item_id: ${item.id}`);
