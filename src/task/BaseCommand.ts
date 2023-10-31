@@ -1,7 +1,7 @@
 import minimist from "minimist";
 import bytes from "bytes";
-import Console, { LOG_LEVEL_DEBUG } from "./Console.ts";
-import { Config } from "../configs/Config.ts";
+import Console, { LOG_LEVEL_DEBUG } from "../utils/Console.js";
+import { Config } from "../configs/Config.js";
 import { cpuUsage } from "node:process";
 
 interface CommandStatistic {
@@ -13,6 +13,13 @@ interface CommandStatistic {
   finalMemoryUsage?: number,
 }
 
+interface Argument {
+  argName: string,
+  argDescription: string
+}
+
+export { Argument};
+
 export abstract class BaseCommand {
   protected argv: minimist.ParsedArgs;
   protected statistics: CommandStatistic = {};
@@ -21,7 +28,7 @@ export abstract class BaseCommand {
     this.parseArgs();
   }
 
-  protected getArgsList() {
+  protected getArgsList(): Argument[] {
     return [
       {
         argName: "-h, --help",
@@ -74,7 +81,7 @@ export abstract class BaseCommand {
     );
   }
 
-  protected parseArgs() {
+  protected parseArgs(): void {
     this.argv = minimist(process.argv.slice(2));
 
     if (this.argv?.env) {
@@ -96,14 +103,14 @@ export abstract class BaseCommand {
     }
   }
 
-  protected beforeRun() {
+  protected beforeRun(): void {
     if (this.argv?.['print-statistics']) {
       this.statistics.startCpuUsage = cpuUsage();
       this.statistics.startTimeMs = new Date().getTime();
     }
   }
 
-  protected afterRun() {
+  protected afterRun(): void {
     if (this.argv?.['print-statistics'] && this.statistics?.startCpuUsage) {
       this.statistics.finalCpuUsage = cpuUsage(this.statistics.startCpuUsage);
       this.statistics.endTimeMs = new Date().getTime();

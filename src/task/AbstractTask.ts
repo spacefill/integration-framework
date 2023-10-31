@@ -2,7 +2,7 @@ import { WorkflowType } from "../api/APIContext.ts";
 import { SpacefillAPIWrapperV1 } from "../api/SpacefillAPIWrapperV1.ts";
 import { Config } from "../configs/Config.ts";
 import { Transfert, TransfertProtocol } from "../transport/Transfert.ts";
-import { BaseCommand } from "../utils/BaseCommand.ts";
+import { Argument, BaseCommand } from "./BaseCommand.ts";
 
 export abstract class AbstractTask extends BaseCommand {
   protected sdk: SpacefillAPIWrapperV1;
@@ -28,5 +28,23 @@ export abstract class AbstractTask extends BaseCommand {
       Config.get().spacefillApi.apiToken,
       workflowType
     );
+  }
+
+  protected getArgsList(): Argument[]{
+    return [
+      ...super.getArgsList(),
+      {
+        argName: "--disable-events",
+        argDescription: "Disable edi events emit"
+      }
+    ]
+  }
+
+  protected parseArgs(): void {
+    super.parseArgs();
+
+    if (this.argv?.['disable-events']) {
+      process.env.SPACEFILL_API_EVENT_ENABLED = '0';
+    }
   }
 }

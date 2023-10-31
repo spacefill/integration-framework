@@ -33,6 +33,10 @@ export default class EdiEvent {
       Console.info("Ignore sending event, because is a network error event");
       return;
     }
+    if (!Config.get().spacefillApi.eventEnabled) {
+      Console.debug("Event sending disabled in configuration");
+      return;
+    }
     await this.apiClient.post_v1_logistic_management_event_v1_logistic_management_events__post(
       null,
       {

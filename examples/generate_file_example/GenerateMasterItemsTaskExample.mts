@@ -103,7 +103,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
 
   async postAction(): Promise<void> {
     let errorFound = false;
-    this.currentFileConfiguration.initialData.forEach(async(item) => {
+    for( const item of this.currentFileConfiguration.initialData) {
       await this.sdk.client.patch_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___patch(
         { master_item_id: `${item.id}`},
         { transfered_to_wms_at: DateTime.now().toFormat('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'') }
@@ -111,7 +111,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
         Console.error(`Failed to patch transfered to wms at for master_item_id: ${item.id}`);
         errorFound = true;
       });
-    });
+    }
 
     if (errorFound) {
       throw new Error("One or more errors during patch master items");

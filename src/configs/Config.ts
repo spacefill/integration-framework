@@ -23,7 +23,8 @@ export class Config {
           serviceVersion: process.env?.SPACEFILL_API_CONTEXT_SERVICE_VERSION,
           transport: process.env?.SPACEFILL_API_CONTEXT_TRANSPORT,
           clientType: process.env?.SPACEFILL_API_CONTEXT_CLIENT_TYPE,
-        }
+        },
+        eventEnabled: process.env?.SPACEFILL_API_EVENT_ENABLED == '1' ? true : false,
       },
       transfert: {
         protocol: process.env?.WMS_TRANSFERT_PROTOCOL,
