@@ -69,7 +69,7 @@ export abstract class BaseCommand {
     Console.info("Statistics",
       {
         "Resource usage": {
-          cpu: this.statistics.finalCpuUsage,
+          "cpu time (µs)": this.statistics.finalCpuUsage,
           memory: {
             "Memory used": bytes.format(memoryUsage.rss),
             "Memory used by code": bytes.format(memoryUsage.heapTotal),
