@@ -9,6 +9,7 @@ import Console from '../../src/utils/Console.ts';
 import { InitialDataItem } from "../../src/task/GenerateFileTasklnterfaces.ts";
 import { DefaultGenerateMasterItemsSchema } from "./schemas/DefaultGenerateMasterItemsSchema.ts";
 import { WorkflowType } from "../../src/api/APIContext.ts";
+import InternalError from "../../src/exceptions/InternalError.ts";
 
 interface MasterItemInterface {
   id: number,
@@ -33,12 +34,15 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
     super.displayUsages();
   }
 
+  getWorkflowType(): WorkflowType {
+    return WorkflowType.EXPORT_ITEM_REFERENCES;
+  }
+
   initFilesGeneration(): InitialDataItem<MasterItemInterface>[] {
     const schema = new DefaultGenerateMasterItemsSchema();
     return [
       {
         schema: schema,
-        workflowType: WorkflowType.EXPORT_ITEM_REFERENCES,
         initialData: []
       }
     ]
@@ -68,9 +72,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
         }
       })
       .catch(err => {
-        Console.error(`Status: ${err?.response?.status} - ${err?.response?.statusText}`)
-        Console.error(err?.response?.data)
-        process.exit(1);
+        throw new InternalError(`Error during prepareFileData - ${err?.response?.status} - ${err?.response?.statusText} - ${err?.response?.data}`);
       });
 
     return masterItems as MasterItemInterface[];

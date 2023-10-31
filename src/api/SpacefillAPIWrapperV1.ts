@@ -68,5 +68,6 @@ export class SpacefillAPIWrapperV1{
     axiosDebug.addLogger(api.getAxiosInstance());
 
     this.client = await api.getClient<SpacefillAPIClient>();
+    this.ediEvent = new EdiEvent(this.client);
   }
 }
