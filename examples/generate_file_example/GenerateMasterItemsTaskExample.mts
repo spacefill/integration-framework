@@ -149,7 +149,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
     return targetFileName;
   }
 
-  async postAction(): Promise<void> {
+  async postFileSending(): Promise<void> {
     let errorFound = false;
 
     if (this.argv?.['disable-is-transfered-to-wms-update']) {

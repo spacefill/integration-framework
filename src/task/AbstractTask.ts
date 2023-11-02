@@ -21,6 +21,10 @@ export abstract class AbstractTask extends BaseCommand {
     )
   }
 
+  getWorkflowType(): WorkflowType {
+    throw new Error("Method not implemented.");
+  }
+
   async initApiClient(workflowType: WorkflowType) {
     this.sdk = new SpacefillAPIWrapperV1();
     await this.sdk.initClient(

@@ -4,7 +4,6 @@ import { Config } from "../configs/Config.ts";
 import Console from "../utils/Console.ts";
 import { AbstractTask } from "./AbstractTask.ts";
 import { GenerateFileTasklnterface, InitialDataItem } from "./GenerateFileTasklnterfaces.ts";
-import { WorkflowType } from '../api/APIContext.ts';
 import { EventTypeEnumString } from '../api/EdiEvent.ts';
 import { ExceptionUtils } from '../utils/ExceptionUtils.ts';
 import NetWorkError from '../exceptions/NetWorkError.ts';
@@ -16,13 +15,10 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
 
   protected currentFileConfiguration: InitialDataItem<T>;
 
-  getWorkflowType(): WorkflowType {
-    throw new Error("Method not implemented.");
-  }
-
   initFilesGeneration(): InitialDataItem<T>[] {
     throw new Error("Method not implemented.");
   }
+
   prepareFileData(): Promise<T[]> {
     throw new Error("Method not implemented.");
   }
@@ -34,8 +30,8 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
   async sendFile(_tempFilePath: string): Promise<string> {
     throw new Error("Method not implemented.");
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async postAction(): Promise<void> {
+
+  async postFileSending(): Promise<void> {
     Console.debug("No post actions");
   }
 
@@ -112,9 +108,9 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
             }
           });
 
-          Console.info("Post action ---------------------");
-          await this.postAction();
-          Console.confirm("Data action done");
+          Console.info("Post file sending ---------------------");
+          await this.postFileSending();
+          Console.confirm("Post file sending action done");
 
         } catch (processFileException) {
           Console.error(processFileException?.message);
