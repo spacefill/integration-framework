@@ -1,10 +1,10 @@
-import { SchemaInterface } from "../../../src/data_mapping/SchemaInterface.ts";
+import { GenerateFileSchemaInterface } from "../../../src/data_mapping/GenerateFileSchemaInterface.ts";
 import { MasterItemInterface } from "../GenerateMasterItemsTaskExample.mts";
 import { Config } from "../../../src/configs/Config.ts";
-import { AbstractSchema, FileDescriptor } from "../../../src/data_mapping/AbstractSchema.ts";
+import { AbstractGenerateFileSchema, ExportFileDescriptor } from "../../../src/data_mapping/AbstractGenerateFileSchema.ts";
 
 
-export class DefaultGenerateMasterItemsSchema extends AbstractSchema<MasterItemInterface> implements SchemaInterface<MasterItemInterface> {
+export class DefaultGenerateMasterItemsSchema extends AbstractGenerateFileSchema<MasterItemInterface> implements GenerateFileSchemaInterface<MasterItemInterface> {
   itemSchemaValidation: object = {
     type: 'object',
     properties: {
@@ -127,7 +127,7 @@ export class DefaultGenerateMasterItemsSchema extends AbstractSchema<MasterItemI
     ]
   };
 
-  fileDescriptor: FileDescriptor = {
+  fileDescriptor: ExportFileDescriptor = {
     csvTotalColumnNumber: 133,
     columnsPosition: {
       'Type de message': 0,

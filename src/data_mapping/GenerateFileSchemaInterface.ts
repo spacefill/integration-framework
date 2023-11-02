@@ -1,10 +1,10 @@
-import { FileDescriptor } from "./AbstractSchema.ts";
+import { FileDescriptor } from "./AbstractGenerateFileSchema.ts";
 
-interface SchemaInterface<T> {
+interface GenerateFileSchemaInterface<T> {
   itemSchemaValidation: object,
   fileDescriptor: FileDescriptor,
   mapFileData(rawData: T[]): object[],
   validateFileData(rawData: object[]): void,
 }
 
-export { SchemaInterface };
+export { GenerateFileSchemaInterface };
