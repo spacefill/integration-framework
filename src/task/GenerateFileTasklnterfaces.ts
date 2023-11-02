@@ -2,13 +2,13 @@ import { WorkflowType } from "../api/APIContext.ts";
 import { SchemaInterface } from "../data_mapping/SchemaInterface.ts";
 
 interface GenerateFileTasklnterface<T> {
-    initApiClient(workflowType: WorkflowType): void,
-    initFilesGeneration(): InitialDataItem<T>[],
-    prepareFileData(): Promise<T[]>,
-    generateFile(mappedData: object[], tempFilePath: string): Promise<void>,
-    sendFile(tempFilePath: string): Promise<string>,
-    postFileSending(): Promise<void>,
-    run(): void
+  initApiClient(workflowType: WorkflowType): void,
+  initFilesGeneration(): InitialDataItem<T>[],
+  prepareFileData(): Promise<T[]>,
+  generateFile(mappedData: object[], tempFilePath: string): Promise<void>,
+  sendFile(tempFilePath: string): Promise<string>,
+  postFileSending(): Promise<void>,
+  run(): void
 }
 
 interface InitialDataItem<T> {
