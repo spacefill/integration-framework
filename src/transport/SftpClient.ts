@@ -41,7 +41,7 @@ export class SftpClient implements TransfertInterface {
   upload(localPath: string, remotePath: string): void {
     throw new Error("Method not implemented.");
   }
-  downloadAndReadFile(filepath: string, encoding: string): Stream {
+  downloadAndReadFile(filepath: string, encoding: BufferEncoding): Promise<string> {
     console.log(encoding, filepath);
     throw new Error("Method not implemented.");
   }

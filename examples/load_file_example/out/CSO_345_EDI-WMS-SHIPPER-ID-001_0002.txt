@@ -1,0 +1,2 @@
+Type de fichier;Type de mouvement;Code client;Date et heure fichier;N de mouvement;Date de mouvement;Reference article;Numero de lot;Numero de serie;Quantit article;Reference secondaire;Code barre sur l'article;Designation article;Code fournisseur;Transporteur;Nb Um;Type Um
+MOUVEMENT;LV;EDI-WMS-SHIPPER-ID-001;202301011000;MV-20230110-002;20230115;404-600-01;;;5;;;;;;;

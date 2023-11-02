@@ -44,6 +44,7 @@ export class Config {
         wmsPathSpacefillToWmsDir: process.env?.WMS_PATH_SPACEFILL_TO_WMS_DIR,
         wmsPathArchiveDir: process.env?.WMS_PATH_ARCHIVE_DIR,
         wmsPathErrorDir: process.env?.WMS_PATH_ERROR_DIR,
+        fileEncoding: process.env?.WMS_FILE_ENCODING ?? 'utf-8'
       },
       console: {
         color: process.env?.CONSOLE_COLOR_ENABLED == '1' ? true : false,
@@ -187,6 +188,9 @@ export class Config {
         wmsPathErrorDir: {
           type: 'string',
         },
+        fileEncoding: {
+          type: 'string',
+        }
       },
       required: [
         'wmsShipperID',

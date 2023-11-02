@@ -1,7 +1,7 @@
-import { Stream } from "stream"
 import { TransfertConfiguration, TransfertInterface } from "./TransfertInterfaces.ts"
 import { SftpClient } from "./SftpClient.ts";
 import { LocalClient } from "./LocalClient.ts";
+import { Config } from "../configs/Config.ts";
 
 enum TransfertProtocol {
   sftp = 'sftp',
@@ -44,8 +44,8 @@ class Transfert implements TransfertInterface {
   upload(localPath: string, remotePath: string): void {
     return this.client.upload(localPath, remotePath);
   }
-  downloadAndReadFile(filepath: string, encoding: string = 'utf-8'): Stream {
-    return this.client.downloadAndReadFile(filepath, encoding);
+  async downloadAndReadFile(filepath: string): Promise<string> {
+    return this.client.downloadAndReadFile(filepath, Config.get().edi.fileEncoding as BufferEncoding);
   }
   listDirWithFilter(filepathPattern: string): Promise<string[]> {
     return this.client.listDirWithFilter(filepathPattern);

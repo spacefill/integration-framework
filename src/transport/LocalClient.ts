@@ -1,4 +1,3 @@
-import { Stream } from "stream";
 import { TransfertInterface } from "./TransfertInterfaces.js";
 import path from 'path';
 import { fs } from "zx";
@@ -19,9 +18,8 @@ export class LocalClient implements TransfertInterface {
     const mode = constants.COPYFILE_EXCL;
     fs.copyFileSync(localPath, path.join(process.cwd(), remotePath), mode);
   }
-  downloadAndReadFile(filepath: string, encoding: string): Stream {
-    console.log(encoding, filepath);
-    throw new Error("Method not implemented.");
+  downloadAndReadFile(filepath: string, encoding: BufferEncoding): Promise<string> {
+    return fs.readFile(filepath, encoding);
   }
   async listDirWithFilter(filepathPattern: string): Promise<string[]> {
     const directory = path.dirname(filepathPattern);
@@ -32,7 +30,7 @@ export class LocalClient implements TransfertInterface {
     const result = rawResult.filter((file) => {
       return file.match(new RegExp(filenamePattern));
     }).map((file) => {
-      return file;
+      return path.join(directory, file);
     })
 
     return result;

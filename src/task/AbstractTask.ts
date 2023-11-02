@@ -21,6 +21,9 @@ export abstract class AbstractTask extends BaseCommand {
     )
   }
 
+  /**
+   * This method allows to enrich api call context headers
+   */
   getWorkflowType(): WorkflowType {
     throw new Error("Method not implemented.");
   }

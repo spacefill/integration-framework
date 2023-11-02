@@ -1,11 +1,9 @@
-import { Stream } from "stream";
-
 interface TransfertInterface {
     checkStatut(): boolean,
     close(): void,
     mkdirIfNotExists(): void,
     upload(localPath: string, remotePath: string): void,
-    downloadAndReadFile(filepath: string, encoding: string): Stream,
+    downloadAndReadFile(filepath: string, encoding: BufferEncoding): Promise<string>,
     listDirWithFilter(filepathPattern: string): Promise<string[]>,
     deleteFile(filepath: string): void,
     moveFile(filepath: string): void,

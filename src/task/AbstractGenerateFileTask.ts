@@ -55,7 +55,7 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
       await this.sdk.client.get_v1_ping_v1_ping_get().then(() => {
         Console.confirm("Api initialized");
       }).catch(() => {
-        throw new ApiNetWorkError("Cannot reach api. Exit.");
+        throw new ApiNetWorkError("Unable to reach the api. Exit.");
       });
 
       await this.sdk.ediEvent.send(EventTypeEnumString.STARTED,
