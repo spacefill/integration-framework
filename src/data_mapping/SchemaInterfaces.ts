@@ -1,10 +1,14 @@
-interface CommonSchemaInterface<T> {
-  fileDescriptor: ExportFileDescriptor,
-  mapFileData(rawData: T[]): object[],
+interface LoadFileSchemaInterface<T> {
+  mapInputFileData(rawData: object[]): T[],
 }
 
-interface GenerateFileSchemaInterface {
+interface GenerateFileSchemaInterface<T> {
+  mapOutputFileData(rawData: T[]): object[],
+}
+
+interface CommonSchemaInterface {
   itemSchemaValidation: object,
+  fileDescriptor: ExportFileDescriptor,
   validateFileData(rawData: object[]): void,
 }
 
@@ -13,4 +17,4 @@ interface ExportFileDescriptor {
   columnsPosition: object
 }
 
-export { GenerateFileSchemaInterface, CommonSchemaInterface, ExportFileDescriptor };
+export { GenerateFileSchemaInterface, LoadFileSchemaInterface, ExportFileDescriptor, CommonSchemaInterface };

@@ -1,7 +1,7 @@
-import { GenerateFileSchemaInterface } from "../../../src/data_mapping/SchemaInterfaces.ts";
+import { ExportFileDescriptor, GenerateFileSchemaInterface } from "../../../src/data_mapping/SchemaInterfaces.ts";
 import { MasterItemInterface } from "../GenerateMasterItemsTaskExample.mts";
 import { Config } from "../../../src/configs/Config.ts";
-import { AbstractGenerateFileSchema, ExportFileDescriptor } from "../../../src/data_mapping/AbstractGenerateFileSchema.ts";
+import { AbstractGenerateFileSchema } from "../../../src/data_mapping/AbstractGenerateFileSchema.ts";
 
 
 export class DefaultGenerateMasterItemsSchema extends AbstractGenerateFileSchema<MasterItemInterface> implements GenerateFileSchemaInterface<MasterItemInterface> {

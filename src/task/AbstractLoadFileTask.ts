@@ -3,15 +3,15 @@ import ApiNetWorkError from "../exceptions/ApiNetWorkError.ts";
 import Console from "../utils/Console.ts";
 import { ExceptionUtils } from "../utils/ExceptionUtils.ts";
 import { AbstractTask } from "./AbstractTask.ts";
-import LoadFileTaskInterface from "./LoadFileTaskInterfaces.ts";
+import LoadFileTaskInterface, { FileItemInterface } from "./LoadFileTaskInterfaces.ts";
 
 export default abstract class AbstractLoadFileTask<T> extends AbstractTask implements LoadFileTaskInterface<T> {
 
-  async getFilesList(): Promise<string[]> {
+  async getFilesList(): Promise<FileItemInterface<T>[]> {
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async prepareData(_fileContent: string): Promise<T[]> {
+  async parseRawData(_fileContent: string): Promise<object[]> {
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,22 +41,29 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
 
       const filesList = await this.getFilesList();
 
-      for (const targetFile of filesList) {
+      for (const targetFileItem of filesList) {
         try {
+          const targetFile = targetFileItem.file;
           Console.info(`Start processing ${targetFile}`);
           this.sdk.dataSource = targetFile;
 
           Console.info("Download and read file --------------------");
           const fileContent = await this.transfert.downloadAndReadFile(targetFile);
-          Console.debug("File content:", fileContent);
+          Console.trace("File content:", fileContent);
           Console.confirm("File content retrieved");
 
           Console.info("Prepare data --------------------"); // @todo: Continuer avec la preparation des données.
-          const preparedData = await this.prepareData(fileContent);
+          const preparedData = await this.parseRawData(fileContent);
+          Console.trace(preparedData);
           Console.confirm("Data prepared");
 
+          Console.info("Data mapping ------------------------");
+          Console.debug(`${preparedData?.length} items to map.`);
+          const mappedData = targetFileItem.schema.mapInputFileData(preparedData);
+          Console.confirm("Data mapped");
+
           Console.info("Data processing --------------------");
-          await this.dataProcessing(preparedData);
+          await this.dataProcessing(mappedData);
           Console.confirm("Data processed");
 
           Console.info("Post data processing ---------------");

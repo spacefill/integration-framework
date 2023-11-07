@@ -5,6 +5,9 @@ import { WorkflowType } from "../../src/api/APIContext.ts";
 import { Config } from "../../src/configs/Config.ts";
 import AbstractLoadFileTask from "../../src/task/AbstractLoadFileTask.ts";
 import Console from "../../src/utils/Console.ts";
+import DefaultLoadOrderAckSchema from "./schemas/DefaultLoadOrderAckSchema.ts";
+import { FileItemInterface } from "../../src/task/LoadFileTaskInterfaces.ts";
+import { parse } from "fast-csv";
 
 interface OrderAcknowledge {
   order_id: number
@@ -20,20 +23,39 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
   }
 
   getWorkflowType(): WorkflowType {
-    return WorkflowType.IMPORT_INVENTORY_ADJUSTEMENT;
+    return WorkflowType.IMPORT_ORDER_ACK;
   }
 
-  async getFilesList(): Promise<string[]> {
+  async getFilesList(): Promise<FileItemInterface<OrderAcknowledge>[]> {
     const filter = path.join(
       Config.get().edi.wmsPathWmsToSpacefillDir,
       `(CIN|CSO)_${Config.get().edi.wmsAgencyCode}_${Config.get().edi.wmsShipperID}_.*\\.(TXT|txt)$`
     );
+    const schema = new DefaultLoadOrderAckSchema();
 
-    return await this.transfert.listDirWithFilter(filter);
+    const filesList = await this.transfert.listDirWithFilter(filter);
+    return filesList.map((filename) => ({ file: filename, schema: schema }));
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async prepareData(_fileContent: string): Promise<OrderAcknowledge[]> {
-    throw new Error("Method not implemented.");
+
+  async parseRawData(fileContent: string): Promise<object[]> {
+    const parsedData: object[] = [];
+    return await new Promise<object[]>((resolve, reject) => {
+      const stream = parse({ headers: false, delimiter: ';' })
+      .on('error', (error) => {
+        Console.error(error);
+        reject(error);
+      })
+      .on('data', (row) => {
+        parsedData.push(row);
+      })
+      .on('finish', (rowCount: number) => {
+        Console.info(`Parsed ${rowCount} rows`);
+        parsedData.shift(); // remove headers line
+        return resolve(parsedData);
+      });
+      stream.write(fileContent);
+      stream.end();
+    });
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async dataProcessing(_preparedData: OrderAcknowledge[]): Promise<void> {

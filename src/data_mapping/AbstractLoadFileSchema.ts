@@ -1,10 +1,9 @@
-import { CommonSchemaInterface, ExportFileDescriptor } from "./SchemaInterfaces.ts";
+import AbtractSchema from "./AbtractSchema.ts";
+import { CommonSchemaInterface, LoadFileSchemaInterface } from "./SchemaInterfaces.ts";
 
-export abstract class AbstractLoadFileSchema<T> implements CommonSchemaInterface<T>{
-  fileDescriptor: ExportFileDescriptor;
-
+export abstract class AbstractLoadFileSchema<T> extends AbtractSchema implements LoadFileSchemaInterface<T>, CommonSchemaInterface {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  mapFileData(_rawData: T[]): object[] {
+  mapInputFileData(_rawData: object[]): T[] {
     throw new Error("Method not implemented.");
   }
 }

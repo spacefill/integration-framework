@@ -80,7 +80,7 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
 
           Console.info("Data mapping ------------------------");
           Console.debug(`${rawData?.length} items to map.`);
-          const mappedData = this.currentFileConfiguration.schema.mapFileData(rawData);
+          const mappedData = this.currentFileConfiguration.schema.mapOutputFileData(rawData);
           Console.confirm("Data mapped");
 
           Console.info("Data validation ---------------------");
