@@ -1,4 +1,4 @@
-import { GenerateFileSchemaInterface } from "../../../src/data_mapping/GenerateFileSchemaInterface.ts";
+import { GenerateFileSchemaInterface } from "../../../src/data_mapping/SchemaInterfaces.ts";
 import { MasterItemInterface } from "../GenerateMasterItemsTaskExample.mts";
 import { Config } from "../../../src/configs/Config.ts";
 import { AbstractGenerateFileSchema, ExportFileDescriptor } from "../../../src/data_mapping/AbstractGenerateFileSchema.ts";

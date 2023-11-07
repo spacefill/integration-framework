@@ -6,7 +6,6 @@ import { Config } from "../../src/configs/Config.ts";
 import AbstractLoadFileTask from "../../src/task/AbstractLoadFileTask.ts";
 import Console from "../../src/utils/Console.ts";
 
-
 interface OrderAcknowledge {
   order_id: number
 }
@@ -44,7 +43,6 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
   async postDataProcessing(): Promise<void> {
     Console.debug("No post actions");
   }
-
 
 }
 

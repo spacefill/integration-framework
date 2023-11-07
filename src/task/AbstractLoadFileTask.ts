@@ -55,10 +55,6 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
           const preparedData = await this.prepareData(fileContent);
           Console.confirm("Data prepared");
 
-          Console.info("Data validation ---------------------");
-          //this.currentFileConfiguration.schema.validateFileData(mappedData);
-          Console.confirm("Data validated");
-
           Console.info("Data processing --------------------");
           await this.dataProcessing(preparedData);
           Console.confirm("Data processed");

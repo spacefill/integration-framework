@@ -1,5 +1,5 @@
 import { WorkflowType } from "../api/APIContext.ts";
-import { SchemaInterface } from "../data_mapping/GenerateFileSchemaInterface.ts";
+import { SchemaInterface } from "../data_mapping/SchemaInterfaces.ts";
 
 interface GenerateFileTasklnterface<T> {
   initApiClient(workflowType: WorkflowType): void,
