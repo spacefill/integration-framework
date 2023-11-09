@@ -2,36 +2,9 @@ import { DateTime } from "luxon";
 import { Config } from "../../../src/configs/Config.ts";
 import { AbstractLoadFileSchema } from "../../../src/data_mapping/AbstractLoadFileSchema.ts"
 import { ExportFileDescriptor } from "../../../src/data_mapping/SchemaInterfaces.ts";
+import { ExitOrderInterface, OrderInterface, OrderItemInterface } from "../LoadOrderAcknowledgeTaskExample.mts";
 
-interface OrderIterface {
-  order_id: number,
-  order_type: string,
-  shipper_order_reference: string,
-  order_effective_executed_at: string,
-  order_items: {
-    item_reference: string,
-    batch_name: string,
-    serial_number: string,
-    actual_quantity: number,
-    item_packaging_type: string,
-    serial_shipping_container_code: string,
-    designation: string,
-
-  }
-}
-
-interface ExitOrderInterface extends OrderIterface {
-  exit_final_recipient: string,
-  exit_final_recipient_address_line1: string,
-  exit_final_recipient_address_zip: string,
-  exit_final_recipient_address_city: string,
-  exit_final_recipient_address_country_code:string,
-  exit_final_recipient_address_details: string,
-  exit_final_recipient_address_details_2: string,
-  exit_final_recipient_address_details_3: string,
-}
-
-export default class DefaultLoadOrderAckSchema extends AbstractLoadFileSchema<OrderIterface> {
+export default class DefaultLoadOrderAckSchema extends AbstractLoadFileSchema<OrderInterface | ExitOrderInterface> {
 
   fileDescriptor: ExportFileDescriptor = {
     columnsPosition: {                              // examples:
@@ -57,12 +30,12 @@ export default class DefaultLoadOrderAckSchema extends AbstractLoadFileSchema<Or
       'Adresse1 livraison': 19,                     // LOGISTIQUE ZIEGLER
       'Adresse2 livraison': 20,                     //
       'CPT livraison': 21,                          // 63000
-      'Localite livraison': 23,                     // CLERMONT FERRAND
-      'Code pays livraison': 24,                    // FR
-      'Tel livraison': 25,                          // @todo- à compléter
-      'Mail livraison': 26,                         // @todo- à compléter
-      'Contact livraison': 27,                      // @todo- à compléter
-      'Numero de serie': 28,                        // S613022710958 -- custom field
+      'Localite livraison': 22,                     // CLERMONT FERRAND
+      'Code pays livraison': 23,                    // FR
+      'Tel livraison': 24,                          // @todo- à compléter
+      'Mail livraison': 25,                         // @todo- à compléter
+      'Contact livraison': 26,                      // @todo- à compléter
+      'Numero de serie': 27,                        // S613022710958 -- custom field
     }
   };
 
@@ -140,11 +113,11 @@ export default class DefaultLoadOrderAckSchema extends AbstractLoadFileSchema<Or
         type: 'string',
         maxLength: 50,
       },
-      'Nom livraison':{
+      'Nom livraison': {
         type: 'string',
         maxLength: 50,
       },
-      'Adresse1 livraison':{
+      'Adresse1 livraison': {
         type: 'string',
         maxLength: 50,
       },
@@ -185,7 +158,7 @@ export default class DefaultLoadOrderAckSchema extends AbstractLoadFileSchema<Or
     ]
   };
 
-  mapFileData(rawData: object[]): OrderIterface[] {
+  mapInputFileData(rawData: object[]): OrderInterface[] | ExitOrderInterface[] {
     const itemsWithColumns = rawData.map((rawItem) => {
       const itemWithColumns = {};
 
@@ -194,20 +167,70 @@ export default class DefaultLoadOrderAckSchema extends AbstractLoadFileSchema<Or
       });
       return itemWithColumns;
     });
+    const grouped_order_items = [];
+
+    itemsWithColumns.forEach((line) => {
+      const keyArr = [
+        line['Reference article'],
+        line['Numero de lot'],
+        Config.get().edi.wmsItemPackagingType,
+        line["Code barre sur l'article"]
+      ];
+      const key = keyArr.join('#');
+
+      const defautOrderItem: OrderItemInterface = {
+        item_reference: line['Reference article'],
+        batch_name: line['Numero de lot'].length > 0 ? line['Numero de lot'] : null,
+        serial_number: line['Numero de palette'],
+        actual_quantity: 0,
+        item_packaging_type: Config.get().edi.wmsItemPackagingType,
+        serial_shipping_container_code: line["Code barre sur l'article"].length > 0 ? line["Code barre sur l'article"] : null,
+        designation: line['Designation article'],
+      };
+
+      const previousValue = grouped_order_items[key] ?? defautOrderItem;
+      grouped_order_items[key] = {
+        ...previousValue,
+        actual_quantity: defautOrderItem.actual_quantity + previousValue.actual_quantity
+      }
+    });
 
     const firstItem = itemsWithColumns[0];
-    let mappedData: OrderIterface | ExitOrderInterface;
-
-    if (firstItem['Type de mouvement'] === 'IN' || firstItem['Type de mouvement']) {
-      mappedData.order_type = 'IN';
+    let order_type: string;
+    if (firstItem['Type de mouvement'] === 'IN' || firstItem['Type de mouvement'] === 'AE') {
+      order_type = 'IN';
     } else {
-      mappedData.order_type = 'EXIT';
+      order_type = 'EXIT';
     }
-    mappedData.shipper_order_reference = firstItem['N de mouvement'];
-    mappedData.order_effective_executed_at = DateTime.fromFormat(firstItem['Date de mouvement'], 'yyyyMMdd').toFormat('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
+    const executionDate = DateTime.fromFormat(firstItem['Date de mouvement'], 'yyyyMMdd').toFormat('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
+    const mappedData: OrderInterface = {
+      order_type: order_type,
+      shipper_order_reference: firstItem['N de mouvement'],
+      planned_execution_datetime_range: {
+        datetime_from: executionDate,
+        datetime_to: executionDate
+      },
+      transport_management_owner: "SHIPPER",
+      order_items: Object.values(grouped_order_items),
+    }
 
-    // @todo suite ici.
+    if (mappedData.order_type === 'EXIT') {
+      const exitOrderMappeData: ExitOrderInterface = {
+        ...mappedData as ExitOrderInterface,
+        exit_final_recipient: firstItem['Nom livraison'],
+        exit_final_recipient_address_line1: firstItem['Adresse1 livraison'],
+        exit_final_recipient_address_zip: firstItem['CPT livraison'],
+        exit_final_recipient_address_city: firstItem['Localite livraison'],
+        exit_final_recipient_address_country_code: firstItem['Code pays livraison'],
+        exit_final_recipient_address_details: firstItem['Tel livraison'],
+        exit_final_recipient_address_details_2: firstItem['Mail livraison'],
+        exit_final_recipient_address_details_3: firstItem['Contact livraison'],
+      }
 
-    return mappedData;
+      return [exitOrderMappeData];
+    }
+
+    // We return an array due to different behaviour With Logis there is only one order, but with ItemStock there are several orders per file
+    return [mappedData];
   }
 }

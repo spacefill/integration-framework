@@ -1,5 +1,4 @@
 import { WorkflowType } from "../api/APIContext.ts";
-import { SchemaInterface } from "../data_mapping/SchemaInterfaces.ts";
 
 interface GenerateFileTasklnterface<T> {
   initApiClient(workflowType: WorkflowType): void,
@@ -12,7 +11,6 @@ interface GenerateFileTasklnterface<T> {
 }
 
 interface InitialDataItem<T> {
-  schema: SchemaInterface<T>,
   targetFileName?: string,
   initialData: T[]
 }

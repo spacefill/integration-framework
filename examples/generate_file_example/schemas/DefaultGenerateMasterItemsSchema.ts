@@ -155,7 +155,7 @@ export class DefaultGenerateMasterItemsSchema extends AbstractGenerateFileSchema
     }
   };
 
-  mapFileData(rawData: MasterItemInterface[]): object[] {
+  mapOutputFileData(rawData: MasterItemInterface[]): object[] {
     /**
      * Keys are column names in the final generated file.
      */

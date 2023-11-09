@@ -1,8 +1,8 @@
-interface LoadFileSchemaInterface<T> {
+interface LoadFileSchemaInterface<T> extends CommonSchemaInterface {
   mapInputFileData(rawData: object[]): T[],
 }
 
-interface GenerateFileSchemaInterface<T> {
+interface GenerateFileSchemaInterface<T> extends CommonSchemaInterface {
   mapOutputFileData(rawData: T[]): object[],
 }
 

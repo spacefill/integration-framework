@@ -1,14 +1,11 @@
-import { AbstractLoadFileSchema } from "../data_mapping/AbstractLoadFileSchema.ts";
-
-interface FileItemInterface<T> {
+interface FileItemInterface {
   file: string,
-  schema: AbstractLoadFileSchema<T>
 }
 
 export { FileItemInterface };
 
 interface LoadFileTaskInterface<T> {
-  getFilesList(): Promise<FileItemInterface<T>[]>,
+  getFilesList(): Promise<FileItemInterface[]>,
   parseRawData(_fileContent: string): Promise<object[]>,
   dataProcessing(_preparedData: T[]): Promise<void>,
   postDataProcessing(): Promise<void>,

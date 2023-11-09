@@ -12,6 +12,7 @@ import { WorkflowType } from "../../src/api/APIContext.ts";
 import InternalError from "../../src/exceptions/InternalError.ts";
 import { Argument } from "../../src/task/BaseCommand.ts";
 import { fs } from "zx";
+import { GenerateFileSchemaInterface } from "../../src/data_mapping/SchemaInterfaces.ts";
 
 interface MasterItemInterface {
   id: number,
@@ -58,12 +59,14 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
     return WorkflowType.EXPORT_ITEM_REFERENCES;
   }
 
+  getDataSchema(): GenerateFileSchemaInterface<MasterItemInterface> {
+    return new DefaultGenerateMasterItemsSchema();
+  }
+
   initFilesGeneration(): InitialDataItem<MasterItemInterface>[] {
-    const schema = new DefaultGenerateMasterItemsSchema();
     return [
       // Only one file to be generated, so only one object returned.
       {
-        schema: schema,
         initialData: []
       }
     ]
@@ -120,7 +123,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
           reject(error);
         });
 
-      const fileDescriptor = this.currentFileConfiguration.schema.fileDescriptor;
+      const fileDescriptor = this.getDataSchema().fileDescriptor;
 
       if (this.argv?.['headers']) {
         const headersLine = new Array(fileDescriptor.csvTotalColumnNumber);

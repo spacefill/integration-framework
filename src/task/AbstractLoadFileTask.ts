@@ -1,4 +1,5 @@
 import { EventTypeEnumString } from "../api/EdiEvent.ts";
+import { LoadFileSchemaInterface } from "../data_mapping/SchemaInterfaces.ts";
 import ApiNetWorkError from "../exceptions/ApiNetWorkError.ts";
 import Console from "../utils/Console.ts";
 import { ExceptionUtils } from "../utils/ExceptionUtils.ts";
@@ -7,7 +8,12 @@ import LoadFileTaskInterface, { FileItemInterface } from "./LoadFileTaskInterfac
 
 export default abstract class AbstractLoadFileTask<T> extends AbstractTask implements LoadFileTaskInterface<T> {
 
-  async getFilesList(): Promise<FileItemInterface<T>[]> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getDataSchema() : LoadFileSchemaInterface<T> {
+    throw new Error("Method not implemented.");
+  }
+
+  async getFilesList(): Promise<FileItemInterface[]> {
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -59,7 +65,8 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
 
           Console.info("Data mapping ------------------------");
           Console.debug(`${preparedData?.length} items to map.`);
-          const mappedData = targetFileItem.schema.mapInputFileData(preparedData);
+          const mappedData = this.getDataSchema().mapInputFileData(preparedData);
+          Console.trace(mappedData);
           Console.confirm("Data mapped");
 
           Console.info("Data processing --------------------");
@@ -71,7 +78,7 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
           Console.confirm("Post data processing action completed");
 
         } catch (processFileException) {
-          Console.error(processFileException?.message);
+          Console.error(processFileException);
           errorFound = true;
 
           await this.sdk.ediEvent.send(ExceptionUtils.getEventTypeFromException(processFileException),

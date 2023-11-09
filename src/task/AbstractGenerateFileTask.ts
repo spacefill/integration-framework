@@ -10,12 +10,18 @@ import NetWorkError from '../exceptions/NetWorkError.ts';
 import IoError from '../exceptions/IoError.ts';
 import ApiNetWorkError from '../exceptions/ApiNetWorkError.ts';
 import UnknownError from '../exceptions/UnknownError.ts';
+import { GenerateFileSchemaInterface } from '../data_mapping/SchemaInterfaces.ts';
 
 export abstract class AbstractGenerateFileTask<T> extends AbstractTask implements GenerateFileTasklnterface<T> {
 
   protected currentFileConfiguration: InitialDataItem<T>;
 
   initFilesGeneration(): InitialDataItem<T>[] {
+    throw new Error("Method not implemented.");
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getDataSchema() : GenerateFileSchemaInterface<T> {
     throw new Error("Method not implemented.");
   }
 
@@ -80,11 +86,11 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
 
           Console.info("Data mapping ------------------------");
           Console.debug(`${rawData?.length} items to map.`);
-          const mappedData = this.currentFileConfiguration.schema.mapOutputFileData(rawData);
+          const mappedData = this.getDataSchema().mapOutputFileData(rawData);
           Console.confirm("Data mapped");
 
           Console.info("Data validation ---------------------");
-          this.currentFileConfiguration.schema.validateFileData(mappedData);
+          this.getDataSchema().validateFileData(mappedData);
           Console.confirm("Data validated");
 
           await temporaryFileTask(async (tempFilePath) => {
