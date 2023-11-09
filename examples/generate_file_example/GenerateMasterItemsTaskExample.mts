@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx ts-node --esm --transpile-only --compilerOptions '{"moduleResolution":"nodenext","module":"NodeNext","target":"esnext", "allowImportingTsExtensions": true}'
+#!/usr/bin/env -S npx ts-node --esm --transpile-only
 
 import { DateTime } from "luxon";
 import * as csv from 'fast-csv';
