@@ -101,7 +101,7 @@ class Console {
     Config.get().console.color ? console.log(`${coloredPrefix}\t`, firstMessage) : console.log(`${prefix}\t`, firstMessage);
 
     if (otherMessages.length > 0) console.group();
-    otherMessages.map((otherMessage) => console.log(otherMessage));
+    otherMessages.map((otherMessage) => console.dir(otherMessage, {depth: null}));
     if (otherMessages.length > 0) console.groupEnd();
   }
 }

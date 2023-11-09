@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 import { Config } from "../../../src/configs/Config.ts";
 import { AbstractLoadFileSchema } from "../../../src/data_mapping/AbstractLoadFileSchema.ts"
 import { ExportFileDescriptor } from "../../../src/data_mapping/SchemaInterfaces.ts";
-import { ExitOrderInterface, OrderInterface, OrderItemInterface } from "../LoadOrderAcknowledgeTaskExample.mts";
+import { ExitOrderInterface, ItemPackagingTypeEnum, OrderInterface, OrderItemInterface, OrderTypeEnum } from "../LoadOrderAcknowledgeTaskExample.mts";
 
 export default class DefaultLoadOrderAckSchema extends AbstractLoadFileSchema<OrderInterface | ExitOrderInterface> {
 
@@ -181,9 +181,9 @@ export default class DefaultLoadOrderAckSchema extends AbstractLoadFileSchema<Or
       const defautOrderItem: OrderItemInterface = {
         item_reference: line['Reference article'],
         batch_name: line['Numero de lot'].length > 0 ? line['Numero de lot'] : null,
-        serial_number: line['Numero de palette'],
-        actual_quantity: 0,
-        item_packaging_type: Config.get().edi.wmsItemPackagingType,
+        serial_number: line['Numero de palette'].length > 0 ? line['Numero de palette'] : null,
+        expected_quantity: parseInt(line['Quantit article']),
+        item_packaging_type: Config.get().edi.wmsItemPackagingType as ItemPackagingTypeEnum,
         serial_shipping_container_code: line["Code barre sur l'article"].length > 0 ? line["Code barre sur l'article"] : null,
         designation: line['Designation article'],
       };
@@ -191,21 +191,23 @@ export default class DefaultLoadOrderAckSchema extends AbstractLoadFileSchema<Or
       const previousValue = grouped_order_items[key] ?? defautOrderItem;
       grouped_order_items[key] = {
         ...previousValue,
-        actual_quantity: defautOrderItem.actual_quantity + previousValue.actual_quantity
+        expected_quantity: (defautOrderItem.expected_quantity + previousValue.expected_quantity) as number
       }
     });
 
     const firstItem = itemsWithColumns[0];
     let order_type: string;
     if (firstItem['Type de mouvement'] === 'IN' || firstItem['Type de mouvement'] === 'AE') {
-      order_type = 'IN';
+      order_type = 'ENTRY';
     } else {
       order_type = 'EXIT';
     }
     const executionDate = DateTime.fromFormat(firstItem['Date de mouvement'], 'yyyyMMdd').toFormat('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
     const mappedData: OrderInterface = {
-      order_type: order_type,
       shipper_order_reference: firstItem['N de mouvement'],
+      order_type: order_type as OrderTypeEnum,
+      shipper_account_id: Config.get().edi.wmsShipperAccountId,
+      warehouse_id: Config.get().edi.wmsWarehouseId,
       planned_execution_datetime_range: {
         datetime_from: executionDate,
         datetime_to: executionDate

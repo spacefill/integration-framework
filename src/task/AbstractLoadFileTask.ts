@@ -21,11 +21,11 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async dataProcessing(_preparedData: T[]): Promise<void> {
+  async dataProcessing(_mappedData: T[]): Promise<void> {
     throw new Error("Method not implemented.");
   }
-
-  async postDataProcessing(): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async postDataProcessing(_preparedData: object[], _mappedData: T[]): Promise<void> {
     Console.debug("No post actions");
   }
 
@@ -60,13 +60,13 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
 
           Console.info("Prepare data --------------------"); // @todo: Continuer avec la preparation des données.
           const preparedData = await this.parseRawData(fileContent);
-          Console.trace(preparedData);
+          Console.trace("Prepared data:", preparedData);
           Console.confirm("Data prepared");
 
           Console.info("Data mapping ------------------------");
           Console.debug(`${preparedData?.length} items to map.`);
           const mappedData = this.getDataSchema().mapInputFileData(preparedData);
-          Console.trace(mappedData);
+          Console.trace("Mapped data:", mappedData);
           Console.confirm("Data mapped");
 
           Console.info("Data processing --------------------");
@@ -74,7 +74,7 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
           Console.confirm("Data processed");
 
           Console.info("Post data processing ---------------");
-          await this.postDataProcessing();
+          await this.postDataProcessing(preparedData, mappedData);
           Console.confirm("Post data processing action completed");
 
         } catch (processFileException) {
@@ -86,7 +86,6 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
           );
         }
       }
-
 
     } catch (exception) {
       Console.error(exception?.message);

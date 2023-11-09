@@ -7,8 +7,8 @@ export { FileItemInterface };
 interface LoadFileTaskInterface<T> {
   getFilesList(): Promise<FileItemInterface[]>,
   parseRawData(_fileContent: string): Promise<object[]>,
-  dataProcessing(_preparedData: T[]): Promise<void>,
-  postDataProcessing(): Promise<void>,
+  dataProcessing(_mappedData: T[]): Promise<void>,
+  postDataProcessing(_preparedData: object[], _mappedData: T[]): Promise<void>,
 }
 
 export default LoadFileTaskInterface;

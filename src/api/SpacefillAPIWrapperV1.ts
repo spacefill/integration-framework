@@ -4,6 +4,7 @@ import type { Client as SpacefillAPIClient } from './spacefill-api-openapi.d.ts'
 import APIContext, { WorkflowType } from "./APIContext.ts";
 import Console from "../utils/Console.ts";
 import EdiEvent from "./EdiEvent.ts";
+import axiosFormData from "axios-form-data";
 
 /**
  * This wrapper is using openapi-stack client
@@ -44,11 +45,16 @@ export class SpacefillAPIWrapperV1{
         },
         transformRequest: (data, headers) => {
           headers['Spacefill-Ctx-Data-Source']= this.dataSource ?? 'unknown';
-          headers['Content-Type']= 'application/json';
+          if (!headers['Content-Type']) {
+            headers['Content-Type']= 'application/json';
+          }
           return JSON.stringify(data);
         }
       },
     });
+
+    const axiosInstance = api.getAxiosInstance();
+    axiosInstance.interceptors.request.use(axiosFormData);
 
     axiosDebug.default({
       request: (_debug, config) => {
