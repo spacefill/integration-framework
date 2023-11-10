@@ -2,6 +2,7 @@ import { TransfertConfiguration, TransfertInterface } from "./TransfertInterface
 import { SftpClient } from "./SftpClient.ts";
 import { LocalClient } from "./LocalClient.ts";
 import { Config } from "../configs/Config.ts";
+import Console from "../utils/Console.ts";
 
 enum TransfertProtocol {
   sftp = 'sftp',
@@ -21,6 +22,11 @@ class Transfert implements TransfertInterface {
     this.protocol = protocol;
     this.configuration = configuration;
 
+    Console.debug("Transfert", {
+      protocol: this.protocol,
+      configuration: this.configuration
+    });
+
     switch (this.protocol) {
       case TransfertProtocol.sftp:
         this.client = new SftpClient(this.configuration);
@@ -29,7 +35,7 @@ class Transfert implements TransfertInterface {
         this.client = new LocalClient();
         break;
       default:
-        throw new Error(`Unsupported protocol ${this.protocol}`);
+        throw new Error(`Unsupported protocol ${this.protocol} - check your configuration`);
     }
   }
   checkStatut(): boolean {

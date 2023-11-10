@@ -48,13 +48,13 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
 
       Console.info(`Starting new task, type: ${this.constructor.name}`);
 
-      Console.info("Config validation -------------------");
+      Console.title("Config validation");
       Config.validate();
       Console.confirm("Config validated");
 
       const filesConfiguration = this.initFilesGeneration();
 
-      Console.info("Api init ----------------------------");
+      Console.title("Api init");
       await this.initApiClient(this.getWorkflowType());
       this.sdk.dataSource = 'API';
 
@@ -72,7 +72,7 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
         try {
           this.currentFileConfiguration = fileConfiguration;
 
-          Console.info("Data preparation --------------------");
+          Console.title("Data preparation");
           const rawData = await this.prepareFileData();
           Console.confirm("Data prepared");
 
@@ -84,18 +84,18 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
             continue;
           }
 
-          Console.info("Data mapping ------------------------");
+          Console.title("Data mapping");
           Console.debug(`${rawData?.length} items to map.`);
           const mappedData = this.getDataSchema().mapOutputFileData(rawData);
           Console.confirm("Data mapped");
 
-          Console.info("Data validation ---------------------");
+          Console.title("Data validation");
           this.getDataSchema().validateFileData(mappedData);
           Console.confirm("Data validated");
 
           await temporaryFileTask(async (tempFilePath) => {
             Console.info(`Temporary file: ${tempFilePath}`)
-            Console.info("File generation ---------------------");
+            Console.title("File generation");
             try {
               await this.generateFile(mappedData, tempFilePath);
               Console.confirm("File generated");
@@ -104,7 +104,7 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
               throw new IoError(`Error during generating file ${tempFilePath}`);
             }
 
-            Console.info("File sending ------------------------");
+            Console.title("File sending");
             try {
               const sentFile = await this.sendFile(tempFilePath);
               Console.confirm(`File ${sentFile} well sent.`);
@@ -114,7 +114,7 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
             }
           });
 
-          Console.info("Post file sending ---------------------");
+          Console.title("Post file sending");
           await this.postFileSending();
           Console.confirm("Post file sending action done");
 

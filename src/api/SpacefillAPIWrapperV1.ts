@@ -1,27 +1,42 @@
 import OpenAPIClientAxios from "openapi-client-axios";
+import axios, { AxiosInstance } from 'axios';
+import FormData from 'form-data';
 import * as axiosDebug from "axios-debug-log";
+
 import type { Client as SpacefillAPIClient } from './spacefill-api-openapi.d.ts';
 import APIContext, { WorkflowType } from "./APIContext.ts";
 import Console from "../utils/Console.ts";
 import EdiEvent from "./EdiEvent.ts";
-import axiosFormData from "axios-form-data";
 
 /**
  * This wrapper is using openapi-stack client
  * see https://openapistack.co/docs/openapi-client-axios/intro/
  */
 
-export class SpacefillAPIWrapperV1{
+export class SpacefillAPIWrapperV1 {
 
   public client: SpacefillAPIClient;
+
   /**
    * Helper that manages the sending of api edi events.
    */
   public ediEvent: EdiEvent;
+
   /**
    * Data source used in API Context
    */
   public dataSource?: string;
+
+  /**
+   * Workflow type used in API Context
+   */
+  private workflowType: WorkflowType;
+
+  private apiUrl: string;
+
+  private bearerToken: string;
+
+  private axiosInstance: AxiosInstance;
 
   /**
    * Init api client
@@ -31,37 +46,48 @@ export class SpacefillAPIWrapperV1{
    * @returns
    */
   public async initClient(url: string, bearerToken: string, workflowType: WorkflowType): Promise<void> {
+    this.workflowType = workflowType;
+    this.apiUrl = url;
+    this.bearerToken = bearerToken;
+
     const api = new OpenAPIClientAxios.default({
       definition: "https://api.spacefill.fr/openapi.json",
       withServer: {
-        url: url
+        url: this.apiUrl
       },
       axiosConfigDefaults: {
         withCredentials: true,
         headers: {
-          'Authorization': `Bearer ${bearerToken}`,
+          'Authorization': `Bearer ${this.bearerToken}`,
           ...APIContext.getMainHeaders(),
-          ...APIContext.getWorkflowHeader(workflowType),
+          ...APIContext.getWorkflowHeader(this.workflowType),
         },
         transformRequest: (data, headers) => {
-          headers['Spacefill-Ctx-Data-Source']= this.dataSource ?? 'unknown';
+          headers['Spacefill-Ctx-Data-Source'] = this.dataSource ?? 'unknown';
           if (!headers['Content-Type']) {
-            headers['Content-Type']= 'application/json';
+            headers['Content-Type'] = 'application/json';
           }
           return JSON.stringify(data);
         }
       },
     });
 
-    const axiosInstance = api.getAxiosInstance();
-    axiosInstance.interceptors.request.use(axiosFormData);
+    this.axiosInstance = api.getAxiosInstance();
 
     axiosDebug.default({
       request: (_debug, config) => {
-        Console.debug(`axios: ${config.method} ${config.url}`, {
-          parameter: config.params,
-          data: config.data
-        })
+        if (!(config.data instanceof FormData)) {
+          Console.debug(`Axios: ${config.method} ${config.url}`, {
+            parameter: config.params,
+            data: config.data
+          });
+        } else {
+          Console.debug(`Axios upload: ${config.method} ${config.url}`, {
+            parameter: config.params,
+          });
+          Console.trace('FormData', config.data);
+        }
+
       },
       response: (_debug, config) => {
         Console.debug(`Axios: ${config.status} ${config.statusText} (${config.config.method} ${config.config.url})`);
@@ -71,9 +97,30 @@ export class SpacefillAPIWrapperV1{
         Console.error(`Axios: ${error.message} (${error.config.method} ${error.config.url})`, JSON.stringify(error.response?.data))
       },
     });
-    axiosDebug.addLogger(api.getAxiosInstance());
+    axiosDebug.addLogger(this.axiosInstance);
 
     this.client = await api.getClient<SpacefillAPIClient>();
     this.ediEvent = new EdiEvent(this.client);
+  }
+
+  async upload(method: string, path: string, formData: FormData): Promise<void> {
+    const axiosInstance: AxiosInstance = axios.create({
+      baseURL: this.apiUrl
+    });
+    axiosDebug.addLogger(axiosInstance);
+
+    return await axiosInstance({
+      method: method,
+      url: path,
+      data: formData,
+      headers: {
+        'Authorization': `Bearer ${this.bearerToken}`,
+        ...APIContext.getMainHeaders(),
+        ...APIContext.getWorkflowHeader(this.workflowType),
+        ...APIContext.getDataSourceHeader(this.dataSource),
+        ...formData.getHeaders(),
+      },
+    });
+
   }
 }

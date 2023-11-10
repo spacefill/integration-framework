@@ -4,6 +4,8 @@ import path from "path";
 import { temporaryFileTask } from "tempy";
 import * as csv from 'fast-csv';
 import * as XLSX from 'xlsx';
+import FormData from 'form-data';
+import { fs } from "zx";
 
 import { WorkflowType } from "../../src/api/APIContext.ts";
 import { Config } from "../../src/configs/Config.ts";
@@ -13,8 +15,6 @@ import DefaultLoadOrderAckSchema from "./schemas/DefaultLoadOrderAckSchema.ts";
 import { FileItemInterface } from "../../src/task/LoadFileTaskInterfaces.ts";
 import { LoadFileSchemaInterface } from "../../src/data_mapping/SchemaInterfaces.ts";
 import { EventTypeEnumString } from "../../src/api/EdiEvent.ts";
-import { fs } from "zx";
-import FormData from "form-data";
 
 
 type ItemPackagingTypeEnum = "PALLET" | "CARDBOARD_BOX" | "EACH";
@@ -167,8 +167,6 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
       }
 
       await temporaryFileTask(async (tempFilePath) => {
-
-        // Données à exporter
         const data = [["Order reference", "Item reference", "Item designation", "Batch name", "Serial number"]];
 
         currentOrder.order_items.forEach((orderItem) => {
@@ -187,22 +185,14 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
         const wb: XLSX.WorkBook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Serial numbers');
 
-        // Convertir le classeur en un tableau de bytes
         XLSX.writeFile(wb, tempFilePath, { compression: true });
 
         const formData = new FormData();
-        formData.append('file', `${currentOrder.shipper_order_reference}_serial_numbers.xlsx`);
+        formData.append('file',  fs.createReadStream(tempFilePath), {filename: `${currentOrder.shipper_order_reference}_serial_numbers.xlsx`});
 
-        await this.sdk.client.post_v1_logistic_management_order_upload_document_v1_logistic_management_orders__order_id__documents__post(
-          {
-            order_id: orderId
-          },
-          {
-            file: fs.readFileSync(tempFilePath) // @todo : fix that
-          }
-        );
+        await this.sdk.upload('post', `/v1/logistic_management/orders/${orderId}/documents/`, formData);
       });
-
+      Console.confirm(`Data processed for the order [id=${orderId} / shipper_order_reference=${currentOrder.shipper_order_reference}]`);
     }
   }
 

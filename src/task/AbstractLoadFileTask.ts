@@ -36,7 +36,7 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
 
       Console.info(`Starting new task, type: ${this.constructor.name}`);
 
-      Console.info("Api init ----------------------------");
+      Console.title("Api init");
       await this.initApiClient(this.getWorkflowType());
 
       await this.sdk.client.get_v1_ping_v1_ping_get().then(() => {
@@ -53,27 +53,27 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
           Console.info(`Start processing ${targetFile}`);
           this.sdk.dataSource = targetFile;
 
-          Console.info("Download and read file --------------------");
+          Console.title("Download and read file");
           const fileContent = await this.transfert.downloadAndReadFile(targetFile);
           Console.trace("File content:", fileContent);
           Console.confirm("File content retrieved");
 
-          Console.info("Prepare data --------------------"); // @todo: Continuer avec la preparation des données.
+          Console.title("Prepare data");
           const preparedData = await this.parseRawData(fileContent);
           Console.trace("Prepared data:", preparedData);
           Console.confirm("Data prepared");
 
-          Console.info("Data mapping ------------------------");
+          Console.title("Data mapping");
           Console.debug(`${preparedData?.length} items to map.`);
           const mappedData = this.getDataSchema().mapInputFileData(preparedData);
           Console.trace("Mapped data:", mappedData);
           Console.confirm("Data mapped");
 
-          Console.info("Data processing --------------------");
+          Console.title("Data processing");
           await this.dataProcessing(mappedData);
           Console.confirm("Data processed");
 
-          Console.info("Post data processing ---------------");
+          Console.title("Post data processing");
           await this.postDataProcessing(preparedData, mappedData);
           Console.confirm("Post data processing action completed");
 
