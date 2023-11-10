@@ -2,6 +2,7 @@ import { Stream } from "stream";
 import { TransfertConfiguration, TransfertInterface } from "./TransfertInterfaces.js";
 import WFtp from 'w-ftp';
 import path from 'path';
+import { Config } from "../configs/Config.ts";
 
 
 interface SSH2TransfertConfiguration {
@@ -29,22 +30,28 @@ export class SftpClient implements TransfertInterface {
       password: configuration.password,
     };
   }
+
   checkStatut(): boolean {
     throw new Error("Method not implemented.");
   }
-  close(): void {
+
+  async close(): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  mkdirIfNotExists(): void {
+
+  async mkdirIfNotExists(): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  upload(localPath: string, remotePath: string): void {
+
+  async upload(localPath: string, remotePath: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  downloadAndReadFile(filepath: string, encoding: BufferEncoding): Promise<string> {
+
+  async downloadAndReadFile(filepath: string, encoding: BufferEncoding): Promise<string> {
     console.log(encoding, filepath);
     throw new Error("Method not implemented.");
   }
+
   async listDirWithFilter(filepathPattern: string): Promise<string[]> {
     const client = new WFtp(this.configuration);
     await client.conn();
@@ -63,14 +70,20 @@ export class SftpClient implements TransfertInterface {
     await client.quit()
     return result;
   }
-  deleteFile(filepath: string): void {
-    throw new Error("Method not implemented.");
-  }
-  moveFile(filepath: string): void {
-    throw new Error("Method not implemented.");
-  }
-  renameFile(filepath: string): void {
+
+  async deleteFile(filepath: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
+  async moveFile(sourceFilePath: string, targetFilePath: string, mkdirIfNotExists: boolean = true): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  async moveToErrorDir(sourceFilePath: string): Promise<void> {
+    return this.moveFile(sourceFilePath, path.join(Config.get().edi.wmsPathErrorDir, path.basename(sourceFilePath)));
+  }
+
+  async moveToArchiveDir(sourceFilePath: string): Promise<void> {
+    return this.moveFile(sourceFilePath, path.join(Config.get().edi.wmsPathArchiveDir, path.basename(sourceFilePath)));
+  }
 }

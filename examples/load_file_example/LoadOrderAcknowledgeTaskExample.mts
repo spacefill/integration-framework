@@ -118,6 +118,7 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
       });
 
       let orderId: string;
+      // Create order if not exists
       if (existingOrdersResponse.data.total === 0) {
         const createdOrder = await this.sdk.client.post_v1_logistic_management_warehouse_creates_order_action_v1_logistic_management_orders_warehouse_creates_order_action_post(
           null,
@@ -135,7 +136,7 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
         ];
 
         if (!allowedStatuses.includes(firstElement.status)) {
-          Console.warn(`Order [${currentOrder.shipper_order_reference}] ignored`);
+          Console.warn(`Order [${currentOrder.shipper_order_reference}] ignored - invalid order status`);
 
           this.sdk.ediEvent.send(EventTypeEnumString.PRECONDITION_FAILED_ERROR,
             `Order [${currentOrder.shipper_order_reference}] is in status ${firstElement.status} which is not an allowed status (${allowedStatuses.join(',')}).`
@@ -144,6 +145,7 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
         }
       }
 
+      // Acknowledge the order
       await this.sdk.client.post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action_v1_logistic_management_orders__order_id__warehouse_acknowledges_receipt_of_order_action_post(
         {
           order_id: orderId
@@ -165,7 +167,7 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
         Console.info(`Serial number skipped because WMS_LOGIS_SERIAL_NUMBER_ENABLED=${process.env?.WMS_LOGIS_SERIAL_NUMBER_ENABLED}`);
         return;
       }
-
+      // Send serial number export is option is enabled
       await temporaryFileTask(async (tempFilePath) => {
         const data = [["Order reference", "Item reference", "Item designation", "Batch name", "Serial number"]];
 
@@ -180,6 +182,11 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
             ]);
           }
         });
+
+        if (!(data.length > 1)){
+          Console.warn('No serial number to export - skipped');
+          return;
+        }
 
         const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
         const wb: XLSX.WorkBook = XLSX.utils.book_new();
@@ -197,8 +204,12 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async postDataProcessing(_preparedData: object[], mappedData: OrderInterface[] | ExitOrderInterface[]): Promise<void> {
+  async onProcessingFileSucces(targetFileItem: FileItemInterface, _preparedData: object[], mappedData: OrderInterface[] | ExitOrderInterface[]): Promise<void> {
+    this.transfert.moveToArchiveDir(targetFileItem.file);
+  }
 
+  async onProcessingFileError(targetFileItem: FileItemInterface): Promise<void> {
+    this.transfert.moveToErrorDir(targetFileItem.file);
   }
 
 }

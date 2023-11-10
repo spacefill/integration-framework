@@ -1,26 +1,32 @@
-import { TransfertInterface } from "./TransfertInterfaces.js";
+import { TransfertInterface } from "./TransfertInterfaces.ts";
 import path from 'path';
-import { fs } from "zx";
+import { $, fs } from "zx";
 import { constants } from "fs";
+import { Config } from "../configs/Config.ts";
 
 export class LocalClient implements TransfertInterface {
 
   checkStatut(): boolean {
     return true;
   }
-  close(): void {
+
+  async close(): Promise<void> {
     return;
   }
-  mkdirIfNotExists(): void {
+
+  async mkdirIfNotExists(): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  upload(localPath: string, remotePath: string): void {
+
+  async upload(localPath: string, remotePath: string): Promise<void> {
     const mode = constants.COPYFILE_EXCL;
     fs.copyFileSync(localPath, path.join(process.cwd(), remotePath), mode);
   }
-  downloadAndReadFile(filepath: string, encoding: BufferEncoding): Promise<string> {
+
+  async downloadAndReadFile(filepath: string, encoding: BufferEncoding): Promise<string> {
     return fs.readFile(filepath, encoding);
   }
+
   async listDirWithFilter(filepathPattern: string): Promise<string[]> {
     const directory = path.dirname(filepathPattern);
     const filenamePattern = path.basename(filepathPattern);
@@ -35,14 +41,24 @@ export class LocalClient implements TransfertInterface {
 
     return result;
   }
-  deleteFile(filepath: string): void {
-    throw new Error("Method not implemented.");
+
+  async deleteFile(filepath: string): Promise<void> {
+    await $`rm ${filepath}`;
   }
-  moveFile(filepath: string): void {
-    throw new Error("Method not implemented.");
+
+  async moveFile(sourceFilePath: string, targetFilePath: string, mkdirIfNotExists: boolean = false): Promise<void> {
+    if (mkdirIfNotExists) {
+      await $`mkdir -p ${path.dirname(targetFilePath)}`;
+    }
+    await $`mv ${sourceFilePath} ${targetFilePath}`;
   }
-  renameFile(filepath: string): void {
-    throw new Error("Method not implemented.");
+
+  async moveToErrorDir(sourceFilePath: string): Promise<void> {
+    return this.moveFile(sourceFilePath, path.join(Config.get().edi.wmsPathErrorDir, path.basename(sourceFilePath)));
+  }
+
+  async moveToArchiveDir(sourceFilePath: string): Promise<void> {
+    return this.moveFile(sourceFilePath, path.join(Config.get().edi.wmsPathArchiveDir, path.basename(sourceFilePath)));
   }
 
 }

@@ -25,8 +25,12 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async postDataProcessing(_preparedData: object[], _mappedData: T[]): Promise<void> {
-    Console.debug("No post actions");
+  async onProcessingFileSucces(targetFile: FileItemInterface, _preparedData: object[], _mappedData: T[]): Promise<void> {
+    Console.info(`onProcessingFileSucces not implemented. Nothing to do on ${targetFile.file}.`);
+  }
+
+  async onProcessingFileError(targetFile: FileItemInterface): Promise<void> {
+    Console.info(`onProcessingFileError not implemented. Nothing to do on ${targetFile.file}`);
   }
 
   async run(): Promise<void> {
@@ -74,16 +78,16 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
           Console.confirm("Data processed");
 
           Console.title("Post data processing");
-          await this.postDataProcessing(preparedData, mappedData);
+          await this.onProcessingFileSucces(targetFileItem, preparedData, mappedData);
           Console.confirm("Post data processing action completed");
 
         } catch (processFileException) {
           Console.error(processFileException);
           errorFound = true;
-
           await this.sdk.ediEvent.send(ExceptionUtils.getEventTypeFromException(processFileException),
             `File loading failed. Type=${this.getWorkflowType()}`
           );
+          await this.onProcessingFileError(targetFileItem);
         }
       }
 

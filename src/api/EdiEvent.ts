@@ -28,13 +28,13 @@ export default class EdiEvent {
   }
 
   public async send(type: EventTypeEnumString, message: string, meta: object = {}) : Promise<void> {
-    Console.debug(`Sending event ${type}: ${message}`);
+    Console.info(`Sending event ${type}: ${message}`);
     if (type === EventTypeEnumString.API_NETWORK_ERROR) {
       Console.info("Ignore sending event, because is a network error event");
       return;
     }
     if (!Config.get().spacefillApi.eventEnabled) {
-      Console.debug("Event sending disabled in configuration");
+      Console.info("Event sending disabled in configuration");
       return;
     }
     await this.apiClient.post_v1_logistic_management_event_v1_logistic_management_events__post(

@@ -41,29 +41,32 @@ class Transfert implements TransfertInterface {
   checkStatut(): boolean {
     return this.client.checkStatut();
   }
-  close(): void {
+  async close(): Promise<void> {
     return this.client.close();
   }
-  mkdirIfNotExists(): void {
+  async mkdirIfNotExists(): Promise<void> {
     return this.client.mkdirIfNotExists();
   }
-  upload(localPath: string, remotePath: string): void {
+  async upload(localPath: string, remotePath: string): Promise<void> {
     return this.client.upload(localPath, remotePath);
   }
   async downloadAndReadFile(filepath: string): Promise<string> {
     return this.client.downloadAndReadFile(filepath, Config.get().edi.fileEncoding as BufferEncoding);
   }
-  listDirWithFilter(filepathPattern: string): Promise<string[]> {
+  async listDirWithFilter(filepathPattern: string): Promise<string[]> {
     return this.client.listDirWithFilter(filepathPattern);
   }
-  deleteFile(filepath: string): void {
+  async deleteFile(filepath: string): Promise<void> {
     return this.client.deleteFile(filepath);
   }
-  moveFile(filepath: string): void {
-    return this.client.moveFile(filepath);
+  async moveFile(sourceFilePath: string, targetFilePath: string, mkdirIfNotExists: boolean = true): Promise<void> {
+    return this.client.moveFile(sourceFilePath, targetFilePath, mkdirIfNotExists);
   }
-  renameFile(filepath: string): void {
-    return this.client.renameFile(filepath);
+  async moveToErrorDir(sourceFilePath: string): Promise<void> {
+    return this.client.moveToErrorDir(sourceFilePath);
+  }
+  async moveToArchiveDir(sourceFilePath: string): Promise<void> {
+    return this.client.moveToArchiveDir(sourceFilePath);
   }
 }
 
