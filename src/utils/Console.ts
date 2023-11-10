@@ -68,7 +68,12 @@ class Console {
       return;
     }
     const infoGradient = gradient(['#084C61', '#177E89', '#084C61']);
-    const maxColumns = 80;
+    const cliWidth = process.stdout.columns;
+    const prefixWidth = 12;
+    let maxColumns = 80;
+    if ( cliWidth && cliWidth < 80 ) {
+      maxColumns = cliWidth - prefixWidth;
+    }
     const delta = (maxColumns - message.length) > 0 ? (maxColumns - message.length) : 0;
     Console.printGradient(infoGradient, '[Info]', `${message} ${".".repeat(delta)}`);
   }
