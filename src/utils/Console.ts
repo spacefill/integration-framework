@@ -63,6 +63,16 @@ class Console {
     Console.printGradient(infoGradient, '[Info]', ...message);
   }
 
+  static title(message) {
+    if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_INFO) {
+      return;
+    }
+    const infoGradient = gradient(['#084C61', '#177E89', '#084C61']);
+    const maxColumns = 80;
+    const delta = (maxColumns - message.length) > 0 ? (maxColumns - message.length) : 0;
+    Console.printGradient(infoGradient, '[Info]', `${message} ${".".repeat(delta)}`);
+  }
+
   static warn(...message) {
     if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_WARN) {
       return;
