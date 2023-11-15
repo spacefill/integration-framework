@@ -1,4 +1,3 @@
-import { Stream } from "stream";
 import { TransfertConfiguration, TransfertInterface } from "./TransfertInterfaces.js";
 import WFtp from 'w-ftp';
 import path from 'path';

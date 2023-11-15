@@ -1,6 +1,6 @@
 import minimist from "minimist";
 import bytes from "bytes";
-import Console, { LOG_LEVEL_DEBUG } from "../utils/Console.js";
+import Console from "../utils/Console.js";
 import { Config } from "../configs/Config.js";
 import { cpuUsage } from "node:process";
 
