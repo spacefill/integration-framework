@@ -111,7 +111,7 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
   async dataProcessing(mappedData: OrderInterface[] | ExitOrderInterface[]): Promise<void> {
     for (const currentOrder of mappedData) {
 
-      const existingOrdersResponse = await this.sdk.client.get_v1_logistic_management_order_list_v1_logistic_management_orders__get({
+      const existingOrdersResponse = await this.sdk.client.get_v1_logistic_management_order_list({
         shipper_account_id: Config.get().edi.wmsShipperAccountId,
         shipper_order_reference: currentOrder.shipper_order_reference,
         warehouse_id: Config.get().edi.wmsWarehouseId,
@@ -120,7 +120,7 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
       let orderId: string;
       // Create order if not exists
       if (existingOrdersResponse.data.total === 0) {
-        const createdOrder = await this.sdk.client.post_v1_logistic_management_warehouse_creates_order_action_v1_logistic_management_orders_warehouse_creates_order_action_post(
+        const createdOrder = await this.sdk.client.post_v1_logistic_management_warehouse_creates_order_action(
           null,
           currentOrder
         );
@@ -146,7 +146,7 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
       }
 
       // Acknowledge the order
-      await this.sdk.client.post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action_v1_logistic_management_orders__order_id__warehouse_acknowledges_receipt_of_order_action_post(
+      await this.sdk.client.post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action(
         {
           order_id: orderId
         },

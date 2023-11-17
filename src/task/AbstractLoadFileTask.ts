@@ -43,7 +43,7 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
       Console.title("Api init");
       await this.initApiClient(this.getWorkflowType());
 
-      await this.sdk.client.get_v1_ping_v1_ping_get().then(() => {
+      await this.sdk.client.get_v1_ping().then(() => {
         Console.confirm("Api initialized");
       }).catch(() => {
         throw new ApiNetWorkError("Unable to reach the api. Exit.");
