@@ -45,6 +45,7 @@
   "scripts": {
     "test": "jest --coverage ci/*",
     "test-manual": "jest --coverage manual/*",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "lint": "./node_modules/.bin/eslint ./src/"
   }
 }
