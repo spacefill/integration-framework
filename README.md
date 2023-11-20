@@ -6,7 +6,7 @@ The spacefill's integration framework contains a toolkit to build edi integratio
 
 ## Getting started
 
-Build with NodeJS `16.20`.
+Build with NodeJS `18.12`.
 
 ```sh
 yarn install

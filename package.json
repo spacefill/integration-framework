@@ -47,5 +47,8 @@
     "test-manual": "jest --coverage manual/*",
     "test:watch": "jest --watch",
     "lint": "./node_modules/.bin/eslint ./src/"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
