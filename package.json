@@ -1,5 +1,5 @@
 {
-  "name": "poc-integration-framework",
+  "name": "integration-framework",
   "type": "module",
   "dependencies": {
     "@fast-csv/format": "4.3.5",
