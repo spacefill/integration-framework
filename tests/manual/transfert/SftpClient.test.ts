@@ -1,4 +1,5 @@
-import 'jest';
+import { expect } from 'chai';
+
 import { SftpClient } from '../../../src/transport/SftpClient.ts';
 
 describe('SftpTransfert', () => {
@@ -9,6 +10,6 @@ describe('SftpTransfert', () => {
       username: 'alice',
       password: 'password'
     })
-    expect(instance).toBeInstanceOf(SftpClient);
+    expect(instance).to.be.an.instanceof(SftpClient);
   });
 });
