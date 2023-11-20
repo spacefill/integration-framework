@@ -8,6 +8,8 @@ import APIContext, { WorkflowType } from "./APIContext.ts";
 import Console from "../utils/Console.ts";
 import EdiEvent from "./EdiEvent.ts";
 
+import definition from "./openapi.json"  assert {type: 'json'};
+
 /**
  * This wrapper is using openapi-stack client
  * see https://openapistack.co/docs/openapi-client-axios/intro/
@@ -51,7 +53,7 @@ export class SpacefillAPIWrapperV1 {
     this.bearerToken = bearerToken;
 
     const api = new OpenAPIClientAxios.default({
-      definition: "https://api.spacefill.fr/openapi.json",
+      definition: definition,
       withServer: {
         url: this.apiUrl
       },

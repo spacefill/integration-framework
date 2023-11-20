@@ -75,7 +75,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
   async prepareFileData(offset: number = 0): Promise<MasterItemInterface[]> {
     let masterItems = this.currentFileConfiguration?.initialData ?? [];
 
-    await this.sdk.client.get_v1_logistic_management_master_item_list_v1_logistic_management_master_items__get(
+    await this.sdk.client.get_v1_logistic_management_master_item_list(
       {
         offset: offset,
         limit: Config.get().spacefillApi.defaultPaginationLimit,
@@ -161,7 +161,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
     }
 
     for (const item of this.currentFileConfiguration.initialData) {
-      await this.sdk.client.patch_v1_logistic_management_master_item_v1_logistic_management_master_items__master_item_id___patch(
+      await this.sdk.client.patch_v1_logistic_management_master_item(
         { master_item_id: `${item.id}` },
         { transfered_to_wms_at: DateTime.now().toFormat('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'') }
       ).catch(() => {

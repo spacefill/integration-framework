@@ -37,7 +37,7 @@ export default class EdiEvent {
       Console.info("Event sending disabled in configuration");
       return;
     }
-    await this.apiClient.post_v1_logistic_management_event_v1_logistic_management_events__post(
+    await this.apiClient.post_v1_logistic_management_event(
       null,
       {
         type: type,

@@ -58,7 +58,7 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
       await this.initApiClient(this.getWorkflowType());
       this.sdk.dataSource = 'API';
 
-      await this.sdk.client.get_v1_ping_v1_ping_get().then(() => {
+      await this.sdk.client.get_v1_ping().then(() => {
         Console.confirm("Api initialized");
       }).catch(() => {
         throw new ApiNetWorkError("Unable to reach the api. Exit.");

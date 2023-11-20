@@ -4,6 +4,8 @@
     "module": "NodeNext",
     "target": "esnext",
     "noEmit": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
   }
 }
