@@ -1,4 +1,4 @@
-import OpenAPIClientAxios from "openapi-client-axios";
+import OpenAPIClientAxios, { Document } from "openapi-client-axios";
 import axios, { AxiosInstance } from 'axios';
 import FormData from 'form-data';
 import * as axiosDebug from "axios-debug-log";
@@ -53,7 +53,7 @@ export class SpacefillAPIWrapperV1 {
     this.bearerToken = bearerToken;
 
     const api = new OpenAPIClientAxios.default({
-      definition: definition,
+      definition: definition as Document,
       withServer: {
         url: this.apiUrl
       },
@@ -74,7 +74,9 @@ export class SpacefillAPIWrapperV1 {
       },
     });
 
-    this.axiosInstance = api.getAxiosInstance();
+    this.client = await api.getClient<SpacefillAPIClient>();
+    this.ediEvent = new EdiEvent(this.client);
+    this.axiosInstance = api.instance;
 
     axiosDebug.default({
       request: (_debug, config) => {
@@ -100,9 +102,10 @@ export class SpacefillAPIWrapperV1 {
       },
     });
     axiosDebug.addLogger(this.axiosInstance);
+  }
 
-    this.client = await api.getClient<SpacefillAPIClient>();
-    this.ediEvent = new EdiEvent(this.client);
+  getAxiosInstance() : AxiosInstance {
+    return this.axiosInstance;
   }
 
   async upload(method: string, path: string, formData: FormData): Promise<void> {
