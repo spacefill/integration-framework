@@ -260,6 +260,18 @@
   resolved "https://registry.yarnpkg.com/@types/bytes/-/bytes-3.1.3.tgz#929ce4acb29f6a9eb59b1842f079a50abad0d9d2"
   integrity sha512-eEgZiWn6cjG8tc+AkI3FIa9ub9zhLMSRHqbecHe5yffqws+848zoHdbgFYxvUks4RElfJB9cupvqcd1gvDFQig==
 
+"@types/chai-spies@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@types/chai-spies/-/chai-spies-1.0.6.tgz#20ad60f2bc484ced5cbd4a901f3bbfc1225e968e"
+  integrity sha512-xkk4HmhBB9OQeTAifa9MJ+6R5/Rq9+ungDe4JidZD+vqZVeiWZwc2i7/pd1ZKjyGlSBIQePoWdyUyFUGT0rv5w==
+  dependencies:
+    "@types/chai" "*"
+
+"@types/chai@*":
+  version "4.3.11"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.11.tgz#e95050bf79a932cb7305dd130254ccdf9bde671c"
+  integrity sha512-qQR1dr2rGIHYlJulmr8Ioq3De0Le9E4MJ5AiaeAETJJpndT1uUNHsGFK3L/UIu+rbkQSdj8J/w2bCsBZc/Y5fQ==
+
 "@types/chai@4.3.10":
   version "4.3.10"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.10.tgz#2ad2959d1767edee5b0e4efb1a0cd2b500747317"
@@ -776,6 +788,11 @@ cfb@~1.2.1:
   dependencies:
     adler-32 "~1.3.0"
     crc-32 "~1.2.0"
+
+chai-spies@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/chai-spies/-/chai-spies-1.1.0.tgz#a6c270bc708c70716fed667d771f910902a5fb31"
+  integrity sha512-ikaUhQvQWchRYj2K54itFp3nrcxaFRpSDQxDlRzSn9aWgu9Pi7lD8yFxTso4WnQ39+WZ69oB/qOvqp+isJIIWA==
 
 chai@4.3.10:
   version "4.3.10"

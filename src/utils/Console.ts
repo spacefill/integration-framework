@@ -90,21 +90,21 @@ class Console {
     if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_ERROR) {
       return;
     }
-    const errorGradient = gradient(['#ff0025', 'purple']);
+    const errorGradient = gradient(['#ff0025', '#fe9014', '#ff0025', '#ff0025']);
     Console.printGradient(errorGradient, '[Error]', ...message);
+  }
+
+  static fatal(...message) {
+    if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_FATAL) {
+      return;
+    }
+    const errorGradient = gradient(['#ff0025', 'purple']);
+    Console.printGradient(errorGradient, '[Fatal]', ...message);
   }
 
   static confirm(...message) {
     const confirmGradient = gradient(['#38c172', '#128e46']);
     Console.printGradient(confirmGradient, '[OK]', ...message);
-  }
-
-  static printError(promise) {
-    Console.error(
-      `[Exit=${promise?.exitCode}] ${promise?.stderr}`,
-      `signal: ${promise?.signal}`
-    );
-    Console.debug(promise?.stdout);
   }
 
   static printGradient(gradientObj, prefix, ...message) {
