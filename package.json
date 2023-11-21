@@ -19,10 +19,10 @@
     "minimist": "1.2.8",
     "openapi-client-axios": "7.3.11",
     "prompts": "2.4.2",
+    "ssh2-sftp-client": "9.1.0",
     "tempy": "3.1.0",
     "ts-node": "10.9.1",
     "url-join": "5.0.0",
-    "w-ftp": "1.0.12",
     "zx": "7.2.3"
   },
   "devDependencies": {
@@ -35,6 +35,7 @@
     "@types/luxon": "3.3.3",
     "@types/mocha": "10.0.4",
     "@types/prompts": "2.4.5",
+    "@types/ssh2-sftp-client": "^9.0.3",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
     "add": "2.0.6",

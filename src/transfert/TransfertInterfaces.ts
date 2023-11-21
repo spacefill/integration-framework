@@ -1,14 +1,13 @@
 interface TransfertInterface {
-    checkStatut(): boolean,
+    open(): Promise<void>,
     close(): Promise<void>,
-    mkdirIfNotExists(): Promise<void>,
+    mkdirIfNotExists(remotePath: string): Promise<void>,
+    isExists(remotePath: string): Promise<string|boolean>,
     upload(localPath: string, remotePath: string): Promise<void>,
-    downloadAndReadFile(filepath: string, encoding: BufferEncoding): Promise<string>,
+    downloadAndReadFile(remotePath: string, encoding: BufferEncoding): Promise<string>,
     listDirWithFilter(filepathPattern: string): Promise<string[]>,
     deleteFile(filepath: string): Promise<void>,
-    moveFile(sourceFilePath: string, targetFilePath: string, mkdirIfNotExists: boolean): Promise<void>,
-    moveToErrorDir(sourceFilePath: string): Promise<void>,
-    moveToArchiveDir(sourceFilePath: string): Promise<void>,
+    moveFile(sourceFilePath: string, targetFilePath: string): Promise<void>,
 }
 
 interface TransfertConfiguration {

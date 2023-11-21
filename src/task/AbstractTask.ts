@@ -1,7 +1,7 @@
 import { WorkflowType } from "../api/APIContext.ts";
 import { SpacefillAPIWrapperV1 } from "../api/SpacefillAPIWrapperV1.ts";
 import { Config } from "../configs/Config.ts";
-import { Transfert, TransfertProtocol } from "../transport/Transfert.ts";
+import { Transfert, TransfertProtocol } from "../transfert/Transfert.ts";
 import { Argument, BaseCommand } from "./BaseCommand.ts";
 
 export abstract class AbstractTask extends BaseCommand {

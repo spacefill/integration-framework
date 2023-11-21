@@ -1,12 +1,14 @@
 import { expect } from 'chai';
 
-import { SftpClient } from '../../../src/transfert/SftpClient.ts';
+import { LocalClient } from '../../../src/transfert/LocalClient.ts';
 import { Transfert, TransfertProtocol } from '../../../src/transfert/Transfert.ts'
-import { fs } from "zx";
+import { $, fs } from "zx";
 import initTestEnv from '../../testUtils/initTestEnv.ts';
 import { Config } from '../../../src/configs/Config.ts';
 
-describe('SftpTransfert', () => {
+$.verbose = false
+
+describe('LocalTransfert', () => {
     before(async () => {
         initTestEnv();
         process.env.WMS_PATH_ERROR_DIR = 'folder-test/errors';
@@ -14,14 +16,7 @@ describe('SftpTransfert', () => {
         Config.validate();
     })
 
-    const config = {
-        hostname: '127.0.0.1',
-        port: 2222,
-        username: 'alice',
-        password: 'password'
-    }
-
-    const transfert = new Transfert(TransfertProtocol.sftp, config);
+    const transfert = new Transfert(TransfertProtocol.local);
 
     const fileName = 'remote-test1.txt';
     const localPath = './local-test.txt';
@@ -36,15 +31,15 @@ describe('SftpTransfert', () => {
     const fileContent = 'Contenu du fichier';
 
     it('should get configuration', async () => {
-        const instance = new SftpClient(config);
-        expect(instance).to.be.an.instanceof(SftpClient);
+        const instance = new LocalClient();
+        expect(instance).to.be.an.instanceof(LocalClient);
     });
 
-    it('create new directory', async () => {
+    it('try to create new directory already exist', async () => {
         await transfert.mkdirIfNotExists(folderWorkDir);
 
         const isExists = await transfert.isExists(folderWorkDir);
-        expect(isExists).equal('d');
+        expect(isExists).equal(true);
     });
 
     describe('process', function () {
@@ -61,7 +56,7 @@ describe('SftpTransfert', () => {
             await transfert.upload(localPath, remoteFilePath);
 
             const isExists = await transfert.isExists(remoteFilePath);
-            expect(isExists).equal('-');
+            expect(isExists).equal(true);
         })
 
         it('remove file', async () => {
@@ -77,16 +72,21 @@ describe('SftpTransfert', () => {
                 await transfert.upload(localPath, remoteFilePath);
 
                 const isExists = await transfert.isExists(remoteFilePath);
-                expect(isExists).equal('-');
+                expect(isExists).equal(true);
             })
 
             it('download file', async () => {
                 const data = await transfert.downloadAndReadFile(remoteFilePath);
                 expect(data).equal(fileContent);
+
+                await transfert.deleteFile(remoteFilePath);
             })
 
             it('move file', async () => {
                 await transfert.moveFile(remoteFilePath, `${rootDir}/${fileName}`);
+                const isExists = await transfert.isExists(`${rootDir}/${fileName}`);
+                expect(isExists).equal(true);
+
                 await transfert.deleteFile(`${rootDir}/${fileName}`);
             })
 
@@ -94,23 +94,25 @@ describe('SftpTransfert', () => {
                 await transfert.upload(localPath, remoteFilePath2);
 
                 const isExists = await transfert.isExists(remoteFilePath2);
-                expect(isExists).equal('-');
+                expect(isExists).equal(true);
 
                 const filter = `${folderWorkDir}/remote-test(1|2).*\\.(TXT|txt)$`
 
                 const data = await transfert.listDirWithFilter(filter);
+                console.log(data)
                 expect(data).to.be.an('array');
                 expect(data).to.have.lengthOf(2);
                 expect(data).to.include.members(['remote-test1.txt','remote-test2.TXT']);
 
                 await transfert.deleteFile(remoteFilePath2);
+                await transfert.deleteFile(remoteFilePath);
             })
 
             it('move file to error directory', async () => {
                 await transfert.moveToErrorDir(remoteFilePath);
 
                 const isNewFileExists = await transfert.isExists(remoteErrorPath);
-                expect(isNewFileExists).equal('-');
+                expect(isNewFileExists).equal(true);
 
                 const isOldFileExists = await transfert.isExists(remoteFilePath);
                 expect(isOldFileExists).equal(false);
@@ -122,7 +124,7 @@ describe('SftpTransfert', () => {
                 await transfert.moveToArchiveDir(remoteFilePath);
 
                 const isNewFileExists = await transfert.isExists(remoteArchivesPath);
-                expect(isNewFileExists).equal('-');
+                expect(isNewFileExists).equal(true);
 
                 const isOldFileExists = await transfert.isExists(remoteFilePath);
                 expect(isOldFileExists).equal(false);
@@ -130,5 +132,5 @@ describe('SftpTransfert', () => {
                 await transfert.deleteFile(remoteArchivesPath);
             })
         })
-    });
+    })
 })
