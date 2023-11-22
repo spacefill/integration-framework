@@ -46,7 +46,7 @@ describe('Console', () => {
     process.env.LOG_LEVEL = 'fatal';
 
     Console.log(message, debugVar);
-    // spy is not reset, so 2 + 2
+
     expect(consoleLogSpy).to.have.been.called.exactly(2);
     chai.spy.restore(console);
   });
@@ -69,7 +69,7 @@ describe('Console', () => {
     process.env.LOG_LEVEL = 'fatal';
 
     Console.trace(message);
-    // spy is not reset, so 1 + 0
+
     expect(consoleLogSpy).to.have.been.called.exactly(0);
     chai.spy.restore(console);
   });
@@ -92,7 +92,7 @@ describe('Console', () => {
     process.env.LOG_LEVEL = 'fatal';
 
     Console.debug(message);
-    // spy is not reset, so 1 + 0
+
     expect(consoleLogSpy).to.have.been.called.exactly(0);
     chai.spy.restore(console);
   });
@@ -115,7 +115,7 @@ describe('Console', () => {
     process.env.LOG_LEVEL = 'fatal';
 
     Console.info(message);
-    // spy is not reset, so 1 + 0
+
     expect(consoleLogSpy).to.have.been.called.exactly(0);
     chai.spy.restore(console);
   });
@@ -138,7 +138,7 @@ describe('Console', () => {
     process.env.LOG_LEVEL = 'fatal';
 
     Console.title(message);
-    // spy is not reset, so 1 + 0
+
     expect(consoleLogSpy).to.have.been.called.exactly(0);
     chai.spy.restore(console);
   });
@@ -161,7 +161,7 @@ describe('Console', () => {
     process.env.LOG_LEVEL = 'fatal';
 
     Console.warn(message);
-    // spy is not reset, so 1 + 0
+
     expect(consoleLogSpy).to.have.been.called.exactly(0);
     chai.spy.restore(console);
   });
@@ -184,7 +184,7 @@ describe('Console', () => {
     process.env.LOG_LEVEL = 'fatal';
 
     Console.error(message);
-    // spy is not reset, so 1 + 0
+
     expect(consoleLogSpy).to.have.been.called.exactly(0);
     chai.spy.restore(console);
   });
