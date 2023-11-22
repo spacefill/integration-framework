@@ -51,8 +51,10 @@
     "yarn": "1.22.19"
   },
   "scripts": {
-    "test": "ts-mocha tests/**/*.test.ts --timeout 10000",
+    "test": "ts-mocha --timeout 10000",
     "test:coverage": "c8 yarn run test",
+    "tests": "ts-mocha tests/**/*.test.ts --timeout 10000",
+    "tests:coverage": "c8 yarn run tests",
     "lint": "eslint ./src/"
   },
   "engines": {
