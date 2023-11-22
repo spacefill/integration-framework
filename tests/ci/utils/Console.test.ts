@@ -1,6 +1,7 @@
 import chai, { expect } from 'chai';
 import spies from 'chai-spies';
 import Console from '../../../src/utils/Console.ts';
+import initTestEnv from '../../testUtils/initTestEnv.ts';
 
 chai.use(spies);
 
@@ -14,6 +15,7 @@ describe('Console', () => {
       // disable print for the tests
       console.log = () => {};
     }
+    initTestEnv();
   })
 
   after(() => {

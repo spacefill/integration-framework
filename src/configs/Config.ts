@@ -59,7 +59,10 @@ export class Config {
 
   public static reloadConfig(envFile: string) {
     if (fs.existsSync(envFile)) {
-      dotenv.config({ path: envFile });
+      dotenv.config({
+        path: envFile,
+        override: true
+      });
     } else {
       throw new Error(`Cannot find env file ${envFile}`);
     }
@@ -93,6 +96,7 @@ export class Config {
             },
             serviceVersion: {
               type: 'string',
+              // semVer pattern
               pattern: '^([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+)?$'
             },
             transport: {

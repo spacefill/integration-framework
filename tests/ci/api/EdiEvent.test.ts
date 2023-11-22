@@ -5,9 +5,12 @@ import { EventTypeEnumString } from '../../../src/api/EdiEvent.ts';
 import { SpacefillAPIWrapperV1 } from '../../../src/api/SpacefillAPIWrapperV1.ts';
 import { WorkflowType } from '../../../src/api/APIContext.ts';
 import { beforeEach } from 'mocha';
+import initTestEnv from '../../testUtils/initTestEnv.ts';
 
 describe('EdiEvent', () => {
   let sdk: SpacefillAPIWrapperV1;
+
+  before(() => initTestEnv())
 
   beforeEach(async () => {
     process.env.SPACEFILL_API_EVENT_ENABLED = '1';
