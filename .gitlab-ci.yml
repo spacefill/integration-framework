@@ -1,0 +1,44 @@
+# --------------------------
+#      Stages
+
+stages:
+  - lint
+  - test
+
+# --------------------------
+#      Abstract jobs
+.base:
+  tags:
+    - spacefill
+
+# --------------------------
+#     Lint
+
+eslint:
+  stage: lint
+  needs: []
+  extends: .base
+  script:
+    - ./scripts/ci/execute-lint.sh
+
+# --------------------------
+#     Tests
+
+test:
+  stage: test
+  extends: .base
+  needs: []
+  script:
+    -  ./scripts/ci/execute-tests.sh
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+  artifacts:
+    name: "$CI_COMMIT_REF_SLUG"
+    untracked: true
+    expire_in: 3 day
+    paths:
+      - coverage/
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+

@@ -55,6 +55,7 @@
     "test:coverage": "c8 yarn run test",
     "tests": "ts-mocha tests/**/*.test.ts --timeout 10000",
     "tests:coverage": "c8 yarn run tests",
+    "tests:ci": "c8 -r text -r cobertura yarn run tests",
     "lint": "eslint ./src/"
   },
   "engines": {
