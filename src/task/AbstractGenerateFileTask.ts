@@ -11,10 +11,11 @@ import IoError from '../exceptions/IoError.ts';
 import ApiNetWorkError from '../exceptions/ApiNetWorkError.ts';
 import UnknownError from '../exceptions/UnknownError.ts';
 import { GenerateFileSchemaInterface } from '../data_mapping/SchemaInterfaces.ts';
+import InternalError from '../exceptions/InternalError.ts';
 
 export abstract class AbstractGenerateFileTask<T> extends AbstractTask implements GenerateFileTasklnterface<T> {
 
-  protected currentFileConfiguration: InitialDataItem<T>;
+  protected currentFileConfiguration: InitialDataItem<T> | undefined;
 
   initFilesGeneration(): InitialDataItem<T>[] {
     throw new Error("Method not implemented.");
@@ -56,6 +57,9 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
 
       Console.title("Api init");
       await this.initApiClient(this.getWorkflowType());
+      if (!this.sdk.client || !this.sdk.ediEvent){
+        throw new InternalError('SDK is not well initiazed - client or ediEvent missing');
+      }
       this.sdk.dataSource = 'API';
 
       await this.sdk.client.get_v1_ping().then(() => {
@@ -119,10 +123,10 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
           Console.confirm("Post file sending action done");
 
         } catch (processFileException) {
-          Console.error(processFileException?.message);
+          Console.error(processFileException);
           errorFound = true;
 
-          await this.sdk.ediEvent.send(ExceptionUtils.getEventTypeFromException(processFileException),
+          await this.sdk.ediEvent.send(ExceptionUtils.getEventTypeFromException(processFileException as Error),
             `File generation failed. Type=${this.getWorkflowType()}`
           );
         }
@@ -136,15 +140,18 @@ export abstract class AbstractGenerateFileTask<T> extends AbstractTask implement
         );
       }
     } catch (exception) {
-      Console.error(exception?.message);
+      Console.error(exception);
       this.afterRun();
 
       if (exception instanceof ApiNetWorkError){
         process.exit(1);
       }
-      await this.sdk.ediEvent.send(EventTypeEnumString.PRECONDITION_FAILED_ERROR,
-        `File generation failed. Type=${this.getWorkflowType()}`
-      );
+      if (this.sdk.ediEvent) {
+        await this.sdk.ediEvent.send(EventTypeEnumString.PRECONDITION_FAILED_ERROR,
+          `File generation failed. Type=${this.getWorkflowType()}`
+        );
+      }
+
       process.exit(1);
     }
 

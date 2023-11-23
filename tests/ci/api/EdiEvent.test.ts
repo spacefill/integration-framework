@@ -1,11 +1,13 @@
 import { assert, expect } from 'chai';
 import MockAdapter from 'axios-mock-adapter';
+import { beforeEach } from 'mocha';
+import { AxiosInstance } from 'axios';
 
-import { EventTypeEnumString } from '../../../src/api/EdiEvent.ts';
+import EdiEvent, { EventTypeEnumString } from '../../../src/api/EdiEvent.ts';
 import { SpacefillAPIWrapperV1 } from '../../../src/api/SpacefillAPIWrapperV1.ts';
 import { WorkflowType } from '../../../src/api/APIContext.ts';
-import { beforeEach } from 'mocha';
 import initTestEnv from '../../testUtils/initTestEnv.ts';
+import Console from '../../../src/utils/Console.ts';
 
 describe('EdiEvent', () => {
   let sdk: SpacefillAPIWrapperV1;
@@ -27,13 +29,19 @@ describe('EdiEvent', () => {
   });
 
   it('should send event', async () => {
-
     const axiosInstance = sdk.getAxiosInstance();
 
-    const mock = new MockAdapter(axiosInstance,  { onNoMatch: "throwException" });
+    const mock = new MockAdapter(axiosInstance as AxiosInstance,  { onNoMatch: "throwException" });
     mock.onPost("/v1/logistic_management/events/").reply(200, { data: 'mocked response' });
 
     const meta = { test: "hello" };
+    expect(sdk.ediEvent).to.be.an.instanceof(EdiEvent);
+
+    if (!sdk.ediEvent){
+      Console.error("sdk.ediEvent not initialized");
+      return;
+    }
+
     await sdk.ediEvent.send(EventTypeEnumString.STARTED, 'Test started event message', meta);
 
     expect(mock.history.post.length).to.equals(1);
@@ -53,9 +61,19 @@ describe('EdiEvent', () => {
   it('should not send network error', async () => {
     const axiosInstance = sdk.getAxiosInstance();
 
+    if (!axiosInstance){
+      Console.error("axiosInstance not initialized");
+      return;
+    }
+
     const mock = new MockAdapter(axiosInstance);
     mock.onPost("/v1/logistic_management/events/").reply(200, { data: 'mocked response' });
 
+    expect(sdk.ediEvent).to.be.an.instanceof(EdiEvent);
+    if (!sdk.ediEvent){
+      Console.error("sdk.ediEvent not initialized");
+      return;
+    }
     await sdk.ediEvent.send(EventTypeEnumString.API_NETWORK_ERROR, 'Network error event message');
 
     expect(mock.history.post.length).to.equals(0);
@@ -65,8 +83,18 @@ describe('EdiEvent', () => {
     process.env.SPACEFILL_API_EVENT_ENABLED = '0';
     const axiosInstance = sdk.getAxiosInstance();
 
+    if (!axiosInstance){
+      Console.error("axiosInstance not initialized");
+      return;
+    }
+
     const mock = new MockAdapter(axiosInstance);
+
     mock.onPost("/v1/logistic_management/events/").reply(200, { data: 'mocked response' });
+    if (!sdk.ediEvent){
+      Console.error("sdk.ediEvent not initialized");
+      return;
+    }
 
     await sdk.ediEvent.send(EventTypeEnumString.STARTED, 'Test started event message');
 

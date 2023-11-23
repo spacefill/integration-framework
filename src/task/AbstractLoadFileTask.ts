@@ -1,6 +1,7 @@
 import { EventTypeEnumString } from "../api/EdiEvent.ts";
 import { LoadFileSchemaInterface } from "../data_mapping/SchemaInterfaces.ts";
 import ApiNetWorkError from "../exceptions/ApiNetWorkError.ts";
+import InternalError from "../exceptions/InternalError.ts";
 import Console from "../utils/Console.ts";
 import { ExceptionUtils } from "../utils/ExceptionUtils.ts";
 import { AbstractTask } from "./AbstractTask.ts";
@@ -43,6 +44,11 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
       Console.title("Api init");
       await this.initApiClient(this.getWorkflowType());
 
+      await this.initApiClient(this.getWorkflowType());
+      if (!this.sdk.client || !this.sdk.ediEvent){
+        throw new InternalError('SDK is not well initiazed - client or ediEvent missing');
+      }
+
       await this.sdk.client.get_v1_ping().then(() => {
         Console.confirm("Api initialized");
       }).catch(() => {
@@ -84,7 +90,7 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
         } catch (processFileException) {
           Console.error(processFileException);
           errorFound = true;
-          await this.sdk.ediEvent.send(ExceptionUtils.getEventTypeFromException(processFileException),
+          await this.sdk.ediEvent.send(ExceptionUtils.getEventTypeFromException(processFileException as Error),
             `File loading failed. Type=${this.getWorkflowType()}`
           );
           await this.onProcessingFileError(targetFileItem);
@@ -92,15 +98,17 @@ export default abstract class AbstractLoadFileTask<T> extends AbstractTask imple
       }
 
     } catch (exception) {
-      Console.error(exception?.message);
+      Console.error(exception);
       this.afterRun();
 
       if (exception instanceof ApiNetWorkError) {
         process.exit(1);
       }
-      await this.sdk.ediEvent.send(EventTypeEnumString.PRECONDITION_FAILED_ERROR,
-        `File generation failed. Type=${this.getWorkflowType()}`
-      );
+      if (this.sdk.ediEvent) {
+        await this.sdk.ediEvent.send(EventTypeEnumString.PRECONDITION_FAILED_ERROR,
+          `File generation failed. Type=${this.getWorkflowType()}`
+        );
+      }
       process.exit(1);
     }
 

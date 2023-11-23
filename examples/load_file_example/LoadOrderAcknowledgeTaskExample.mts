@@ -15,6 +15,7 @@ import DefaultLoadOrderAckSchema from "./schemas/DefaultLoadOrderAckSchema.ts";
 import { FileItemInterface } from "../../src/task/LoadFileTaskInterfaces.ts";
 import { LoadFileSchemaInterface } from "../../src/data_mapping/SchemaInterfaces.ts";
 import { EventTypeEnumString } from "../../src/api/EdiEvent.ts";
+import InternalError from "../../src/exceptions/InternalError.ts";
 
 
 type ItemPackagingTypeEnum = "PALLET" | "CARDBOARD_BOX" | "EACH";
@@ -74,7 +75,7 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
 
   async getFilesList(): Promise<FileItemInterface[]> {
     const filter = path.join(
-      Config.get().edi.wmsPathWmsToSpacefillDir,
+      Config.get().edi.wmsPathWmsToSpacefillDir as string,
       `(CIN|CSO)_${Config.get().edi.wmsAgencyCode}_${Config.get().edi.wmsShipperID}_.*\\.(TXT|txt)$`
     );
 
@@ -109,6 +110,9 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
   }
 
   async dataProcessing(mappedData: OrderInterface[] | ExitOrderInterface[]): Promise<void> {
+    if (!this.sdk.client || !this.sdk.ediEvent) {
+      throw new InternalError("SDK is not well initiazed - client or ediEvent missing");
+    }
     for (const currentOrder of mappedData) {
 
       const existingOrdersResponse = await this.sdk.client.get_v1_logistic_management_order_list({
@@ -127,6 +131,9 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
         orderId = createdOrder.data.id;
       } else {
         const firstElement = existingOrdersResponse.data.items.shift();
+        if (!firstElement) {
+          continue;
+        }
         orderId = firstElement.id;
 
         const allowedStatuses = [
@@ -152,11 +159,12 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
         },
         {
           order_effective_executed_at: currentOrder.planned_execution_datetime_range.datetime_from,
-          order_items: currentOrder.order_items.map((order_item) => {
-            const actual_quantity = order_item.expected_quantity;
-            delete order_item.expected_quantity;
+          order_items: currentOrder.order_items.map((orderItem) => {
+            const actual_quantity = orderItem.expected_quantity;
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { expected_quantity, ...tmpOrderItem } = orderItem;
             return {
-              ...order_item,
+              ...tmpOrderItem,
               actual_quantity: actual_quantity
             }
           })
@@ -177,13 +185,13 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
               currentOrder.shipper_order_reference,
               orderItem.item_reference,
               orderItem.designation,
-              orderItem.batch_name,
+              orderItem.batch_name as string,
               orderItem.serial_number
             ]);
           }
         });
 
-        if (!(data.length > 1)){
+        if (!(data.length > 1)) {
           Console.warn('No serial number to export - skipped');
           return;
         }
@@ -195,7 +203,7 @@ export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTas
         XLSX.writeFile(wb, tempFilePath, { compression: true });
 
         const formData = new FormData();
-        formData.append('file',  fs.createReadStream(tempFilePath), {filename: `${currentOrder.shipper_order_reference}_serial_numbers.xlsx`});
+        formData.append('file', fs.createReadStream(tempFilePath), { filename: `${currentOrder.shipper_order_reference}_serial_numbers.xlsx` });
 
         await this.sdk.upload('post', `/v1/logistic_management/orders/${orderId}/documents/`, formData);
       });

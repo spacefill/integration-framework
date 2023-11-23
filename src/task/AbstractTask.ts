@@ -10,13 +10,14 @@ export abstract class AbstractTask extends BaseCommand {
 
   public constructor() {
     super();
+    this.sdk = new SpacefillAPIWrapperV1();
     this.transfert = new Transfert(
       Config.get().transfert.protocol as unknown as TransfertProtocol,
       {
-        hostname: Config.get().transfert.hostname,
-        port: Config.get().transfert.port,
-        username: Config.get().transfert.username,
-        password: Config.get().transfert.password,
+        hostname: Config.get().transfert.hostname as string,
+        port: Config.get().transfert.port as number,
+        username: Config.get().transfert.username as string,
+        password: Config.get().transfert.password as string,
       }
     )
   }
@@ -29,7 +30,6 @@ export abstract class AbstractTask extends BaseCommand {
   }
 
   async initApiClient(workflowType: WorkflowType) {
-    this.sdk = new SpacefillAPIWrapperV1();
     await this.sdk.initClient(
       Config.get().spacefillApi.url,
       Config.get().spacefillApi.apiToken,

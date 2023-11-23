@@ -43,8 +43,8 @@ export default class EdiEvent {
         type: type,
         message: message.substring(0, 300),
         data: {
-          shipper_account_id: Config.get().edi.wmsShipperAccountId,
-          warehouse_id: Config.get().edi.wmsWarehouseId
+          shipper_account_id: Config.get().edi.wmsShipperAccountId as string,
+          warehouse_id: Config.get().edi.wmsWarehouseId as string
         },
         meta: meta
       }

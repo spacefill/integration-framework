@@ -8,7 +8,7 @@ interface GenerateFileSchemaInterface<T> extends CommonSchemaInterface {
 
 interface CommonSchemaInterface {
   itemSchemaValidation: object,
-  fileDescriptor: ExportFileDescriptor,
+  fileDescriptor: ExportFileDescriptor | undefined,
   validateFileData(rawData: object[]): void,
 }
 

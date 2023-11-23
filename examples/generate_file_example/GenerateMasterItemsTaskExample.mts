@@ -75,6 +75,10 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
   async prepareFileData(offset: number = 0): Promise<MasterItemInterface[]> {
     let masterItems = this.currentFileConfiguration?.initialData ?? [];
 
+    if (!this.sdk.client || !this.sdk.ediEvent) {
+      throw new InternalError("SDK is not well initiazed - client or ediEvent missing");
+    }
+
     await this.sdk.client.get_v1_logistic_management_master_item_list(
       {
         offset: offset,
@@ -125,6 +129,10 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
 
       const fileDescriptor = this.getDataSchema().fileDescriptor;
 
+      if (!fileDescriptor) {
+        throw new InternalError("fileDescriptor not well initialized");
+      }
+
       if (this.argv?.['headers']) {
         const headersLine = new Array(fileDescriptor.csvTotalColumnNumber);
         for (const field of Object.keys(fileDescriptor.columnsPosition)) {
@@ -158,6 +166,13 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
     if (this.argv?.['disable-is-transfered-to-wms-update']) {
       Console.debug("Skip transfered_to_wms_at update");
       return;
+    }
+
+    if (!this.currentFileConfiguration) {
+      throw new InternalError("currentFileConfiguration not well initialized");
+    }
+    if (!this.sdk.client) {
+      throw new InternalError("SDK is not well initiazed - client is missing");
     }
 
     for (const item of this.currentFileConfiguration.initialData) {

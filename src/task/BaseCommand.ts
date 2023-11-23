@@ -21,7 +21,7 @@ interface Argument {
 export { Argument };
 
 export abstract class BaseCommand {
-  protected argv: minimist.ParsedArgs;
+  protected argv: minimist.ParsedArgs | undefined;
   protected statistics: CommandStatistic = {};
 
   public constructor() {
@@ -70,6 +70,10 @@ export abstract class BaseCommand {
   protected displayStatistics() {
     const memoryUsage = process.memoryUsage();
 
+    const duration = this.statistics.endTimeMs && this.statistics.startTimeMs
+      ? (this.statistics.endTimeMs - this.statistics.startTimeMs)
+      : "unknown - check beforeRun() is well implemented";
+
     Console.info("Statistics",
       {
         "Resource usage": {
@@ -80,7 +84,7 @@ export abstract class BaseCommand {
             "Memory currently allocated by code": bytes.format(memoryUsage.heapUsed),
           }
         },
-        "Duration (ms)": (this.statistics.endTimeMs - this.statistics.startTimeMs)
+        "Duration (ms)": duration
       }
     );
   }

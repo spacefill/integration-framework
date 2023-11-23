@@ -55,10 +55,11 @@
   "scripts": {
     "test": "ts-mocha --timeout 10000",
     "test:coverage": "c8 yarn run test",
-    "tests": "ts-mocha tests/**/*.test.ts --timeout 10000",
+    "tests": "yarn run test ./tests/",
     "tests:coverage": "c8 yarn run tests",
-    "tests:ci": "c8 -r text -r cobertura yarn run tests",
-    "lint": "eslint ./src/"
+    "tests:ci": "c8 -r text -r cobertura yarn run test ./tests/ci/",
+    "lint": "eslint ./src/",
+    "build": "npx tsc -p tsconfig.json"
   },
   "engines": {
     "node": "18.x"

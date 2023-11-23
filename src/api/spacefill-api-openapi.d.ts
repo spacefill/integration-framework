@@ -1,10 +1,10 @@
+import { AxiosRequestConfig } from 'axios';
 import type {
   OpenAPIClient,
   Parameters,
   UnknownParamsObject,
-  OperationResponse,
-  AxiosRequestConfig,
-} from 'openapi-client-axios'; 
+  OperationResponse
+} from 'openapi-client-axios';
 
 declare namespace Components {
     namespace Schemas {
@@ -13627,78 +13627,78 @@ export interface OperationMethods {
   'get_v1_ping'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1Ping.Responses.$200>
   /**
    * get_v1_logistic_management_master_item_list - List references
-   * 
+   *
    * List and filter <<glossary:reference>>s.
    */
   'get_v1_logistic_management_master_item_list'(
     parameters?: Parameters<Paths.GetV1LogisticManagementMasterItemList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementMasterItemList.Responses.$200>
   /**
    * post_v1_logistic_management_master_item - Create a reference
-   * 
+   *
    * Create a <<glossary:reference>>.
-   * 
+   *
    * > 🚧 Avoiding conflict:
    * >
    * > Setting a value for the `each_quantity_by_pallet` field conflicts with the values of the `cardboard_box_quantity_by_pallet` and `each_quantity_by_cardboard_box` fields.
    * > Furthermore, you should set a value to `each_quantity_by_cardboard_box` when setting a value to `cardboard_box_quantity_by_pallet`.
-   * 
+   *
    * > Reference creation is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly to prevent anomalies.
    */
   'post_v1_logistic_management_master_item'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementMasterItem.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementMasterItem.Responses.$200>
   /**
    * get_v1_logistic_management_master_item - View a reference
-   * 
+   *
    * View the details of a <<glossary:reference>> with current and forecasted stock quantities.
    */
   'get_v1_logistic_management_master_item'(
     parameters?: Parameters<Paths.GetV1LogisticManagementMasterItem.PathParameters & Paths.GetV1LogisticManagementMasterItem.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementMasterItem.Responses.$200>
   /**
    * put_v1_logistic_management_master_item - Replace a reference
-   * 
+   *
    * Replace all the fields of a <<glossary:reference>>, if the transfered_to_xxx_at and metadata fields are missing, it will be replaced by null.
-   * 
+   *
    * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
    */
   'put_v1_logistic_management_master_item'(
     parameters?: Parameters<Paths.PutV1LogisticManagementMasterItem.PathParameters> | null,
     data?: Paths.PutV1LogisticManagementMasterItem.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PutV1LogisticManagementMasterItem.Responses.$200>
   /**
    * patch_v1_logistic_management_master_item - Update a reference
-   * 
+   *
    * Update one or several fields of a <<glossary:reference>> without overwriting existing fields.
-   * 
+   *
    * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
    */
   'patch_v1_logistic_management_master_item'(
     parameters?: Parameters<Paths.PatchV1LogisticManagementMasterItem.PathParameters> | null,
     data?: Paths.PatchV1LogisticManagementMasterItem.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PatchV1LogisticManagementMasterItem.Responses.$200>
   /**
    * get_v1_logistic_management_batch_list - List batches
-   * 
+   *
    * List and filter <<glossary:batch>>es.
    */
   'get_v1_logistic_management_batch_list'(
     parameters?: Parameters<Paths.GetV1LogisticManagementBatchList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementBatchList.Responses.$200>
   /**
    * post_v1_logistic_management_batch - Create a batch
@@ -13706,17 +13706,17 @@ export interface OperationMethods {
   'post_v1_logistic_management_batch'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementBatch.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementBatch.Responses.$200>
   /**
    * get_v1_logistic_management_batch - View a batch
-   * 
+   *
    * View the details of a <<glossary:batch>> with current stock quantities.
    */
   'get_v1_logistic_management_batch'(
     parameters?: Parameters<Paths.GetV1LogisticManagementBatch.PathParameters & Paths.GetV1LogisticManagementBatch.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementBatch.Responses.$200>
   /**
    * put_v1_logistic_management_batch - Replace Batch resource
@@ -13724,44 +13724,44 @@ export interface OperationMethods {
   'put_v1_logistic_management_batch'(
     parameters?: Parameters<Paths.PutV1LogisticManagementBatch.PathParameters> | null,
     data?: Paths.PutV1LogisticManagementBatch.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PutV1LogisticManagementBatch.Responses.$200>
   /**
    * get_v1_logistic_management_order_list - List orders
-   * 
+   *
    * List and filter <<glossary:order>>s.
    */
   'get_v1_logistic_management_order_list'(
     parameters?: Parameters<Paths.GetV1LogisticManagementOrderList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementOrderList.Responses.$200>
   /**
    * get_v1_logistic_management_order - View an order
-   * 
+   *
    * View the details of an order and all order items associated.
    */
   'get_v1_logistic_management_order'(
     parameters?: Parameters<Paths.GetV1LogisticManagementOrder.PathParameters & Paths.GetV1LogisticManagementOrder.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementOrder.Responses.$200>
   /**
    * patch_v1_logistic_management_order - Update an order
-   * 
+   *
    * Update one or several fields of <<glossary:order>>.
    */
   'patch_v1_logistic_management_order'(
     parameters?: Parameters<Paths.PatchV1LogisticManagementOrder.PathParameters> | null,
     data?: Paths.PatchV1LogisticManagementOrder.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PatchV1LogisticManagementOrder.Responses.$200>
   /**
    * post_v1_logistic_management_shipper_create_entry_order_action - Create an entry order
-   * 
+   *
    * Create an <<glossary:entry order>>.
    * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
-   * 
+   *
    * ```
    * entry_expeditor
    * entry_expeditor_address_line1
@@ -13770,20 +13770,20 @@ export interface OperationMethods {
    * entry_expeditor_address_country
    * entry_expeditor_address_country_code
    * ```
-   * 
+   *
    * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
    */
   'post_v1_logistic_management_shipper_create_entry_order_action'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.Responses.$200>
   /**
    * post_v1_logistic_management_shipper_creates_order_exit_action - Create an exit order
-   * 
+   *
    * Create an <<glossary:exit order>>.
    * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
-   * 
+   *
    * ```
    * exit_final_recipient
    * exit_final_recipient_address_line1
@@ -13792,13 +13792,13 @@ export interface OperationMethods {
    * exit_final_recipient_address_country
    * exit_final_recipient_address_country_code
    * ```
-   * 
+   *
    * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
    */
   'post_v1_logistic_management_shipper_creates_order_exit_action'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.Responses.$200>
   /**
    * get_v1_logistic_management_order_documents_list - List order documents
@@ -13806,7 +13806,7 @@ export interface OperationMethods {
   'get_v1_logistic_management_order_documents_list'(
     parameters?: Parameters<Paths.GetV1LogisticManagementOrderDocumentsList.PathParameters & Paths.GetV1LogisticManagementOrderDocumentsList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementOrderDocumentsList.Responses.$200>
   /**
    * get_v1_logistic_management_order_download_document - Download a document
@@ -13814,7 +13814,7 @@ export interface OperationMethods {
   'get_v1_logistic_management_order_download_document'(
     parameters?: Parameters<Paths.GetV1LogisticManagementOrderDownloadDocument.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementOrderDownloadDocument.Responses.$200>
   /**
    * post_v1_logistic_management_order_upload_document - Attach document to an order
@@ -13822,7 +13822,7 @@ export interface OperationMethods {
   'post_v1_logistic_management_order_upload_document'(
     parameters?: Parameters<Paths.PostV1LogisticManagementOrderUploadDocument.PathParameters> | null,
     data?: Paths.PostV1LogisticManagementOrderUploadDocument.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementOrderUploadDocument.Responses.$200>
   /**
    * get_v1_logistic_management_warehouse_confirms_planned_execution_date_action - With this endpoint, the warehouse/logistic-provider user can confirm the planned execution date proposed by the shipper user
@@ -13830,17 +13830,17 @@ export interface OperationMethods {
   'get_v1_logistic_management_warehouse_confirms_planned_execution_date_action'(
     parameters?: Parameters<Paths.GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateAction.Responses.$200>
   /**
    * post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action - Acknowledge reception of an order
-   * 
+   *
    * Confirm receipt or exit of the <<glossary:order>> to the <<glossary:Shipper>>.
    */
   'post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.PathParameters> | null,
     data?: Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.Responses.$200>
   /**
    * get_v1_logistic_management_shipper_acknowledges_receipt_of_adjustment_action - With this endpoint, a shipper-user can acknowledge that the order items have been updated by the warehouse after order completion
@@ -13848,7 +13848,7 @@ export interface OperationMethods {
   'get_v1_logistic_management_shipper_acknowledges_receipt_of_adjustment_action'(
     parameters?: Parameters<Paths.GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentAction.Responses.$200>
   /**
    * post_v1_logistic_management_shipper_cancels_order_action - Cancel an order
@@ -13856,7 +13856,7 @@ export interface OperationMethods {
   'post_v1_logistic_management_shipper_cancels_order_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementShipperCancelsOrderAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementShipperCancelsOrderAction.Responses.$200>
   /**
    * get_v1_logistic_management_shipper_reschedule_order_action - With this endpoint, a shipper-user can reschedule a planned order
@@ -13864,7 +13864,7 @@ export interface OperationMethods {
   'get_v1_logistic_management_shipper_reschedule_order_action'(
     parameters?: Parameters<Paths.GetV1LogisticManagementShipperRescheduleOrderAction.PathParameters> | null,
     data?: Paths.GetV1LogisticManagementShipperRescheduleOrderAction.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementShipperRescheduleOrderAction.Responses.$200>
   /**
    * get_v1_logistic_management_shipper_suggests_planned_execution_date_action - With this endpoint, a shipper-user can reschedule an order whose previous planned execution date has been refused by the warehouse/logistic-provider-user
@@ -13872,21 +13872,21 @@ export interface OperationMethods {
   'get_v1_logistic_management_shipper_suggests_planned_execution_date_action'(
     parameters?: Parameters<Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateAction.PathParameters> | null,
     data?: Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateAction.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateAction.Responses.$200>
   /**
    * post_v1_logistic_management_shipper_updates_order_action - Update an order
-   * 
+   *
    * Update an <<glossary:entry order>> or <<glossary:exit order>>. You will be able to validate the draft later.
-   * 
+   *
    * The accepted fields depend on the `order_type` field:
-   * 
+   *
    * - If you need to update an <<glossary:entry order>>, please use the dedicated fields that start with `entry_expeditor_` to specify the sender information.
-   * 
+   *
    * - If you need to update an <<glossary:exit order>>, please use the dedicated fields that start with `exit_final_recipient_` to specify the final recipient information.
-   * 
+   *
    * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
-   * 
+   *
    * ```
    * entry_expeditor
    * entry_expeditor_address_line1
@@ -13895,9 +13895,9 @@ export interface OperationMethods {
    * entry_expeditor_address_country
    * entry_expeditor_address_country_code
    * ```
-   * 
+   *
    * OR
-   * 
+   *
    * ```
    * exit_final_recipient
    * exit_final_recipient_address_line1
@@ -13905,13 +13905,13 @@ export interface OperationMethods {
    * exit_final_recipient_address_city
    * exit_final_recipient_address_country
    * ```
-   * 
+   *
    * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
    */
   'post_v1_logistic_management_shipper_updates_order_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementShipperUpdatesOrderAction.PathParameters> | null,
     data?: Paths.PostV1LogisticManagementShipperUpdatesOrderAction.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementShipperUpdatesOrderAction.Responses.$200>
   /**
    * post_v1_logistic_management_warehouse_adjust_stock_after_order_is_completed_action - Adjust stock after order completion
@@ -13919,17 +13919,17 @@ export interface OperationMethods {
   'post_v1_logistic_management_warehouse_adjust_stock_after_order_is_completed_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedAction.PathParameters> | null,
     data?: Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedAction.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedAction.Responses.$200>
   /**
    * post_v1_logistic_management_warehouse_creates_order_action - Create an order
-   * 
+   *
    * Create an <<glossary:order>>. The accepted fields depend on the `order_type` field:
    * - If you need to create an <<glossary:entry order>>, you need to use the fields that start with `entry_expeditor_` to specify the sender information.
    * - If you need to create an <<glossary:exit order>>, you need to use the fields that start with `exit_final_recipient_` to specify the final recipient information.
-   * 
+   *
    * If the following fields correspond to an existing address in the shipper [address-book](https://app.spacefill.fr/settings/address-book/):
-   * 
+   *
    * ```
    * entry_expeditor_address_line1
    * entry_expeditor_address_zip
@@ -13937,9 +13937,9 @@ export interface OperationMethods {
    * entry_expeditor_address_country
    * entry_expeditor_address_country_code
    * ```
-   * 
+   *
    * OR
-   * 
+   *
    * ```
    * exit_final_recipient_address_line1
    * exit_final_recipient_address_zip
@@ -13947,13 +13947,13 @@ export interface OperationMethods {
    * exit_final_recipient_address_country
    * exit_final_recipient_address_country_code
    * ```
-   * 
+   *
    * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
    */
   'post_v1_logistic_management_warehouse_creates_order_action'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementWarehouseCreatesOrderAction.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseCreatesOrderAction.Responses.$200>
   /**
    * get_v1_logistic_management_warehouse_declines_planned_execution_date_action - With this endpoint, the warehouse/logistic-provider user can notify the shipper-user that the planned execution date is not available
@@ -13961,17 +13961,17 @@ export interface OperationMethods {
   'get_v1_logistic_management_warehouse_declines_planned_execution_date_action'(
     parameters?: Parameters<Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateAction.PathParameters & Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateAction.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateAction.Responses.$200>
   /**
    * post_v1_logistic_management_warehouse_emits_order_receipt_error_action - Order not received
-   * 
+   *
    * Inform the <<glossary:shipper>> that the <<glossary:order>> has not been received.
    */
   'post_v1_logistic_management_warehouse_emits_order_receipt_error_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorAction.PathParameters & Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorAction.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorAction.Responses.$200>
   /**
    * post_v1_logistic_management_create_webhook_webhook - Create a order webhook
@@ -13979,61 +13979,61 @@ export interface OperationMethods {
   'post_v1_logistic_management_create_webhook_webhook'(
     parameters?: Parameters<Paths.PostV1LogisticManagementCreateWebhookWebhook.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementCreateWebhookWebhook.Responses.$200>
   /**
    * post_v1_logistic_management_warehouse_starts_unloading_action - Order unloading has begun
-   * 
+   *
    * Inform the <<glossary:shipper>> that the <<glossary:order>> unloading has begun.
    */
   'post_v1_logistic_management_warehouse_starts_unloading_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseStartsUnloadingAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseStartsUnloadingAction.Responses.$200>
   /**
    * post_v1_logistic_management_warehouse_finishes_unloading_action - Order unloading has ended
-   * 
+   *
    * Inform the <<glossary:shipper>> that the <<glossary:order>> unloading has ended.
    */
   'post_v1_logistic_management_warehouse_finishes_unloading_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesUnloadingAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesUnloadingAction.Responses.$200>
   /**
    * post_v1_logistic_management_warehouse_starts_preparation_action - Order preparation has begun
-   * 
+   *
    * Inform the <<glossary:shipper>> that the <<glossary:order>> preparation has begun.
    */
   'post_v1_logistic_management_warehouse_starts_preparation_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseStartsPreparationAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseStartsPreparationAction.Responses.$200>
   /**
    * post_v1_logistic_management_warehouse_finishes_preparation_action - Order preparation has ended
-   * 
+   *
    * Inform the <<glossary:shipper>> that the <<glossary:order>> preparation has ended.
    */
   'post_v1_logistic_management_warehouse_finishes_preparation_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.Responses.$200>
   /**
    * post_v1_logistic_management_shipper_create_or_update_draft_order_action - Create/update a draft order
-   * 
+   *
    * Create/update a draft entry or exit order. You will be able to validate the draft later.
-   * 
+   *
    * The accepted fields depend on the `order_type` field:
-   * 
+   *
    * - If you need to write an <<glossary:entry order>>, please use the dedicated fields that start with `entry_expeditor_` to specify the sender information.
-   * 
+   *
    * - If you need to write an <<glossary:exit order>>, please use the dedicated fields that start with `exit_final_recipient_` to specify the final recipient information.
-   * 
+   *
    * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
-   * 
+   *
    * ```
    * entry_expeditor
    * entry_expeditor_address_line1
@@ -14042,9 +14042,9 @@ export interface OperationMethods {
    * entry_expeditor_address_country
    * entry_expeditor_address_country_code
    * ```
-   * 
+   *
    * or
-   * 
+   *
    * ```
    * exit_final_recipient
    * exit_final_recipient_address_line1
@@ -14053,13 +14053,13 @@ export interface OperationMethods {
    * exit_final_recipient_address_country
    * exit_final_recipient_address_country_code
    * ```
-   * 
+   *
    * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
    */
   'post_v1_logistic_management_shipper_create_or_update_draft_order_action'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.Responses.$200>
   /**
    * post_v1_logistic_management_shipper_validate_draft_order_action - Validate a draft order
@@ -14067,7 +14067,7 @@ export interface OperationMethods {
   'post_v1_logistic_management_shipper_validate_draft_order_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementShipperValidateDraftOrderAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementShipperValidateDraftOrderAction.Responses.$200>
   /**
    * get_v1_logistic_management_inventory_adjustement_list - List inventory adjustments
@@ -14075,7 +14075,7 @@ export interface OperationMethods {
   'get_v1_logistic_management_inventory_adjustement_list'(
     parameters?: Parameters<Paths.GetV1LogisticManagementInventoryAdjustementList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementInventoryAdjustementList.Responses.$200>
   /**
    * post_v1_logistic_management_inventory_adjustement - Create an inventory adjustment
@@ -14083,7 +14083,7 @@ export interface OperationMethods {
   'post_v1_logistic_management_inventory_adjustement'(
     parameters?: Parameters<Paths.PostV1LogisticManagementInventoryAdjustement.QueryParameters> | null,
     data?: Paths.PostV1LogisticManagementInventoryAdjustement.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementInventoryAdjustement.Responses.$200>
   /**
    * post_v1_async_logistic_management_inventory_adjustement - Create an inventory adjustment (asynchronously)
@@ -14091,7 +14091,7 @@ export interface OperationMethods {
   'post_v1_async_logistic_management_inventory_adjustement'(
     parameters?: Parameters<Paths.PostV1AsyncLogisticManagementInventoryAdjustement.QueryParameters> | null,
     data?: Paths.PostV1AsyncLogisticManagementInventoryAdjustement.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1AsyncLogisticManagementInventoryAdjustement.Responses.$200>
   /**
    * get_v1_logistic_management_inventory_adjustement - View an inventory adjustment
@@ -14099,7 +14099,7 @@ export interface OperationMethods {
   'get_v1_logistic_management_inventory_adjustement'(
     parameters?: Parameters<Paths.GetV1LogisticManagementInventoryAdjustement.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementInventoryAdjustement.Responses.$200>
   /**
    * get_v1_logistic_management_sscc_list - List SSCC informations and stock
@@ -14107,7 +14107,7 @@ export interface OperationMethods {
   'get_v1_logistic_management_sscc_list'(
     parameters?: Parameters<Paths.GetV1LogisticManagementSsccList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementSsccList.Responses.$200>
   /**
    * get_v1_logistic_management_sscc_total_in_stock - Get total of SSCC currently in stock
@@ -14115,7 +14115,7 @@ export interface OperationMethods {
   'get_v1_logistic_management_sscc_total_in_stock'(
     parameters?: Parameters<Paths.GetV1LogisticManagementSsccTotalInStock.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementSsccTotalInStock.Responses.$200>
   /**
    * get_v1_carrier_list - List carriers from carriers book and from LSP
@@ -14123,7 +14123,7 @@ export interface OperationMethods {
   'get_v1_carrier_list'(
     parameters?: Parameters<Paths.GetV1CarrierList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1CarrierList.Responses.$200>
   /**
    * post_v1_carrier - Create a carrier
@@ -14131,37 +14131,37 @@ export interface OperationMethods {
   'post_v1_carrier'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1Carrier.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1Carrier.Responses.$200>
   /**
    * get_v1_transports - Get V1 Transports
-   * 
+   *
    * Return all transports for a given carrier
    */
   'get_v1_transports'(
     parameters?: Parameters<Paths.GetV1Transports.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1Transports.Responses.$200>
   /**
    * patch_v1_transport_status - Patch V1 Transport Status
-   * 
+   *
    * Update a transport
    */
   'patch_v1_transport_status'(
     parameters?: Parameters<Paths.PatchV1TransportStatus.PathParameters> | null,
     data?: Paths.PatchV1TransportStatus.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PatchV1TransportStatus.Responses.$200>
   /**
    * post_v1_logistic_management_event - Post an event
-   * 
+   *
    * Post an event.
    */
   'post_v1_logistic_management_event'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementEvent.RequestBody,
-    config?: AxiosRequestConfig  
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementEvent.Responses.$200>
 }
 
@@ -14175,84 +14175,84 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1Ping.Responses.$200>
   }
   ['/v1/logistic_management/master_items/']: {
     /**
      * get_v1_logistic_management_master_item_list - List references
-     * 
+     *
      * List and filter <<glossary:reference>>s.
      */
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementMasterItemList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementMasterItemList.Responses.$200>
     /**
      * post_v1_logistic_management_master_item - Create a reference
-     * 
+     *
      * Create a <<glossary:reference>>.
-     * 
+     *
      * > 🚧 Avoiding conflict:
      * >
      * > Setting a value for the `each_quantity_by_pallet` field conflicts with the values of the `cardboard_box_quantity_by_pallet` and `each_quantity_by_cardboard_box` fields.
      * > Furthermore, you should set a value to `each_quantity_by_cardboard_box` when setting a value to `cardboard_box_quantity_by_pallet`.
-     * 
+     *
      * > Reference creation is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly to prevent anomalies.
      */
     'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementMasterItem.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementMasterItem.Responses.$200>
   }
   ['/v1/logistic_management/master_items/{master_item_id}/']: {
     /**
      * get_v1_logistic_management_master_item - View a reference
-     * 
+     *
      * View the details of a <<glossary:reference>> with current and forecasted stock quantities.
      */
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementMasterItem.PathParameters & Paths.GetV1LogisticManagementMasterItem.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementMasterItem.Responses.$200>
     /**
      * put_v1_logistic_management_master_item - Replace a reference
-     * 
+     *
      * Replace all the fields of a <<glossary:reference>>, if the transfered_to_xxx_at and metadata fields are missing, it will be replaced by null.
-     * 
+     *
      * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
      */
     'put'(
       parameters?: Parameters<Paths.PutV1LogisticManagementMasterItem.PathParameters> | null,
       data?: Paths.PutV1LogisticManagementMasterItem.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PutV1LogisticManagementMasterItem.Responses.$200>
     /**
      * patch_v1_logistic_management_master_item - Update a reference
-     * 
+     *
      * Update one or several fields of a <<glossary:reference>> without overwriting existing fields.
-     * 
+     *
      * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
      */
     'patch'(
       parameters?: Parameters<Paths.PatchV1LogisticManagementMasterItem.PathParameters> | null,
       data?: Paths.PatchV1LogisticManagementMasterItem.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PatchV1LogisticManagementMasterItem.Responses.$200>
   }
   ['/v1/logistic_management/batches/']: {
     /**
      * get_v1_logistic_management_batch_list - List batches
-     * 
+     *
      * List and filter <<glossary:batch>>es.
      */
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementBatchList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementBatchList.Responses.$200>
     /**
      * post_v1_logistic_management_batch - Create a batch
@@ -14260,19 +14260,19 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementBatch.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementBatch.Responses.$200>
   }
   ['/v1/logistic_management/batches/{batch_id}/']: {
     /**
      * get_v1_logistic_management_batch - View a batch
-     * 
+     *
      * View the details of a <<glossary:batch>> with current stock quantities.
      */
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementBatch.PathParameters & Paths.GetV1LogisticManagementBatch.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementBatch.Responses.$200>
     /**
      * put_v1_logistic_management_batch - Replace Batch resource
@@ -14280,50 +14280,50 @@ export interface PathsDictionary {
     'put'(
       parameters?: Parameters<Paths.PutV1LogisticManagementBatch.PathParameters> | null,
       data?: Paths.PutV1LogisticManagementBatch.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PutV1LogisticManagementBatch.Responses.$200>
   }
   ['/v1/logistic_management/orders/']: {
     /**
      * get_v1_logistic_management_order_list - List orders
-     * 
+     *
      * List and filter <<glossary:order>>s.
      */
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementOrderList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementOrderList.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/']: {
     /**
      * get_v1_logistic_management_order - View an order
-     * 
+     *
      * View the details of an order and all order items associated.
      */
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementOrder.PathParameters & Paths.GetV1LogisticManagementOrder.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementOrder.Responses.$200>
     /**
      * patch_v1_logistic_management_order - Update an order
-     * 
+     *
      * Update one or several fields of <<glossary:order>>.
      */
     'patch'(
       parameters?: Parameters<Paths.PatchV1LogisticManagementOrder.PathParameters> | null,
       data?: Paths.PatchV1LogisticManagementOrder.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PatchV1LogisticManagementOrder.Responses.$200>
   }
   ['/v1/logistic_management/orders/entry/']: {
     /**
      * post_v1_logistic_management_shipper_create_entry_order_action - Create an entry order
-     * 
+     *
      * Create an <<glossary:entry order>>.
      * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
-     * 
+     *
      * ```
      * entry_expeditor
      * entry_expeditor_address_line1
@@ -14332,22 +14332,22 @@ export interface PathsDictionary {
      * entry_expeditor_address_country
      * entry_expeditor_address_country_code
      * ```
-     * 
+     *
      * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
      */
     'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/exit/']: {
     /**
      * post_v1_logistic_management_shipper_creates_order_exit_action - Create an exit order
-     * 
+     *
      * Create an <<glossary:exit order>>.
      * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
-     * 
+     *
      * ```
      * exit_final_recipient
      * exit_final_recipient_address_line1
@@ -14356,13 +14356,13 @@ export interface PathsDictionary {
      * exit_final_recipient_address_country
      * exit_final_recipient_address_country_code
      * ```
-     * 
+     *
      * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
      */
     'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/documents']: {
@@ -14372,7 +14372,7 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementOrderDocumentsList.PathParameters & Paths.GetV1LogisticManagementOrderDocumentsList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementOrderDocumentsList.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/documents/{document_id}/download']: {
@@ -14382,7 +14382,7 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementOrderDownloadDocument.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementOrderDownloadDocument.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/documents/']: {
@@ -14392,7 +14392,7 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementOrderUploadDocument.PathParameters> | null,
       data?: Paths.PostV1LogisticManagementOrderUploadDocument.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementOrderUploadDocument.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/warehouse_confirms_planned_execution_date']: {
@@ -14402,19 +14402,19 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/warehouse_acknowledges_receipt_of_order_action']: {
     /**
      * post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action - Acknowledge reception of an order
-     * 
+     *
      * Confirm receipt or exit of the <<glossary:order>> to the <<glossary:Shipper>>.
      */
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.PathParameters> | null,
       data?: Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/shipper_acknowledges_receipt_of_adjustment_action']: {
@@ -14424,7 +14424,7 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/shipper_cancels_order_action']: {
@@ -14434,7 +14434,7 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementShipperCancelsOrderAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementShipperCancelsOrderAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/shipper_reschedule_order_action']: {
@@ -14444,7 +14444,7 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.GetV1LogisticManagementShipperRescheduleOrderAction.PathParameters> | null,
       data?: Paths.GetV1LogisticManagementShipperRescheduleOrderAction.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementShipperRescheduleOrderAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/shipper_suggests_planned_execution_date_action']: {
@@ -14454,23 +14454,23 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateAction.PathParameters> | null,
       data?: Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateAction.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/shipper_updates_order_action']: {
     /**
      * post_v1_logistic_management_shipper_updates_order_action - Update an order
-     * 
+     *
      * Update an <<glossary:entry order>> or <<glossary:exit order>>. You will be able to validate the draft later.
-     * 
+     *
      * The accepted fields depend on the `order_type` field:
-     * 
+     *
      * - If you need to update an <<glossary:entry order>>, please use the dedicated fields that start with `entry_expeditor_` to specify the sender information.
-     * 
+     *
      * - If you need to update an <<glossary:exit order>>, please use the dedicated fields that start with `exit_final_recipient_` to specify the final recipient information.
-     * 
+     *
      * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
-     * 
+     *
      * ```
      * entry_expeditor
      * entry_expeditor_address_line1
@@ -14479,9 +14479,9 @@ export interface PathsDictionary {
      * entry_expeditor_address_country
      * entry_expeditor_address_country_code
      * ```
-     * 
+     *
      * OR
-     * 
+     *
      * ```
      * exit_final_recipient
      * exit_final_recipient_address_line1
@@ -14489,13 +14489,13 @@ export interface PathsDictionary {
      * exit_final_recipient_address_city
      * exit_final_recipient_address_country
      * ```
-     * 
+     *
      * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
      */
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementShipperUpdatesOrderAction.PathParameters> | null,
       data?: Paths.PostV1LogisticManagementShipperUpdatesOrderAction.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementShipperUpdatesOrderAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/warehouse_adjust_stock_after_order_is_completed_action']: {
@@ -14505,19 +14505,19 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedAction.PathParameters> | null,
       data?: Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedAction.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/warehouse_creates_order_action']: {
     /**
      * post_v1_logistic_management_warehouse_creates_order_action - Create an order
-     * 
+     *
      * Create an <<glossary:order>>. The accepted fields depend on the `order_type` field:
      * - If you need to create an <<glossary:entry order>>, you need to use the fields that start with `entry_expeditor_` to specify the sender information.
      * - If you need to create an <<glossary:exit order>>, you need to use the fields that start with `exit_final_recipient_` to specify the final recipient information.
-     * 
+     *
      * If the following fields correspond to an existing address in the shipper [address-book](https://app.spacefill.fr/settings/address-book/):
-     * 
+     *
      * ```
      * entry_expeditor_address_line1
      * entry_expeditor_address_zip
@@ -14525,9 +14525,9 @@ export interface PathsDictionary {
      * entry_expeditor_address_country
      * entry_expeditor_address_country_code
      * ```
-     * 
+     *
      * OR
-     * 
+     *
      * ```
      * exit_final_recipient_address_line1
      * exit_final_recipient_address_zip
@@ -14535,13 +14535,13 @@ export interface PathsDictionary {
      * exit_final_recipient_address_country
      * exit_final_recipient_address_country_code
      * ```
-     * 
+     *
      * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
      */
     'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementWarehouseCreatesOrderAction.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseCreatesOrderAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/warehouse_declines_planned_execution_date_action']: {
@@ -14551,19 +14551,19 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateAction.PathParameters & Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateAction.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/warehouse_emits_order_receipt_error_action']: {
     /**
      * post_v1_logistic_management_warehouse_emits_order_receipt_error_action - Order not received
-     * 
+     *
      * Inform the <<glossary:shipper>> that the <<glossary:order>> has not been received.
      */
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorAction.PathParameters & Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorAction.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/hooks']: {
@@ -14573,71 +14573,71 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementCreateWebhookWebhook.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementCreateWebhookWebhook.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/warehouse_starts_unloading_action']: {
     /**
      * post_v1_logistic_management_warehouse_starts_unloading_action - Order unloading has begun
-     * 
+     *
      * Inform the <<glossary:shipper>> that the <<glossary:order>> unloading has begun.
      */
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseStartsUnloadingAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseStartsUnloadingAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/warehouse_finishes_unloading_action']: {
     /**
      * post_v1_logistic_management_warehouse_finishes_unloading_action - Order unloading has ended
-     * 
+     *
      * Inform the <<glossary:shipper>> that the <<glossary:order>> unloading has ended.
      */
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesUnloadingAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesUnloadingAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/warehouse_starts_preparation_action']: {
     /**
      * post_v1_logistic_management_warehouse_starts_preparation_action - Order preparation has begun
-     * 
+     *
      * Inform the <<glossary:shipper>> that the <<glossary:order>> preparation has begun.
      */
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseStartsPreparationAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseStartsPreparationAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/warehouse_finishes_preparation_action']: {
     /**
      * post_v1_logistic_management_warehouse_finishes_preparation_action - Order preparation has ended
-     * 
+     *
      * Inform the <<glossary:shipper>> that the <<glossary:order>> preparation has ended.
      */
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/shipper_create_or_update_draft_order_action']: {
     /**
      * post_v1_logistic_management_shipper_create_or_update_draft_order_action - Create/update a draft order
-     * 
+     *
      * Create/update a draft entry or exit order. You will be able to validate the draft later.
-     * 
+     *
      * The accepted fields depend on the `order_type` field:
-     * 
+     *
      * - If you need to write an <<glossary:entry order>>, please use the dedicated fields that start with `entry_expeditor_` to specify the sender information.
-     * 
+     *
      * - If you need to write an <<glossary:exit order>>, please use the dedicated fields that start with `exit_final_recipient_` to specify the final recipient information.
-     * 
+     *
      * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
-     * 
+     *
      * ```
      * entry_expeditor
      * entry_expeditor_address_line1
@@ -14646,9 +14646,9 @@ export interface PathsDictionary {
      * entry_expeditor_address_country
      * entry_expeditor_address_country_code
      * ```
-     * 
+     *
      * or
-     * 
+     *
      * ```
      * exit_final_recipient
      * exit_final_recipient_address_line1
@@ -14657,13 +14657,13 @@ export interface PathsDictionary {
      * exit_final_recipient_address_country
      * exit_final_recipient_address_country_code
      * ```
-     * 
+     *
      * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
      */
     'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.Responses.$200>
   }
   ['/v1/logistic_management/orders/{order_id}/shipper_validate_draft_order_action']: {
@@ -14673,7 +14673,7 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementShipperValidateDraftOrderAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementShipperValidateDraftOrderAction.Responses.$200>
   }
   ['/v1/logistic_management/inventory_adjustments/']: {
@@ -14683,7 +14683,7 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementInventoryAdjustementList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementInventoryAdjustementList.Responses.$200>
     /**
      * post_v1_logistic_management_inventory_adjustement - Create an inventory adjustment
@@ -14691,7 +14691,7 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementInventoryAdjustement.QueryParameters> | null,
       data?: Paths.PostV1LogisticManagementInventoryAdjustement.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementInventoryAdjustement.Responses.$200>
   }
   ['/v1/async/logistic_management/inventory_adjustments/']: {
@@ -14701,7 +14701,7 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<Paths.PostV1AsyncLogisticManagementInventoryAdjustement.QueryParameters> | null,
       data?: Paths.PostV1AsyncLogisticManagementInventoryAdjustement.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1AsyncLogisticManagementInventoryAdjustement.Responses.$200>
   }
   ['/v1/logistic_management/inventory_adjustments/{inventory_adjustment_id}/']: {
@@ -14711,7 +14711,7 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementInventoryAdjustement.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementInventoryAdjustement.Responses.$200>
   }
   ['/v1/logistic_management/serial_shipping_container_codes/']: {
@@ -14721,7 +14721,7 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementSsccList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementSsccList.Responses.$200>
   }
   ['/v1/logistic_management/sscc_total_in_stock/']: {
@@ -14731,7 +14731,7 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementSsccTotalInStock.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementSsccTotalInStock.Responses.$200>
   }
   ['/v1/transport_management/carriers/']: {
@@ -14741,7 +14741,7 @@ export interface PathsDictionary {
     'get'(
       parameters?: Parameters<Paths.GetV1CarrierList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1CarrierList.Responses.$200>
     /**
      * post_v1_carrier - Create a carrier
@@ -14749,43 +14749,43 @@ export interface PathsDictionary {
     'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1Carrier.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1Carrier.Responses.$200>
   }
   ['/v1/transport_management/transports']: {
     /**
      * get_v1_transports - Get V1 Transports
-     * 
+     *
      * Return all transports for a given carrier
      */
     'get'(
       parameters?: Parameters<Paths.GetV1Transports.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1Transports.Responses.$200>
   }
   ['/v1/transport_management/transports/{transport_id}']: {
     /**
      * patch_v1_transport_status - Patch V1 Transport Status
-     * 
+     *
      * Update a transport
      */
     'patch'(
       parameters?: Parameters<Paths.PatchV1TransportStatus.PathParameters> | null,
       data?: Paths.PatchV1TransportStatus.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PatchV1TransportStatus.Responses.$200>
   }
   ['/v1/logistic_management/events/']: {
     /**
      * post_v1_logistic_management_event - Post an event
-     * 
+     *
      * Post an event.
      */
     'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementEvent.RequestBody,
-      config?: AxiosRequestConfig  
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementEvent.Responses.$200>
   }
 }

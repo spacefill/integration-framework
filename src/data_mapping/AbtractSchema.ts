@@ -10,7 +10,7 @@ import { CommonSchemaInterface, ExportFileDescriptor } from "./SchemaInterfaces.
 
 export default abstract class AbtractSchema implements CommonSchemaInterface {
   itemSchemaValidation: object = {};
-  fileDescriptor: ExportFileDescriptor;
+  fileDescriptor: ExportFileDescriptor | undefined;
 
   public validateFileData(data: object[]): void {
     const schema = {
@@ -22,7 +22,7 @@ export default abstract class AbtractSchema implements CommonSchemaInterface {
     addFormats(ajv);
 
     const validate = ajv.compile(schema);
-    if (!validate(data)) {
+    if (!validate(data) && validate?.errors) {
       validate?.errors.forEach((validationError) => {
 
         Console.error("Validation error",

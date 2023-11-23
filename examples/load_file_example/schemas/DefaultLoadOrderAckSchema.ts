@@ -206,8 +206,8 @@ export default class DefaultLoadOrderAckSchema extends AbstractLoadFileSchema<Or
     const mappedData: OrderInterface = {
       shipper_order_reference: firstItem['N de mouvement'],
       order_type: order_type as OrderTypeEnum,
-      shipper_account_id: Config.get().edi.wmsShipperAccountId,
-      warehouse_id: Config.get().edi.wmsWarehouseId,
+      shipper_account_id: Config.get().edi.wmsShipperAccountId as string,
+      warehouse_id: Config.get().edi.wmsWarehouseId as string,
       planned_execution_datetime_range: {
         datetime_from: executionDate,
         datetime_to: executionDate
