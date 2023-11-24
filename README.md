@@ -28,3 +28,23 @@ yarn install
     --disable-events                        Disable edi events emit
 
   ```
+
+## Tests
+
+See [./tests/README.md](./tests/README.md)
+
+## Dev tools
+
+### Prettier
+
+- Make prettier watch and correct changes
+
+```sh
+$ yarn run prettier-watch
+```
+
+- Fix all `.ts` files from `./src`
+
+```sh
+$ yarn prettier src/**/*.ts --write
+```

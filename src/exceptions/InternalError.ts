@@ -7,4 +7,3 @@ export default class InternalError extends Error {
     this.name = "InternalError";
   }
 }
-

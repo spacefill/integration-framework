@@ -1,14 +1,14 @@
 import OpenAPIClientAxios, { Document } from "openapi-client-axios";
-import axios, { AxiosInstance } from 'axios';
-import FormData from 'form-data';
+import axios, { AxiosInstance } from "axios";
+import FormData from "form-data";
 import * as axiosDebug from "axios-debug-log";
 
-import type { Client as SpacefillAPIClient } from './spacefill-api-openapi.d.ts';
+import type { Client as SpacefillAPIClient } from "./spacefill-api-openapi.d.ts";
 import APIContext, { WorkflowType } from "./APIContext.ts";
 import Console from "../utils/Console.ts";
 import EdiEvent from "./EdiEvent.ts";
 
-import definition from "./openapi.json"  assert {type: 'json'};
+import definition from "./openapi.json" assert { type: "json" };
 import InternalError from "../exceptions/InternalError.ts";
 
 /**
@@ -17,7 +17,6 @@ import InternalError from "../exceptions/InternalError.ts";
  */
 
 export class SpacefillAPIWrapperV1 {
-
   public client: SpacefillAPIClient | undefined;
 
   /**
@@ -56,22 +55,22 @@ export class SpacefillAPIWrapperV1 {
     const api = new OpenAPIClientAxios.default({
       definition: definition as Document,
       withServer: {
-        url: this.apiUrl
+        url: this.apiUrl,
       },
       axiosConfigDefaults: {
         withCredentials: true,
         headers: {
-          'Authorization': `Bearer ${this.bearerToken}`,
+          Authorization: `Bearer ${this.bearerToken}`,
           ...APIContext.getMainHeaders(),
           ...APIContext.getWorkflowHeader(this.workflowType),
         },
         transformRequest: (data, headers) => {
-          headers['Spacefill-Ctx-Data-Source'] = this.dataSource ?? 'unknown';
-          if (!headers['Content-Type']) {
-            headers['Content-Type'] = 'application/json';
+          headers["Spacefill-Ctx-Data-Source"] = this.dataSource ?? "unknown";
+          if (!headers["Content-Type"]) {
+            headers["Content-Type"] = "application/json";
           }
           return JSON.stringify(data);
-        }
+        },
       },
     });
 
@@ -84,44 +83,47 @@ export class SpacefillAPIWrapperV1 {
         if (!(config.data instanceof FormData)) {
           Console.debug(`Axios: ${config.method} ${config.url}`, {
             parameter: config.params,
-            data: config.data
+            data: config.data,
           });
         } else {
           Console.debug(`Axios upload: ${config.method} ${config.url}`, {
             parameter: config.params,
           });
-          Console.trace('FormData', config.data);
+          Console.trace("FormData", config.data);
         }
-
       },
       response: (_debug, config) => {
-        Console.debug(`Axios: ${config.status} ${config.statusText} (${config.config.method} ${config.config.url})`);
-        Console.trace('Response data', JSON.stringify(config.data));
+        Console.debug(
+          `Axios: ${config.status} ${config.statusText} (${config.config.method} ${config.config.url})`,
+        );
+        Console.trace("Response data", JSON.stringify(config.data));
       },
       error(_debug, error) {
         if (error?.config) {
-          Console.error(`Axios: ${error.message} (${error.config.method} ${error.config.url})`, JSON.stringify(error.response?.data))
+          Console.error(
+            `Axios: ${error.message} (${error.config.method} ${error.config.url})`,
+            JSON.stringify(error.response?.data),
+          );
         } else {
-          Console.error(`Axios: ${error.message}`, JSON.stringify(error.response?.data))
+          Console.error(`Axios: ${error.message}`, JSON.stringify(error.response?.data));
         }
-
       },
     });
     axiosDebug.addLogger(this.axiosInstance as AxiosInstance);
   }
 
-  getAxiosInstance() : AxiosInstance | undefined{
+  getAxiosInstance(): AxiosInstance | undefined {
     return this.axiosInstance;
   }
 
   async upload(method: string, path: string, formData: FormData): Promise<void> {
     const axiosInstance: AxiosInstance = axios.create({
-      baseURL: this.apiUrl
+      baseURL: this.apiUrl,
     });
     axiosDebug.addLogger(axiosInstance);
 
     if (!this.workflowType) {
-      throw new InternalError('Worklow type is not defined !');
+      throw new InternalError("Worklow type is not defined !");
     }
 
     return await axiosInstance({
@@ -129,13 +131,12 @@ export class SpacefillAPIWrapperV1 {
       url: path,
       data: formData,
       headers: {
-        'Authorization': `Bearer ${this.bearerToken}`,
+        Authorization: `Bearer ${this.bearerToken}`,
         ...APIContext.getMainHeaders(),
         ...APIContext.getWorkflowHeader(this.workflowType),
-        ...APIContext.getDataSourceHeader(this.dataSource ?? 'Unknown data source'),
+        ...APIContext.getDataSourceHeader(this.dataSource ?? "Unknown data source"),
         ...formData.getHeaders(),
       },
     });
-
   }
 }

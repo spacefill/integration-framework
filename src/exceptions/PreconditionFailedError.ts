@@ -7,5 +7,3 @@ export default class PreconditionFailedError extends Error {
     this.name = "PreconditionFailedError";
   }
 }
-
-

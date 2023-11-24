@@ -7,4 +7,3 @@ export default class InvalidRequestDataError extends Error {
     this.name = "InvalidRequestDataError";
   }
 }
-

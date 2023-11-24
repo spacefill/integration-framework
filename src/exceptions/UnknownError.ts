@@ -7,5 +7,3 @@ export default class UnknownError extends Error {
     this.name = "UnknownError";
   }
 }
-
-

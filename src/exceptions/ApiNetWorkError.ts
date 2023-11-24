@@ -8,4 +8,3 @@ export default class ApiNetWorkError extends Error {
     this.name = "ApiNetWorkError";
   }
 }
-

@@ -11,15 +11,12 @@ export abstract class AbstractTask extends BaseCommand {
   public constructor() {
     super();
     this.sdk = new SpacefillAPIWrapperV1();
-    this.transfert = new Transfert(
-      Config.get().transfert.protocol as unknown as TransfertProtocol,
-      {
-        hostname: Config.get().transfert.hostname as string,
-        port: Config.get().transfert.port as number,
-        username: Config.get().transfert.username as string,
-        password: Config.get().transfert.password as string,
-      }
-    )
+    this.transfert = new Transfert(Config.get().transfert.protocol as unknown as TransfertProtocol, {
+      hostname: Config.get().transfert.hostname as string,
+      port: Config.get().transfert.port as number,
+      username: Config.get().transfert.username as string,
+      password: Config.get().transfert.password as string,
+    });
   }
 
   /**
@@ -33,25 +30,25 @@ export abstract class AbstractTask extends BaseCommand {
     await this.sdk.initClient(
       Config.get().spacefillApi.url,
       Config.get().spacefillApi.apiToken,
-      workflowType
+      workflowType,
     );
   }
 
-  protected getArgsList(): Argument[]{
+  protected getArgsList(): Argument[] {
     return [
       ...super.getArgsList(),
       {
         argName: "--disable-events",
-        argDescription: "Disable edi events emit"
-      }
-    ]
+        argDescription: "Disable edi events emit",
+      },
+    ];
   }
 
   protected parseArgs(): void {
     super.parseArgs();
 
-    if (this.argv?.['disable-events']) {
-      process.env.SPACEFILL_API_EVENT_ENABLED = '0';
+    if (this.argv?.["disable-events"]) {
+      process.env.SPACEFILL_API_EVENT_ENABLED = "0";
     }
   }
 }

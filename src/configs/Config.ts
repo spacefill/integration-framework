@@ -1,20 +1,19 @@
-import { fs } from 'zx';
-import * as dotenv from 'dotenv';
+import { fs } from "zx";
+import * as dotenv from "dotenv";
 import AjvModule from "ajv";
-import addFormatsModule from 'ajv-formats';
+import addFormatsModule from "ajv-formats";
 const Ajv = AjvModule.default;
 const addFormats = addFormatsModule.default;
 
 import Console, { logLevelOrder } from "../utils/Console.ts";
-import { ClientTransport, ClientType } from '../api/APIContext.ts';
+import { ClientTransport, ClientType } from "../api/APIContext.ts";
 
 export class Config {
-
   public static get() {
     return {
       spacefillApi: {
-        url: process.env?.SPACEFILL_API_URL ?? 'http://localhost:5004',
-        apiToken: process.env?.SPACEFILL_API_TOKEN ?? '',
+        url: process.env?.SPACEFILL_API_URL ?? "http://localhost:5004",
+        apiToken: process.env?.SPACEFILL_API_TOKEN ?? "",
         defaultPaginationLimit: process.env?.SPACEFILL_API_DEFAULT_PAGINATION_LIMIT
           ? parseInt(process.env?.SPACEFILL_API_DEFAULT_PAGINATION_LIMIT)
           : 50,
@@ -24,7 +23,7 @@ export class Config {
           transport: process.env?.SPACEFILL_API_CONTEXT_TRANSPORT,
           clientType: process.env?.SPACEFILL_API_CONTEXT_CLIENT_TYPE,
         },
-        eventEnabled: process.env?.SPACEFILL_API_EVENT_ENABLED == '1' ? true : false,
+        eventEnabled: process.env?.SPACEFILL_API_EVENT_ENABLED == "1" ? true : false,
       },
       transfert: {
         protocol: process.env?.WMS_TRANSFERT_PROTOCOL,
@@ -32,7 +31,7 @@ export class Config {
         port: process.env?.WMS_TRANSFERT_PORT ? parseInt(process.env?.WMS_TRANSFERT_PORT) : undefined,
         username: process.env?.WMS_TRANSFERT_USER,
         password: process.env?.WMS_TRANSFERT_PASSWORD,
-        autoAddPolicy: process.env?.WMS_TRANSFERT_SFTP_AUTOADDPOLICY == '1' ? true : false,
+        autoAddPolicy: process.env?.WMS_TRANSFERT_SFTP_AUTOADDPOLICY == "1" ? true : false,
       },
       edi: {
         wmsAgencyCode: process.env?.WMS_AGENCY_CODE,
@@ -44,24 +43,24 @@ export class Config {
         wmsPathSpacefillToWmsDir: process.env?.WMS_PATH_SPACEFILL_TO_WMS_DIR,
         wmsPathArchiveDir: process.env?.WMS_PATH_ARCHIVE_DIR,
         wmsPathErrorDir: process.env?.WMS_PATH_ERROR_DIR,
-        fileEncoding: process.env?.WMS_FILE_ENCODING ?? 'utf-8'
+        fileEncoding: process.env?.WMS_FILE_ENCODING ?? "utf-8",
       },
       console: {
-        color: process.env?.CONSOLE_COLOR_ENABLED == '1' ? true : false,
-        interactiveMode: process.env?.CONSOLE_INTERACTIVE_MODE == '1' ? true : false,
+        color: process.env?.CONSOLE_COLOR_ENABLED == "1" ? true : false,
+        interactiveMode: process.env?.CONSOLE_INTERACTIVE_MODE == "1" ? true : false,
       },
       log: {
-        level: process.env?.LOG_LEVEL ?? 'info',
-        defaultLogLevel: 'info'
-      }
-    }
+        level: process.env?.LOG_LEVEL ?? "info",
+        defaultLogLevel: "info",
+      },
+    };
   }
 
   public static reloadConfig(envFile: string) {
     if (fs.existsSync(envFile)) {
       dotenv.config({
         path: envFile,
-        override: true
+        override: true,
       });
     } else {
       throw new Error(`Cannot find env file ${envFile}`);
@@ -74,180 +73,177 @@ export class Config {
     let errorFound = false;
 
     const schemaSpacefillApi = {
-      type: 'object',
+      type: "object",
       properties: {
         url: {
-          type: 'string',
-          format: 'uri',
+          type: "string",
+          format: "uri",
         },
         apiToken: {
-          type: 'string',
+          type: "string",
         },
         defaultPaginationLimit: {
-          type: 'number',
+          type: "number",
           minimum: 1,
-          maximum: 1000
+          maximum: 1000,
         },
         context: {
-          type: 'object',
+          type: "object",
           properties: {
             serviceSource: {
-              type: 'string',
+              type: "string",
             },
             serviceVersion: {
-              type: 'string',
+              type: "string",
               // semVer pattern
-              pattern: '^([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+)?$'
+              pattern:
+                "^([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+)?$",
             },
             transport: {
-              type: 'string',
-              enum: Object.values(ClientTransport)
+              type: "string",
+              enum: Object.values(ClientTransport),
             },
             clientType: {
-              type: 'string',
-              enum: Object.values(ClientType)
-            }
+              type: "string",
+              enum: Object.values(ClientType),
+            },
           },
-          required: ['serviceSource', 'serviceVersion', 'transport', 'clientType']
-        }
+          required: ["serviceSource", "serviceVersion", "transport", "clientType"],
+        },
       },
-      required: ['url', 'apiToken', 'defaultPaginationLimit']
+      required: ["url", "apiToken", "defaultPaginationLimit"],
     };
     const validateSpacefillApi = ajv.compile(schemaSpacefillApi);
     if (!validateSpacefillApi(Config.get().spacefillApi)) {
-      Console.error('Configuration validation failed for spacefillApi', validateSpacefillApi?.errors);
+      Console.error("Configuration validation failed for spacefillApi", validateSpacefillApi?.errors);
       errorFound = true;
     }
 
     const schemaTransfert = {
-      type: 'object',
+      type: "object",
       properties: {
         protocol: {
-          type: 'string',
-          enum: ['local', 'sftp', 'ftp']
+          type: "string",
+          enum: ["local", "sftp", "ftp"],
         },
         hostname: {
-          type: 'string',
-          oneOf: [
-            {format: 'hostname'},
-            {format: 'ipv4'},
-            {format: 'ipv6'}
-          ],
+          type: "string",
+          oneOf: [{ format: "hostname" }, { format: "ipv4" }, { format: "ipv6" }],
         },
         port: {
-          type: 'number',
+          type: "number",
           minimum: 0,
-          maximum: 65535
+          maximum: 65535,
         },
         username: {
-          type: 'string'
+          type: "string",
         },
         password: {
-          type: 'string'
+          type: "string",
         },
         autoAddPolicy: {
-          type: 'boolean'
-        }
+          type: "boolean",
+        },
       },
-      if: {properties: {protocol: {enum: ['sftp', 'ftp']}}},
-      then: {required: ['protocol', 'hostname', 'port', 'username', 'password']},
-      else: {required: ['protocol']}
+      if: { properties: { protocol: { enum: ["sftp", "ftp"] } } },
+      then: { required: ["protocol", "hostname", "port", "username", "password"] },
+      else: { required: ["protocol"] },
     };
     const validateTransfert = ajv.compile(schemaTransfert);
     if (!validateTransfert(Config.get().transfert)) {
-      Console.error('Configuration validation failed for transfert', validateTransfert?.errors);
+      Console.error("Configuration validation failed for transfert", validateTransfert?.errors);
       errorFound = true;
     }
 
     const schemaEdi = {
-      type: 'object',
+      type: "object",
       properties: {
         wmsAgencyCode: {
-          type: 'string',
+          type: "string",
         },
         wmsShipperID: {
-          type: 'string',
+          type: "string",
         },
         wmsShipperAccountId: {
-          type: 'string',
-          format: 'uuid',
+          type: "string",
+          format: "uuid",
         },
         wmsWarehouseId: {
-          type: 'string',
-          format: 'uuid',
+          type: "string",
+          format: "uuid",
         },
         wmsItemPackagingType: {
-          type: 'string',
-          enum: ['EACH', 'CARDBOARD_BOX', 'PALLET']
+          type: "string",
+          enum: ["EACH", "CARDBOARD_BOX", "PALLET"],
         },
         wmsPathWmsToSpacefillDir: {
-          type: 'string',
+          type: "string",
         },
         wmsPathSpacefillToWmsDir: {
-          type: 'string',
+          type: "string",
         },
         wmsPathArchiveDir: {
-          type: 'string',
+          type: "string",
         },
         wmsPathErrorDir: {
-          type: 'string',
+          type: "string",
         },
         fileEncoding: {
-          type: 'string',
-        }
+          type: "string",
+        },
       },
       required: [
-        'wmsShipperID',
-        'wmsShipperAccountId',
-        'wmsWarehouseId',
-        'wmsItemPackagingType',
-        'wmsPathWmsToSpacefillDir',
-        'wmsPathSpacefillToWmsDir',
-        'wmsPathArchiveDir',
-        'wmsPathErrorDir',
-      ]
-    }
+        "wmsShipperID",
+        "wmsShipperAccountId",
+        "wmsWarehouseId",
+        "wmsItemPackagingType",
+        "wmsPathWmsToSpacefillDir",
+        "wmsPathSpacefillToWmsDir",
+        "wmsPathArchiveDir",
+        "wmsPathErrorDir",
+      ],
+    };
     const validateEdi = ajv.compile(schemaEdi);
     if (!validateEdi(Config.get().edi)) {
-      Console.error('Configuration validation failed for edi', validateEdi?.errors);
+      Console.error("Configuration validation failed for edi", validateEdi?.errors);
       errorFound = true;
     }
 
     const schemaConsole = {
-      type: 'object',
+      type: "object",
       properties: {
         color: {
-          type: 'boolean'
+          type: "boolean",
         },
         interactiveMode: {
-          type: 'boolean',
-        }
+          type: "boolean",
+        },
       },
-      required: ['color', 'interactiveMode']
-    }
+      required: ["color", "interactiveMode"],
+    };
     const validateConsole = ajv.compile(schemaConsole);
     if (!validateConsole(Config.get().console)) {
-      Console.error('Configuration validation failed for console', validateConsole?.errors);
+      Console.error("Configuration validation failed for console", validateConsole?.errors);
       errorFound = true;
     }
 
     const schemaLog = {
-      type: 'object',
+      type: "object",
       properties: {
         level: {
-          type: 'string',
-          enum: Object.keys(logLevelOrder)
+          type: "string",
+          enum: Object.keys(logLevelOrder),
         },
         defaultLogLevel: {
-          type: 'string',
-          enum: Object.keys(logLevelOrder)
-        }
+          type: "string",
+          enum: Object.keys(logLevelOrder),
+        },
       },
-      required: ['level', 'defaultLogLevel']
-    }
+      required: ["level", "defaultLogLevel"],
+    };
     const validateLog = ajv.compile(schemaLog);
     if (!validateLog(Config.get().log)) {
-      Console.error('Configuration validation failed for log', validateLog?.errors);
+      Console.error("Configuration validation failed for log", validateLog?.errors);
       errorFound = true;
     }
 

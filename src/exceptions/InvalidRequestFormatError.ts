@@ -7,4 +7,3 @@ export default class InvalidRequestFormatError extends Error {
     this.name = "InvalidRequestFormatError";
   }
 }
-

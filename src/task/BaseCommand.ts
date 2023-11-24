@@ -5,17 +5,17 @@ import { Config } from "../configs/Config.js";
 import { cpuUsage } from "node:process";
 
 interface CommandStatistic {
-  startTimeMs?: number,
-  endTimeMs?: number,
-  startCpuUsage?: NodeJS.CpuUsage,
-  finalCpuUsage?: NodeJS.CpuUsage,
-  startMemoryUsage?: number,
-  finalMemoryUsage?: number,
+  startTimeMs?: number;
+  endTimeMs?: number;
+  startCpuUsage?: NodeJS.CpuUsage;
+  finalCpuUsage?: NodeJS.CpuUsage;
+  startMemoryUsage?: number;
+  finalMemoryUsage?: number;
 }
 
 interface Argument {
-  argName: string,
-  argDescription: string
+  argName: string;
+  argDescription: string;
 }
 
 export { Argument };
@@ -32,25 +32,25 @@ export abstract class BaseCommand {
     return [
       {
         argName: "-h, --help",
-        argDescription: "Print this help and exit."
+        argDescription: "Print this help and exit.",
       },
       {
         argName: "--debug",
-        argDescription: "Force log level to DEBUG."
+        argDescription: "Force log level to DEBUG.",
       },
       {
         argName: "--env",
-        argDescription: "Path to environment variables file. e.g: --env=.env"
+        argDescription: "Path to environment variables file. e.g: --env=.env",
       },
       {
         argName: "--print-config",
-        argDescription: "Display the environment variables values and exit."
+        argDescription: "Display the environment variables values and exit.",
       },
       {
         argName: "--print-statistics",
-        argDescription: "Display the resource usage at the end of the process"
-      }
-    ]
+        argDescription: "Display the resource usage at the end of the process",
+      },
+    ];
   }
 
   protected displayUsages() {
@@ -59,7 +59,7 @@ export abstract class BaseCommand {
     Console.log(`\nOptions:`);
     for (const args of this.getArgsList()) {
       let nbSpaces = Math.round(optionMaxLenght - args.argName.length);
-      if (nbSpaces < 1){
+      if (nbSpaces < 1) {
         nbSpaces = 1;
       }
       const separator = " ".repeat(nbSpaces);
@@ -70,23 +70,22 @@ export abstract class BaseCommand {
   protected displayStatistics() {
     const memoryUsage = process.memoryUsage();
 
-    const duration = this.statistics.endTimeMs && this.statistics.startTimeMs
-      ? (this.statistics.endTimeMs - this.statistics.startTimeMs)
-      : "unknown - check beforeRun() is well implemented";
+    const duration =
+      this.statistics.endTimeMs && this.statistics.startTimeMs
+        ? this.statistics.endTimeMs - this.statistics.startTimeMs
+        : "unknown - check beforeRun() is well implemented";
 
-    Console.info("Statistics",
-      {
-        "Resource usage": {
-          "cpu time (µs)": this.statistics.finalCpuUsage,
-          memory: {
-            "Memory used": bytes.format(memoryUsage.rss),
-            "Memory used by code": bytes.format(memoryUsage.heapTotal),
-            "Memory currently allocated by code": bytes.format(memoryUsage.heapUsed),
-          }
+    Console.info("Statistics", {
+      "Resource usage": {
+        "cpu time (µs)": this.statistics.finalCpuUsage,
+        memory: {
+          "Memory used": bytes.format(memoryUsage.rss),
+          "Memory used by code": bytes.format(memoryUsage.heapTotal),
+          "Memory currently allocated by code": bytes.format(memoryUsage.heapUsed),
         },
-        "Duration (ms)": duration
-      }
-    );
+      },
+      "Duration (ms)": duration,
+    });
   }
 
   protected parseArgs(): void {
@@ -102,24 +101,24 @@ export abstract class BaseCommand {
     }
 
     if (this.argv?.debug) {
-      process.env.LOG_LEVEL = 'debug';
+      process.env.LOG_LEVEL = "debug";
     }
 
-    if (this.argv?.['print-config']) {
+    if (this.argv?.["print-config"]) {
       Console.log(Config);
-      process.exit(0)
+      process.exit(0);
     }
   }
 
   protected beforeRun(): void {
-    if (this.argv?.['print-statistics']) {
+    if (this.argv?.["print-statistics"]) {
       this.statistics.startCpuUsage = cpuUsage();
       this.statistics.startTimeMs = new Date().getTime();
     }
   }
 
   protected afterRun(): void {
-    if (this.argv?.['print-statistics'] && this.statistics?.startCpuUsage) {
+    if (this.argv?.["print-statistics"] && this.statistics?.startCpuUsage) {
       this.statistics.finalCpuUsage = cpuUsage(this.statistics.startCpuUsage);
       this.statistics.endTimeMs = new Date().getTime();
       this.displayStatistics();

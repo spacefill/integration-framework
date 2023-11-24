@@ -7,4 +7,3 @@ export default class NetWorkError extends Error {
     this.name = "NetWorkError";
   }
 }
-

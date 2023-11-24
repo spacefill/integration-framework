@@ -7,4 +7,3 @@ export default class IoError extends Error {
     this.name = "IoError";
   }
 }
-
