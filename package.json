@@ -46,6 +46,7 @@
     "cross-env": "7.0.3",
     "eslint": "^8.50.0",
     "mocha": "10.2.0",
+    "mocha-junit-reporter": "2.2.1",
     "openapi-client-axios-typegen": "7.3.11",
     "ts-mocha": "10.0.0",
     "typescript": "5.2.2",
@@ -55,9 +56,9 @@
   "scripts": {
     "test": "ts-mocha --timeout 10000",
     "test:coverage": "c8 yarn run test",
-    "tests": "yarn run test ./tests/",
+    "tests": "ts-mocha --timeout 10000 tests/ci",
     "tests:coverage": "c8 yarn run tests",
-    "tests:ci": "c8 -r text -r cobertura yarn run test ./tests/ci/",
+    "tests:ci": "c8 -r text -r cobertura yarn run test --reporter mocha-junit-reporter  ./tests/ci/",
     "lint": "eslint ./src/",
     "build": "npx tsc -p tsconfig.json"
   },

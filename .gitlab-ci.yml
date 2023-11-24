@@ -36,9 +36,7 @@ test:
     untracked: true
     expire_in: 3 day
     paths:
-      - coverage/
+      - test-results.xml
     reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage/cobertura-coverage.xml
+      junit: test-results.xml
 

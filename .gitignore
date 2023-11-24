@@ -10,3 +10,4 @@ examples/load_file_example/errors/*.TXT
 examples/load_file_example/archives/*.txt
 examples/load_file_example/errors/*.TXT
 .nyc_output
+test-results.xml
