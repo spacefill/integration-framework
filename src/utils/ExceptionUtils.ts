@@ -1,12 +1,12 @@
 import { EventTypeEnumString } from "../api/EdiEvent.ts";
-import ApiNetWorkError from "../exceptions/ApiNetWorkError.ts";
-import InternalError from "../exceptions/InternalError.ts";
-import InvalidRequestDataError from "../exceptions/InvalidRequestDataError.ts";
-import InvalidRequestFormatError from "../exceptions/InvalidRequestFormatError.ts";
-import IoError from "../exceptions/IoError.ts";
-import NetWorkError from "../exceptions/NetWorkError.ts";
-import PreconditionFailedError from "../exceptions/PreconditionFailedError.ts";
-import UnknownError from "../exceptions/UnknownError.ts";
+import { ApiNetWorkError } from "../exceptions/ApiNetWorkError.ts";
+import { InternalError } from "../exceptions/InternalError.ts";
+import { InvalidRequestDataError } from "../exceptions/InvalidRequestDataError.ts";
+import { InvalidRequestFormatError } from "../exceptions/InvalidRequestFormatError.ts";
+import { IoError } from "../exceptions/IoError.ts";
+import { NetWorkError } from "../exceptions/NetWorkError.ts";
+import { PreconditionFailedError } from "../exceptions/PreconditionFailedError.ts";
+import { UnknownError } from "../exceptions/UnknownError.ts";
 
 export class ExceptionUtils {
   public static getEventTypeFromException(error: Error): EventTypeEnumString {

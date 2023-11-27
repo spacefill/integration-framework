@@ -5,11 +5,11 @@ import * as csv from 'fast-csv';
 
 import { Config } from '../../src/configs/Config.ts';
 import { AbstractGenerateFileTask } from '../../src/task/AbstractGenerateFileTask.ts';
-import Console from '../../src/utils/Console.ts';
+import { Console } from '../../src/utils/Console.ts';
 import { InitialDataItem } from "../../src/task/GenerateFileTasklnterfaces.ts";
 import { DefaultGenerateMasterItemsSchema } from "./schemas/DefaultGenerateMasterItemsSchema.ts";
 import { WorkflowType } from "../../src/api/APIContext.ts";
-import InternalError from "../../src/exceptions/InternalError.ts";
+import { InternalError } from "../../src/exceptions/InternalError.ts";
 import { Argument } from "../../src/task/BaseCommand.ts";
 import { fs } from "zx";
 import { GenerateFileSchemaInterface } from "../../src/data_mapping/SchemaInterfaces.ts";

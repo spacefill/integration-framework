@@ -3,7 +3,7 @@ import { TransfertConfiguration, TransfertInterface } from "./TransfertInterface
 import { SftpClient } from "./SftpClient.ts";
 import { LocalClient } from "./LocalClient.ts";
 import { Config } from "../configs/Config.ts";
-import Console from "../utils/Console.ts";
+import { Console } from "../utils/Console.ts";
 
 enum TransfertProtocol {
   sftp = "sftp",

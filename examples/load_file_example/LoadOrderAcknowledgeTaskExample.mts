@@ -9,13 +9,13 @@ import { fs } from "zx";
 
 import { WorkflowType } from "../../src/api/APIContext.ts";
 import { Config } from "../../src/configs/Config.ts";
-import AbstractLoadFileTask from "../../src/task/AbstractLoadFileTask.ts";
-import Console from "../../src/utils/Console.ts";
-import DefaultLoadOrderAckSchema from "./schemas/DefaultLoadOrderAckSchema.ts";
+import { AbstractLoadFileTask } from "../../src/task/AbstractLoadFileTask.ts";
+import { Console } from "../../src/utils/Console.ts";
+import { DefaultLoadOrderAckSchema } from "./schemas/DefaultLoadOrderAckSchema.ts";
 import { FileItemInterface } from "../../src/task/LoadFileTaskInterfaces.ts";
 import { LoadFileSchemaInterface } from "../../src/data_mapping/SchemaInterfaces.ts";
 import { EventTypeEnumString } from "../../src/api/EdiEvent.ts";
-import InternalError from "../../src/exceptions/InternalError.ts";
+import { InternalError } from "../../src/exceptions/InternalError.ts";
 
 
 type ItemPackagingTypeEnum = "PALLET" | "CARDBOARD_BOX" | "EACH";
@@ -58,7 +58,7 @@ interface ExitOrderInterface extends OrderInterface {
 export { ExitOrderInterface, OrderInterface, OrderItemInterface, ItemPackagingTypeEnum, OrderTypeEnum };
 
 
-export default class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTask<OrderInterface | ExitOrderInterface> {
+export class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTask<OrderInterface | ExitOrderInterface> {
 
   protected displayUsages() {
     Console.log("Usage: ./LoadOrderAcknowledgeTaskExample.mts [OPTIONS]")

@@ -1,11 +1,11 @@
 import { fs } from "zx";
 import * as dotenv from "dotenv";
 import AjvModule from "ajv";
-import addFormatsModule from "ajv-formats";
 const Ajv = AjvModule.default;
+import addFormatsModule from "ajv-formats";
 const addFormats = addFormatsModule.default;
 
-import Console, { logLevelOrder } from "../utils/Console.ts";
+import { Console, logLevelOrder } from "../utils/Console.ts";
 import { ClientTransport, ClientType } from "../api/APIContext.ts";
 
 export class Config {

@@ -1,7 +1,12 @@
 {
-  "name": "integration-framework",
+  "name": "@spacefill/integration-framework",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "dependencies": {
     "@fast-csv/format": "4.3.5",
     "@types/node": "20.8.2",
@@ -27,6 +32,7 @@
     "zx": "7.2.3"
   },
   "devDependencies": {
+    "@microsoft/api-extractor": "7.38.3",
     "@types/bytes": "3.1.3",
     "@types/chai": "4.3.10",
     "@types/chai-spies": "1.0.6",
@@ -41,6 +47,7 @@
     "@typescript-eslint/parser": "^6.7.4",
     "add": "2.0.6",
     "axios-mock-adapter": "1.22.0",
+    "barrelsby": "2.8.1",
     "c8": "8.0.1",
     "chai": "4.3.10",
     "chai-spies": "1.1.0",
@@ -52,23 +59,37 @@
     "openapi-client-axios-typegen": "7.3.11",
     "prettier": "3.1.0",
     "ts-mocha": "10.0.0",
+    "tsup": "8.0.1",
     "typescript": "5.2.2",
     "xlsx": "0.18.5",
     "yarn": "1.22.19"
   },
   "scripts": {
-    "prettier-watch": "onchange \"./src/**/*.(ts|mts)\" -- prettier --write --ignore-unknown {{changed}}",
+    "prettier-watch": "onchange \"./(src|tests)/**/*.(ts|mts)\" -- prettier --write --ignore-unknown {{changed}}",
     "test": "ts-mocha --timeout 10000",
     "test:coverage": "c8 yarn run test",
     "tests": "ts-mocha --timeout 10000 tests/ci",
     "tests:coverage": "c8 yarn run tests",
     "tests:ci": "c8 -r text yarn run test --reporter mocha-junit-reporter  ./tests/ci/",
-    "lint": "eslint ./src/",
-    "build": "npx tsc -p tsconfig.json"
+    "lint": "eslint ./src/ ./tests/",
+    "build": "tsup --dts",
+    "generate-barrels": "barrelsby --delete -d ./src"
   },
   "engines": {
     "node": "18.x"
   },
-  "private": true,
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "splitting": false,
+    "sourcemap": false,
+    "clean": true,
+    "format": [
+      "esm",
+      "cjs"
+    ],
+    "minify": true
+  }
 }

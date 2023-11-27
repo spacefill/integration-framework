@@ -20,7 +20,7 @@ yarn install
   Usage: ./LoadOrderAcknowledgeTaskExample.mts [OPTIONS]
 
   Options:
-    -h, --help                              Print this help and exit.
+    -h, --help                              Console this help and exit.
     --debug                                 Force log level to DEBUG.
     --env                                   Path to environment variables file. e.g: --env=.env
     --print-config                          Display the environment variables values and exit.

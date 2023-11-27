@@ -4,12 +4,12 @@ import FormData from "form-data";
 import * as axiosDebug from "axios-debug-log";
 
 import type { Client as SpacefillAPIClient } from "./spacefill-api-openapi.d.ts";
-import APIContext, { WorkflowType } from "./APIContext.ts";
-import Console from "../utils/Console.ts";
-import EdiEvent from "./EdiEvent.ts";
+import { APIContext, WorkflowType } from "./APIContext.ts";
+import { Console } from "../utils/Console.ts";
+import { EdiEvent } from "./EdiEvent.ts";
+import { InternalError } from "../exceptions/InternalError.ts";
 
 import definition from "./openapi.json" assert { type: "json" };
-import InternalError from "../exceptions/InternalError.ts";
 
 /**
  * This wrapper is using openapi-stack client
@@ -75,7 +75,7 @@ export class SpacefillAPIWrapperV1 {
     });
 
     this.client = await api.getClient<SpacefillAPIClient>();
-    this.ediEvent = new EdiEvent(this.client);
+    this.ediEvent = new EdiEvent(this.client as SpacefillAPIClient);
     this.axiosInstance = api.instance;
 
     axiosDebug.default({

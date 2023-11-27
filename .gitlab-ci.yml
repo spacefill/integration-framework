@@ -4,6 +4,8 @@
 stages:
   - lint
   - test
+  - build
+  - publish
 
 # --------------------------
 #      Abstract jobs
@@ -29,14 +31,44 @@ test:
   extends: .base
   needs: []
   script:
-    -  ./scripts/ci/execute-tests.sh
+    - ./scripts/ci/execute-tests.sh
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
   artifacts:
     name: "$CI_COMMIT_REF_SLUG"
     untracked: true
-    expire_in: 3 day
+    expire_in: 1 day
     paths:
       - test-results.xml
     reports:
       junit: test-results.xml
 
+# --------------------------
+#      Build
+
+build:
+  stage: build
+  needs:
+    - test
+    - eslint
+  extends: .base
+  script:
+    - ./scripts/ci/build-package.sh
+  artifacts:
+    name: "$CI_COMMIT_REF_SLUG"
+    untracked: true
+    expire_in: 1 day
+    paths:
+      - ./dist
+
+# --------------------------
+#      Publish package
+
+publish:
+  stage: publish
+  needs:
+    - build
+  extends: .base
+  script:
+    - ./scripts/ci/publish-package.sh
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^\d+\.\d+\.\d+$/'

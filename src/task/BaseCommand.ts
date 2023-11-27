@@ -1,6 +1,6 @@
 import minimist from "minimist";
 import bytes from "bytes";
-import Console from "../utils/Console.js";
+import { Console } from "../utils/Console.ts";
 import { Config } from "../configs/Config.js";
 import { cpuUsage } from "node:process";
 
@@ -32,7 +32,7 @@ export abstract class BaseCommand {
     return [
       {
         argName: "-h, --help",
-        argDescription: "Print this help and exit.",
+        argDescription: "Console this help and exit.",
       },
       {
         argName: "--debug",

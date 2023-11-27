@@ -1,10 +1,8 @@
-interface FileItemInterface {
+export interface FileItemInterface {
   file: string;
 }
 
-export { FileItemInterface };
-
-interface LoadFileTaskInterface<T> {
+export interface LoadFileTaskInterface<T> {
   getFilesList(): Promise<FileItemInterface[]>;
   parseRawData(_fileContent: string): Promise<object[]>;
   dataProcessing(_mappedData: T[]): Promise<void>;
@@ -15,5 +13,3 @@ interface LoadFileTaskInterface<T> {
   ): Promise<void>;
   onProcessingFileError(_targetFile: FileItemInterface): Promise<void>;
 }
-
-export default LoadFileTaskInterface;

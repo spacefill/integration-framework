@@ -5,7 +5,6 @@ cd "$(dirname "$0")/../../"
 
 docker run --rm \
   -v "$(pwd)":/src \
-  -w /src node:18.12-alpine \
-  sh -c 'yarn install && yarn run lint'
-
-
+  -w /src \
+  node:18.12-alpine \
+  sh -c 'yarn install && yarn run build'

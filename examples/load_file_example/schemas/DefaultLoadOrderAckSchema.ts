@@ -4,7 +4,7 @@ import { AbstractLoadFileSchema } from "../../../src/data_mapping/AbstractLoadFi
 import { ExportFileDescriptor } from "../../../src/data_mapping/SchemaInterfaces.ts";
 import { ExitOrderInterface, ItemPackagingTypeEnum, OrderInterface, OrderItemInterface, OrderTypeEnum } from "../LoadOrderAcknowledgeTaskExample.mts";
 
-export default class DefaultLoadOrderAckSchema extends AbstractLoadFileSchema<OrderInterface | ExitOrderInterface> {
+export class DefaultLoadOrderAckSchema extends AbstractLoadFileSchema<OrderInterface | ExitOrderInterface> {
 
   fileDescriptor: ExportFileDescriptor = {
     columnsPosition: {                              // examples:

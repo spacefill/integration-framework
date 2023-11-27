@@ -1,97 +1,84 @@
-import { expect, assert } from 'chai';
+import { expect, assert } from "chai";
 
-import { Config } from '../../../src/configs/Config.ts';
-import initTestEnv from '../../testUtils/initTestEnv.ts';
+import { Config } from "../../../src/configs/Config.ts";
+import { initTestEnv } from "../../testUtils/initTestEnv.ts";
 
-describe('Config', () => {
+describe("Config", () => {
   before(() => initTestEnv());
 
-  it('should get config', async () => {
+  it("should get config", async () => {
     const config = Config.get();
 
-    expect(config).to.have.all.keys(
-      'spacefillApi',
-      'transfert',
-      'edi',
-      'console',
-      'log'
-    );
+    expect(config).to.have.all.keys("spacefillApi", "transfert", "edi", "console", "log");
 
     expect(config.spacefillApi).to.have.all.keys(
-      'url',
-      'apiToken',
-      'defaultPaginationLimit',
-      'context',
-      'eventEnabled'
+      "url",
+      "apiToken",
+      "defaultPaginationLimit",
+      "context",
+      "eventEnabled",
     );
 
     expect(config.spacefillApi.context).to.have.all.keys(
-      'serviceSource',
-      'serviceVersion',
-      'transport',
-      'clientType',
+      "serviceSource",
+      "serviceVersion",
+      "transport",
+      "clientType",
     );
 
     expect(config.transfert).to.have.all.keys(
-      'protocol',
-      'hostname',
-      'port',
-      'username',
-      'password',
-      'autoAddPolicy',
+      "protocol",
+      "hostname",
+      "port",
+      "username",
+      "password",
+      "autoAddPolicy",
     );
 
     expect(config.edi).to.have.all.keys(
-      'wmsAgencyCode',
-      'wmsShipperID',
-      'wmsShipperAccountId',
-      'wmsWarehouseId',
-      'wmsItemPackagingType',
-      'wmsPathWmsToSpacefillDir',
-      'wmsPathSpacefillToWmsDir',
-      'wmsPathArchiveDir',
-      'wmsPathErrorDir',
-      'fileEncoding',
+      "wmsAgencyCode",
+      "wmsShipperID",
+      "wmsShipperAccountId",
+      "wmsWarehouseId",
+      "wmsItemPackagingType",
+      "wmsPathWmsToSpacefillDir",
+      "wmsPathSpacefillToWmsDir",
+      "wmsPathArchiveDir",
+      "wmsPathErrorDir",
+      "fileEncoding",
     );
 
-    expect(config.console).to.have.all.keys(
-      'color',
-      'interactiveMode',
-    );
+    expect(config.console).to.have.all.keys("color", "interactiveMode");
 
-    expect(config.log).to.have.all.keys(
-      'level',
-      'defaultLogLevel',
-    );
+    expect(config.log).to.have.all.keys("level", "defaultLogLevel");
   });
 
-  it('should be able to reload env vars from .env file', async () => {
-    process.env.LOG_LEVEL = 'info';
-    assert(Config.get().log.level, 'info');
+  it("should be able to reload env vars from .env file", async () => {
+    process.env.LOG_LEVEL = "info";
+    assert(Config.get().log.level, "info");
 
     initTestEnv();
 
-    assert(Config.get().log.level, 'debug');
+    assert(Config.get().log.level, "debug");
 
     expect(() => {
-      Config.reloadConfig('not-existing-env-file');
+      Config.reloadConfig("not-existing-env-file");
     }).to.throw(Error, `Cannot find env file not-existing-env-file`);
   });
 
-  it('should validate conf', async () => {
-    process.env.SPACEFILL_API_URL = 'not-an-url';
-    process.env.LOG_LEVEL = 'fatal'; // Do display error validation logs on the test CLI
+  it("should validate conf", async () => {
+    process.env.SPACEFILL_API_URL = "not-an-url";
+    process.env.LOG_LEVEL = "fatal"; // Do display error validation logs on the test CLI
 
     expect(() => {
       Config.validate();
-    }).to.throw(Error, 'Invalid configuration');
+    }).to.throw(Error, "Invalid configuration");
 
-    process.env.SPACEFILL_API_URL = 'http://127.0.0.1:5004'
+    process.env.SPACEFILL_API_URL = "http://127.0.0.1:5004";
 
     expect(() => {
       initTestEnv();
       Config.validate();
-    }).to.not.throw(Error, 'Invalid configuration');
-
-  })
+    }).to.not.throw(Error, "Invalid configuration");
+  });
 });

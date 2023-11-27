@@ -1,5 +1,5 @@
 import { GenerateFileSchemaInterface } from "./SchemaInterfaces.ts";
-import AbtractSchema from "./AbtractSchema.ts";
+import { AbtractSchema } from "./AbtractSchema.ts";
 
 export abstract class AbstractGenerateFileSchema<T>
   extends AbtractSchema

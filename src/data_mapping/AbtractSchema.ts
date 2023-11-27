@@ -5,10 +5,10 @@ import addFormatsModule from "ajv-formats";
 const Ajv = AjvModule.default;
 const addFormats = addFormatsModule.default;
 
-import Console from "../utils/Console.ts";
+import { Console } from "../utils/Console.ts";
 import { CommonSchemaInterface, ExportFileDescriptor } from "./SchemaInterfaces.ts";
 
-export default abstract class AbtractSchema implements CommonSchemaInterface {
+export abstract class AbtractSchema implements CommonSchemaInterface {
   itemSchemaValidation: object = {};
   fileDescriptor: ExportFileDescriptor | undefined;
 

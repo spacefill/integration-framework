@@ -23,7 +23,7 @@ enum WorkflowType {
 
 export { ClientTransport, ClientType, WorkflowType };
 
-export default class APIContext {
+export class APIContext {
   public static getMainHeaders(): object {
     return {
       "Spacefill-Ctx-Service-Source": Config.get().spacefillApi.context.serviceSource,

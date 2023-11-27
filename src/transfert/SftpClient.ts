@@ -1,6 +1,6 @@
 import { TransfertConfiguration, TransfertInterface } from "./TransfertInterfaces.ts";
 import sftp from "ssh2-sftp-client";
-import Console from "../utils/Console.ts";
+import { Console } from "../utils/Console.ts";
 
 interface SSH2TransfertConfiguration {
   hostname: string;

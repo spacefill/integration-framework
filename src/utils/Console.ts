@@ -1,6 +1,6 @@
 import gradient from "gradient-string";
-import prompts from "prompts";
-import { Config } from "../configs/Config.js";
+//import prompts from 'prompts';
+import { Config } from "../configs/Config.ts";
 
 const LOG_LEVEL_FATAL = 1;
 const LOG_LEVEL_ERROR = 2;
@@ -20,14 +20,18 @@ const logLevelOrder = {
   fatal: LOG_LEVEL_FATAL,
 };
 
-class Console {
-  static prompts(...args) {
-    if (!Config.get().console.interactiveMode) {
-      throw new Error("Prompts is only allowed with interactive mode enabled.");
-    }
-    return prompts(args);
-  }
+export {
+  LOG_LEVEL_TRACE,
+  LOG_LEVEL_DEBUG,
+  LOG_LEVEL_INFO,
+  LOG_LEVEL_WARN,
+  LOG_LEVEL_ERROR,
+  LOG_LEVEL_FATAL,
+  logLevelOrder,
+};
 
+
+export class Console {
   static log(...message) {
     const firstMessage = message?.[0];
     const otherMessages = message.slice(1);
@@ -122,14 +126,3 @@ class Console {
     if (otherMessages.length > 0) console.groupEnd();
   }
 }
-
-export {
-  LOG_LEVEL_TRACE,
-  LOG_LEVEL_DEBUG,
-  LOG_LEVEL_INFO,
-  LOG_LEVEL_WARN,
-  LOG_LEVEL_ERROR,
-  LOG_LEVEL_FATAL,
-  logLevelOrder,
-};
-export default Console;

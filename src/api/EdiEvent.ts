@@ -1,5 +1,5 @@
 import { Config } from "../configs/Config.ts";
-import Console from "../utils/Console.ts";
+import { Console } from "../utils/Console.ts";
 import type { Client as SpacefillAPIClient } from "./spacefill-api-openapi.d.ts";
 
 enum EventTypeEnumString {
@@ -20,7 +20,7 @@ enum EventTypeEnumString {
 
 export { EventTypeEnumString };
 
-export default class EdiEvent {
+export class EdiEvent {
   private apiClient: SpacefillAPIClient;
 
   public constructor(apiClient: SpacefillAPIClient) {
