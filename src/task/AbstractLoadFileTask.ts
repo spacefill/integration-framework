@@ -27,7 +27,7 @@ export default abstract class AbstractLoadFileTask<T>
   async dataProcessing(_mappedData: T[]): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   async onProcessingFileSucces(
     targetFile: FileItemInterface,
     _preparedData: object[],
@@ -35,6 +35,7 @@ export default abstract class AbstractLoadFileTask<T>
   ): Promise<void> {
     Console.info(`onProcessingFileSucces not implemented. Nothing to do on ${targetFile.file}.`);
   }
+  /* eslint-enable */
 
   async onProcessingFileError(targetFile: FileItemInterface): Promise<void> {
     Console.info(`onProcessingFileError not implemented. Nothing to do on ${targetFile.file}`);
