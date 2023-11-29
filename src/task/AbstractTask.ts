@@ -26,6 +26,10 @@ export abstract class AbstractTask extends BaseCommand {
     throw new Error("Method not implemented.");
   }
 
+  async run(): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
   async initApiClient(workflowType: WorkflowType) {
     await this.sdk.initClient(
       Config.get().spacefillApi.url,
