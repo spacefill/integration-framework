@@ -1,7 +1,7 @@
 import minimist from "minimist";
 import bytes from "bytes";
 import { Console } from "../utils/Console.ts";
-import { Config } from "../configs/Config.js";
+import { Config } from "../configs/Config.ts";
 import { cpuUsage } from "node:process";
 
 interface CommandStatistic {
@@ -39,8 +39,12 @@ export abstract class BaseCommand {
         argDescription: "Force log level to DEBUG.",
       },
       {
-        argName: "--env",
+        argName: "-e, --env",
         argDescription: "Path to environment variables file. e.g: --env=.env",
+      },
+      {
+        argName: "--wms-default-dir",
+        argDescription: "Root dir for transfert. e.g: --wms-default-dir=/root-dir => /root-dir/archives",
       },
       {
         argName: "--print-config",
@@ -94,7 +98,9 @@ export abstract class BaseCommand {
     if (this.argv?.env) {
       Config.reloadConfig(this.argv.env);
     }
-
+    if (this.argv?.["wms-default-dir"]) {
+      process.env.WMS_DEFAULT_DIR = this.argv["wms-default-dir"];
+    }
     if (this.argv?.h || this.argv?.help) {
       this.displayUsages();
       process.exit(0);

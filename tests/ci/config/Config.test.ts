@@ -2,6 +2,7 @@ import { expect, assert } from "chai";
 
 import { Config } from "../../../src/configs/Config.ts";
 import { initTestEnv } from "../../testUtils/initTestEnv.ts";
+import path from "path";
 
 describe("Config", () => {
   before(() => initTestEnv());
@@ -80,5 +81,21 @@ describe("Config", () => {
       initTestEnv();
       Config.validate();
     }).to.not.throw(Error, "Invalid configuration");
+  });
+
+  it("should take account about WMS_DEFAULT_DIR env var", async () => {
+    process.env.WMS_DEFAULT_DIR = "root_dir";
+
+    assert(Config.get().edi.wmsPathArchiveDir, path.join(process.env.WMS_DEFAULT_DIR, "archives"));
+    assert(Config.get().edi.wmsPathErrorDir, path.join(process.env.WMS_DEFAULT_DIR, "errors"));
+    assert(Config.get().edi.wmsPathSpacefillToWmsDir, path.join(process.env.WMS_DEFAULT_DIR, "in"));
+    assert(Config.get().edi.wmsPathWmsToSpacefillDir, path.join(process.env.WMS_DEFAULT_DIR, "out"));
+
+    process.env.WMS_DEFAULT_DIR = undefined;
+
+    assert(Config.get().edi.wmsPathArchiveDir, "archives");
+    assert(Config.get().edi.wmsPathErrorDir, "errors");
+    assert(Config.get().edi.wmsPathSpacefillToWmsDir, "in");
+    assert(Config.get().edi.wmsPathWmsToSpacefillDir, "out");
   });
 });

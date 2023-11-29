@@ -1,4 +1,4 @@
-import { fs } from "zx";
+import { fs, path } from "zx";
 import * as dotenv from "dotenv";
 import AjvModule from "ajv";
 const Ajv = AjvModule.default;
@@ -39,10 +39,22 @@ export class Config {
         wmsShipperAccountId: process.env?.WMS_SHIPPER_ACCOUNT_ID,
         wmsWarehouseId: process.env?.WMS_WAREHOUSE_ID,
         wmsItemPackagingType: process.env?.WMS_MASTER_ITEM_PACKAGING_TYPE,
-        wmsPathWmsToSpacefillDir: process.env?.WMS_PATH_WMS_TO_SPACEFILL_DIR,
-        wmsPathSpacefillToWmsDir: process.env?.WMS_PATH_SPACEFILL_TO_WMS_DIR,
-        wmsPathArchiveDir: process.env?.WMS_PATH_ARCHIVE_DIR,
-        wmsPathErrorDir: process.env?.WMS_PATH_ERROR_DIR,
+        wmsPathWmsToSpacefillDir:
+          process.env?.WMS_DEFAULT_DIR && process.env?.WMS_PATH_WMS_TO_SPACEFILL_DIR
+            ? path.join(process.env?.WMS_DEFAULT_DIR, process.env?.WMS_PATH_WMS_TO_SPACEFILL_DIR)
+            : process.env?.WMS_PATH_WMS_TO_SPACEFILL_DIR,
+        wmsPathSpacefillToWmsDir:
+          process.env?.WMS_DEFAULT_DIR && process.env?.WMS_PATH_SPACEFILL_TO_WMS_DIR
+            ? path.join(process.env?.WMS_DEFAULT_DIR, process.env?.WMS_PATH_SPACEFILL_TO_WMS_DIR)
+            : process.env?.WMS_PATH_SPACEFILL_TO_WMS_DIR,
+        wmsPathArchiveDir:
+          process.env?.WMS_DEFAULT_DIR && process.env?.WMS_PATH_ARCHIVE_DIR
+            ? path.join(process.env?.WMS_DEFAULT_DIR, process.env?.WMS_PATH_ARCHIVE_DIR)
+            : process.env?.WMS_PATH_ARCHIVE_DIR,
+        wmsPathErrorDir:
+          process.env?.WMS_DEFAULT_DIR && process.env?.WMS_PATH_ERROR_DIR
+            ? path.join(process.env?.WMS_DEFAULT_DIR, process.env?.WMS_PATH_ERROR_DIR)
+            : process.env?.WMS_PATH_ERROR_DIR,
         fileEncoding: process.env?.WMS_FILE_ENCODING ?? "utf-8",
       },
       console: {
