@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4] - 2023-11-29
+
+### Added
+
+- [!22](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/22) Declare `run()` method into `AbstractTask` to be able to create a task launcher.
+
 ## [0.0.3] - 2023-11-29
 
 ### Fixed
