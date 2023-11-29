@@ -109,7 +109,7 @@ class Transfert implements TransfertInterface {
           return file.match(new RegExp(fileNamePattern));
         })
         .map((file) => {
-          return file;
+          return path.join(remotePath, file);
         });
 
       Console.debug(`Files list: ${result}`);
