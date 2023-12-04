@@ -1,6 +1,6 @@
 import { TransfertInterface } from "./TransfertInterfaces.ts";
 import path from 'path';
-import { $, fs } from "zx";
+import { fs } from "zx";
 import { constants } from "fs";
 
 export class LocalClient implements TransfertInterface {
@@ -35,10 +35,10 @@ export class LocalClient implements TransfertInterface {
   }
 
   async deleteFile(filepath: string): Promise<void> {
-    await $`rm ${filepath}`;
+    fs.unlinkSync(filepath);
   }
 
   async moveFile(sourceFilePath: string, targetFilePath: string): Promise<void> {
-    await $`mv ${sourceFilePath} ${targetFilePath}`;
+    fs.renameSync(sourceFilePath, targetFilePath);
   }
 }

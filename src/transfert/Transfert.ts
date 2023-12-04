@@ -103,7 +103,7 @@ class Transfert implements TransfertInterface {
 
       await this.open();
       const rawResult = await this.client.listDirWithFilter(remotePath);
-      console.log(`Files list: ${rawResult}`);
+
       const result = rawResult
         .filter((file) => {
           return file.match(new RegExp(fileNamePattern));

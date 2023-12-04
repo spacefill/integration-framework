@@ -1,39 +1,34 @@
 import { expect } from "chai";
+import path from 'path';
+import { fs } from "zx";
 
 import { SftpClient } from "../../../src/transfert/SftpClient.ts";
 import { Transfert, TransfertProtocol } from "../../../src/transfert/Transfert.ts";
-import { fs } from "zx";
 import { initTestEnv } from "../../testUtils/initTestEnv.ts";
 import { Config } from "../../../src/configs/Config.ts";
+import { TestHelpers } from "../../../src/utils/TestHelpers.ts";
 
 describe("SftpTransfert", () => {
+
+  const rootDir = `folder-test`;
+  const folderWorkDir = path.join(rootDir, 'folder-process');
+  const fileName = "remote-test1.txt";
+  const localPath = "./local-test.txt";
+  const remoteFilePath = `${fileName}`;
+  const remoteFilePath2 = `remote-test2.TXT`;
+  const remoteErrorPath = `${rootDir}/errors/remote-test1.txt`;
+  const remoteArchivesPath = `${rootDir}/archives/remote-test1.txt`;
+  const fileContent = "Contenu du fichier";
+
+  const config = { hostname: "127.0.0.1", port: 2222, username: "alice", password: "password" };
+  const transfert = new Transfert(TransfertProtocol.sftp, config);
+
   before(async () => {
     initTestEnv();
     process.env.WMS_PATH_ERROR_DIR = "folder-test/errors";
     process.env.WMS_PATH_ARCHIVE_DIR = "folder-test/archives";
     Config.validate();
   });
-
-  const config = {
-    hostname: "127.0.0.1",
-    port: 2222,
-    username: "alice",
-    password: "password",
-  };
-
-  const transfert = new Transfert(TransfertProtocol.sftp, config);
-
-  const fileName = "remote-test1.txt";
-  const localPath = "./local-test.txt";
-
-  const rootDir = `folder-test`;
-  const folderWorkDir = `${rootDir}/folder-process`;
-  const remoteFilePath = `${folderWorkDir}/${fileName}`;
-
-  const remoteFilePath2 = `${folderWorkDir}/remote-test2.TXT`;
-  const remoteErrorPath = `${rootDir}/errors/remote-test1.txt`;
-  const remoteArchivesPath = `${rootDir}/archives/remote-test1.txt`;
-  const fileContent = "Contenu du fichier";
 
   it("should get configuration", async () => {
     const instance = new SftpClient(config);
@@ -47,7 +42,7 @@ describe("SftpTransfert", () => {
     expect(isExists).equal("d");
   });
 
-  describe("process", function () {
+  describe("Process", function () {
     before(async () => {
       await transfert.mkdirIfNotExists(folderWorkDir);
       fs.writeFileSync(localPath, fileContent);
@@ -71,7 +66,7 @@ describe("SftpTransfert", () => {
       expect(isOldFileExists).equal(false);
     });
 
-    describe("process_with_files", function () {
+    describe("Process With Files", function () {
       beforeEach(async () => {
         await transfert.upload(localPath, remoteFilePath);
 
@@ -95,7 +90,7 @@ describe("SftpTransfert", () => {
         const isExists = await transfert.isExists(remoteFilePath2);
         expect(isExists).equal("-");
 
-        const filter = `${folderWorkDir}/remote-test(1|2).*\\.(TXT|txt)$`;
+        const filter = `remote-test(1|2).*\\.(TXT|txt)$`;
 
         const data = await transfert.listDirWithFilter(filter);
         expect(data).to.be.an("array");
@@ -128,6 +123,32 @@ describe("SftpTransfert", () => {
 
         await transfert.deleteFile(remoteArchivesPath);
       });
+
+      it('error to check if folder exists with wrong config but good hostname', async () => {
+        const wrongConfig = {
+            hostname: '127.0.0.1',
+            port: 2229,
+            username: 'alice',
+            password: 'passwordd'
+        }
+
+        const transfert = new Transfert(TransfertProtocol.sftp, wrongConfig);
+        await TestHelpers.expectThrowsAsync(() => transfert.isExists(''), `connect: Remote host refused connection`);
+
+      }).timeout(200000);
+
+      it('error to check if folder exists with wrong hostname config', async () => {
+        const wrongConfig = {
+            hostname: '127.0.60.1',
+            port: 2222,
+            username: 'alice',
+            password: 'password'
+        }
+
+        const transfert = new Transfert(TransfertProtocol.sftp, wrongConfig);
+        await TestHelpers.expectThrowsAsync(() => transfert.isExists(''), `connect: getConnection: Timed out while waiting for handshake`);
+
+      }).timeout(200000);
     });
   });
 });
