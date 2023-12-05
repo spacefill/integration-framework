@@ -4,12 +4,6 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.0.6] - 2023-12-05
-
-### Refactored
-
-- [!28](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/28) Update SDK and refactor the way of loading api definition (openapi.json) to avoid unwanted verbosity.
-
 ## [0.0.5] - 2023-12-05
 
 ### Added

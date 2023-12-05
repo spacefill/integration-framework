@@ -2,8 +2,6 @@ import OpenAPIClientAxios, { Document } from "openapi-client-axios";
 import axios, { AxiosInstance } from "axios";
 import FormData from "form-data";
 import * as axiosDebug from "axios-debug-log";
-import { fs, path } from "zx";
-import { fileURLToPath } from "url";
 
 import type { Client as SpacefillAPIClient } from "./spacefill-api-openapi.d.ts";
 import { APIContext, WorkflowType } from "./APIContext.ts";
@@ -11,8 +9,7 @@ import { Console } from "../utils/Console.ts";
 import { EdiEvent } from "./EdiEvent.ts";
 import { InternalError } from "../exceptions/InternalError.ts";
 
-const currentDirName = path.dirname(fileURLToPath(import.meta.url));
-const definition = JSON.parse(fs.readFileSync(path.join(currentDirName, "openapi.json"), "utf-8"));
+import definition from "./openapi.json" assert { type: "json" };
 
 /**
  * This wrapper is using openapi-stack client
