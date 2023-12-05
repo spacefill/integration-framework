@@ -6,6 +6,7 @@ import { Console } from "../utils/Console.ts";
 import { ExceptionUtils } from "../utils/ExceptionUtils.ts";
 import { AbstractTask } from "./AbstractTask.ts";
 import { LoadFileTaskInterface, FileItemInterface } from "./LoadFileTaskInterfaces.ts";
+import { Config } from "../index.ts";
 
 export abstract class AbstractLoadFileTask<T> extends AbstractTask implements LoadFileTaskInterface<T> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -66,12 +67,16 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
 
       for (const targetFileItem of filesList) {
         try {
-          const targetFile = targetFileItem.file;
-          Console.info(`Start processing ${targetFile}`);
-          this.sdk.dataSource = targetFile;
+          await this.transfert.moveFile(
+            targetFileItem.file,
+            `${targetFileItem.file}.${Config.get().edi.runId}`,
+          );
+          targetFileItem.file = `${targetFileItem.file}.${Config.get().edi.runId}`;
+          Console.info(`Start processing ${targetFileItem.file}`);
+          this.sdk.dataSource = targetFileItem.file;
 
           Console.title("Download and read file");
-          const fileContent = await this.transfert.downloadAndReadFile(targetFile);
+          const fileContent = await this.transfert.downloadAndReadFile(targetFileItem.file);
           Console.trace("File content:", fileContent);
           Console.confirm("File content retrieved");
 

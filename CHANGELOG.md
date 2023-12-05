@@ -6,7 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [0.0.5] - 2023-12-05
 
-### Change
+### Added
+
+- [#13](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/13) `AbstractLoadFileTask.ts` - Temporary rename file with `RUN_ID` to flag origin process.
+
+### Fixed
 
 - [!25](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/25) Move `LocalClient.test` and `Transfert.test` files in `tests/ci` folder + fix tests.
 

@@ -56,6 +56,7 @@ export class Config {
             ? path.join(process.env?.WMS_DEFAULT_DIR, process.env?.WMS_PATH_ERROR_DIR)
             : process.env?.WMS_PATH_ERROR_DIR,
         fileEncoding: process.env?.WMS_FILE_ENCODING ?? "utf-8",
+        runId: process.env?.RUN_ID ?? "LocalRun",
       },
       console: {
         color: process.env?.CONSOLE_COLOR_ENABLED == "1" ? true : false,
@@ -203,6 +204,10 @@ export class Config {
         fileEncoding: {
           type: "string",
         },
+        runId: {
+          type: "string",
+          minimum: 1,
+        },
       },
       required: [
         "wmsShipperID",
@@ -213,6 +218,7 @@ export class Config {
         "wmsPathSpacefillToWmsDir",
         "wmsPathArchiveDir",
         "wmsPathErrorDir",
+        "runId",
       ],
     };
     const validateEdi = ajv.compile(schemaEdi);

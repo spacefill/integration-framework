@@ -47,6 +47,7 @@ describe("Config", () => {
       "wmsPathArchiveDir",
       "wmsPathErrorDir",
       "fileEncoding",
+      "runId",
     );
 
     expect(config.console).to.have.all.keys("color", "interactiveMode");
