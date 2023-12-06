@@ -7,6 +7,7 @@ import { ExceptionUtils } from "../utils/ExceptionUtils.ts";
 import { AbstractTask } from "./AbstractTask.ts";
 import { LoadFileTaskInterface, FileItemInterface } from "./LoadFileTaskInterfaces.ts";
 import { Config } from "../index.ts";
+import { path } from "zx";
 
 export abstract class AbstractLoadFileTask<T> extends AbstractTask implements LoadFileTaskInterface<T> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -73,7 +74,7 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
           );
           targetFileItem.file = `${targetFileItem.file}.${Config.get().edi.runId}`;
           Console.info(`Start processing ${targetFileItem.file}`);
-          this.sdk.dataSource = targetFileItem.file;
+          this.sdk.dataSource = path.basename(targetFileItem.file);
 
           Console.title("Download and read file");
           const fileContent = await this.transfert.downloadAndReadFile(targetFileItem.file);
