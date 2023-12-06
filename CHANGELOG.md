@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.8] - 2023-12-06
+
+### Fixed
+
+- [!36](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/36) Duplicated sdk init in `AbstractLoadFileTask.ts`.
+
 ## [0.0.7] - 2023-12-06
 
 ### Added

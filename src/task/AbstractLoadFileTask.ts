@@ -50,7 +50,6 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
       Console.title("Api init");
       await this.initApiClient(this.getWorkflowType());
 
-      await this.initApiClient(this.getWorkflowType());
       if (!this.sdk.client || !this.sdk.ediEvent) {
         throw new InternalError("SDK is not well initiazed - client or ediEvent missing");
       }
