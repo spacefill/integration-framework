@@ -34,6 +34,8 @@ describe("Config", () => {
       "username",
       "password",
       "autoAddPolicy",
+      "delay",
+      "retries",
     );
 
     expect(config.edi).to.have.all.keys(

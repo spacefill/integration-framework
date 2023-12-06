@@ -31,6 +31,8 @@ export class Config {
         port: process.env?.WMS_TRANSFERT_PORT ? parseInt(process.env?.WMS_TRANSFERT_PORT) : undefined,
         username: process.env?.WMS_TRANSFERT_USER,
         password: process.env?.WMS_TRANSFERT_PASSWORD,
+        retries: process.env?.WMS_TRANSFERT_RETRIES ? process.env?.WMS_TRANSFERT_RETRIES : 3,
+        delay: process.env?.WMS_TRANSFERT_RETRIES_DELAY ? process.env?.WMS_TRANSFERT_RETRIES_DELAY : 5000,
         autoAddPolicy: process.env?.WMS_TRANSFERT_SFTP_AUTOADDPOLICY == "1" ? true : false,
       },
       edi: {

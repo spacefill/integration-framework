@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.7] - 2023-12-06
+
+### Added
+
+- [#14](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/14) Add automatic connection retries for transfert operations.
+
 ## [0.0.6] - 2023-12-06
 
 ### Fixed

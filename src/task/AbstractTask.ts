@@ -16,6 +16,8 @@ export abstract class AbstractTask extends BaseCommand {
       port: Config.get().transfert.port as number,
       username: Config.get().transfert.username as string,
       password: Config.get().transfert.password as string,
+      retries: Config.get().transfert.retries as number,
+      delay: Config.get().transfert.delay as number,
     });
   }
 

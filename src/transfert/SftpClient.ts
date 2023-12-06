@@ -7,6 +7,8 @@ interface SSH2TransfertConfiguration {
   port: number;
   username: string;
   password: string;
+  retries?: number,
+  retry_minTimeout?: number
 }
 
 export class SftpClient implements TransfertInterface {
@@ -19,6 +21,8 @@ export class SftpClient implements TransfertInterface {
       port: configuration.port,
       username: configuration.username,
       password: configuration.password,
+      retries: configuration.retries,
+      retry_minTimeout: configuration.delay
     };
     this.client = new sftp();
   }

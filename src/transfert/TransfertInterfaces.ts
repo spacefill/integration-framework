@@ -14,7 +14,9 @@ interface TransfertConfiguration {
     hostname: string,
     port: number,
     username: string,
-    password: string
+    password: string,
+    retries?: number,
+    delay?: number
 }
 
 export {TransfertConfiguration, TransfertInterface}
