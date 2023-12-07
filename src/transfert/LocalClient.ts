@@ -1,5 +1,4 @@
 import { TransfertInterface } from "./TransfertInterfaces.ts";
-import path from 'path';
 import { fs } from "zx";
 import { constants } from "fs";
 
@@ -17,13 +16,13 @@ export class LocalClient implements TransfertInterface {
     fs.mkdirSync(remotePath, { recursive: true });
   }
 
-  async isExists(remotePath: string): Promise<string|boolean>  {
+  async isExists(remotePath: string): Promise<string | boolean> {
     return fs.existsSync(remotePath);
   }
 
   async upload(localPath: string, remotePath: string): Promise<void> {
     const mode = constants.COPYFILE_EXCL;
-    fs.copyFileSync(localPath, path.join(process.cwd(), remotePath), mode);
+    fs.copyFileSync(localPath, remotePath, mode);
   }
 
   async downloadAndReadFile(remotePath: string, encoding: BufferEncoding): Promise<string> {

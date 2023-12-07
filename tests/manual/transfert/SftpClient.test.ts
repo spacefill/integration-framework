@@ -9,7 +9,6 @@ import { Config } from "../../../src/configs/Config.ts";
 import { TestHelpers } from "../../../src/utils/TestHelpers.ts";
 
 describe("SftpTransfert", () => {
-
   const rootDir = `folder-test`;
   const folderWorkDir = path.join(rootDir, 'folder-process');
   const fileName = "remote-test1.txt";
@@ -126,10 +125,10 @@ describe("SftpTransfert", () => {
 
       it('error to check if folder exists with wrong config but good hostname', async () => {
         const wrongConfig = {
-            hostname: '127.0.0.1',
-            port: 2229,
-            username: 'alice',
-            password: 'passwordd'
+          hostname: '127.0.0.1',
+          port: 2229,
+          username: 'alice',
+          password: 'passwordd'
         }
 
         const transfert = new Transfert(TransfertProtocol.sftp, wrongConfig);
@@ -139,10 +138,10 @@ describe("SftpTransfert", () => {
 
       it('error to check if folder exists with wrong hostname config', async () => {
         const wrongConfig = {
-            hostname: '127.0.60.1',
-            port: 2222,
-            username: 'alice',
-            password: 'password'
+          hostname: '127.0.60.1',
+          port: 2222,
+          username: 'alice',
+          password: 'password'
         }
 
         const transfert = new Transfert(TransfertProtocol.sftp, wrongConfig);

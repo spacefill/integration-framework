@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.3] - 2023-12-07
+
+### Fixed
+
+- [#16](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/16)
+    - fix on LocalClient.upload() - wrong root dir.
+    - replace minimum by minLength in Config.ts.
+
 ## [0.4.2] - 2023-12-07
 
 ### Fixed
