@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.9] - 2023-12-07
+
+### Fixed
+
+- [!38](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/38) Limit length of `Spacefill-Ctx-Data-Source` header to 100 characters on `SpacefillAPIWrapperV1.upload()` method.
+
 ## [0.0.8] - 2023-12-06
 
 ### Fixed

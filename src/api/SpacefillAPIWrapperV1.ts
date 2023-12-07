@@ -134,7 +134,7 @@ export class SpacefillAPIWrapperV1 {
         Authorization: `Bearer ${this.bearerToken}`,
         ...APIContext.getMainHeaders(),
         ...APIContext.getWorkflowHeader(this.workflowType),
-        ...APIContext.getDataSourceHeader(this.dataSource ?? "Unknown data source"),
+        ...APIContext.getDataSourceHeader(this.dataSource?.substring(0, 100) ?? "Unknown data source"),
         ...formData.getHeaders(),
       },
     });
