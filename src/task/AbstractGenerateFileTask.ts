@@ -55,8 +55,6 @@ export abstract class AbstractGenerateFileTask<T>
       Config.validate();
       Console.confirm("Config validated");
 
-      const filesConfiguration = this.initFilesGeneration();
-
       Console.title("Api init");
       await this.initApiClient(this.getWorkflowType());
       if (!this.sdk.client || !this.sdk.ediEvent) {
@@ -77,6 +75,7 @@ export abstract class AbstractGenerateFileTask<T>
         EventTypeEnumString.STARTED,
         `File generation started. Type=${this.getWorkflowType()}`,
       );
+      const filesConfiguration = this.initFilesGeneration();
 
       for (const fileConfiguration of filesConfiguration) {
         try {

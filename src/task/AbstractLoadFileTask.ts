@@ -47,6 +47,10 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
 
       Console.info(`Starting new task, type: ${this.constructor.name}`);
 
+      Console.title("Config validation");
+      Config.validate();
+      Console.confirm("Config validated");
+
       Console.title("Api init");
       await this.initApiClient(this.getWorkflowType());
 
