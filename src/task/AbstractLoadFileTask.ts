@@ -106,6 +106,11 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
           Console.title("Post data processing");
           await this.onProcessingFileSuccess(targetFileItem, preparedData, mappedData);
           Console.confirm("Post data processing action completed");
+
+          await this.sdk.ediEvent.send(
+            EventTypeEnumString.SUCCESS,
+            `File generation ended. Type=${this.getWorkflowType()}`,
+          );
         } catch (processFileException) {
           Console.error(processFileException);
           errorFound = true;
