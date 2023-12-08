@@ -40,7 +40,7 @@
 [AbstractGenerateFileTask&lt;T&gt;|+currentFileConfiguration: InitialDataItem&lt;T&gt; \| undefined|+initFilesGeneration(): InitialDataItem&lt;T&gt;\[\];+getDataSchema(): GenerateFileSchemaInterface&lt;T&gt;;+prepareFileData(): Promise&lt;T\[\]&gt;;+generateFile(): Promise&lt;void&gt;;+sendFile(): Promise&lt;string&gt;;+postFileSending(): Promise&lt;void&gt;;+run(): Promise&lt;void&gt;]
 [AbstractTask]&lt;:-[AbstractGenerateFileTask&lt;T&gt;]
 [GenerateFileTasklnterface&lt;T&gt;]&lt;:--[AbstractGenerateFileTask&lt;T&gt;]
-[AbstractLoadFileTask&lt;T&gt;||+getDataSchema(): LoadFileSchemaInterface&lt;T&gt;;+getFilesList(): Promise&lt;FileItemInterface\[\]&gt;;+parseRawData(): Promise&lt;object\[\]&gt;;+dataProcessing(): Promise&lt;void&gt;;+onProcessingFileSucces(): Promise&lt;void&gt;;+onProcessingFileError(): Promise&lt;void&gt;;+run(): Promise&lt;void&gt;]
+[AbstractLoadFileTask&lt;T&gt;||+getDataSchema(): LoadFileSchemaInterface&lt;T&gt;;+getFilesList(): Promise&lt;FileItemInterface\[\]&gt;;+parseRawData(): Promise&lt;object\[\]&gt;;+dataProcessing(): Promise&lt;void&gt;;+onProcessingFileSuccess(): Promise&lt;void&gt;;+onProcessingFileError(): Promise&lt;void&gt;;+run(): Promise&lt;void&gt;]
 [AbstractTask]&lt;:-[AbstractLoadFileTask&lt;T&gt;]
 [LoadFileTaskInterface&lt;T&gt;]&lt;:--[AbstractLoadFileTask&lt;T&gt;]
 [AbstractTask|+sdk: SpacefillAPIWrapperV1;+transfert: Transfert|+getWorkflowType(): WorkflowType;+initApiClient(): Promise&lt;void&gt;;+getArgsList(): Argument\[\];+parseArgs(): void]
@@ -52,7 +52,7 @@
 [&lt;interface&gt;GenerateFileTasklnterface&lt;T&gt;||+initApiClient(): void;+initFilesGeneration(): InitialDataItem&lt;T&gt;\[\];+prepareFileData(): Promise&lt;T\[\]&gt;;+generateFile(): Promise&lt;void&gt;;+sendFile(): Promise&lt;string&gt;;+postFileSending(): Promise&lt;void&gt;;+run(): void]
 [&lt;interface&gt;InitialDataItem&lt;T&gt;|+targetFileName?: string;+initialData: T\[\]|]
 [&lt;interface&gt;FileItemInterface|+file: string|]
-[&lt;interface&gt;LoadFileTaskInterface&lt;T&gt;||+getFilesList(): Promise&lt;FileItemInterface\[\]&gt;;+parseRawData(): Promise&lt;object\[\]&gt;;+dataProcessing(): Promise&lt;void&gt;;+onProcessingFileSucces(): Promise&lt;void&gt;;+onProcessingFileError(): Promise&lt;void&gt;]
+[&lt;interface&gt;LoadFileTaskInterface&lt;T&gt;||+getFilesList(): Promise&lt;FileItemInterface\[\]&gt;;+parseRawData(): Promise&lt;object\[\]&gt;;+dataProcessing(): Promise&lt;void&gt;;+onProcessingFileSuccess(): Promise&lt;void&gt;;+onProcessingFileError(): Promise&lt;void&gt;]
 [LocalClient||+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+deleteFile(): Promise&lt;void&gt;;+moveFile(): Promise&lt;void&gt;]
 [TransfertInterface]&lt;:--[LocalClient]
 [SftpClient|+configuration: SSH2TransfertConfiguration;+client: sftp|+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+moveFile(): Promise&lt;void&gt;;+deleteFile(): Promise&lt;void&gt;]
@@ -987,7 +987,7 @@
 <text x="0.0" y="28.5" stroke="none" data-name="AbstractLoadFileTask&lt;T&gt;">+getFilesList(): Promise&lt;FileItemInterface[]&gt;</text>
 <text x="0.0" y="43.5" stroke="none" data-name="AbstractLoadFileTask&lt;T&gt;">+parseRawData(): Promise&lt;object[]&gt;</text>
 <text x="0.0" y="58.5" stroke="none" data-name="AbstractLoadFileTask&lt;T&gt;">+dataProcessing(): Promise&lt;void&gt;</text>
-<text x="0.0" y="73.5" stroke="none" data-name="AbstractLoadFileTask&lt;T&gt;">+onProcessingFileSucces(): Promise&lt;void&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="AbstractLoadFileTask&lt;T&gt;">+onProcessingFileSuccess(): Promise&lt;void&gt;</text>
 <text x="0.0" y="88.5" stroke="none" data-name="AbstractLoadFileTask&lt;T&gt;">+onProcessingFileError(): Promise&lt;void&gt;</text>
 <text x="0.0" y="103.5" stroke="none" data-name="AbstractLoadFileTask&lt;T&gt;">+run(): Promise&lt;void&gt;</text>
 
@@ -1016,7 +1016,7 @@
 <text x="0.0" y="13.5" stroke="none" data-name="LoadFileTaskInterface&lt;T&gt;">+getFilesList(): Promise&lt;FileItemInterface[]&gt;</text>
 <text x="0.0" y="28.5" stroke="none" data-name="LoadFileTaskInterface&lt;T&gt;">+parseRawData(): Promise&lt;object[]&gt;</text>
 <text x="0.0" y="43.5" stroke="none" data-name="LoadFileTaskInterface&lt;T&gt;">+dataProcessing(): Promise&lt;void&gt;</text>
-<text x="0.0" y="58.5" stroke="none" data-name="LoadFileTaskInterface&lt;T&gt;">+onProcessingFileSucces(): Promise&lt;void&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="LoadFileTaskInterface&lt;T&gt;">+onProcessingFileSuccess(): Promise&lt;void&gt;</text>
 <text x="0.0" y="73.5" stroke="none" data-name="LoadFileTaskInterface&lt;T&gt;">+onProcessingFileError(): Promise&lt;void&gt;</text>
 
 </g>

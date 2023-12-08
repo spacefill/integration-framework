@@ -27,12 +27,12 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
     throw new Error("Method not implemented.");
   }
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  async onProcessingFileSucces(
+  async onProcessingFileSuccess(
     targetFile: FileItemInterface,
     _preparedData: object[],
     _mappedData: T[],
   ): Promise<void> {
-    Console.info(`onProcessingFileSucces not implemented. Nothing to do on ${targetFile.file}.`);
+    Console.info(`onProcessingFileSuccess not implemented. Nothing to do on ${targetFile.file}.`);
   }
   /* eslint-enable */
 
@@ -96,7 +96,7 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
           Console.confirm("Data processed");
 
           Console.title("Post data processing");
-          await this.onProcessingFileSucces(targetFileItem, preparedData, mappedData);
+          await this.onProcessingFileSuccess(targetFileItem, preparedData, mappedData);
           Console.confirm("Post data processing action completed");
         } catch (processFileException) {
           Console.error(processFileException);
