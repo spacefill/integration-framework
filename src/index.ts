@@ -31,3 +31,4 @@ export * from "./transfert/SftpClient.ts";
 export * from "./transfert/Transfert.ts";
 export * from "./transfert/TransfertInterfaces.ts";
 export * from "./utils/ExceptionUtils.ts";
+export * from "./task/TaskLauncher.ts";
