@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2023-12-11
+
+### Added
+
+- [#18](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/18) Add TaskLauncher.ts to be use as an entry point in the connectors.
+
 ## [0.4.4] - 2023-12-08
 
 ### Fixed
