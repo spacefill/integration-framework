@@ -1,4 +1,4 @@
-<svg version="1.1" baseProfile="full" width="11044.8" height="2810.0" viewbox="0 0 11044.75 2810" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+<svg version="1.1" baseProfile="full" width="11087.0" height="3018.0" viewbox="0 0 11087 3018" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
 <desc >#.interface: fill=lightblue
 #.enumeration: fill=lightgreen
 #.type: fill=lightgray
@@ -14,7 +14,7 @@
 [SpacefillAPIWrapperV1|\#client: Client \| undefined;\#ediEvent: EdiEvent \| undefined;\#dataSource?: string;+workflowType: WorkflowType \| undefined;+apiUrl: string \| undefined;+bearerToken: string \| undefined;+axiosInstance: AxiosInstance \| undefined|\#initClient(): Promise&lt;void&gt;;+getAxiosInstance(): AxiosInstance \| undefined;+upload(): Promise&lt;void&gt;]
 [SpacefillAPIWrapperV1]  -  [OperationMethods]
 [SpacefillAPIWrapperV1]  -  [EdiEvent]
-[Config||\#get(): { spacefillApi: { url: string; apiToken: string; defaultPaginationLimit: number; context: { serviceSource: string \| undefined; serviceVersion: string \| undefined; transport: string \| undefined; clientType: string \| undefined; }; eventEnabled: boolean; }; transfer: { ...; }; edi: { ...; }; console: { ...; }; log: { ...;\#reloadConfig(): void;\#validate(): void]
+[Config||\#get(): { spacefillApi: { url: string; apiToken: string; defaultPaginationLimit: number; context: { serviceSource: string \| undefined; serviceVersion: string \| undefined; transport: string \| undefined; clientType: string \| undefined; }; eventEnabled: boolean; }; transfer: { ...; }; edi: { ...; }; console: { ...; }; log: { ....;\#reloadConfig(): void;\#validate(): void]
 [AbstractGenerateFileSchema&lt;T&gt;||+mapOutputFileData(): object\[\]]
 [AbstractSchema]&lt;:-[AbstractGenerateFileSchema&lt;T&gt;]
 [GenerateFileSchemaInterface&lt;T&gt;]&lt;:--[AbstractGenerateFileSchema&lt;T&gt;]
@@ -39,93 +39,103 @@
 [UnknownError||]
 [AbstractGenerateFileTask&lt;T&gt;|+currentFileConfiguration: InitialDataItem&lt;T&gt; \| undefined|+initFilesGeneration(): InitialDataItem&lt;T&gt;\[\];+getDataSchema(): GenerateFileSchemaInterface&lt;T&gt;;+prepareFileData(): Promise&lt;T\[\]&gt;;+generateFile(): Promise&lt;void&gt;;+sendFile(): Promise&lt;string&gt;;+postFileSending(): Promise&lt;void&gt;;+run(): Promise&lt;void&gt;]
 [AbstractTask]&lt;:-[AbstractGenerateFileTask&lt;T&gt;]
-[GenerateFileTasklnterface&lt;T&gt;]&lt;:--[AbstractGenerateFileTask&lt;T&gt;]
+[GenerateFileTaskInterface&lt;T&gt;]&lt;:--[AbstractGenerateFileTask&lt;T&gt;]
 [AbstractLoadFileTask&lt;T&gt;||+getDataSchema(): LoadFileSchemaInterface&lt;T&gt;;+getFilesList(): Promise&lt;FileItemInterface\[\]&gt;;+parseRawData(): Promise&lt;object\[\]&gt;;+dataProcessing(): Promise&lt;void&gt;;+onProcessingFileSuccess(): Promise&lt;void&gt;;+onProcessingFileError(): Promise&lt;void&gt;;+run(): Promise&lt;void&gt;]
 [AbstractTask]&lt;:-[AbstractLoadFileTask&lt;T&gt;]
 [LoadFileTaskInterface&lt;T&gt;]&lt;:--[AbstractLoadFileTask&lt;T&gt;]
-[AbstractTask|+sdk: SpacefillAPIWrapperV1;+transfer: Transfer|+getWorkflowType(): WorkflowType;+initApiClient(): Promise&lt;void&gt;;+getArgsList(): Argument\[\];+parseArgs(): void]
+[AbstractTask|+sdk: SpacefillAPIWrapperV1;+transfer: Transfer|+getWorkflowType(): WorkflowType;+run(): Promise&lt;void&gt;;+initApiClient(): Promise&lt;void&gt;;+getArgsList(): Argument\[\];+parseArgs(): void]
 [BaseCommand]&lt;:-[AbstractTask]
 [AbstractTask]  -  [SpacefillAPIWrapperV1]
 [BaseCommand|+argv: ParsedArgs \| undefined;+statistics: CommandStatistic|+getArgsList(): Argument\[\];+displayUsages(): void;+displayStatistics(): void;+parseArgs(): void;+beforeRun(): void;+afterRun(): void]
 [&lt;interface&gt;CommandStatistic|+startTimeMs?: number;+endTimeMs?: number;+startCpuUsage?: CpuUsage;+finalCpuUsage?: CpuUsage;+startMemoryUsage?: number;+finalMemoryUsage?: number|]
 [&lt;interface&gt;Argument|+argName: string;+argDescription: string|]
-[&lt;interface&gt;GenerateFileTasklnterface&lt;T&gt;||+initApiClient(): void;+initFilesGeneration(): InitialDataItem&lt;T&gt;\[\];+prepareFileData(): Promise&lt;T\[\]&gt;;+generateFile(): Promise&lt;void&gt;;+sendFile(): Promise&lt;string&gt;;+postFileSending(): Promise&lt;void&gt;;+run(): void]
+[&lt;interface&gt;GenerateFileTaskInterface&lt;T&gt;||+initApiClient(): void;+initFilesGeneration(): InitialDataItem&lt;T&gt;\[\];+prepareFileData(): Promise&lt;T\[\]&gt;;+generateFile(): Promise&lt;void&gt;;+sendFile(): Promise&lt;string&gt;;+postFileSending(): Promise&lt;void&gt;;+run(): void]
 [&lt;interface&gt;InitialDataItem&lt;T&gt;|+targetFileName?: string;+initialData: T\[\]|]
 [&lt;interface&gt;FileItemInterface|+file: string|]
 [&lt;interface&gt;LoadFileTaskInterface&lt;T&gt;||+getFilesList(): Promise&lt;FileItemInterface\[\]&gt;;+parseRawData(): Promise&lt;object\[\]&gt;;+dataProcessing(): Promise&lt;void&gt;;+onProcessingFileSuccess(): Promise&lt;void&gt;;+onProcessingFileError(): Promise&lt;void&gt;]
+[TaskLauncher|+task: AbstractTask \| undefined;+mode: string;+displayHelp: boolean;+tasksList: TaskListInterface|+getArgsList(): Argument\[\];+parseArgs(): void;+parseTaskArgs(): void;\#getTask(): AbstractTask \| undefined;\#run(): void]
+[&lt;interface&gt;TaskListInterface||]
+[BaseCommand]&lt;:-[TaskLauncher]
+[TaskLauncher]  -  [AbstractTask]
+[TaskLauncher]  -  [TaskListInterface]
 [LocalClient||+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+deleteFile(): Promise&lt;void&gt;;+moveFile(): Promise&lt;void&gt;]
 [TransferInterface]&lt;:--[LocalClient]
 [SftpClient|+configuration: SSH2TransferConfiguration;+client: sftp|+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+moveFile(): Promise&lt;void&gt;;+deleteFile(): Promise&lt;void&gt;]
-[&lt;interface&gt;SSH2TransferConfiguration|+hostname: string;+port: number;+username: string;+password: string|]
+[&lt;interface&gt;SSH2TransferConfiguration|+hostname: string;+port: number;+username: string;+password: string;+retries?: number;+retry_minTimeout?: number|]
 [TransferInterface]&lt;:--[SftpClient]
 [Transfer|+protocol: TransferProtocol;+configuration: TransferConfiguration;+client: TransferInterface|+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+moveFile(): Promise&lt;void&gt;;+deleteFile(): Promise&lt;void&gt;;+moveToErrorDir(): Promise&lt;void&gt;;+moveToArchiveDir(): Promise&lt;void&gt;]
 [&lt;enumeration&gt;TransferProtocol|sftp;ftp;local]
 [TransferInterface]&lt;:--[Transfer]
 [&lt;interface&gt;TransferInterface||+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+deleteFile(): Promise&lt;void&gt;;+moveFile(): Promise&lt;void&gt;]
-[&lt;interface&gt;TransferConfiguration|+hostname: string;+port: number;+username: string;+password: string|]
+[&lt;interface&gt;TransferConfiguration|+hostname: string;+port: number;+username: string;+password: string;+retries?: number;+delay?: number|]
 [Console||+log(): void;+trace(): void;+debug(): void;+info(): void;+title(): void;+warn(): void;+error(): void;+fatal(): void;+confirm(): void;+printGradient(): void]
-[ExceptionUtils||\#getEventTypeFromException(): EventTypeEnumString]</desc>
+[ExceptionUtils||\#getEventTypeFromException(): EventTypeEnumString]
+[TestHelpers||\#expectThrowsAsync(): Promise&lt;void&gt;]</desc>
 <g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="normal" font-style="normal">
 <g font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
 <g stroke="transparent" fill="transparent">
-<rect x="0.0" y="0.0" height="2810.0" width="11044.8" stroke="none"></rect>
+<rect x="0.0" y="0.0" height="3018.0" width="11087.0" stroke="none"></rect>
 </g>
 <g transform="translate(8, 8)" fill="#33322E">
 <g transform="translate(20, 20)" fill="#eee8d5" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal">
-<path d="M7131.3 1954.0 L7131.25 1974 L7138.35 1994 L7138.4 1994.0 " fill="none"></path>
-<path d="M7273.3 1821.0 L7273.25 1841 L7273.25 1907.5 L7273.25 1907.5 L7273.25 1974 L7273.25 1974 L7273.25 1994 L7273.3 1994.0 " fill="none"></path>
-<path d="M7153.7 1821.0 L7131.25 1841 L7131.25 1861 L7131.3 1861.0 " fill="none"></path>
-<path d="M5892.6 1498.7 L5904 1588 L5648.667984189723 1679.5 L5648.7 1679.5 " fill="none"></path>
-<path d="M5897.9 1498.0 L5892.6 1498.7 L5887.3 1499.4 L5890.9 1485.5 Z"></path>
+<path d="M6912.3 2162.0 L6912.25 2182 L6915.8 2202 L6915.8 2202.0 " fill="none"></path>
+<path d="M7043.0 2029.0 L7054.25 2049 L7054.25 2115.5 L7054.25 2115.5 L7054.25 2182 L7054.25 2182 L7050.7 2202 L7050.7 2202.0 " fill="none"></path>
+<path d="M6923.5 2029.0 L6912.25 2049 L6912.25 2069 L6912.3 2069.0 " fill="none"></path>
+<path d="M5145.0 1498.8 L5145 1588 L5270.3942307692305 1657 L5270.4 1657.0 " fill="none"></path>
+<path d="M5150.3 1498.8 L5145.0 1498.8 L5139.7 1498.8 L5145.0 1485.5 Z"></path>
 <g stroke-dasharray="6 6">
-<path d="M5218.0 1479.8 L5218 1588 L5458.865612648221 1679.5 L5458.9 1679.5 " fill="none"></path>
-</g>
-<path d="M5223.3 1479.8 L5218.0 1479.8 L5212.7 1479.8 L5218.0 1466.5 Z"></path>
-<path d="M5819.1 1494.8 L5723.5 1588 L5362 1682.6785714285713 L5362.0 1682.7 " fill="none"></path>
-<path d="M5822.8 1498.6 L5819.1 1494.8 L5815.4 1491.0 L5828.6 1485.5 Z"></path>
-<g stroke-dasharray="6 6">
-<path d="M5523.0 1479.8 L5523 1588 L5318.662055335968 1679.5 L5318.7 1679.5 " fill="none"></path>
+<path d="M5523.0 1479.8 L5523 1588 L5397.6057692307695 1657 L5397.6 1657.0 " fill="none"></path>
 </g>
 <path d="M5528.3 1479.8 L5523.0 1479.8 L5517.7 1479.8 L5523.0 1466.5 Z"></path>
+<path d="M5355.2 1455.6 L6510.25 1588 L6598.158653846154 1657 L6598.2 1657.0 " fill="none"></path>
+<path d="M5355.9 1450.3 L5355.2 1455.6 L5354.6 1460.9 L5342.0 1454.1 Z"></path>
 <g stroke-dasharray="6 6">
-<path d="M5559.6 693.1 L5884 1275 L5884 1377.5 L5884.0 1377.5 " fill="none"></path>
+<path d="M6715.3 1479.8 L6715.25 1588 L6667.149038461538 1657 L6667.1 1657.0 " fill="none"></path>
 </g>
-<path d="M5564.3 690.5 L5559.6 693.1 L5554.9 695.7 L5553.1 681.5 Z"></path>
+<path d="M6720.6 1479.8 L6715.3 1479.8 L6709.9 1479.8 L6715.3 1466.5 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M5484.8 693.0 L5145 1275 L5145 1377.5 L5145.0 1377.5 " fill="none"></path>
+</g>
+<path d="M5489.4 695.7 L5484.8 693.0 L5480.1 690.3 L5491.5 681.5 Z"></path>
+<g stroke-dasharray="6 6">
+<path d="M5634.1 687.9 L6715.25 1275 L6715.25 1396.5 L6715.3 1396.5 " fill="none"></path>
+</g>
+<path d="M5636.7 683.2 L5634.1 687.9 L5631.6 692.6 L5622.4 681.5 Z"></path>
 <g stroke-dasharray="6 6">
 <path d="M5523.0 694.8 L5523 1275 L5523 1396.5 L5523.0 1396.5 " fill="none"></path>
 </g>
 <path d="M5528.3 694.8 L5523.0 694.8 L5517.7 694.8 L5523.0 681.5 Z"></path>
+<path d="M7927.2 1711.7 L8615 1796 L8615 1831 L8615.0 1831.0 " fill="none"></path>
+<path d="M7927.9 1706.4 L7927.2 1711.7 L7926.6 1717.0 L7914.0 1710.1 Z"></path>
 <g stroke-dasharray="6 6">
-<path d="M5491.9 693.6 L5218 1275 L5218 1396.5 L5218.0 1396.5 " fill="none"></path>
+<path d="M9382.5 1785.3 L9382.5 1796 L8846.5 1884.3439739413682 L8846.5 1884.3 " fill="none"></path>
 </g>
-<path d="M5496.7 695.8 L5491.9 693.6 L5487.1 691.3 L5497.6 681.5 Z"></path>
-<path d="M7903.6 1514.9 L8023.75 1588 L8228.25 1647.3331422018348 L8228.3 1647.3 " fill="none"></path>
-<path d="M7906.4 1510.4 L7903.6 1514.9 L7900.9 1519.5 L7892.2 1508.0 Z"></path>
+<path d="M9387.8 1785.3 L9382.5 1785.3 L9377.2 1785.3 L9382.5 1772.0 Z"></path>
+<path d="M7927.3 1700.5 L9741 1796 L9741 1842.5 L9741.0 1842.5 " fill="none"></path>
+<path d="M7927.6 1695.1 L7927.3 1700.5 L7927.0 1705.8 L7914.0 1699.8 Z"></path>
 <g stroke-dasharray="6 6">
-<path d="M8204.8 1524.8 L8204.75 1588 L8275.303359683794 1623 L8275.3 1623.0 " fill="none"></path>
+<path d="M9781.0 1770.3 L9781 1796 L9766.296442687748 1842.5 L9766.3 1842.5 " fill="none"></path>
 </g>
-<path d="M8210.1 1524.8 L8204.8 1524.8 L8199.4 1524.8 L8204.8 1511.5 Z"></path>
-<path d="M7766.5 1521.3 L7766.5 1588 L7846.910079051383 1634.5 L7846.9 1634.5 " fill="none"></path>
-<path d="M7771.8 1521.3 L7766.5 1521.3 L7761.2 1521.3 L7766.5 1508.0 Z"></path>
-<g stroke-dasharray="6 6">
-<path d="M8601.3 1509.8 L8601.25 1588 L8188.25 1672.8125 L8188.3 1672.8 " fill="none"></path>
-</g>
-<path d="M8606.6 1509.8 L8601.3 1509.8 L8595.9 1509.8 L8601.3 1496.5 Z"></path>
-<path d="M7766.5 732.3 L7766.5 1275 L7766.5 1355 L7766.5 1355.0 " fill="none"></path>
+<path d="M9786.3 1770.3 L9781.0 1770.3 L9775.7 1770.3 L9781.0 1757.0 Z"></path>
+<path d="M7766.5 732.3 L7766.5 1275 L7766.5 1431.5 L7766.5 1431.5 L7766.5 1588 L7766.5 1588 L7766.5 1608 L7766.5 1608.0 " fill="none"></path>
 <path d="M7771.8 732.3 L7766.5 732.3 L7761.2 732.3 L7766.5 719.0 Z"></path>
-<path d="M7619.0 1478.3 L7273.25 1588 L7273.25 1608 L7273.3 1608.0 " fill="none"></path>
+<path d="M7619.0 1711.6 L6983.25 1796 L6983.25 1816 L6983.3 1816.0 " fill="none"></path>
+<path d="M7907.8 667.7 L10041 1275 L10041 1332.5 L10041.0 1332.5 " fill="none"></path>
+<path d="M7909.3 662.6 L7907.8 667.7 L7906.4 672.9 L7895.0 664.1 Z"></path>
+<path d="M9887.0 1516.2 L9756.5 1588 L7914 1684.2914572864322 L7914.0 1684.3 " fill="none"></path>
+<path d="M10066.3 1530.5 L10081 1588 L10081 1668.5 L10081.0 1668.5 " fill="none"></path>
 <g stroke-dasharray="6 6">
-<path d="M9461.4 733.9 L9792.75 1275 L9792.75 1336.5 L9792.8 1336.5 " fill="none"></path>
+<path d="M8960.1 731.2 L8334.25 1275 L8334.25 1336.5 L8334.3 1336.5 " fill="none"></path>
 </g>
-<path d="M9465.9 731.1 L9461.4 733.9 L9456.8 736.7 L9454.4 722.5 Z"></path>
+<path d="M8963.6 735.3 L8960.1 731.2 L8956.6 727.2 L8970.2 722.5 Z"></path>
 <g stroke-dasharray="6 6">
-<path d="M9396.3 735.8 L9396.25 1275 L9396.25 1317.5 L9396.3 1317.5 " fill="none"></path>
+<path d="M9079.5 735.8 L9079.5 1275 L9079.5 1317.5 L9079.5 1317.5 " fill="none"></path>
 </g>
-<path d="M9401.6 735.8 L9396.3 735.8 L9390.9 735.8 L9396.3 722.5 Z"></path>
+<path d="M9084.8 735.8 L9079.5 735.8 L9074.2 735.8 L9079.5 722.5 Z"></path>
 <g stroke-dasharray="6 6">
-<path d="M9331.1 733.9 L8999.75 1275 L8999.75 1295 L8999.8 1295.0 " fill="none"></path>
+<path d="M9144.2 733.9 L9473.5 1275 L9473.5 1295 L9473.5 1295.0 " fill="none"></path>
 </g>
-<path d="M9335.7 736.7 L9331.1 733.9 L9326.6 731.1 L9338.1 722.5 Z"></path>
+<path d="M9148.8 731.1 L9144.2 733.9 L9139.7 736.7 L9137.3 722.5 Z"></path>
 <g data-name="APIContext">
 <g fill="#eee8d5" stroke="#33322E" data-name="APIContext">
 <rect x="0.0" y="577.5" height="100.0" width="272.0" data-name="APIContext"></rect>
@@ -216,23 +226,23 @@
 </g>
 <g data-name="EdiEvent">
 <g fill="#eee8d5" stroke="#33322E" data-name="EdiEvent">
-<rect x="7029.3" y="1861.0" height="93.0" width="204.0" data-name="EdiEvent"></rect>
-<path d="M7029.3 1892.0 L7233.3 1892.0" fill="none" data-name="EdiEvent"></path>
-<path d="M7029.3 1923.0 L7233.3 1923.0" fill="none" data-name="EdiEvent"></path>
+<rect x="6810.3" y="2069.0" height="93.0" width="204.0" data-name="EdiEvent"></rect>
+<path d="M6810.3 2100.0 L7014.3 2100.0" fill="none" data-name="EdiEvent"></path>
+<path d="M6810.3 2131.0 L7014.3 2131.0" fill="none" data-name="EdiEvent"></path>
 </g>
-<g transform="translate(7029.25, 1861)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="EdiEvent">
+<g transform="translate(6810.25, 2069)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="EdiEvent">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="EdiEvent">
 <a id="../src/api/EdiEvent.ts.EdiEvent" xlink:href="../src/api/EdiEvent.ts"><text x="94.0" y="13.5" stroke="none" text-anchor="middle" data-name="EdiEvent">EdiEvent</text></a>
 
 </g>
 </g>
-<g transform="translate(7029.25, 1892)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="EdiEvent">
+<g transform="translate(6810.25, 2100)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="EdiEvent">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="EdiEvent">
 <text x="0.0" y="13.5" stroke="none" data-name="EdiEvent">+apiClient: Client</text>
 
 </g>
 </g>
-<g transform="translate(7029.25, 1923)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="EdiEvent">
+<g transform="translate(6810.25, 2131)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="EdiEvent">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="EdiEvent">
 <text x="0.0" y="13.5" stroke="none" data-name="EdiEvent">#send(): Promise&lt;void&gt;</text>
 
@@ -271,22 +281,22 @@
 </g>
 <g data-name="OperationMethods">
 <g fill="lightblue" stroke="#33322E" data-name="OperationMethods">
-<rect x="6714.8" y="1994.0" height="760.0" width="1117.0" data-name="OperationMethods"></rect>
-<path d="M6714.8 2025.0 L7831.8 2025.0" fill="none" data-name="OperationMethods"></path>
-<path d="M6714.8 2033.0 L7831.8 2033.0" fill="none" data-name="OperationMethods"></path>
+<rect x="6424.8" y="2202.0" height="760.0" width="1117.0" data-name="OperationMethods"></rect>
+<path d="M6424.8 2233.0 L7541.8 2233.0" fill="none" data-name="OperationMethods"></path>
+<path d="M6424.8 2241.0 L7541.8 2241.0" fill="none" data-name="OperationMethods"></path>
 </g>
-<g transform="translate(6714.75, 1994)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OperationMethods">
+<g transform="translate(6424.75, 2202)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OperationMethods">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="OperationMethods">
 <a id="../src/api/spacefill-api-openapi.ts.OperationMethods" xlink:href="../src/api/spacefill-api-openapi.ts"><text x="550.5" y="13.5" stroke="none" text-anchor="middle" data-name="OperationMethods">OperationMethods</text></a>
 
 </g>
 </g>
-<g transform="translate(6714.75, 2025)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OperationMethods">
+<g transform="translate(6424.75, 2233)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OperationMethods">
 <g transform="translate(8, 8)" fill="#33322E" data-name="OperationMethods">
 
 </g>
 </g>
-<g transform="translate(6714.75, 2033)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OperationMethods">
+<g transform="translate(6424.75, 2241)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="OperationMethods">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="OperationMethods">
 <text x="0.0" y="13.5" stroke="none" data-name="OperationMethods">+get_v1_ping(): OperationResponse&lt;any&gt;</text>
 <text x="0.0" y="28.5" stroke="none" data-name="OperationMethods">+get_v1_logistic_management_master_item_list(): OperationResponse&lt;PaginationResponseModelOutputListMasterItem&gt;</text>
@@ -444,17 +454,17 @@
 </g>
 <g data-name="SpacefillAPIWrapperV1">
 <g fill="#eee8d5" stroke="#33322E" data-name="SpacefillAPIWrapperV1">
-<rect x="7078.8" y="1608.0" height="213.0" width="389.0" data-name="SpacefillAPIWrapperV1"></rect>
-<path d="M7078.8 1639.0 L7467.8 1639.0" fill="none" data-name="SpacefillAPIWrapperV1"></path>
-<path d="M7078.8 1760.0 L7467.8 1760.0" fill="none" data-name="SpacefillAPIWrapperV1"></path>
+<rect x="6788.8" y="1816.0" height="213.0" width="389.0" data-name="SpacefillAPIWrapperV1"></rect>
+<path d="M6788.8 1847.0 L7177.8 1847.0" fill="none" data-name="SpacefillAPIWrapperV1"></path>
+<path d="M6788.8 1968.0 L7177.8 1968.0" fill="none" data-name="SpacefillAPIWrapperV1"></path>
 </g>
-<g transform="translate(7078.75, 1608)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SpacefillAPIWrapperV1">
+<g transform="translate(6788.75, 1816)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SpacefillAPIWrapperV1">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SpacefillAPIWrapperV1">
 <a id="../src/api/SpacefillAPIWrapperV1.ts.SpacefillAPIWrapperV1" xlink:href="../src/api/SpacefillAPIWrapperV1.ts"><text x="186.5" y="13.5" stroke="none" text-anchor="middle" data-name="SpacefillAPIWrapperV1">SpacefillAPIWrapperV1</text></a>
 
 </g>
 </g>
-<g transform="translate(7078.75, 1639)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SpacefillAPIWrapperV1">
+<g transform="translate(6788.75, 1847)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SpacefillAPIWrapperV1">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SpacefillAPIWrapperV1">
 <text x="0.0" y="13.5" stroke="none" data-name="SpacefillAPIWrapperV1">#client: Client | undefined</text>
 <text x="0.0" y="28.5" stroke="none" data-name="SpacefillAPIWrapperV1">#ediEvent: EdiEvent | undefined</text>
@@ -466,7 +476,7 @@
 
 </g>
 </g>
-<g transform="translate(7078.75, 1760)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SpacefillAPIWrapperV1">
+<g transform="translate(6788.75, 1968)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SpacefillAPIWrapperV1">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SpacefillAPIWrapperV1">
 <text x="0.0" y="13.5" stroke="none" data-name="SpacefillAPIWrapperV1">#initClient(): Promise&lt;void&gt;</text>
 <text x="0.0" y="28.5" stroke="none" data-name="SpacefillAPIWrapperV1">+getAxiosInstance(): AxiosInstance | undefined</text>
@@ -510,7 +520,7 @@
 <text x="0.0" y="208.5" stroke="none" data-name="Config">}</text>
 <text x="0.0" y="223.5" stroke="none" data-name="Config">console: { ...</text>
 <text x="0.0" y="238.5" stroke="none" data-name="Config">}</text>
-<text x="0.0" y="253.5" stroke="none" data-name="Config">log: { ...</text>
+<text x="0.0" y="253.5" stroke="none" data-name="Config">log: { ....</text>
 <text x="0.0" y="268.5" stroke="none" data-name="Config">#reloadConfig(): void</text>
 <text x="0.0" y="283.5" stroke="none" data-name="Config">#validate(): void</text>
 
@@ -519,22 +529,22 @@
 </g>
 <g data-name="AbstractGenerateFileSchema&lt;T&gt;">
 <g fill="#eee8d5" stroke="#33322E" data-name="AbstractGenerateFileSchema&lt;T&gt;">
-<rect x="5412.5" y="1679.5" height="70.0" width="277.0" data-name="AbstractGenerateFileSchema&lt;T&gt;"></rect>
-<path d="M5412.5 1710.5 L5689.5 1710.5" fill="none" data-name="AbstractGenerateFileSchema&lt;T&gt;"></path>
-<path d="M5412.5 1718.5 L5689.5 1718.5" fill="none" data-name="AbstractGenerateFileSchema&lt;T&gt;"></path>
+<rect x="5195.5" y="1657.0" height="70.0" width="277.0" data-name="AbstractGenerateFileSchema&lt;T&gt;"></rect>
+<path d="M5195.5 1688.0 L5472.5 1688.0" fill="none" data-name="AbstractGenerateFileSchema&lt;T&gt;"></path>
+<path d="M5195.5 1696.0 L5472.5 1696.0" fill="none" data-name="AbstractGenerateFileSchema&lt;T&gt;"></path>
 </g>
-<g transform="translate(5412.5, 1679.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractGenerateFileSchema&lt;T&gt;">
+<g transform="translate(5195.5, 1657)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractGenerateFileSchema&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AbstractGenerateFileSchema&lt;T&gt;">
 <a id="../src/data_mapping/AbstractGenerateFileSchema.ts.AbstractGenerateFileSchema&lt;T&gt;" xlink:href="../src/data_mapping/AbstractGenerateFileSchema.ts"><text x="130.5" y="13.5" stroke="none" text-anchor="middle" data-name="AbstractGenerateFileSchema&lt;T&gt;">AbstractGenerateFileSchema&lt;T&gt;</text></a>
 
 </g>
 </g>
-<g transform="translate(5412.5, 1710.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractGenerateFileSchema&lt;T&gt;">
+<g transform="translate(5195.5, 1688)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractGenerateFileSchema&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" data-name="AbstractGenerateFileSchema&lt;T&gt;">
 
 </g>
 </g>
-<g transform="translate(5412.5, 1718.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractGenerateFileSchema&lt;T&gt;">
+<g transform="translate(5195.5, 1696)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractGenerateFileSchema&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractGenerateFileSchema&lt;T&gt;">
 <text x="0.0" y="13.5" stroke="none" data-name="AbstractGenerateFileSchema&lt;T&gt;">+mapOutputFileData(): object[]</text>
 
@@ -543,24 +553,24 @@
 </g>
 <g data-name="AbstractSchema">
 <g fill="#eee8d5" stroke="#33322E" data-name="AbstractSchema">
-<rect x="5687.0" y="1377.5" height="108.0" width="394.0" data-name="AbstractSchema"></rect>
-<path d="M5687.0 1408.5 L6081.0 1408.5" fill="none" data-name="AbstractSchema"></path>
-<path d="M5687.0 1454.5 L6081.0 1454.5" fill="none" data-name="AbstractSchema"></path>
+<rect x="4948.0" y="1377.5" height="108.0" width="394.0" data-name="AbstractSchema"></rect>
+<path d="M4948.0 1408.5 L5342.0 1408.5" fill="none" data-name="AbstractSchema"></path>
+<path d="M4948.0 1454.5 L5342.0 1454.5" fill="none" data-name="AbstractSchema"></path>
 </g>
-<g transform="translate(5687, 1377.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractSchema">
+<g transform="translate(4948, 1377.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractSchema">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AbstractSchema">
 <a id="../src/data_mapping/AbstractSchema.ts.AbstractSchema" xlink:href="../src/data_mapping/AbstractSchema.ts"><text x="189.0" y="13.5" stroke="none" text-anchor="middle" data-name="AbstractSchema">AbstractSchema</text></a>
 
 </g>
 </g>
-<g transform="translate(5687, 1408.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractSchema">
+<g transform="translate(4948, 1408.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractSchema">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractSchema">
 <text x="0.0" y="13.5" stroke="none" data-name="AbstractSchema">+itemSchemaValidation: object</text>
 <text x="0.0" y="28.5" stroke="none" data-name="AbstractSchema">+fileDescriptor: ExportFileDescriptor | undefined</text>
 
 </g>
 </g>
-<g transform="translate(5687, 1454.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractSchema">
+<g transform="translate(4948, 1454.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractSchema">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractSchema">
 <text x="0.0" y="13.5" stroke="none" data-name="AbstractSchema">#validateFileData(): void</text>
 
@@ -569,22 +579,22 @@
 </g>
 <g data-name="GenerateFileSchemaInterface&lt;T&gt;">
 <g fill="lightblue" stroke="#33322E" data-name="GenerateFileSchemaInterface&lt;T&gt;">
-<rect x="5077.0" y="1396.5" height="70.0" width="282.0" data-name="GenerateFileSchemaInterface&lt;T&gt;"></rect>
-<path d="M5077.0 1427.5 L5359.0 1427.5" fill="none" data-name="GenerateFileSchemaInterface&lt;T&gt;"></path>
-<path d="M5077.0 1435.5 L5359.0 1435.5" fill="none" data-name="GenerateFileSchemaInterface&lt;T&gt;"></path>
+<rect x="5382.0" y="1396.5" height="70.0" width="282.0" data-name="GenerateFileSchemaInterface&lt;T&gt;"></rect>
+<path d="M5382.0 1427.5 L5664.0 1427.5" fill="none" data-name="GenerateFileSchemaInterface&lt;T&gt;"></path>
+<path d="M5382.0 1435.5 L5664.0 1435.5" fill="none" data-name="GenerateFileSchemaInterface&lt;T&gt;"></path>
 </g>
-<g transform="translate(5077, 1396.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileSchemaInterface&lt;T&gt;">
+<g transform="translate(5382, 1396.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileSchemaInterface&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GenerateFileSchemaInterface&lt;T&gt;">
 <a id="../src/data_mapping/SchemaInterfaces.ts.GenerateFileSchemaInterface&lt;T&gt;" xlink:href="../src/data_mapping/SchemaInterfaces.ts"><text x="133.0" y="13.5" stroke="none" text-anchor="middle" data-name="GenerateFileSchemaInterface&lt;T&gt;">GenerateFileSchemaInterface&lt;T&gt;</text></a>
 
 </g>
 </g>
-<g transform="translate(5077, 1427.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileSchemaInterface&lt;T&gt;">
+<g transform="translate(5382, 1427.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileSchemaInterface&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" data-name="GenerateFileSchemaInterface&lt;T&gt;">
 
 </g>
 </g>
-<g transform="translate(5077, 1435.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileSchemaInterface&lt;T&gt;">
+<g transform="translate(5382, 1435.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileSchemaInterface&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GenerateFileSchemaInterface&lt;T&gt;">
 <text x="0.0" y="13.5" stroke="none" data-name="GenerateFileSchemaInterface&lt;T&gt;">+mapOutputFileData(): object[]</text>
 
@@ -593,22 +603,22 @@
 </g>
 <g data-name="AbstractLoadFileSchema&lt;T&gt;">
 <g fill="#eee8d5" stroke="#33322E" data-name="AbstractLoadFileSchema&lt;T&gt;">
-<rect x="5119.0" y="1679.5" height="70.0" width="243.0" data-name="AbstractLoadFileSchema&lt;T&gt;"></rect>
-<path d="M5119.0 1710.5 L5362.0 1710.5" fill="none" data-name="AbstractLoadFileSchema&lt;T&gt;"></path>
-<path d="M5119.0 1718.5 L5362.0 1718.5" fill="none" data-name="AbstractLoadFileSchema&lt;T&gt;"></path>
+<rect x="6521.3" y="1657.0" height="70.0" width="243.0" data-name="AbstractLoadFileSchema&lt;T&gt;"></rect>
+<path d="M6521.3 1688.0 L6764.3 1688.0" fill="none" data-name="AbstractLoadFileSchema&lt;T&gt;"></path>
+<path d="M6521.3 1696.0 L6764.3 1696.0" fill="none" data-name="AbstractLoadFileSchema&lt;T&gt;"></path>
 </g>
-<g transform="translate(5119, 1679.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractLoadFileSchema&lt;T&gt;">
+<g transform="translate(6521.25, 1657)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractLoadFileSchema&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AbstractLoadFileSchema&lt;T&gt;">
 <a id="../src/data_mapping/AbstractLoadFileSchema.ts.AbstractLoadFileSchema&lt;T&gt;" xlink:href="../src/data_mapping/AbstractLoadFileSchema.ts"><text x="113.5" y="13.5" stroke="none" text-anchor="middle" data-name="AbstractLoadFileSchema&lt;T&gt;">AbstractLoadFileSchema&lt;T&gt;</text></a>
 
 </g>
 </g>
-<g transform="translate(5119, 1710.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractLoadFileSchema&lt;T&gt;">
+<g transform="translate(6521.25, 1688)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractLoadFileSchema&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" data-name="AbstractLoadFileSchema&lt;T&gt;">
 
 </g>
 </g>
-<g transform="translate(5119, 1718.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractLoadFileSchema&lt;T&gt;">
+<g transform="translate(6521.25, 1696)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractLoadFileSchema&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractLoadFileSchema&lt;T&gt;">
 <text x="0.0" y="13.5" stroke="none" data-name="AbstractLoadFileSchema&lt;T&gt;">+mapInputFileData(): T[]</text>
 
@@ -617,22 +627,22 @@
 </g>
 <g data-name="LoadFileSchemaInterface&lt;T&gt;">
 <g fill="lightblue" stroke="#33322E" data-name="LoadFileSchemaInterface&lt;T&gt;">
-<rect x="5399.0" y="1396.5" height="70.0" width="248.0" data-name="LoadFileSchemaInterface&lt;T&gt;"></rect>
-<path d="M5399.0 1427.5 L5647.0 1427.5" fill="none" data-name="LoadFileSchemaInterface&lt;T&gt;"></path>
-<path d="M5399.0 1435.5 L5647.0 1435.5" fill="none" data-name="LoadFileSchemaInterface&lt;T&gt;"></path>
+<rect x="6591.3" y="1396.5" height="70.0" width="248.0" data-name="LoadFileSchemaInterface&lt;T&gt;"></rect>
+<path d="M6591.3 1427.5 L6839.3 1427.5" fill="none" data-name="LoadFileSchemaInterface&lt;T&gt;"></path>
+<path d="M6591.3 1435.5 L6839.3 1435.5" fill="none" data-name="LoadFileSchemaInterface&lt;T&gt;"></path>
 </g>
-<g transform="translate(5399, 1396.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LoadFileSchemaInterface&lt;T&gt;">
+<g transform="translate(6591.25, 1396.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LoadFileSchemaInterface&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="LoadFileSchemaInterface&lt;T&gt;">
 <a id="../src/data_mapping/SchemaInterfaces.ts.LoadFileSchemaInterface&lt;T&gt;" xlink:href="../src/data_mapping/SchemaInterfaces.ts"><text x="116.0" y="13.5" stroke="none" text-anchor="middle" data-name="LoadFileSchemaInterface&lt;T&gt;">LoadFileSchemaInterface&lt;T&gt;</text></a>
 
 </g>
 </g>
-<g transform="translate(5399, 1427.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LoadFileSchemaInterface&lt;T&gt;">
+<g transform="translate(6591.25, 1427.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LoadFileSchemaInterface&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" data-name="LoadFileSchemaInterface&lt;T&gt;">
 
 </g>
 </g>
-<g transform="translate(5399, 1435.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LoadFileSchemaInterface&lt;T&gt;">
+<g transform="translate(6591.25, 1435.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LoadFileSchemaInterface&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="LoadFileSchemaInterface&lt;T&gt;">
 <text x="0.0" y="13.5" stroke="none" data-name="LoadFileSchemaInterface&lt;T&gt;">+mapInputFileData(): T[]</text>
 
@@ -876,23 +886,23 @@
 </g>
 <g data-name="AbstractGenerateFileTask&lt;T&gt;">
 <g fill="#eee8d5" stroke="#33322E" data-name="AbstractGenerateFileTask&lt;T&gt;">
-<rect x="8228.3" y="1623.0" height="183.0" width="463.0" data-name="AbstractGenerateFileTask&lt;T&gt;"></rect>
-<path d="M8228.3 1654.0 L8691.3 1654.0" fill="none" data-name="AbstractGenerateFileTask&lt;T&gt;"></path>
-<path d="M8228.3 1685.0 L8691.3 1685.0" fill="none" data-name="AbstractGenerateFileTask&lt;T&gt;"></path>
+<rect x="8383.5" y="1831.0" height="183.0" width="463.0" data-name="AbstractGenerateFileTask&lt;T&gt;"></rect>
+<path d="M8383.5 1862.0 L8846.5 1862.0" fill="none" data-name="AbstractGenerateFileTask&lt;T&gt;"></path>
+<path d="M8383.5 1893.0 L8846.5 1893.0" fill="none" data-name="AbstractGenerateFileTask&lt;T&gt;"></path>
 </g>
-<g transform="translate(8228.25, 1623)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractGenerateFileTask&lt;T&gt;">
+<g transform="translate(8383.5, 1831)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractGenerateFileTask&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AbstractGenerateFileTask&lt;T&gt;">
 <a id="../src/task/AbstractGenerateFileTask.ts.AbstractGenerateFileTask&lt;T&gt;" xlink:href="../src/task/AbstractGenerateFileTask.ts"><text x="223.5" y="13.5" stroke="none" text-anchor="middle" data-name="AbstractGenerateFileTask&lt;T&gt;">AbstractGenerateFileTask&lt;T&gt;</text></a>
 
 </g>
 </g>
-<g transform="translate(8228.25, 1654)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractGenerateFileTask&lt;T&gt;">
+<g transform="translate(8383.5, 1862)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractGenerateFileTask&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractGenerateFileTask&lt;T&gt;">
 <text x="0.0" y="13.5" stroke="none" data-name="AbstractGenerateFileTask&lt;T&gt;">+currentFileConfiguration: InitialDataItem&lt;T&gt; | undefined</text>
 
 </g>
 </g>
-<g transform="translate(8228.25, 1685)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractGenerateFileTask&lt;T&gt;">
+<g transform="translate(8383.5, 1893)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractGenerateFileTask&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractGenerateFileTask&lt;T&gt;">
 <text x="0.0" y="13.5" stroke="none" data-name="AbstractGenerateFileTask&lt;T&gt;">+initFilesGeneration(): InitialDataItem&lt;T&gt;[]</text>
 <text x="0.0" y="28.5" stroke="none" data-name="AbstractGenerateFileTask&lt;T&gt;">+getDataSchema(): GenerateFileSchemaInterface&lt;T&gt;</text>
@@ -907,81 +917,82 @@
 </g>
 <g data-name="AbstractTask">
 <g fill="#eee8d5" stroke="#33322E" data-name="AbstractTask">
-<rect x="7619.0" y="1355.0" height="153.0" width="295.0" data-name="AbstractTask"></rect>
-<path d="M7619.0 1386.0 L7914.0 1386.0" fill="none" data-name="AbstractTask"></path>
-<path d="M7619.0 1432.0 L7914.0 1432.0" fill="none" data-name="AbstractTask"></path>
+<rect x="7619.0" y="1608.0" height="168.0" width="295.0" data-name="AbstractTask"></rect>
+<path d="M7619.0 1639.0 L7914.0 1639.0" fill="none" data-name="AbstractTask"></path>
+<path d="M7619.0 1685.0 L7914.0 1685.0" fill="none" data-name="AbstractTask"></path>
 </g>
-<g transform="translate(7619, 1355)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractTask">
+<g transform="translate(7619, 1608)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractTask">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AbstractTask">
 <a id="../src/task/AbstractTask.ts.AbstractTask" xlink:href="../src/task/AbstractTask.ts"><text x="139.5" y="13.5" stroke="none" text-anchor="middle" data-name="AbstractTask">AbstractTask</text></a>
 
 </g>
 </g>
-<g transform="translate(7619, 1386)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractTask">
+<g transform="translate(7619, 1639)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractTask">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractTask">
 <text x="0.0" y="13.5" stroke="none" data-name="AbstractTask">+sdk: SpacefillAPIWrapperV1</text>
 <text x="0.0" y="28.5" stroke="none" data-name="AbstractTask">+transfer: Transfer</text>
 
 </g>
 </g>
-<g transform="translate(7619, 1432)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractTask">
+<g transform="translate(7619, 1685)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractTask">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractTask">
 <text x="0.0" y="13.5" stroke="none" data-name="AbstractTask">+getWorkflowType(): WorkflowType</text>
-<text x="0.0" y="28.5" stroke="none" data-name="AbstractTask">+initApiClient(): Promise&lt;void&gt;</text>
-<text x="0.0" y="43.5" stroke="none" data-name="AbstractTask">+getArgsList(): Argument[]</text>
-<text x="0.0" y="58.5" stroke="none" data-name="AbstractTask">+parseArgs(): void</text>
+<text x="0.0" y="28.5" stroke="none" data-name="AbstractTask">+run(): Promise&lt;void&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="AbstractTask">+initApiClient(): Promise&lt;void&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="AbstractTask">+getArgsList(): Argument[]</text>
+<text x="0.0" y="73.5" stroke="none" data-name="AbstractTask">+parseArgs(): void</text>
 
 </g>
 </g>
 </g>
-<g data-name="GenerateFileTasklnterface&lt;T&gt;">
-<g fill="lightblue" stroke="#33322E" data-name="GenerateFileTasklnterface&lt;T&gt;">
-<rect x="8030.3" y="1351.5" height="160.0" width="349.0" data-name="GenerateFileTasklnterface&lt;T&gt;"></rect>
-<path d="M8030.3 1382.5 L8379.3 1382.5" fill="none" data-name="GenerateFileTasklnterface&lt;T&gt;"></path>
-<path d="M8030.3 1390.5 L8379.3 1390.5" fill="none" data-name="GenerateFileTasklnterface&lt;T&gt;"></path>
+<g data-name="GenerateFileTaskInterface&lt;T&gt;">
+<g fill="lightblue" stroke="#33322E" data-name="GenerateFileTaskInterface&lt;T&gt;">
+<rect x="9208.0" y="1612.0" height="160.0" width="349.0" data-name="GenerateFileTaskInterface&lt;T&gt;"></rect>
+<path d="M9208.0 1643.0 L9557.0 1643.0" fill="none" data-name="GenerateFileTaskInterface&lt;T&gt;"></path>
+<path d="M9208.0 1651.0 L9557.0 1651.0" fill="none" data-name="GenerateFileTaskInterface&lt;T&gt;"></path>
 </g>
-<g transform="translate(8030.25, 1351.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileTasklnterface&lt;T&gt;">
-<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GenerateFileTasklnterface&lt;T&gt;">
-<a id="../src/task/GenerateFileTasklnterfaces.ts.GenerateFileTasklnterface&lt;T&gt;" xlink:href="../src/task/GenerateFileTasklnterfaces.ts"><text x="166.5" y="13.5" stroke="none" text-anchor="middle" data-name="GenerateFileTasklnterface&lt;T&gt;">GenerateFileTasklnterface&lt;T&gt;</text></a>
+<g transform="translate(9208, 1612)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileTaskInterface&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="GenerateFileTaskInterface&lt;T&gt;">
+<a id="../src/task/GenerateFileTaskInterfaces.ts.GenerateFileTaskInterface&lt;T&gt;" xlink:href="../src/task/GenerateFileTaskInterfaces.ts"><text x="166.5" y="13.5" stroke="none" text-anchor="middle" data-name="GenerateFileTaskInterface&lt;T&gt;">GenerateFileTaskInterface&lt;T&gt;</text></a>
 
 </g>
 </g>
-<g transform="translate(8030.25, 1382.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileTasklnterface&lt;T&gt;">
-<g transform="translate(8, 8)" fill="#33322E" data-name="GenerateFileTasklnterface&lt;T&gt;">
+<g transform="translate(9208, 1643)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileTaskInterface&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" data-name="GenerateFileTaskInterface&lt;T&gt;">
 
 </g>
 </g>
-<g transform="translate(8030.25, 1390.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileTasklnterface&lt;T&gt;">
-<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GenerateFileTasklnterface&lt;T&gt;">
-<text x="0.0" y="13.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+initApiClient(): void</text>
-<text x="0.0" y="28.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+initFilesGeneration(): InitialDataItem&lt;T&gt;[]</text>
-<text x="0.0" y="43.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+prepareFileData(): Promise&lt;T[]&gt;</text>
-<text x="0.0" y="58.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+generateFile(): Promise&lt;void&gt;</text>
-<text x="0.0" y="73.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+sendFile(): Promise&lt;string&gt;</text>
-<text x="0.0" y="88.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+postFileSending(): Promise&lt;void&gt;</text>
-<text x="0.0" y="103.5" stroke="none" data-name="GenerateFileTasklnterface&lt;T&gt;">+run(): void</text>
+<g transform="translate(9208, 1651)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="GenerateFileTaskInterface&lt;T&gt;">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="GenerateFileTaskInterface&lt;T&gt;">
+<text x="0.0" y="13.5" stroke="none" data-name="GenerateFileTaskInterface&lt;T&gt;">+initApiClient(): void</text>
+<text x="0.0" y="28.5" stroke="none" data-name="GenerateFileTaskInterface&lt;T&gt;">+initFilesGeneration(): InitialDataItem&lt;T&gt;[]</text>
+<text x="0.0" y="43.5" stroke="none" data-name="GenerateFileTaskInterface&lt;T&gt;">+prepareFileData(): Promise&lt;T[]&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="GenerateFileTaskInterface&lt;T&gt;">+generateFile(): Promise&lt;void&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="GenerateFileTaskInterface&lt;T&gt;">+sendFile(): Promise&lt;string&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="GenerateFileTaskInterface&lt;T&gt;">+postFileSending(): Promise&lt;void&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="GenerateFileTaskInterface&lt;T&gt;">+run(): void</text>
 
 </g>
 </g>
 </g>
 <g data-name="AbstractLoadFileTask&lt;T&gt;">
 <g fill="#eee8d5" stroke="#33322E" data-name="AbstractLoadFileTask&lt;T&gt;">
-<rect x="7782.3" y="1634.5" height="160.0" width="406.0" data-name="AbstractLoadFileTask&lt;T&gt;"></rect>
-<path d="M7782.3 1665.5 L8188.3 1665.5" fill="none" data-name="AbstractLoadFileTask&lt;T&gt;"></path>
-<path d="M7782.3 1673.5 L8188.3 1673.5" fill="none" data-name="AbstractLoadFileTask&lt;T&gt;"></path>
+<rect x="9538.0" y="1842.5" height="160.0" width="406.0" data-name="AbstractLoadFileTask&lt;T&gt;"></rect>
+<path d="M9538.0 1873.5 L9944.0 1873.5" fill="none" data-name="AbstractLoadFileTask&lt;T&gt;"></path>
+<path d="M9538.0 1881.5 L9944.0 1881.5" fill="none" data-name="AbstractLoadFileTask&lt;T&gt;"></path>
 </g>
-<g transform="translate(7782.25, 1634.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractLoadFileTask&lt;T&gt;">
+<g transform="translate(9538, 1842.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractLoadFileTask&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AbstractLoadFileTask&lt;T&gt;">
 <a id="../src/task/AbstractLoadFileTask.ts.AbstractLoadFileTask&lt;T&gt;" xlink:href="../src/task/AbstractLoadFileTask.ts"><text x="195.0" y="13.5" stroke="none" text-anchor="middle" data-name="AbstractLoadFileTask&lt;T&gt;">AbstractLoadFileTask&lt;T&gt;</text></a>
 
 </g>
 </g>
-<g transform="translate(7782.25, 1665.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractLoadFileTask&lt;T&gt;">
+<g transform="translate(9538, 1873.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractLoadFileTask&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" data-name="AbstractLoadFileTask&lt;T&gt;">
 
 </g>
 </g>
-<g transform="translate(7782.25, 1673.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractLoadFileTask&lt;T&gt;">
+<g transform="translate(9538, 1881.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractLoadFileTask&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractLoadFileTask&lt;T&gt;">
 <text x="0.0" y="13.5" stroke="none" data-name="AbstractLoadFileTask&lt;T&gt;">+getDataSchema(): LoadFileSchemaInterface&lt;T&gt;</text>
 <text x="0.0" y="28.5" stroke="none" data-name="AbstractLoadFileTask&lt;T&gt;">+getFilesList(): Promise&lt;FileItemInterface[]&gt;</text>
@@ -996,22 +1007,22 @@
 </g>
 <g data-name="LoadFileTaskInterface&lt;T&gt;">
 <g fill="lightblue" stroke="#33322E" data-name="LoadFileTaskInterface&lt;T&gt;">
-<rect x="8419.3" y="1366.5" height="130.0" width="364.0" data-name="LoadFileTaskInterface&lt;T&gt;"></rect>
-<path d="M8419.3 1397.5 L8783.3 1397.5" fill="none" data-name="LoadFileTaskInterface&lt;T&gt;"></path>
-<path d="M8419.3 1405.5 L8783.3 1405.5" fill="none" data-name="LoadFileTaskInterface&lt;T&gt;"></path>
+<rect x="9597.0" y="1627.0" height="130.0" width="368.0" data-name="LoadFileTaskInterface&lt;T&gt;"></rect>
+<path d="M9597.0 1658.0 L9965.0 1658.0" fill="none" data-name="LoadFileTaskInterface&lt;T&gt;"></path>
+<path d="M9597.0 1666.0 L9965.0 1666.0" fill="none" data-name="LoadFileTaskInterface&lt;T&gt;"></path>
 </g>
-<g transform="translate(8419.25, 1366.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LoadFileTaskInterface&lt;T&gt;">
+<g transform="translate(9597, 1627)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LoadFileTaskInterface&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="LoadFileTaskInterface&lt;T&gt;">
-<a id="../src/task/LoadFileTaskInterfaces.ts.LoadFileTaskInterface&lt;T&gt;" xlink:href="../src/task/LoadFileTaskInterfaces.ts"><text x="174.0" y="13.5" stroke="none" text-anchor="middle" data-name="LoadFileTaskInterface&lt;T&gt;">LoadFileTaskInterface&lt;T&gt;</text></a>
+<a id="../src/task/LoadFileTaskInterfaces.ts.LoadFileTaskInterface&lt;T&gt;" xlink:href="../src/task/LoadFileTaskInterfaces.ts"><text x="176.0" y="13.5" stroke="none" text-anchor="middle" data-name="LoadFileTaskInterface&lt;T&gt;">LoadFileTaskInterface&lt;T&gt;</text></a>
 
 </g>
 </g>
-<g transform="translate(8419.25, 1397.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LoadFileTaskInterface&lt;T&gt;">
+<g transform="translate(9597, 1658)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LoadFileTaskInterface&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" data-name="LoadFileTaskInterface&lt;T&gt;">
 
 </g>
 </g>
-<g transform="translate(8419.25, 1405.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LoadFileTaskInterface&lt;T&gt;">
+<g transform="translate(9597, 1666)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LoadFileTaskInterface&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="LoadFileTaskInterface&lt;T&gt;">
 <text x="0.0" y="13.5" stroke="none" data-name="LoadFileTaskInterface&lt;T&gt;">+getFilesList(): Promise&lt;FileItemInterface[]&gt;</text>
 <text x="0.0" y="28.5" stroke="none" data-name="LoadFileTaskInterface&lt;T&gt;">+parseRawData(): Promise&lt;object[]&gt;</text>
@@ -1055,17 +1066,17 @@
 </g>
 <g data-name="CommandStatistic">
 <g fill="lightblue" stroke="#33322E" data-name="CommandStatistic">
-<rect x="8131.5" y="555.0" height="145.0" width="255.0" data-name="CommandStatistic"></rect>
-<path d="M8131.5 586.0 L8386.5 586.0" fill="none" data-name="CommandStatistic"></path>
-<path d="M8131.5 692.0 L8386.5 692.0" fill="none" data-name="CommandStatistic"></path>
+<rect x="7935.0" y="555.0" height="145.0" width="255.0" data-name="CommandStatistic"></rect>
+<path d="M7935.0 586.0 L8190.0 586.0" fill="none" data-name="CommandStatistic"></path>
+<path d="M7935.0 692.0 L8190.0 692.0" fill="none" data-name="CommandStatistic"></path>
 </g>
-<g transform="translate(8131.5, 555)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CommandStatistic">
+<g transform="translate(7935, 555)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CommandStatistic">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="CommandStatistic">
 <a id="../src/task/BaseCommand.ts.CommandStatistic" xlink:href="../src/task/BaseCommand.ts"><text x="119.5" y="13.5" stroke="none" text-anchor="middle" data-name="CommandStatistic">CommandStatistic</text></a>
 
 </g>
 </g>
-<g transform="translate(8131.5, 586)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CommandStatistic">
+<g transform="translate(7935, 586)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CommandStatistic">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="CommandStatistic">
 <text x="0.0" y="13.5" stroke="none" data-name="CommandStatistic">+startTimeMs?: number</text>
 <text x="0.0" y="28.5" stroke="none" data-name="CommandStatistic">+endTimeMs?: number</text>
@@ -1076,7 +1087,7 @@
 
 </g>
 </g>
-<g transform="translate(8131.5, 692)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CommandStatistic">
+<g transform="translate(7935, 692)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="CommandStatistic">
 <g transform="translate(8, 8)" fill="#33322E" data-name="CommandStatistic">
 
 </g>
@@ -1084,24 +1095,24 @@
 </g>
 <g data-name="Argument">
 <g fill="lightblue" stroke="#33322E" data-name="Argument">
-<rect x="8426.5" y="585.0" height="85.0" width="195.0" data-name="Argument"></rect>
-<path d="M8426.5 616.0 L8621.5 616.0" fill="none" data-name="Argument"></path>
-<path d="M8426.5 662.0 L8621.5 662.0" fill="none" data-name="Argument"></path>
+<rect x="8230.0" y="585.0" height="85.0" width="195.0" data-name="Argument"></rect>
+<path d="M8230.0 616.0 L8425.0 616.0" fill="none" data-name="Argument"></path>
+<path d="M8230.0 662.0 L8425.0 662.0" fill="none" data-name="Argument"></path>
 </g>
-<g transform="translate(8426.5, 585)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Argument">
+<g transform="translate(8230, 585)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Argument">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Argument">
 <a id="../src/task/BaseCommand.ts.Argument" xlink:href="../src/task/BaseCommand.ts"><text x="89.5" y="13.5" stroke="none" text-anchor="middle" data-name="Argument">Argument</text></a>
 
 </g>
 </g>
-<g transform="translate(8426.5, 616)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Argument">
+<g transform="translate(8230, 616)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Argument">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Argument">
 <text x="0.0" y="13.5" stroke="none" data-name="Argument">+argName: string</text>
 <text x="0.0" y="28.5" stroke="none" data-name="Argument">+argDescription: string</text>
 
 </g>
 </g>
-<g transform="translate(8426.5, 662)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Argument">
+<g transform="translate(8230, 662)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Argument">
 <g transform="translate(8, 8)" fill="#33322E" data-name="Argument">
 
 </g>
@@ -1109,24 +1120,24 @@
 </g>
 <g data-name="InitialDataItem&lt;T&gt;">
 <g fill="lightblue" stroke="#33322E" data-name="InitialDataItem&lt;T&gt;">
-<rect x="8661.5" y="585.0" height="85.0" width="210.0" data-name="InitialDataItem&lt;T&gt;"></rect>
-<path d="M8661.5 616.0 L8871.5 616.0" fill="none" data-name="InitialDataItem&lt;T&gt;"></path>
-<path d="M8661.5 662.0 L8871.5 662.0" fill="none" data-name="InitialDataItem&lt;T&gt;"></path>
+<rect x="8465.0" y="585.0" height="85.0" width="210.0" data-name="InitialDataItem&lt;T&gt;"></rect>
+<path d="M8465.0 616.0 L8675.0 616.0" fill="none" data-name="InitialDataItem&lt;T&gt;"></path>
+<path d="M8465.0 662.0 L8675.0 662.0" fill="none" data-name="InitialDataItem&lt;T&gt;"></path>
 </g>
-<g transform="translate(8661.5, 585)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="InitialDataItem&lt;T&gt;">
+<g transform="translate(8465, 585)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="InitialDataItem&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="InitialDataItem&lt;T&gt;">
-<a id="../src/task/GenerateFileTasklnterfaces.ts.InitialDataItem&lt;T&gt;" xlink:href="../src/task/GenerateFileTasklnterfaces.ts"><text x="97.0" y="13.5" stroke="none" text-anchor="middle" data-name="InitialDataItem&lt;T&gt;">InitialDataItem&lt;T&gt;</text></a>
+<a id="../src/task/GenerateFileTaskInterfaces.ts.InitialDataItem&lt;T&gt;" xlink:href="../src/task/GenerateFileTaskInterfaces.ts"><text x="97.0" y="13.5" stroke="none" text-anchor="middle" data-name="InitialDataItem&lt;T&gt;">InitialDataItem&lt;T&gt;</text></a>
 
 </g>
 </g>
-<g transform="translate(8661.5, 616)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="InitialDataItem&lt;T&gt;">
+<g transform="translate(8465, 616)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="InitialDataItem&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="InitialDataItem&lt;T&gt;">
 <text x="0.0" y="13.5" stroke="none" data-name="InitialDataItem&lt;T&gt;">+targetFileName?: string</text>
 <text x="0.0" y="28.5" stroke="none" data-name="InitialDataItem&lt;T&gt;">+initialData: T[]</text>
 
 </g>
 </g>
-<g transform="translate(8661.5, 662)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="InitialDataItem&lt;T&gt;">
+<g transform="translate(8465, 662)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="InitialDataItem&lt;T&gt;">
 <g transform="translate(8, 8)" fill="#33322E" data-name="InitialDataItem&lt;T&gt;">
 
 </g>
@@ -1134,46 +1145,101 @@
 </g>
 <g data-name="FileItemInterface">
 <g fill="lightblue" stroke="#33322E" data-name="FileItemInterface">
-<rect x="8911.5" y="592.5" height="70.0" width="148.0" data-name="FileItemInterface"></rect>
-<path d="M8911.5 623.5 L9059.5 623.5" fill="none" data-name="FileItemInterface"></path>
-<path d="M8911.5 654.5 L9059.5 654.5" fill="none" data-name="FileItemInterface"></path>
+<rect x="8715.0" y="592.5" height="70.0" width="148.0" data-name="FileItemInterface"></rect>
+<path d="M8715.0 623.5 L8863.0 623.5" fill="none" data-name="FileItemInterface"></path>
+<path d="M8715.0 654.5 L8863.0 654.5" fill="none" data-name="FileItemInterface"></path>
 </g>
-<g transform="translate(8911.5, 592.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="FileItemInterface">
+<g transform="translate(8715, 592.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="FileItemInterface">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="FileItemInterface">
 <a id="../src/task/LoadFileTaskInterfaces.ts.FileItemInterface" xlink:href="../src/task/LoadFileTaskInterfaces.ts"><text x="66.0" y="13.5" stroke="none" text-anchor="middle" data-name="FileItemInterface">FileItemInterface</text></a>
 
 </g>
 </g>
-<g transform="translate(8911.5, 623.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="FileItemInterface">
+<g transform="translate(8715, 623.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="FileItemInterface">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="FileItemInterface">
 <text x="0.0" y="13.5" stroke="none" data-name="FileItemInterface">+file: string</text>
 
 </g>
 </g>
-<g transform="translate(8911.5, 654.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="FileItemInterface">
+<g transform="translate(8715, 654.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="FileItemInterface">
 <g transform="translate(8, 8)" fill="#33322E" data-name="FileItemInterface">
+
+</g>
+</g>
+</g>
+<g data-name="TaskLauncher">
+<g fill="#eee8d5" stroke="#33322E" data-name="TaskLauncher">
+<rect x="9887.0" y="1332.5" height="198.0" width="308.0" data-name="TaskLauncher"></rect>
+<path d="M9887.0 1363.5 L10195.0 1363.5" fill="none" data-name="TaskLauncher"></path>
+<path d="M9887.0 1439.5 L10195.0 1439.5" fill="none" data-name="TaskLauncher"></path>
+</g>
+<g transform="translate(9887, 1332.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TaskLauncher">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TaskLauncher">
+<a id="../src/task/TaskLauncher.ts.TaskLauncher" xlink:href="../src/task/TaskLauncher.ts"><text x="146.0" y="13.5" stroke="none" text-anchor="middle" data-name="TaskLauncher">TaskLauncher</text></a>
+
+</g>
+</g>
+<g transform="translate(9887, 1363.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskLauncher">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TaskLauncher">
+<text x="0.0" y="13.5" stroke="none" data-name="TaskLauncher">+task: AbstractTask | undefined</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TaskLauncher">+mode: string</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TaskLauncher">+displayHelp: boolean</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TaskLauncher">+tasksList: TaskListInterface</text>
+
+</g>
+</g>
+<g transform="translate(9887, 1439.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskLauncher">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TaskLauncher">
+<text x="0.0" y="13.5" stroke="none" data-name="TaskLauncher">+getArgsList(): Argument[]</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TaskLauncher">+parseArgs(): void</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TaskLauncher">+parseTaskArgs(): void</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TaskLauncher">#getTask(): AbstractTask | undefined</text>
+<text x="0.0" y="73.5" stroke="none" data-name="TaskLauncher">#run(): void</text>
+
+</g>
+</g>
+</g>
+<g data-name="TaskListInterface">
+<g fill="lightblue" stroke="#33322E" data-name="TaskListInterface">
+<rect x="10005.0" y="1668.5" height="47.0" width="152.0" data-name="TaskListInterface"></rect>
+<path d="M10005.0 1699.5 L10157.0 1699.5" fill="none" data-name="TaskListInterface"></path>
+<path d="M10005.0 1707.5 L10157.0 1707.5" fill="none" data-name="TaskListInterface"></path>
+</g>
+<g transform="translate(10005, 1668.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskListInterface">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TaskListInterface">
+<a id="../src/task/TaskLauncher.ts.TaskListInterface" xlink:href="../src/task/TaskLauncher.ts"><text x="68.0" y="13.5" stroke="none" text-anchor="middle" data-name="TaskListInterface">TaskListInterface</text></a>
+
+</g>
+</g>
+<g transform="translate(10005, 1699.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskListInterface">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TaskListInterface">
+
+</g>
+</g>
+<g transform="translate(10005, 1707.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TaskListInterface">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TaskListInterface">
 
 </g>
 </g>
 </g>
 <g data-name="LocalClient">
 <g fill="#eee8d5" stroke="#33322E" data-name="LocalClient">
-<rect x="9616.3" y="1336.5" height="190.0" width="353.0" data-name="LocalClient"></rect>
-<path d="M9616.3 1367.5 L9969.3 1367.5" fill="none" data-name="LocalClient"></path>
-<path d="M9616.3 1375.5 L9969.3 1375.5" fill="none" data-name="LocalClient"></path>
+<rect x="8157.8" y="1336.5" height="190.0" width="353.0" data-name="LocalClient"></rect>
+<path d="M8157.8 1367.5 L8510.8 1367.5" fill="none" data-name="LocalClient"></path>
+<path d="M8157.8 1375.5 L8510.8 1375.5" fill="none" data-name="LocalClient"></path>
 </g>
-<g transform="translate(9616.25, 1336.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="LocalClient">
+<g transform="translate(8157.75, 1336.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="LocalClient">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="LocalClient">
 <a id="../src/transfer/LocalClient.ts.LocalClient" xlink:href="../src/transfer/LocalClient.ts"><text x="168.5" y="13.5" stroke="none" text-anchor="middle" data-name="LocalClient">LocalClient</text></a>
 
 </g>
 </g>
-<g transform="translate(9616.25, 1367.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LocalClient">
+<g transform="translate(8157.75, 1367.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LocalClient">
 <g transform="translate(8, 8)" fill="#33322E" data-name="LocalClient">
 
 </g>
 </g>
-<g transform="translate(9616.25, 1375.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LocalClient">
+<g transform="translate(8157.75, 1375.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="LocalClient">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="LocalClient">
 <text x="0.0" y="13.5" stroke="none" data-name="LocalClient">+open(): Promise&lt;void&gt;</text>
 <text x="0.0" y="28.5" stroke="none" data-name="LocalClient">+close(): Promise&lt;void&gt;</text>
@@ -1190,22 +1256,22 @@
 </g>
 <g data-name="TransferInterface">
 <g fill="lightblue" stroke="#33322E" data-name="TransferInterface">
-<rect x="9219.8" y="532.5" height="190.0" width="353.0" data-name="TransferInterface"></rect>
-<path d="M9219.8 563.5 L9572.8 563.5" fill="none" data-name="TransferInterface"></path>
-<path d="M9219.8 571.5 L9572.8 571.5" fill="none" data-name="TransferInterface"></path>
+<rect x="8903.0" y="532.5" height="190.0" width="353.0" data-name="TransferInterface"></rect>
+<path d="M8903.0 563.5 L9256.0 563.5" fill="none" data-name="TransferInterface"></path>
+<path d="M8903.0 571.5 L9256.0 571.5" fill="none" data-name="TransferInterface"></path>
 </g>
-<g transform="translate(9219.75, 532.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferInterface">
+<g transform="translate(8903, 532.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferInterface">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TransferInterface">
 <a id="../src/transfer/TransferInterfaces.ts.TransferInterface" xlink:href="../src/transfer/TransferInterfaces.ts"><text x="168.5" y="13.5" stroke="none" text-anchor="middle" data-name="TransferInterface">TransferInterface</text></a>
 
 </g>
 </g>
-<g transform="translate(9219.75, 563.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferInterface">
+<g transform="translate(8903, 563.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferInterface">
 <g transform="translate(8, 8)" fill="#33322E" data-name="TransferInterface">
 
 </g>
 </g>
-<g transform="translate(9219.75, 571.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferInterface">
+<g transform="translate(8903, 571.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferInterface">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TransferInterface">
 <text x="0.0" y="13.5" stroke="none" data-name="TransferInterface">+open(): Promise&lt;void&gt;</text>
 <text x="0.0" y="28.5" stroke="none" data-name="TransferInterface">+close(): Promise&lt;void&gt;</text>
@@ -1222,24 +1288,24 @@
 </g>
 <g data-name="SftpClient">
 <g fill="#eee8d5" stroke="#33322E" data-name="SftpClient">
-<rect x="9216.3" y="1317.5" height="228.0" width="360.0" data-name="SftpClient"></rect>
-<path d="M9216.3 1348.5 L9576.3 1348.5" fill="none" data-name="SftpClient"></path>
-<path d="M9216.3 1394.5 L9576.3 1394.5" fill="none" data-name="SftpClient"></path>
+<rect x="8902.0" y="1317.5" height="228.0" width="355.0" data-name="SftpClient"></rect>
+<path d="M8902.0 1348.5 L9257.0 1348.5" fill="none" data-name="SftpClient"></path>
+<path d="M8902.0 1394.5 L9257.0 1394.5" fill="none" data-name="SftpClient"></path>
 </g>
-<g transform="translate(9216.25, 1317.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SftpClient">
+<g transform="translate(8902, 1317.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SftpClient">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SftpClient">
-<a id="../src/transfer/SftpClient.ts.SftpClient" xlink:href="../src/transfer/SftpClient.ts"><text x="172.0" y="13.5" stroke="none" text-anchor="middle" data-name="SftpClient">SftpClient</text></a>
+<a id="../src/transfer/SftpClient.ts.SftpClient" xlink:href="../src/transfer/SftpClient.ts"><text x="169.5" y="13.5" stroke="none" text-anchor="middle" data-name="SftpClient">SftpClient</text></a>
 
 </g>
 </g>
-<g transform="translate(9216.25, 1348.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SftpClient">
+<g transform="translate(8902, 1348.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SftpClient">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SftpClient">
 <text x="0.0" y="13.5" stroke="none" data-name="SftpClient">+configuration: SSH2TransferConfiguration</text>
 <text x="0.0" y="28.5" stroke="none" data-name="SftpClient">+client: sftp</text>
 
 </g>
 </g>
-<g transform="translate(9216.25, 1394.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SftpClient">
+<g transform="translate(8902, 1394.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SftpClient">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SftpClient">
 <text x="0.0" y="13.5" stroke="none" data-name="SftpClient">+open(): Promise&lt;void&gt;</text>
 <text x="0.0" y="28.5" stroke="none" data-name="SftpClient">+close(): Promise&lt;void&gt;</text>
@@ -1256,26 +1322,28 @@
 </g>
 <g data-name="SSH2TransferConfiguration">
 <g fill="lightblue" stroke="#33322E" data-name="SSH2TransferConfiguration">
-<rect x="9612.8" y="570.0" height="115.0" width="237.0" data-name="SSH2TransferConfiguration"></rect>
-<path d="M9612.8 601.0 L9849.8 601.0" fill="none" data-name="SSH2TransferConfiguration"></path>
-<path d="M9612.8 677.0 L9849.8 677.0" fill="none" data-name="SSH2TransferConfiguration"></path>
+<rect x="9296.0" y="555.0" height="145.0" width="243.0" data-name="SSH2TransferConfiguration"></rect>
+<path d="M9296.0 586.0 L9539.0 586.0" fill="none" data-name="SSH2TransferConfiguration"></path>
+<path d="M9296.0 692.0 L9539.0 692.0" fill="none" data-name="SSH2TransferConfiguration"></path>
 </g>
-<g transform="translate(9612.75, 570)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransferConfiguration">
+<g transform="translate(9296, 555)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransferConfiguration">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SSH2TransferConfiguration">
-<a id="../src/transfer/SftpClient.ts.SSH2TransferConfiguration" xlink:href="../src/transfer/SftpClient.ts"><text x="110.5" y="13.5" stroke="none" text-anchor="middle" data-name="SSH2TransferConfiguration">SSH2TransferConfiguration</text></a>
+<a id="../src/transfer/SftpClient.ts.SSH2TransferConfiguration" xlink:href="../src/transfer/SftpClient.ts"><text x="113.5" y="13.5" stroke="none" text-anchor="middle" data-name="SSH2TransferConfiguration">SSH2TransferConfiguration</text></a>
 
 </g>
 </g>
-<g transform="translate(9612.75, 601)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransferConfiguration">
+<g transform="translate(9296, 586)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransferConfiguration">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SSH2TransferConfiguration">
 <text x="0.0" y="13.5" stroke="none" data-name="SSH2TransferConfiguration">+hostname: string</text>
 <text x="0.0" y="28.5" stroke="none" data-name="SSH2TransferConfiguration">+port: number</text>
 <text x="0.0" y="43.5" stroke="none" data-name="SSH2TransferConfiguration">+username: string</text>
 <text x="0.0" y="58.5" stroke="none" data-name="SSH2TransferConfiguration">+password: string</text>
+<text x="0.0" y="73.5" stroke="none" data-name="SSH2TransferConfiguration">+retries?: number</text>
+<text x="0.0" y="88.5" stroke="none" data-name="SSH2TransferConfiguration">+retry_minTimeout?: number</text>
 
 </g>
 </g>
-<g transform="translate(9612.75, 677)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransferConfiguration">
+<g transform="translate(9296, 692)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransferConfiguration">
 <g transform="translate(8, 8)" fill="#33322E" data-name="SSH2TransferConfiguration">
 
 </g>
@@ -1283,17 +1351,17 @@
 </g>
 <g data-name="Transfer">
 <g fill="#eee8d5" stroke="#33322E" data-name="Transfer">
-<rect x="8823.3" y="1295.0" height="273.0" width="353.0" data-name="Transfer"></rect>
-<path d="M8823.3 1326.0 L9176.3 1326.0" fill="none" data-name="Transfer"></path>
-<path d="M8823.3 1387.0 L9176.3 1387.0" fill="none" data-name="Transfer"></path>
+<rect x="9297.0" y="1295.0" height="273.0" width="353.0" data-name="Transfer"></rect>
+<path d="M9297.0 1326.0 L9650.0 1326.0" fill="none" data-name="Transfer"></path>
+<path d="M9297.0 1387.0 L9650.0 1387.0" fill="none" data-name="Transfer"></path>
 </g>
-<g transform="translate(8823.25, 1295)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Transfer">
+<g transform="translate(9297, 1295)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Transfer">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Transfer">
 <a id="../src/transfer/Transfer.ts.Transfer" xlink:href="../src/transfer/Transfer.ts"><text x="168.5" y="13.5" stroke="none" text-anchor="middle" data-name="Transfer">Transfer</text></a>
 
 </g>
 </g>
-<g transform="translate(8823.25, 1326)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Transfer">
+<g transform="translate(9297, 1326)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Transfer">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Transfer">
 <text x="0.0" y="13.5" stroke="none" data-name="Transfer">+protocol: TransferProtocol</text>
 <text x="0.0" y="28.5" stroke="none" data-name="Transfer">+configuration: TransferConfiguration</text>
@@ -1301,7 +1369,7 @@
 
 </g>
 </g>
-<g transform="translate(8823.25, 1387)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Transfer">
+<g transform="translate(9297, 1387)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Transfer">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Transfer">
 <text x="0.0" y="13.5" stroke="none" data-name="Transfer">+open(): Promise&lt;void&gt;</text>
 <text x="0.0" y="28.5" stroke="none" data-name="Transfer">+close(): Promise&lt;void&gt;</text>
@@ -1320,16 +1388,16 @@
 </g>
 <g data-name="TransferProtocol">
 <g fill="lightgreen" stroke="#33322E" data-name="TransferProtocol">
-<rect x="9889.8" y="581.5" height="92.0" width="152.0" data-name="TransferProtocol"></rect>
-<path d="M9889.8 612.5 L10041.8 612.5" fill="none" data-name="TransferProtocol"></path>
+<rect x="9579.0" y="581.5" height="92.0" width="147.0" data-name="TransferProtocol"></rect>
+<path d="M9579.0 612.5 L9726.0 612.5" fill="none" data-name="TransferProtocol"></path>
 </g>
-<g transform="translate(9889.75, 581.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferProtocol">
+<g transform="translate(9579, 581.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferProtocol">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TransferProtocol">
-<a id="../src/transfer/Transfer.ts.TransferProtocol" xlink:href="../src/transfer/Transfer.ts"><text x="68.0" y="13.5" stroke="none" text-anchor="middle" data-name="TransferProtocol">TransferProtocol</text></a>
+<a id="../src/transfer/Transfer.ts.TransferProtocol" xlink:href="../src/transfer/Transfer.ts"><text x="65.5" y="13.5" stroke="none" text-anchor="middle" data-name="TransferProtocol">TransferProtocol</text></a>
 
 </g>
 </g>
-<g transform="translate(9889.75, 612.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferProtocol">
+<g transform="translate(9579, 612.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferProtocol">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TransferProtocol">
 <text x="0.0" y="13.5" stroke="none" data-name="TransferProtocol">sftp</text>
 <text x="0.0" y="28.5" stroke="none" data-name="TransferProtocol">ftp</text>
@@ -1340,26 +1408,28 @@
 </g>
 <g data-name="TransferConfiguration">
 <g fill="lightblue" stroke="#33322E" data-name="TransferConfiguration">
-<rect x="10081.8" y="570.0" height="115.0" width="193.0" data-name="TransferConfiguration"></rect>
-<path d="M10081.8 601.0 L10274.8 601.0" fill="none" data-name="TransferConfiguration"></path>
-<path d="M10081.8 677.0 L10274.8 677.0" fill="none" data-name="TransferConfiguration"></path>
+<rect x="9766.0" y="555.0" height="145.0" width="188.0" data-name="TransferConfiguration"></rect>
+<path d="M9766.0 586.0 L9954.0 586.0" fill="none" data-name="TransferConfiguration"></path>
+<path d="M9766.0 692.0 L9954.0 692.0" fill="none" data-name="TransferConfiguration"></path>
 </g>
-<g transform="translate(10081.75, 570)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferConfiguration">
+<g transform="translate(9766, 555)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferConfiguration">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TransferConfiguration">
-<a id="../src/transfer/TransferInterfaces.ts.TransferConfiguration" xlink:href="../src/transfer/TransferInterfaces.ts"><text x="88.5" y="13.5" stroke="none" text-anchor="middle" data-name="TransferConfiguration">TransferConfiguration</text></a>
+<a id="../src/transfer/TransferInterfaces.ts.TransferConfiguration" xlink:href="../src/transfer/TransferInterfaces.ts"><text x="86.0" y="13.5" stroke="none" text-anchor="middle" data-name="TransferConfiguration">TransferConfiguration</text></a>
 
 </g>
 </g>
-<g transform="translate(10081.75, 601)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferConfiguration">
+<g transform="translate(9766, 586)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferConfiguration">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TransferConfiguration">
 <text x="0.0" y="13.5" stroke="none" data-name="TransferConfiguration">+hostname: string</text>
 <text x="0.0" y="28.5" stroke="none" data-name="TransferConfiguration">+port: number</text>
 <text x="0.0" y="43.5" stroke="none" data-name="TransferConfiguration">+username: string</text>
 <text x="0.0" y="58.5" stroke="none" data-name="TransferConfiguration">+password: string</text>
+<text x="0.0" y="73.5" stroke="none" data-name="TransferConfiguration">+retries?: number</text>
+<text x="0.0" y="88.5" stroke="none" data-name="TransferConfiguration">+delay?: number</text>
 
 </g>
 </g>
-<g transform="translate(10081.75, 677)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferConfiguration">
+<g transform="translate(9766, 692)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferConfiguration">
 <g transform="translate(8, 8)" fill="#33322E" data-name="TransferConfiguration">
 
 </g>
@@ -1367,22 +1437,22 @@
 </g>
 <g data-name="Console">
 <g fill="#eee8d5" stroke="#33322E" data-name="Console">
-<rect x="10314.8" y="525.0" height="205.0" width="184.0" data-name="Console"></rect>
-<path d="M10314.8 556.0 L10498.8 556.0" fill="none" data-name="Console"></path>
-<path d="M10314.8 564.0 L10498.8 564.0" fill="none" data-name="Console"></path>
+<rect x="9994.0" y="525.0" height="205.0" width="184.0" data-name="Console"></rect>
+<path d="M9994.0 556.0 L10178.0 556.0" fill="none" data-name="Console"></path>
+<path d="M9994.0 564.0 L10178.0 564.0" fill="none" data-name="Console"></path>
 </g>
-<g transform="translate(10314.75, 525)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Console">
+<g transform="translate(9994, 525)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Console">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Console">
 <a id="../src/utils/Console.ts.Console" xlink:href="../src/utils/Console.ts"><text x="84.0" y="13.5" stroke="none" text-anchor="middle" data-name="Console">Console</text></a>
 
 </g>
 </g>
-<g transform="translate(10314.75, 556)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Console">
+<g transform="translate(9994, 556)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Console">
 <g transform="translate(8, 8)" fill="#33322E" data-name="Console">
 
 </g>
 </g>
-<g transform="translate(10314.75, 564)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Console">
+<g transform="translate(9994, 564)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Console">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Console">
 <text x="0.0" y="13.5" stroke="none" data-name="Console">+log(): void</text>
 <text x="0.0" y="28.5" stroke="none" data-name="Console">+trace(): void</text>
@@ -1400,24 +1470,48 @@
 </g>
 <g data-name="ExceptionUtils">
 <g fill="#eee8d5" stroke="#33322E" data-name="ExceptionUtils">
-<rect x="10538.8" y="592.5" height="70.0" width="450.0" data-name="ExceptionUtils"></rect>
-<path d="M10538.8 623.5 L10988.8 623.5" fill="none" data-name="ExceptionUtils"></path>
-<path d="M10538.8 631.5 L10988.8 631.5" fill="none" data-name="ExceptionUtils"></path>
+<rect x="10218.0" y="592.5" height="70.0" width="450.0" data-name="ExceptionUtils"></rect>
+<path d="M10218.0 623.5 L10668.0 623.5" fill="none" data-name="ExceptionUtils"></path>
+<path d="M10218.0 631.5 L10668.0 631.5" fill="none" data-name="ExceptionUtils"></path>
 </g>
-<g transform="translate(10538.75, 592.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ExceptionUtils">
+<g transform="translate(10218, 592.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="ExceptionUtils">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="ExceptionUtils">
 <a id="../src/utils/ExceptionUtils.ts.ExceptionUtils" xlink:href="../src/utils/ExceptionUtils.ts"><text x="217.0" y="13.5" stroke="none" text-anchor="middle" data-name="ExceptionUtils">ExceptionUtils</text></a>
 
 </g>
 </g>
-<g transform="translate(10538.75, 623.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ExceptionUtils">
+<g transform="translate(10218, 623.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ExceptionUtils">
 <g transform="translate(8, 8)" fill="#33322E" data-name="ExceptionUtils">
 
 </g>
 </g>
-<g transform="translate(10538.75, 631.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ExceptionUtils">
+<g transform="translate(10218, 631.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="ExceptionUtils">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="ExceptionUtils">
 <text x="0.0" y="13.5" stroke="none" data-name="ExceptionUtils">#getEventTypeFromException(): EventTypeEnumString</text>
+
+</g>
+</g>
+</g>
+<g data-name="TestHelpers">
+<g fill="#eee8d5" stroke="#33322E" data-name="TestHelpers">
+<rect x="10708.0" y="592.5" height="70.0" width="323.0" data-name="TestHelpers"></rect>
+<path d="M10708.0 623.5 L11031.0 623.5" fill="none" data-name="TestHelpers"></path>
+<path d="M10708.0 631.5 L11031.0 631.5" fill="none" data-name="TestHelpers"></path>
+</g>
+<g transform="translate(10708, 592.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="TestHelpers">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TestHelpers">
+<a id="../src/utils/TestHelpers.ts.TestHelpers" xlink:href="../src/utils/TestHelpers.ts"><text x="153.5" y="13.5" stroke="none" text-anchor="middle" data-name="TestHelpers">TestHelpers</text></a>
+
+</g>
+</g>
+<g transform="translate(10708, 623.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TestHelpers">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TestHelpers">
+
+</g>
+</g>
+<g transform="translate(10708, 631.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TestHelpers">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TestHelpers">
+<text x="0.0" y="13.5" stroke="none" data-name="TestHelpers">#expectThrowsAsync(): Promise&lt;void&gt;</text>
 
 </g>
 </g>

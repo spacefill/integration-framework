@@ -1,6 +1,6 @@
 import { WorkflowType } from "../api/APIContext.ts";
 
-interface GenerateFileTasklnterface<T> {
+interface GenerateFileTaskInterface<T> {
   initApiClient(workflowType: WorkflowType): void;
   initFilesGeneration(): InitialDataItem<T>[];
   prepareFileData(): Promise<T[]>;
@@ -15,4 +15,4 @@ interface InitialDataItem<T> {
   initialData: T[];
 }
 
-export { GenerateFileTasklnterface, InitialDataItem };
+export { GenerateFileTaskInterface, InitialDataItem };

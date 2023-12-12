@@ -24,7 +24,7 @@ export * from "./task/AbstractGenerateFileTask.ts";
 export * from "./task/AbstractLoadFileTask.ts";
 export * from "./task/AbstractTask.ts";
 export * from "./task/BaseCommand.ts";
-export * from "./task/GenerateFileTasklnterfaces.ts";
+export * from "./task/GenerateFileTaskInterfaces.ts";
 export * from "./task/LoadFileTaskInterfaces.ts";
 export * from "./transfer/LocalClient.ts";
 export * from "./transfer/SftpClient.ts";

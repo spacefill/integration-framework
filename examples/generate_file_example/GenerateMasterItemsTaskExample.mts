@@ -6,7 +6,7 @@ import * as csv from "fast-csv";
 import { Config } from "../../src/configs/Config.ts";
 import { AbstractGenerateFileTask } from "../../src/task/AbstractGenerateFileTask.ts";
 import { Console } from "../../src/utils/Console.ts";
-import { InitialDataItem } from "../../src/task/GenerateFileTasklnterfaces.ts";
+import { InitialDataItem } from "../../src/task/GenerateFileTaskInterfaces.ts";
 import { DefaultGenerateMasterItemsSchema } from "./schemas/DefaultGenerateMasterItemsSchema.ts";
 import { WorkflowType } from "../../src/api/APIContext.ts";
 import { InternalError } from "../../src/exceptions/InternalError.ts";

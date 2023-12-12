@@ -3,7 +3,7 @@ import { temporaryFileTask } from "tempy";
 import { Config } from "../configs/Config.ts";
 import { Console } from "../utils/Console.ts";
 import { AbstractTask } from "./AbstractTask.ts";
-import { GenerateFileTasklnterface, InitialDataItem } from "./GenerateFileTasklnterfaces.ts";
+import { GenerateFileTaskInterface, InitialDataItem } from "./GenerateFileTaskInterfaces.ts";
 import { EventTypeEnumString } from "../api/EdiEvent.ts";
 import { ExceptionUtils } from "../utils/ExceptionUtils.ts";
 import { NetWorkError } from "../exceptions/NetWorkError.ts";
@@ -15,7 +15,7 @@ import { InternalError } from "../exceptions/InternalError.ts";
 
 export abstract class AbstractGenerateFileTask<T>
   extends AbstractTask
-  implements GenerateFileTasklnterface<T>
+  implements GenerateFileTaskInterface<T>
 {
   protected currentFileConfiguration: InitialDataItem<T> | undefined;
 
@@ -60,7 +60,7 @@ export abstract class AbstractGenerateFileTask<T>
       Console.title("Api init");
       await this.initApiClient(this.getWorkflowType());
       if (!this.sdk.client || !this.sdk.ediEvent) {
-        throw new InternalError("SDK is not well initiazed - client or ediEvent missing");
+        throw new InternalError("SDK is not well initialized - client or ediEvent missing");
       }
       this.sdk.dataSource = "API";
 

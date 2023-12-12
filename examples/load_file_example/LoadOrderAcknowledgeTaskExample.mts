@@ -111,7 +111,7 @@ export class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTask<
 
   async dataProcessing(mappedData: OrderInterface[] | ExitOrderInterface[]): Promise<void> {
     if (!this.sdk.client || !this.sdk.ediEvent) {
-      throw new InternalError("SDK is not well initiazed - client or ediEvent missing");
+      throw new InternalError("SDK is not well initialized - client or ediEvent missing");
     }
     for (const currentOrder of mappedData) {
       const existingOrdersResponse = await this.sdk.client.get_v1_logistic_management_order_list({

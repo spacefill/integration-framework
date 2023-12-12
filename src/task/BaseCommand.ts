@@ -59,10 +59,10 @@ export abstract class BaseCommand {
 
   protected displayUsages() {
     const prefixTab = "  ";
-    const optionMaxLenght = 40;
+    const optionMaxLength = 40;
     Console.log(`\nOptions:`);
     for (const args of this.getArgsList()) {
-      let nbSpaces = Math.round(optionMaxLenght - args.argName.length);
+      let nbSpaces = Math.round(optionMaxLength - args.argName.length);
       if (nbSpaces < 1) {
         nbSpaces = 1;
       }
