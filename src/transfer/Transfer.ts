@@ -1,35 +1,35 @@
 import path from "path";
-import { TransfertConfiguration, TransfertInterface } from "./TransfertInterfaces.ts";
+import { TransferConfiguration, TransferInterface } from "./TransferInterfaces.ts";
 import { SftpClient } from "./SftpClient.ts";
 import { LocalClient } from "./LocalClient.ts";
 import { Config } from "../configs/Config.ts";
 import { Console } from "../utils/Console.ts";
 
-enum TransfertProtocol {
+enum TransferProtocol {
   sftp = "sftp",
   ftp = "ftp",
   local = "local",
 }
 
-class Transfert implements TransfertInterface {
-  protected protocol: TransfertProtocol;
-  protected configuration: TransfertConfiguration;
-  protected client: TransfertInterface;
+class Transfer implements TransferInterface {
+  protected protocol: TransferProtocol;
+  protected configuration: TransferConfiguration;
+  protected client: TransferInterface;
 
-  constructor(protocol: TransfertProtocol, configuration?: TransfertConfiguration) {
+  constructor(protocol: TransferProtocol, configuration?: TransferConfiguration) {
     this.protocol = protocol;
-    this.configuration = configuration as TransfertConfiguration;
+    this.configuration = configuration as TransferConfiguration;
 
-    Console.debug("Transfert", {
+    Console.debug("Transfer", {
       protocol: this.protocol,
       configuration: this.configuration,
     });
 
     switch (this.protocol) {
-      case TransfertProtocol.sftp:
+      case TransferProtocol.sftp:
         this.client = new SftpClient(this.configuration);
         break;
-      case TransfertProtocol.local:
+      case TransferProtocol.local:
         this.client = new LocalClient();
         break;
       default:
@@ -171,4 +171,4 @@ class Transfert implements TransfertInterface {
   }
 }
 
-export { Transfert, TransfertProtocol };
+export { Transfer, TransferProtocol };

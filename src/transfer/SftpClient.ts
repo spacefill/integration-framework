@@ -1,28 +1,28 @@
-import { TransfertConfiguration, TransfertInterface } from "./TransfertInterfaces.ts";
+import { TransferConfiguration, TransferInterface } from "./TransferInterfaces.ts";
 import sftp from "ssh2-sftp-client";
 import { Console } from "../utils/Console.ts";
 
-interface SSH2TransfertConfiguration {
+interface SSH2TransferConfiguration {
   hostname: string;
   port: number;
   username: string;
   password: string;
-  retries?: number,
-  retry_minTimeout?: number
+  retries?: number;
+  retry_minTimeout?: number;
 }
 
-export class SftpClient implements TransfertInterface {
-  private configuration: SSH2TransfertConfiguration;
+export class SftpClient implements TransferInterface {
+  private configuration: SSH2TransferConfiguration;
   private client: sftp;
 
-  constructor(configuration: TransfertConfiguration) {
+  constructor(configuration: TransferConfiguration) {
     this.configuration = {
       hostname: configuration.hostname,
       port: configuration.port,
       username: configuration.username,
       password: configuration.password,
       retries: configuration.retries,
-      retry_minTimeout: configuration.delay
+      retry_minTimeout: configuration.delay,
     };
     this.client = new sftp();
   }

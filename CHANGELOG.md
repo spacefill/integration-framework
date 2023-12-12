@@ -40,7 +40,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added
 
-- [#14](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/14) Add automatic connection retries for transfert operations.
+- [#14](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/14) Add automatic connection retries for transfer operations.
 
 ## [0.3.1] - 2023-12-06
 
@@ -56,7 +56,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixed
 
-- [!25](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/25) Move `LocalClient.test` and `Transfert.test` files in `tests/ci` folder + fix tests.
+- [!25](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/25) Move `LocalClient.test` and `Transfer.test` files in `tests/ci` folder + fix tests.
 
 ## [0.2.0] - 2023-11-29
 
@@ -68,13 +68,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixed
 
-- [#9](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/9) Transfert.listDirWithFilter missing full path in returned files.
+- [#9](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/9) Transfer.listDirWithFilter missing full path in returned files.
 
 ## [0.1.0] - 2023-11-29
 
 ### Added
 
-- [#8](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/8) Add new env var `WMS_DEFAULT_DIR` and a CLI argument `--wms-default-dir` to define the root dir in during transfert files.
+- [#8](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/8) Add new env var `WMS_DEFAULT_DIR` and a CLI argument `--wms-default-dir` to define the root dir in during transfer files.
 
 ## [0.0.1] - 2023-11-28
 

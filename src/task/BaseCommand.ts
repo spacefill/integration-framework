@@ -44,7 +44,7 @@ export abstract class BaseCommand {
       },
       {
         argName: "--wms-default-dir",
-        argDescription: "Root dir for transfert. e.g: --wms-default-dir=/root-dir => /root-dir/archives",
+        argDescription: "Root dir for transfer. e.g: --wms-default-dir=/root-dir => /root-dir/archives",
       },
       {
         argName: "--print-config",

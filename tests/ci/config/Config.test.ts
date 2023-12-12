@@ -10,7 +10,7 @@ describe("Config", () => {
   it("should get config", async () => {
     const config = Config.get();
 
-    expect(config).to.have.all.keys("spacefillApi", "transfert", "edi", "console", "log");
+    expect(config).to.have.all.keys("spacefillApi", "transfer", "edi", "console", "log");
 
     expect(config.spacefillApi).to.have.all.keys(
       "url",
@@ -27,7 +27,7 @@ describe("Config", () => {
       "clientType",
     );
 
-    expect(config.transfert).to.have.all.keys(
+    expect(config.transfer).to.have.all.keys(
       "protocol",
       "hostname",
       "port",

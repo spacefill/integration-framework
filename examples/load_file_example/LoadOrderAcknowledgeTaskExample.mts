@@ -78,7 +78,7 @@ export class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTask<
       `(CIN|CSO)_${Config.get().edi.wmsAgencyCode}_${Config.get().edi.wmsShipperID}_.*\\.(TXT|txt)$`,
     );
 
-    const filesList = await this.transfert.listDirWithFilter(filter);
+    const filesList = await this.transfer.listDirWithFilter(filter);
     return filesList.map((filename) => {
       const fileItem: FileItemInterface = {
         file: filename,
@@ -230,11 +230,11 @@ export class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTask<
     _preparedData: object[],
     mappedData: OrderInterface[] | ExitOrderInterface[],
   ): Promise<void> {
-    this.transfert.moveToArchiveDir(targetFileItem.file);
+    this.transfer.moveToArchiveDir(targetFileItem.file);
   }
 
   async onProcessingFileError(targetFileItem: FileItemInterface): Promise<void> {
-    this.transfert.moveToErrorDir(targetFileItem.file);
+    this.transfer.moveToErrorDir(targetFileItem.file);
   }
 }
 

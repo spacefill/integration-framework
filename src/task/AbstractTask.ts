@@ -1,23 +1,23 @@
 import { WorkflowType } from "../api/APIContext.ts";
 import { SpacefillAPIWrapperV1 } from "../api/SpacefillAPIWrapperV1.ts";
 import { Config } from "../configs/Config.ts";
-import { Transfert, TransfertProtocol } from "../transfert/Transfert.ts";
+import { Transfer, TransferProtocol } from "../transfer/Transfer.ts";
 import { Argument, BaseCommand } from "./BaseCommand.ts";
 
 export abstract class AbstractTask extends BaseCommand {
   protected sdk: SpacefillAPIWrapperV1;
-  protected transfert: Transfert;
+  protected transfer: Transfer;
 
   public constructor() {
     super();
     this.sdk = new SpacefillAPIWrapperV1();
-    this.transfert = new Transfert(Config.get().transfert.protocol as unknown as TransfertProtocol, {
-      hostname: Config.get().transfert.hostname as string,
-      port: Config.get().transfert.port as number,
-      username: Config.get().transfert.username as string,
-      password: Config.get().transfert.password as string,
-      retries: Config.get().transfert.retries as number,
-      delay: Config.get().transfert.delay as number,
+    this.transfer = new Transfer(Config.get().transfer.protocol as unknown as TransferProtocol, {
+      hostname: Config.get().transfer.hostname as string,
+      port: Config.get().transfer.port as number,
+      username: Config.get().transfer.username as string,
+      password: Config.get().transfer.password as string,
+      retries: Config.get().transfer.retries as number,
+      delay: Config.get().transfer.delay as number,
     });
   }
 

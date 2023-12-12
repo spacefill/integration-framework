@@ -14,7 +14,7 @@
 [SpacefillAPIWrapperV1|\#client: Client \| undefined;\#ediEvent: EdiEvent \| undefined;\#dataSource?: string;+workflowType: WorkflowType \| undefined;+apiUrl: string \| undefined;+bearerToken: string \| undefined;+axiosInstance: AxiosInstance \| undefined|\#initClient(): Promise&lt;void&gt;;+getAxiosInstance(): AxiosInstance \| undefined;+upload(): Promise&lt;void&gt;]
 [SpacefillAPIWrapperV1]  -  [OperationMethods]
 [SpacefillAPIWrapperV1]  -  [EdiEvent]
-[Config||\#get(): { spacefillApi: { url: string; apiToken: string; defaultPaginationLimit: number; context: { serviceSource: string \| undefined; serviceVersion: string \| undefined; transport: string \| undefined; clientType: string \| undefined; }; eventEnabled: boolean; }; transfert: { ...; }; edi: { ...; }; console: { ...; }; log: { ...;\#reloadConfig(): void;\#validate(): void]
+[Config||\#get(): { spacefillApi: { url: string; apiToken: string; defaultPaginationLimit: number; context: { serviceSource: string \| undefined; serviceVersion: string \| undefined; transport: string \| undefined; clientType: string \| undefined; }; eventEnabled: boolean; }; transfer: { ...; }; edi: { ...; }; console: { ...; }; log: { ...;\#reloadConfig(): void;\#validate(): void]
 [AbstractGenerateFileSchema&lt;T&gt;||+mapOutputFileData(): object\[\]]
 [AbtractSchema]&lt;:-[AbstractGenerateFileSchema&lt;T&gt;]
 [GenerateFileSchemaInterface&lt;T&gt;]&lt;:--[AbstractGenerateFileSchema&lt;T&gt;]
@@ -43,7 +43,7 @@
 [AbstractLoadFileTask&lt;T&gt;||+getDataSchema(): LoadFileSchemaInterface&lt;T&gt;;+getFilesList(): Promise&lt;FileItemInterface\[\]&gt;;+parseRawData(): Promise&lt;object\[\]&gt;;+dataProcessing(): Promise&lt;void&gt;;+onProcessingFileSuccess(): Promise&lt;void&gt;;+onProcessingFileError(): Promise&lt;void&gt;;+run(): Promise&lt;void&gt;]
 [AbstractTask]&lt;:-[AbstractLoadFileTask&lt;T&gt;]
 [LoadFileTaskInterface&lt;T&gt;]&lt;:--[AbstractLoadFileTask&lt;T&gt;]
-[AbstractTask|+sdk: SpacefillAPIWrapperV1;+transfert: Transfert|+getWorkflowType(): WorkflowType;+initApiClient(): Promise&lt;void&gt;;+getArgsList(): Argument\[\];+parseArgs(): void]
+[AbstractTask|+sdk: SpacefillAPIWrapperV1;+transfer: Transfer|+getWorkflowType(): WorkflowType;+initApiClient(): Promise&lt;void&gt;;+getArgsList(): Argument\[\];+parseArgs(): void]
 [BaseCommand]&lt;:-[AbstractTask]
 [AbstractTask]  -  [SpacefillAPIWrapperV1]
 [BaseCommand|+argv: ParsedArgs \| undefined;+statistics: CommandStatistic|+getArgsList(): Argument\[\];+displayUsages(): void;+displayStatistics(): void;+parseArgs(): void;+beforeRun(): void;+afterRun(): void]
@@ -54,15 +54,15 @@
 [&lt;interface&gt;FileItemInterface|+file: string|]
 [&lt;interface&gt;LoadFileTaskInterface&lt;T&gt;||+getFilesList(): Promise&lt;FileItemInterface\[\]&gt;;+parseRawData(): Promise&lt;object\[\]&gt;;+dataProcessing(): Promise&lt;void&gt;;+onProcessingFileSuccess(): Promise&lt;void&gt;;+onProcessingFileError(): Promise&lt;void&gt;]
 [LocalClient||+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+deleteFile(): Promise&lt;void&gt;;+moveFile(): Promise&lt;void&gt;]
-[TransfertInterface]&lt;:--[LocalClient]
-[SftpClient|+configuration: SSH2TransfertConfiguration;+client: sftp|+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+moveFile(): Promise&lt;void&gt;;+deleteFile(): Promise&lt;void&gt;]
-[&lt;interface&gt;SSH2TransfertConfiguration|+hostname: string;+port: number;+username: string;+password: string|]
-[TransfertInterface]&lt;:--[SftpClient]
-[Transfert|+protocol: TransfertProtocol;+configuration: TransfertConfiguration;+client: TransfertInterface|+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+moveFile(): Promise&lt;void&gt;;+deleteFile(): Promise&lt;void&gt;;+moveToErrorDir(): Promise&lt;void&gt;;+moveToArchiveDir(): Promise&lt;void&gt;]
-[&lt;enumeration&gt;TransfertProtocol|sftp;ftp;local]
-[TransfertInterface]&lt;:--[Transfert]
-[&lt;interface&gt;TransfertInterface||+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+deleteFile(): Promise&lt;void&gt;;+moveFile(): Promise&lt;void&gt;]
-[&lt;interface&gt;TransfertConfiguration|+hostname: string;+port: number;+username: string;+password: string|]
+[TransferInterface]&lt;:--[LocalClient]
+[SftpClient|+configuration: SSH2TransferConfiguration;+client: sftp|+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+moveFile(): Promise&lt;void&gt;;+deleteFile(): Promise&lt;void&gt;]
+[&lt;interface&gt;SSH2TransferConfiguration|+hostname: string;+port: number;+username: string;+password: string|]
+[TransferInterface]&lt;:--[SftpClient]
+[Transfer|+protocol: TransferProtocol;+configuration: TransferConfiguration;+client: TransferInterface|+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+moveFile(): Promise&lt;void&gt;;+deleteFile(): Promise&lt;void&gt;;+moveToErrorDir(): Promise&lt;void&gt;;+moveToArchiveDir(): Promise&lt;void&gt;]
+[&lt;enumeration&gt;TransferProtocol|sftp;ftp;local]
+[TransferInterface]&lt;:--[Transfer]
+[&lt;interface&gt;TransferInterface||+open(): Promise&lt;void&gt;;+close(): Promise&lt;void&gt;;+mkdirIfNotExists(): Promise&lt;void&gt;;+isExists(): Promise&lt;string \| boolean&gt;;+upload(): Promise&lt;void&gt;;+downloadAndReadFile(): Promise&lt;string&gt;;+listDirWithFilter(): Promise&lt;string\[\]&gt;;+deleteFile(): Promise&lt;void&gt;;+moveFile(): Promise&lt;void&gt;]
+[&lt;interface&gt;TransferConfiguration|+hostname: string;+port: number;+username: string;+password: string|]
 [Console||+log(): void;+trace(): void;+debug(): void;+info(): void;+title(): void;+warn(): void;+error(): void;+fatal(): void;+confirm(): void;+printGradient(): void]
 [ExceptionUtils||\#getEventTypeFromException(): EventTypeEnumString]</desc>
 <g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="normal" font-style="normal">
@@ -504,7 +504,7 @@
 <text x="0.0" y="118.5" stroke="none" data-name="Config">}</text>
 <text x="0.0" y="133.5" stroke="none" data-name="Config">eventEnabled: boolean</text>
 <text x="0.0" y="148.5" stroke="none" data-name="Config">}</text>
-<text x="0.0" y="163.5" stroke="none" data-name="Config">transfert: { ...</text>
+<text x="0.0" y="163.5" stroke="none" data-name="Config">transfer: { ...</text>
 <text x="0.0" y="178.5" stroke="none" data-name="Config">}</text>
 <text x="0.0" y="193.5" stroke="none" data-name="Config">edi: { ...</text>
 <text x="0.0" y="208.5" stroke="none" data-name="Config">}</text>
@@ -920,7 +920,7 @@
 <g transform="translate(7619, 1386)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractTask">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractTask">
 <text x="0.0" y="13.5" stroke="none" data-name="AbstractTask">+sdk: SpacefillAPIWrapperV1</text>
-<text x="0.0" y="28.5" stroke="none" data-name="AbstractTask">+transfert: Transfert</text>
+<text x="0.0" y="28.5" stroke="none" data-name="AbstractTask">+transfer: Transfer</text>
 
 </g>
 </g>
@@ -1164,7 +1164,7 @@
 </g>
 <g transform="translate(9616.25, 1336.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="LocalClient">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="LocalClient">
-<a id="../src/transfert/LocalClient.ts.LocalClient" xlink:href="../src/transfert/LocalClient.ts"><text x="168.5" y="13.5" stroke="none" text-anchor="middle" data-name="LocalClient">LocalClient</text></a>
+<a id="../src/transfer/LocalClient.ts.LocalClient" xlink:href="../src/transfer/LocalClient.ts"><text x="168.5" y="13.5" stroke="none" text-anchor="middle" data-name="LocalClient">LocalClient</text></a>
 
 </g>
 </g>
@@ -1188,34 +1188,34 @@
 </g>
 </g>
 </g>
-<g data-name="TransfertInterface">
-<g fill="lightblue" stroke="#33322E" data-name="TransfertInterface">
-<rect x="9219.8" y="532.5" height="190.0" width="353.0" data-name="TransfertInterface"></rect>
-<path d="M9219.8 563.5 L9572.8 563.5" fill="none" data-name="TransfertInterface"></path>
-<path d="M9219.8 571.5 L9572.8 571.5" fill="none" data-name="TransfertInterface"></path>
+<g data-name="TransferInterface">
+<g fill="lightblue" stroke="#33322E" data-name="TransferInterface">
+<rect x="9219.8" y="532.5" height="190.0" width="353.0" data-name="TransferInterface"></rect>
+<path d="M9219.8 563.5 L9572.8 563.5" fill="none" data-name="TransferInterface"></path>
+<path d="M9219.8 571.5 L9572.8 571.5" fill="none" data-name="TransferInterface"></path>
 </g>
-<g transform="translate(9219.75, 532.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertInterface">
-<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TransfertInterface">
-<a id="../src/transfert/TransfertInterfaces.ts.TransfertInterface" xlink:href="../src/transfert/TransfertInterfaces.ts"><text x="168.5" y="13.5" stroke="none" text-anchor="middle" data-name="TransfertInterface">TransfertInterface</text></a>
+<g transform="translate(9219.75, 532.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferInterface">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TransferInterface">
+<a id="../src/transfer/TransferInterfaces.ts.TransferInterface" xlink:href="../src/transfer/TransferInterfaces.ts"><text x="168.5" y="13.5" stroke="none" text-anchor="middle" data-name="TransferInterface">TransferInterface</text></a>
 
 </g>
 </g>
-<g transform="translate(9219.75, 563.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertInterface">
-<g transform="translate(8, 8)" fill="#33322E" data-name="TransfertInterface">
+<g transform="translate(9219.75, 563.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferInterface">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TransferInterface">
 
 </g>
 </g>
-<g transform="translate(9219.75, 571.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertInterface">
-<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TransfertInterface">
-<text x="0.0" y="13.5" stroke="none" data-name="TransfertInterface">+open(): Promise&lt;void&gt;</text>
-<text x="0.0" y="28.5" stroke="none" data-name="TransfertInterface">+close(): Promise&lt;void&gt;</text>
-<text x="0.0" y="43.5" stroke="none" data-name="TransfertInterface">+mkdirIfNotExists(): Promise&lt;void&gt;</text>
-<text x="0.0" y="58.5" stroke="none" data-name="TransfertInterface">+isExists(): Promise&lt;string | boolean&gt;</text>
-<text x="0.0" y="73.5" stroke="none" data-name="TransfertInterface">+upload(): Promise&lt;void&gt;</text>
-<text x="0.0" y="88.5" stroke="none" data-name="TransfertInterface">+downloadAndReadFile(): Promise&lt;string&gt;</text>
-<text x="0.0" y="103.5" stroke="none" data-name="TransfertInterface">+listDirWithFilter(): Promise&lt;string[]&gt;</text>
-<text x="0.0" y="118.5" stroke="none" data-name="TransfertInterface">+deleteFile(): Promise&lt;void&gt;</text>
-<text x="0.0" y="133.5" stroke="none" data-name="TransfertInterface">+moveFile(): Promise&lt;void&gt;</text>
+<g transform="translate(9219.75, 571.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferInterface">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TransferInterface">
+<text x="0.0" y="13.5" stroke="none" data-name="TransferInterface">+open(): Promise&lt;void&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TransferInterface">+close(): Promise&lt;void&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TransferInterface">+mkdirIfNotExists(): Promise&lt;void&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TransferInterface">+isExists(): Promise&lt;string | boolean&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="TransferInterface">+upload(): Promise&lt;void&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="TransferInterface">+downloadAndReadFile(): Promise&lt;string&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="TransferInterface">+listDirWithFilter(): Promise&lt;string[]&gt;</text>
+<text x="0.0" y="118.5" stroke="none" data-name="TransferInterface">+deleteFile(): Promise&lt;void&gt;</text>
+<text x="0.0" y="133.5" stroke="none" data-name="TransferInterface">+moveFile(): Promise&lt;void&gt;</text>
 
 </g>
 </g>
@@ -1228,13 +1228,13 @@
 </g>
 <g transform="translate(9216.25, 1317.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="SftpClient">
 <g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SftpClient">
-<a id="../src/transfert/SftpClient.ts.SftpClient" xlink:href="../src/transfert/SftpClient.ts"><text x="172.0" y="13.5" stroke="none" text-anchor="middle" data-name="SftpClient">SftpClient</text></a>
+<a id="../src/transfer/SftpClient.ts.SftpClient" xlink:href="../src/transfer/SftpClient.ts"><text x="172.0" y="13.5" stroke="none" text-anchor="middle" data-name="SftpClient">SftpClient</text></a>
 
 </g>
 </g>
 <g transform="translate(9216.25, 1348.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SftpClient">
 <g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SftpClient">
-<text x="0.0" y="13.5" stroke="none" data-name="SftpClient">+configuration: SSH2TransfertConfiguration</text>
+<text x="0.0" y="13.5" stroke="none" data-name="SftpClient">+configuration: SSH2TransferConfiguration</text>
 <text x="0.0" y="28.5" stroke="none" data-name="SftpClient">+client: sftp</text>
 
 </g>
@@ -1254,113 +1254,113 @@
 </g>
 </g>
 </g>
-<g data-name="SSH2TransfertConfiguration">
-<g fill="lightblue" stroke="#33322E" data-name="SSH2TransfertConfiguration">
-<rect x="9612.8" y="570.0" height="115.0" width="237.0" data-name="SSH2TransfertConfiguration"></rect>
-<path d="M9612.8 601.0 L9849.8 601.0" fill="none" data-name="SSH2TransfertConfiguration"></path>
-<path d="M9612.8 677.0 L9849.8 677.0" fill="none" data-name="SSH2TransfertConfiguration"></path>
+<g data-name="SSH2TransferConfiguration">
+<g fill="lightblue" stroke="#33322E" data-name="SSH2TransferConfiguration">
+<rect x="9612.8" y="570.0" height="115.0" width="237.0" data-name="SSH2TransferConfiguration"></rect>
+<path d="M9612.8 601.0 L9849.8 601.0" fill="none" data-name="SSH2TransferConfiguration"></path>
+<path d="M9612.8 677.0 L9849.8 677.0" fill="none" data-name="SSH2TransferConfiguration"></path>
 </g>
-<g transform="translate(9612.75, 570)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransfertConfiguration">
-<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SSH2TransfertConfiguration">
-<a id="../src/transfert/SftpClient.ts.SSH2TransfertConfiguration" xlink:href="../src/transfert/SftpClient.ts"><text x="110.5" y="13.5" stroke="none" text-anchor="middle" data-name="SSH2TransfertConfiguration">SSH2TransfertConfiguration</text></a>
+<g transform="translate(9612.75, 570)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransferConfiguration">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="SSH2TransferConfiguration">
+<a id="../src/transfer/SftpClient.ts.SSH2TransferConfiguration" xlink:href="../src/transfer/SftpClient.ts"><text x="110.5" y="13.5" stroke="none" text-anchor="middle" data-name="SSH2TransferConfiguration">SSH2TransferConfiguration</text></a>
 
 </g>
 </g>
-<g transform="translate(9612.75, 601)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransfertConfiguration">
-<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SSH2TransfertConfiguration">
-<text x="0.0" y="13.5" stroke="none" data-name="SSH2TransfertConfiguration">+hostname: string</text>
-<text x="0.0" y="28.5" stroke="none" data-name="SSH2TransfertConfiguration">+port: number</text>
-<text x="0.0" y="43.5" stroke="none" data-name="SSH2TransfertConfiguration">+username: string</text>
-<text x="0.0" y="58.5" stroke="none" data-name="SSH2TransfertConfiguration">+password: string</text>
+<g transform="translate(9612.75, 601)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransferConfiguration">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="SSH2TransferConfiguration">
+<text x="0.0" y="13.5" stroke="none" data-name="SSH2TransferConfiguration">+hostname: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="SSH2TransferConfiguration">+port: number</text>
+<text x="0.0" y="43.5" stroke="none" data-name="SSH2TransferConfiguration">+username: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="SSH2TransferConfiguration">+password: string</text>
 
 </g>
 </g>
-<g transform="translate(9612.75, 677)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransfertConfiguration">
-<g transform="translate(8, 8)" fill="#33322E" data-name="SSH2TransfertConfiguration">
-
-</g>
-</g>
-</g>
-<g data-name="Transfert">
-<g fill="#eee8d5" stroke="#33322E" data-name="Transfert">
-<rect x="8823.3" y="1295.0" height="273.0" width="353.0" data-name="Transfert"></rect>
-<path d="M8823.3 1326.0 L9176.3 1326.0" fill="none" data-name="Transfert"></path>
-<path d="M8823.3 1387.0 L9176.3 1387.0" fill="none" data-name="Transfert"></path>
-</g>
-<g transform="translate(8823.25, 1295)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Transfert">
-<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Transfert">
-<a id="../src/transfert/Transfert.ts.Transfert" xlink:href="../src/transfert/Transfert.ts"><text x="168.5" y="13.5" stroke="none" text-anchor="middle" data-name="Transfert">Transfert</text></a>
-
-</g>
-</g>
-<g transform="translate(8823.25, 1326)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Transfert">
-<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Transfert">
-<text x="0.0" y="13.5" stroke="none" data-name="Transfert">+protocol: TransfertProtocol</text>
-<text x="0.0" y="28.5" stroke="none" data-name="Transfert">+configuration: TransfertConfiguration</text>
-<text x="0.0" y="43.5" stroke="none" data-name="Transfert">+client: TransfertInterface</text>
-
-</g>
-</g>
-<g transform="translate(8823.25, 1387)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Transfert">
-<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Transfert">
-<text x="0.0" y="13.5" stroke="none" data-name="Transfert">+open(): Promise&lt;void&gt;</text>
-<text x="0.0" y="28.5" stroke="none" data-name="Transfert">+close(): Promise&lt;void&gt;</text>
-<text x="0.0" y="43.5" stroke="none" data-name="Transfert">+mkdirIfNotExists(): Promise&lt;void&gt;</text>
-<text x="0.0" y="58.5" stroke="none" data-name="Transfert">+isExists(): Promise&lt;string | boolean&gt;</text>
-<text x="0.0" y="73.5" stroke="none" data-name="Transfert">+upload(): Promise&lt;void&gt;</text>
-<text x="0.0" y="88.5" stroke="none" data-name="Transfert">+downloadAndReadFile(): Promise&lt;string&gt;</text>
-<text x="0.0" y="103.5" stroke="none" data-name="Transfert">+listDirWithFilter(): Promise&lt;string[]&gt;</text>
-<text x="0.0" y="118.5" stroke="none" data-name="Transfert">+moveFile(): Promise&lt;void&gt;</text>
-<text x="0.0" y="133.5" stroke="none" data-name="Transfert">+deleteFile(): Promise&lt;void&gt;</text>
-<text x="0.0" y="148.5" stroke="none" data-name="Transfert">+moveToErrorDir(): Promise&lt;void&gt;</text>
-<text x="0.0" y="163.5" stroke="none" data-name="Transfert">+moveToArchiveDir(): Promise&lt;void&gt;</text>
+<g transform="translate(9612.75, 677)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="SSH2TransferConfiguration">
+<g transform="translate(8, 8)" fill="#33322E" data-name="SSH2TransferConfiguration">
 
 </g>
 </g>
 </g>
-<g data-name="TransfertProtocol">
-<g fill="lightgreen" stroke="#33322E" data-name="TransfertProtocol">
-<rect x="9889.8" y="581.5" height="92.0" width="152.0" data-name="TransfertProtocol"></rect>
-<path d="M9889.8 612.5 L10041.8 612.5" fill="none" data-name="TransfertProtocol"></path>
+<g data-name="Transfer">
+<g fill="#eee8d5" stroke="#33322E" data-name="Transfer">
+<rect x="8823.3" y="1295.0" height="273.0" width="353.0" data-name="Transfer"></rect>
+<path d="M8823.3 1326.0 L9176.3 1326.0" fill="none" data-name="Transfer"></path>
+<path d="M8823.3 1387.0 L9176.3 1387.0" fill="none" data-name="Transfer"></path>
 </g>
-<g transform="translate(9889.75, 581.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertProtocol">
-<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TransfertProtocol">
-<a id="../src/transfert/Transfert.ts.TransfertProtocol" xlink:href="../src/transfert/Transfert.ts"><text x="68.0" y="13.5" stroke="none" text-anchor="middle" data-name="TransfertProtocol">TransfertProtocol</text></a>
+<g transform="translate(8823.25, 1295)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="Transfer">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="Transfer">
+<a id="../src/transfer/Transfer.ts.Transfer" xlink:href="../src/transfer/Transfer.ts"><text x="168.5" y="13.5" stroke="none" text-anchor="middle" data-name="Transfer">Transfer</text></a>
 
 </g>
 </g>
-<g transform="translate(9889.75, 612.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertProtocol">
-<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TransfertProtocol">
-<text x="0.0" y="13.5" stroke="none" data-name="TransfertProtocol">sftp</text>
-<text x="0.0" y="28.5" stroke="none" data-name="TransfertProtocol">ftp</text>
-<text x="0.0" y="43.5" stroke="none" data-name="TransfertProtocol">local</text>
+<g transform="translate(8823.25, 1326)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Transfer">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Transfer">
+<text x="0.0" y="13.5" stroke="none" data-name="Transfer">+protocol: TransferProtocol</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Transfer">+configuration: TransferConfiguration</text>
+<text x="0.0" y="43.5" stroke="none" data-name="Transfer">+client: TransferInterface</text>
+
+</g>
+</g>
+<g transform="translate(8823.25, 1387)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="Transfer">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="Transfer">
+<text x="0.0" y="13.5" stroke="none" data-name="Transfer">+open(): Promise&lt;void&gt;</text>
+<text x="0.0" y="28.5" stroke="none" data-name="Transfer">+close(): Promise&lt;void&gt;</text>
+<text x="0.0" y="43.5" stroke="none" data-name="Transfer">+mkdirIfNotExists(): Promise&lt;void&gt;</text>
+<text x="0.0" y="58.5" stroke="none" data-name="Transfer">+isExists(): Promise&lt;string | boolean&gt;</text>
+<text x="0.0" y="73.5" stroke="none" data-name="Transfer">+upload(): Promise&lt;void&gt;</text>
+<text x="0.0" y="88.5" stroke="none" data-name="Transfer">+downloadAndReadFile(): Promise&lt;string&gt;</text>
+<text x="0.0" y="103.5" stroke="none" data-name="Transfer">+listDirWithFilter(): Promise&lt;string[]&gt;</text>
+<text x="0.0" y="118.5" stroke="none" data-name="Transfer">+moveFile(): Promise&lt;void&gt;</text>
+<text x="0.0" y="133.5" stroke="none" data-name="Transfer">+deleteFile(): Promise&lt;void&gt;</text>
+<text x="0.0" y="148.5" stroke="none" data-name="Transfer">+moveToErrorDir(): Promise&lt;void&gt;</text>
+<text x="0.0" y="163.5" stroke="none" data-name="Transfer">+moveToArchiveDir(): Promise&lt;void&gt;</text>
 
 </g>
 </g>
 </g>
-<g data-name="TransfertConfiguration">
-<g fill="lightblue" stroke="#33322E" data-name="TransfertConfiguration">
-<rect x="10081.8" y="570.0" height="115.0" width="193.0" data-name="TransfertConfiguration"></rect>
-<path d="M10081.8 601.0 L10274.8 601.0" fill="none" data-name="TransfertConfiguration"></path>
-<path d="M10081.8 677.0 L10274.8 677.0" fill="none" data-name="TransfertConfiguration"></path>
+<g data-name="TransferProtocol">
+<g fill="lightgreen" stroke="#33322E" data-name="TransferProtocol">
+<rect x="9889.8" y="581.5" height="92.0" width="152.0" data-name="TransferProtocol"></rect>
+<path d="M9889.8 612.5 L10041.8 612.5" fill="none" data-name="TransferProtocol"></path>
 </g>
-<g transform="translate(10081.75, 570)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertConfiguration">
-<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TransfertConfiguration">
-<a id="../src/transfert/TransfertInterfaces.ts.TransfertConfiguration" xlink:href="../src/transfert/TransfertInterfaces.ts"><text x="88.5" y="13.5" stroke="none" text-anchor="middle" data-name="TransfertConfiguration">TransfertConfiguration</text></a>
+<g transform="translate(9889.75, 581.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferProtocol">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TransferProtocol">
+<a id="../src/transfer/Transfer.ts.TransferProtocol" xlink:href="../src/transfer/Transfer.ts"><text x="68.0" y="13.5" stroke="none" text-anchor="middle" data-name="TransferProtocol">TransferProtocol</text></a>
 
 </g>
 </g>
-<g transform="translate(10081.75, 601)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertConfiguration">
-<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TransfertConfiguration">
-<text x="0.0" y="13.5" stroke="none" data-name="TransfertConfiguration">+hostname: string</text>
-<text x="0.0" y="28.5" stroke="none" data-name="TransfertConfiguration">+port: number</text>
-<text x="0.0" y="43.5" stroke="none" data-name="TransfertConfiguration">+username: string</text>
-<text x="0.0" y="58.5" stroke="none" data-name="TransfertConfiguration">+password: string</text>
+<g transform="translate(9889.75, 612.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferProtocol">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TransferProtocol">
+<text x="0.0" y="13.5" stroke="none" data-name="TransferProtocol">sftp</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TransferProtocol">ftp</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TransferProtocol">local</text>
 
 </g>
 </g>
-<g transform="translate(10081.75, 677)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransfertConfiguration">
-<g transform="translate(8, 8)" fill="#33322E" data-name="TransfertConfiguration">
+</g>
+<g data-name="TransferConfiguration">
+<g fill="lightblue" stroke="#33322E" data-name="TransferConfiguration">
+<rect x="10081.8" y="570.0" height="115.0" width="193.0" data-name="TransferConfiguration"></rect>
+<path d="M10081.8 601.0 L10274.8 601.0" fill="none" data-name="TransferConfiguration"></path>
+<path d="M10081.8 677.0 L10274.8 677.0" fill="none" data-name="TransferConfiguration"></path>
+</g>
+<g transform="translate(10081.75, 570)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferConfiguration">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="TransferConfiguration">
+<a id="../src/transfer/TransferInterfaces.ts.TransferConfiguration" xlink:href="../src/transfer/TransferInterfaces.ts"><text x="88.5" y="13.5" stroke="none" text-anchor="middle" data-name="TransferConfiguration">TransferConfiguration</text></a>
+
+</g>
+</g>
+<g transform="translate(10081.75, 601)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferConfiguration">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="TransferConfiguration">
+<text x="0.0" y="13.5" stroke="none" data-name="TransferConfiguration">+hostname: string</text>
+<text x="0.0" y="28.5" stroke="none" data-name="TransferConfiguration">+port: number</text>
+<text x="0.0" y="43.5" stroke="none" data-name="TransferConfiguration">+username: string</text>
+<text x="0.0" y="58.5" stroke="none" data-name="TransferConfiguration">+password: string</text>
+
+</g>
+</g>
+<g transform="translate(10081.75, 677)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="TransferConfiguration">
+<g transform="translate(8, 8)" fill="#33322E" data-name="TransferConfiguration">
 
 </g>
 </g>

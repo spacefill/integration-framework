@@ -25,15 +25,15 @@ export class Config {
         },
         eventEnabled: process.env?.SPACEFILL_API_EVENT_ENABLED == "1" ? true : false,
       },
-      transfert: {
-        protocol: process.env?.WMS_TRANSFERT_PROTOCOL,
-        hostname: process.env?.WMS_TRANSFERT_HOST,
-        port: process.env?.WMS_TRANSFERT_PORT ? parseInt(process.env?.WMS_TRANSFERT_PORT) : undefined,
-        username: process.env?.WMS_TRANSFERT_USER,
-        password: process.env?.WMS_TRANSFERT_PASSWORD,
-        retries: process.env?.WMS_TRANSFERT_RETRIES ? process.env?.WMS_TRANSFERT_RETRIES : 3,
-        delay: process.env?.WMS_TRANSFERT_RETRIES_DELAY ? process.env?.WMS_TRANSFERT_RETRIES_DELAY : 5000,
-        autoAddPolicy: process.env?.WMS_TRANSFERT_SFTP_AUTOADDPOLICY == "1" ? true : false,
+      transfer: {
+        protocol: process.env?.WMS_TRANSFER_PROTOCOL,
+        hostname: process.env?.WMS_TRANSFER_HOST,
+        port: process.env?.WMS_TRANSFER_PORT ? parseInt(process.env?.WMS_TRANSFER_PORT) : undefined,
+        username: process.env?.WMS_TRANSFER_USER,
+        password: process.env?.WMS_TRANSFER_PASSWORD,
+        retries: process.env?.WMS_TRANSFER_RETRIES ? process.env?.WMS_TRANSFER_RETRIES : 3,
+        delay: process.env?.WMS_TRANSFER_RETRIES_DELAY ? process.env?.WMS_TRANSFER_RETRIES_DELAY : 5000,
+        autoAddPolicy: process.env?.WMS_TRANSFER_SFTP_AUTOADDPOLICY == "1" ? true : false,
       },
       edi: {
         wmsAgencyCode: process.env?.WMS_AGENCY_CODE,
@@ -134,7 +134,7 @@ export class Config {
       errorFound = true;
     }
 
-    const schemaTransfert = {
+    const schemaTransfer = {
       type: "object",
       properties: {
         protocol: {
@@ -164,9 +164,9 @@ export class Config {
       then: { required: ["protocol", "hostname", "port", "username", "password"] },
       else: { required: ["protocol"] },
     };
-    const validateTransfert = ajv.compile(schemaTransfert);
-    if (!validateTransfert(Config.get().transfert)) {
-      Console.error("Configuration validation failed for transfert", validateTransfert?.errors);
+    const validateTransfer = ajv.compile(schemaTransfer);
+    if (!validateTransfer(Config.get().transfer)) {
+      Console.error("Configuration validation failed for transfer", validateTransfer?.errors);
       errorFound = true;
     }
 

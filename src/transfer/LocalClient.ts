@@ -1,9 +1,8 @@
-import { TransfertInterface } from "./TransfertInterfaces.ts";
+import { TransferInterface } from "./TransferInterfaces.ts";
 import { fs } from "zx";
 import { constants } from "fs";
 
-export class LocalClient implements TransfertInterface {
-
+export class LocalClient implements TransferInterface {
   async open(): Promise<void> {
     return;
   }

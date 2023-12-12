@@ -51,7 +51,7 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
       await this.initApiClient(this.getWorkflowType());
 
       if (!this.sdk.client || !this.sdk.ediEvent) {
-        throw new InternalError("SDK is not well initiazed - client or ediEvent missing");
+        throw new InternalError("SDK is not well initialized - client or ediEvent missing");
       }
 
       await this.sdk.client
@@ -67,7 +67,7 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
 
       for (const targetFileItem of filesList) {
         try {
-          await this.transfert.moveFile(
+          await this.transfer.moveFile(
             targetFileItem.file,
             `${targetFileItem.file}.${Config.get().edi.runId}`,
           );
@@ -76,7 +76,7 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
           this.sdk.dataSource = path.basename(targetFileItem.file);
 
           Console.title("Download and read file");
-          const fileContent = await this.transfert.downloadAndReadFile(targetFileItem.file);
+          const fileContent = await this.transfer.downloadAndReadFile(targetFileItem.file);
           Console.trace("File content:", fileContent);
           Console.confirm("File content retrieved");
 

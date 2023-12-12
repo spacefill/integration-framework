@@ -1,11 +1,11 @@
 #!/usr/bin/env -S npx ts-node --esm --transpile-only
 
 import { DateTime } from "luxon";
-import * as csv from 'fast-csv';
+import * as csv from "fast-csv";
 
-import { Config } from '../../src/configs/Config.ts';
-import { AbstractGenerateFileTask } from '../../src/task/AbstractGenerateFileTask.ts';
-import { Console } from '../../src/utils/Console.ts';
+import { Config } from "../../src/configs/Config.ts";
+import { AbstractGenerateFileTask } from "../../src/task/AbstractGenerateFileTask.ts";
+import { Console } from "../../src/utils/Console.ts";
 import { InitialDataItem } from "../../src/task/GenerateFileTasklnterfaces.ts";
 import { DefaultGenerateMasterItemsSchema } from "./schemas/DefaultGenerateMasterItemsSchema.ts";
 import { WorkflowType } from "../../src/api/APIContext.ts";
@@ -15,25 +15,24 @@ import { fs } from "zx";
 import { GenerateFileSchemaInterface } from "../../src/data_mapping/SchemaInterfaces.ts";
 
 interface MasterItemInterface {
-  id: number,
-  item_reference: string,
-  designation: string,
-  each_quantity_by_cardboard_box: number,
-  each_quantity_by_pallet: number,
-  cardboard_box_height_in_cm: number,
-  cardboard_box_width_in_cm: number,
-  cardboard_box_length_in_cm: number,
-  cardboard_box_gross_weight_in_kg: number,
-  cardboard_box_net_weight_in_kg: number,
-  cardboard_box_barcode: string,
-  pallet_barcode: string,
+  id: number;
+  item_reference: string;
+  designation: string;
+  each_quantity_by_cardboard_box: number;
+  each_quantity_by_pallet: number;
+  cardboard_box_height_in_cm: number;
+  cardboard_box_width_in_cm: number;
+  cardboard_box_length_in_cm: number;
+  cardboard_box_gross_weight_in_kg: number;
+  cardboard_box_net_weight_in_kg: number;
+  cardboard_box_barcode: string;
+  pallet_barcode: string;
 }
 
 export { MasterItemInterface };
 export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<MasterItemInterface> {
-
   protected displayUsages() {
-    Console.log("Usage: ./GenerateMasterItemsTaskExample.mts [OPTIONS]")
+    Console.log("Usage: ./GenerateMasterItemsTaskExample.mts [OPTIONS]");
     super.displayUsages();
   }
 
@@ -45,13 +44,14 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
     return [
       ...super.getArgsList(),
       {
-        argName: '--disable-is-transfered-to-wms-update',
-        argDescription: '[Test Only] Disable the update of transfered_to_wms_at field, to run the script multiple times.'
+        argName: "--disable-is-transfered-to-wms-update",
+        argDescription:
+          "[Test Only] Disable the update of transfered_to_wms_at field, to run the script multiple times.",
       },
       {
-        argName: '--headers',
-        argDescription: '[Test Only] Add headers in file output.'
-      }
+        argName: "--headers",
+        argDescription: "[Test Only] Add headers in file output.",
+      },
     ];
   }
 
@@ -67,62 +67,63 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
     return [
       // Only one file to be generated, so only one object returned.
       {
-        initialData: []
-      }
-    ]
+        initialData: [],
+      },
+    ];
   }
 
   async prepareFileData(offset: number = 0): Promise<MasterItemInterface[]> {
     let masterItems = this.currentFileConfiguration?.initialData ?? [];
 
     if (!this.sdk.client || !this.sdk.ediEvent) {
-      throw new InternalError("SDK is not well initiazed - client or ediEvent missing");
+      throw new InternalError("SDK is not well initialized - client or ediEvent missing");
     }
 
-    await this.sdk.client.get_v1_logistic_management_master_item_list(
-      {
+    await this.sdk.client
+      .get_v1_logistic_management_master_item_list({
         offset: offset,
         limit: Config.get().spacefillApi.defaultPaginationLimit,
         is_transfered_to_wms: false,
-        shipper_account_id: Config.get().edi.wmsShipperAccountId
-      }
-    )
+        shipper_account_id: Config.get().edi.wmsShipperAccountId,
+      })
       .then(async ({ data }) => {
         const tmpItems = data?.items as unknown as MasterItemInterface[];
         masterItems = [...masterItems, ...tmpItems];
 
         this.currentFileConfiguration = {
           ...this.currentFileConfiguration,
-          initialData: masterItems
-        }
+          initialData: masterItems,
+        };
 
         if (data?.next) {
           masterItems = await this.prepareFileData(offset + Config.get().spacefillApi.defaultPaginationLimit);
         }
       })
-      .catch(err => {
-        throw new InternalError(`Error during prepareFileData - ${err?.response?.status} - ${err?.response?.statusText} - ${err?.response?.data}`);
+      .catch((err) => {
+        throw new InternalError(
+          `Error during prepareFileData - ${err?.response?.status} - ${err?.response?.statusText} - ${err?.response?.data}`,
+        );
       });
 
     return masterItems as MasterItemInterface[];
   }
 
   async generateFile(mappedData: object[], tempFilePath: string): Promise<void> {
-
     const csvStream = csv.format({
-      headers: this.argv?.['headers'] ? true : false,
-      delimiter: ';'
+      headers: this.argv?.["headers"] ? true : false,
+      delimiter: ";",
     });
 
     const writeStream = fs.createWriteStream(tempFilePath);
 
     return await new Promise<void>((resolve, reject) => {
-      csvStream.pipe(writeStream)
-        .once('finish', () => {
+      csvStream
+        .pipe(writeStream)
+        .once("finish", () => {
           Console.debug(`Write stream end for ${tempFilePath}`);
           resolve();
         })
-        .once('error', (error) => {
+        .once("error", (error) => {
           Console.error(error);
           reject(error);
         });
@@ -133,7 +134,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
         throw new InternalError("fileDescriptor not well initialized");
       }
 
-      if (this.argv?.['headers']) {
+      if (this.argv?.["headers"]) {
         const headersLine = new Array(fileDescriptor.csvTotalColumnNumber);
         for (const field of Object.keys(fileDescriptor.columnsPosition)) {
           headersLine[fileDescriptor.columnsPosition[field]] = field;
@@ -155,15 +156,17 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
   }
 
   async sendFile(tempFilePath: string): Promise<string> {
-    const targetFileName = `${Config.get().edi.wmsPathSpacefillToWmsDir}/ARTICLE_${DateTime.now().toFormat('yyyyMMdd_HHmmss')}.txt`;
-    this.transfert.upload(tempFilePath, targetFileName);
+    const targetFileName = `${Config.get().edi.wmsPathSpacefillToWmsDir}/ARTICLE_${DateTime.now().toFormat(
+      "yyyyMMdd_HHmmss",
+    )}.txt`;
+    this.transfer.upload(tempFilePath, targetFileName);
     return targetFileName;
   }
 
   async postFileSending(): Promise<void> {
     let errorFound = false;
 
-    if (this.argv?.['disable-is-transfered-to-wms-update']) {
+    if (this.argv?.["disable-is-transfered-to-wms-update"]) {
       Console.debug("Skip transfered_to_wms_at update");
       return;
     }
@@ -172,17 +175,19 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
       throw new InternalError("currentFileConfiguration not well initialized");
     }
     if (!this.sdk.client) {
-      throw new InternalError("SDK is not well initiazed - client is missing");
+      throw new InternalError("SDK is not well initialized - client is missing");
     }
 
     for (const item of this.currentFileConfiguration.initialData) {
-      await this.sdk.client.patch_v1_logistic_management_master_item(
-        { master_item_id: `${item.id}` },
-        { transfered_to_wms_at: DateTime.now().toFormat('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'') }
-      ).catch(() => {
-        Console.error(`Failed to patch transfered to wms at for master_item_id: ${item.id}`);
-        errorFound = true;
-      });
+      await this.sdk.client
+        .patch_v1_logistic_management_master_item(
+          { master_item_id: `${item.id}` },
+          { transfered_to_wms_at: DateTime.now().toFormat("yyyy-MM-dd'T'HH:mm:ss'Z'") },
+        )
+        .catch(() => {
+          Console.error(`Failed to patch transfered to wms at for master_item_id: ${item.id}`);
+          errorFound = true;
+        });
     }
 
     if (errorFound) {

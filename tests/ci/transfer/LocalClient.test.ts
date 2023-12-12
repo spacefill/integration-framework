@@ -1,17 +1,16 @@
 import { expect } from "chai";
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from "path";
+import { fileURLToPath } from "url";
 import { $, fs } from "zx";
 
-import { LocalClient } from "../../../src/transfert/LocalClient.ts";
-import { Transfert, TransfertProtocol } from "../../../src/transfert/Transfert.ts";
+import { LocalClient } from "../../../src/transfer/LocalClient.ts";
+import { Transfer, TransferProtocol } from "../../../src/transfer/Transfer.ts";
 import { initTestEnv } from "../../testUtils/initTestEnv.ts";
 import { Config } from "../../../src/configs/Config.ts";
 
 $.verbose = false;
 
-describe("LocalTransfert", () => {
-
+describe("LocalTransfer", () => {
   const currentDirName = path.dirname(fileURLToPath(import.meta.url));
   const rootDir = path.join(currentDirName, "folder-test");
   const folderWorkDir = path.join(rootDir, "folder-process");
@@ -20,7 +19,7 @@ describe("LocalTransfert", () => {
   const localPath = path.join(currentDirName, "local-test.txt");
   const fileContent = "Contenu du fichier";
 
-  const transfert = new Transfert(TransfertProtocol.local);
+  const transfer = new Transfer(TransferProtocol.local);
 
   before(async () => {
     initTestEnv();
@@ -34,15 +33,15 @@ describe("LocalTransfert", () => {
   });
 
   it("try to create new directory already exist", async () => {
-    await transfert.mkdirIfNotExists(folderWorkDir);
+    await transfer.mkdirIfNotExists(folderWorkDir);
 
-    const isExists = await transfert.isExists(folderWorkDir);
+    const isExists = await transfer.isExists(folderWorkDir);
     expect(isExists).equal(true);
   });
 
   describe("Process", function () {
     before(async () => {
-      await transfert.mkdirIfNotExists(folderWorkDir);
+      await transfer.mkdirIfNotExists(folderWorkDir);
       fs.writeFileSync(localPath, fileContent);
     });
 
@@ -51,87 +50,87 @@ describe("LocalTransfert", () => {
     });
 
     it("upload file", async () => {
-      await transfert.upload(localPath, remoteFilePath);
+      await transfer.upload(localPath, remoteFilePath);
 
-      const isExists = await transfert.isExists(remoteFilePath);
+      const isExists = await transfer.isExists(remoteFilePath);
       expect(isExists).equal(true);
     });
 
     it("remove file", async () => {
-      await transfert.deleteFile(remoteFilePath);
+      await transfer.deleteFile(remoteFilePath);
 
-      const isOldFileExists = await transfert.isExists(remoteFilePath);
+      const isOldFileExists = await transfer.isExists(remoteFilePath);
       expect(isOldFileExists).equal(false);
     });
 
     describe("Process With Files", function () {
       beforeEach(async () => {
-        await transfert.upload(localPath, remoteFilePath);
+        await transfer.upload(localPath, remoteFilePath);
 
-        const isExists = await transfert.isExists(remoteFilePath);
+        const isExists = await transfer.isExists(remoteFilePath);
         expect(isExists).equal(true);
       });
 
       it("download file", async () => {
-        const data = await transfert.downloadAndReadFile(remoteFilePath);
+        const data = await transfer.downloadAndReadFile(remoteFilePath);
         expect(data).equal(fileContent);
 
-        await transfert.deleteFile(remoteFilePath);
+        await transfer.deleteFile(remoteFilePath);
       });
 
       it("move file", async () => {
-        await transfert.moveFile(remoteFilePath, `${rootDir}/${fileName}`);
-        const isExists = await transfert.isExists(`${rootDir}/${fileName}`);
+        await transfer.moveFile(remoteFilePath, `${rootDir}/${fileName}`);
+        const isExists = await transfer.isExists(`${rootDir}/${fileName}`);
         expect(isExists).equal(true);
 
-        await transfert.deleteFile(`${rootDir}/${fileName}`);
+        await transfer.deleteFile(`${rootDir}/${fileName}`);
       });
 
       it("get list of file with the same pattern", async () => {
         const remoteFilePath2 = path.join(folderWorkDir, `remote-test2.TXT`);
 
-        await transfert.upload(localPath, remoteFilePath2);
+        await transfer.upload(localPath, remoteFilePath2);
 
-        const isExists = await transfert.isExists(remoteFilePath2);
+        const isExists = await transfer.isExists(remoteFilePath2);
         expect(isExists).equal(true);
 
         const filter = path.join(folderWorkDir, `remote-test(1|2).*\\.(TXT|txt)$`);
 
-        const data = await transfert.listDirWithFilter(filter);
+        const data = await transfer.listDirWithFilter(filter);
         expect(data).to.be.an("array");
         expect(data).to.have.lengthOf(2);
         expect(data).to.include.members([remoteFilePath, remoteFilePath2]);
 
-        await transfert.deleteFile(remoteFilePath2);
-        await transfert.deleteFile(remoteFilePath);
+        await transfer.deleteFile(remoteFilePath2);
+        await transfer.deleteFile(remoteFilePath);
       });
 
       it("move file to error directory", async () => {
-        await transfert.moveToErrorDir(remoteFilePath);
+        await transfer.moveToErrorDir(remoteFilePath);
 
         const remoteErrorPath = `${rootDir}/errors/remote-test1.txt`;
 
-        const isNewFileExists = await transfert.isExists(remoteErrorPath);
+        const isNewFileExists = await transfer.isExists(remoteErrorPath);
         expect(isNewFileExists).equal(true);
 
-        const isOldFileExists = await transfert.isExists(remoteFilePath);
+        const isOldFileExists = await transfer.isExists(remoteFilePath);
         expect(isOldFileExists).equal(false);
 
-        await transfert.deleteFile(remoteErrorPath);
+        await transfer.deleteFile(remoteErrorPath);
       });
 
       it("move file to archives directory", async () => {
-        await transfert.moveToArchiveDir(remoteFilePath);
+        await transfer.moveToArchiveDir(remoteFilePath);
 
         const remoteArchivesPath = `${rootDir}/archives/remote-test1.txt`;
 
-        const isNewFileExists = await transfert.isExists(remoteArchivesPath);
+        const isNewFileExists = await transfer.isExists(remoteArchivesPath);
         expect(isNewFileExists).equal(true);
 
-        const isOldFileExists = await transfert.isExists(remoteFilePath);
+        const isOldFileExists = await transfer.isExists(remoteFilePath);
         expect(isOldFileExists).equal(false);
 
-        await transfert.deleteFile(remoteArchivesPath);
+        await transfer.deleteFile(remoteArchivesPath);
       });
     });
   });
