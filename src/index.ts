@@ -10,7 +10,7 @@ export type * from "./api/spacefill-api-openapi.d.ts";
 export * from "./configs/Config.ts";
 export * from "./data_mapping/AbstractGenerateFileSchema.ts";
 export * from "./data_mapping/AbstractLoadFileSchema.ts";
-export * from "./data_mapping/AbtractSchema.ts";
+export * from "./data_mapping/AbstractSchema.ts";
 export * from "./data_mapping/SchemaInterfaces.ts";
 export * from "./exceptions/ApiNetWorkError.ts";
 export * from "./exceptions/InternalError.ts";

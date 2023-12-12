@@ -1,8 +1,8 @@
 import { GenerateFileSchemaInterface } from "./SchemaInterfaces.ts";
-import { AbtractSchema } from "./AbtractSchema.ts";
+import { AbstractSchema } from "./AbstractSchema.ts";
 
 export abstract class AbstractGenerateFileSchema<T>
-  extends AbtractSchema
+  extends AbstractSchema
   implements GenerateFileSchemaInterface<T>
 {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -16,13 +16,13 @@
 [SpacefillAPIWrapperV1]  -  [EdiEvent]
 [Config||\#get(): { spacefillApi: { url: string; apiToken: string; defaultPaginationLimit: number; context: { serviceSource: string \| undefined; serviceVersion: string \| undefined; transport: string \| undefined; clientType: string \| undefined; }; eventEnabled: boolean; }; transfer: { ...; }; edi: { ...; }; console: { ...; }; log: { ...;\#reloadConfig(): void;\#validate(): void]
 [AbstractGenerateFileSchema&lt;T&gt;||+mapOutputFileData(): object\[\]]
-[AbtractSchema]&lt;:-[AbstractGenerateFileSchema&lt;T&gt;]
+[AbstractSchema]&lt;:-[AbstractGenerateFileSchema&lt;T&gt;]
 [GenerateFileSchemaInterface&lt;T&gt;]&lt;:--[AbstractGenerateFileSchema&lt;T&gt;]
 [AbstractLoadFileSchema&lt;T&gt;||+mapInputFileData(): T\[\]]
-[AbtractSchema]&lt;:-[AbstractLoadFileSchema&lt;T&gt;]
+[AbstractSchema]&lt;:-[AbstractLoadFileSchema&lt;T&gt;]
 [LoadFileSchemaInterface&lt;T&gt;]&lt;:--[AbstractLoadFileSchema&lt;T&gt;]
-[AbtractSchema|+itemSchemaValidation: object;+fileDescriptor: ExportFileDescriptor \| undefined|\#validateFileData(): void]
-[CommonSchemaInterface]&lt;:--[AbtractSchema]
+[AbstractSchema|+itemSchemaValidation: object;+fileDescriptor: ExportFileDescriptor \| undefined|\#validateFileData(): void]
+[CommonSchemaInterface]&lt;:--[AbstractSchema]
 [&lt;interface&gt;LoadFileSchemaInterface&lt;T&gt;||+mapInputFileData(): T\[\]]
 [&lt;interface&gt;GenerateFileSchemaInterface&lt;T&gt;||+mapOutputFileData(): object\[\]]
 [&lt;interface&gt;CommonSchemaInterface|+itemSchemaValidation: object;+fileDescriptor: ExportFileDescriptor \| undefined|+validateFileData(): void]
@@ -541,28 +541,28 @@
 </g>
 </g>
 </g>
-<g data-name="AbtractSchema">
-<g fill="#eee8d5" stroke="#33322E" data-name="AbtractSchema">
-<rect x="5687.0" y="1377.5" height="108.0" width="394.0" data-name="AbtractSchema"></rect>
-<path d="M5687.0 1408.5 L6081.0 1408.5" fill="none" data-name="AbtractSchema"></path>
-<path d="M5687.0 1454.5 L6081.0 1454.5" fill="none" data-name="AbtractSchema"></path>
+<g data-name="AbstractSchema">
+<g fill="#eee8d5" stroke="#33322E" data-name="AbstractSchema">
+<rect x="5687.0" y="1377.5" height="108.0" width="394.0" data-name="AbstractSchema"></rect>
+<path d="M5687.0 1408.5 L6081.0 1408.5" fill="none" data-name="AbstractSchema"></path>
+<path d="M5687.0 1454.5 L6081.0 1454.5" fill="none" data-name="AbstractSchema"></path>
 </g>
-<g transform="translate(5687, 1377.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbtractSchema">
-<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AbtractSchema">
-<a id="../src/data_mapping/AbtractSchema.ts.AbtractSchema" xlink:href="../src/data_mapping/AbtractSchema.ts"><text x="189.0" y="13.5" stroke="none" text-anchor="middle" data-name="AbtractSchema">AbtractSchema</text></a>
+<g transform="translate(5687, 1377.5)" font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" data-name="AbstractSchema">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="AbstractSchema">
+<a id="../src/data_mapping/AbstractSchema.ts.AbstractSchema" xlink:href="../src/data_mapping/AbstractSchema.ts"><text x="189.0" y="13.5" stroke="none" text-anchor="middle" data-name="AbstractSchema">AbstractSchema</text></a>
 
 </g>
 </g>
-<g transform="translate(5687, 1408.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbtractSchema">
-<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbtractSchema">
-<text x="0.0" y="13.5" stroke="none" data-name="AbtractSchema">+itemSchemaValidation: object</text>
-<text x="0.0" y="28.5" stroke="none" data-name="AbtractSchema">+fileDescriptor: ExportFileDescriptor | undefined</text>
+<g transform="translate(5687, 1408.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractSchema">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractSchema">
+<text x="0.0" y="13.5" stroke="none" data-name="AbstractSchema">+itemSchemaValidation: object</text>
+<text x="0.0" y="28.5" stroke="none" data-name="AbstractSchema">+fileDescriptor: ExportFileDescriptor | undefined</text>
 
 </g>
 </g>
-<g transform="translate(5687, 1454.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbtractSchema">
-<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbtractSchema">
-<text x="0.0" y="13.5" stroke="none" data-name="AbtractSchema">#validateFileData(): void</text>
+<g transform="translate(5687, 1454.5)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="AbstractSchema">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="AbstractSchema">
+<text x="0.0" y="13.5" stroke="none" data-name="AbstractSchema">#validateFileData(): void</text>
 
 </g>
 </g>

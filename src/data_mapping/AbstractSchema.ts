@@ -8,7 +8,7 @@ const addFormats = addFormatsModule.default;
 import { Console } from "../utils/Console.ts";
 import { CommonSchemaInterface, ExportFileDescriptor } from "./SchemaInterfaces.ts";
 
-export abstract class AbtractSchema implements CommonSchemaInterface {
+export abstract class AbstractSchema implements CommonSchemaInterface {
   itemSchemaValidation: object = {};
   fileDescriptor: ExportFileDescriptor | undefined;
 
