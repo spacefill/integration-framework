@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.1] - 2023-12-12
+
+### Fixed
+
+- [!50](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/50) Correction of several typos.
+
 ## [0.5.0] - 2023-12-11
 
 ### Added
