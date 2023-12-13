@@ -75,7 +75,6 @@ export class SpacefillAPIWrapperV1 {
     });
 
     this.client = await api.getClient<SpacefillAPIClient>();
-    this.ediEvent = new EdiEvent(this.client as SpacefillAPIClient);
     this.axiosInstance = api.instance;
 
     axiosDebug.default({
@@ -110,6 +109,7 @@ export class SpacefillAPIWrapperV1 {
       },
     });
     axiosDebug.addLogger(this.axiosInstance as AxiosInstance);
+    this.ediEvent = new EdiEvent(this.client as SpacefillAPIClient);
   }
 
   getAxiosInstance(): AxiosInstance | undefined {
