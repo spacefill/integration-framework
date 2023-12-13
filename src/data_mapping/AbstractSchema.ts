@@ -29,7 +29,7 @@ export abstract class AbstractSchema implements CommonSchemaInterface {
           checkedItem: pointer.get(data, `/${validationError.instancePath.split("/")[1]}`), // @todo: Vérifier s'il y a mieux pour extraire le path vers l'item en erreur vs la clé de l'item
         });
       });
-      throw new Error("Configuration validation failed for spacefillApi");
+      throw new Error("Data validation failed");
     }
   }
 }

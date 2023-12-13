@@ -16,6 +16,7 @@ import { FileItemInterface } from "../../src/task/LoadFileTaskInterfaces.ts";
 import { LoadFileSchemaInterface } from "../../src/data_mapping/SchemaInterfaces.ts";
 import { EventTypeEnumString } from "../../src/api/EdiEvent.ts";
 import { InternalError } from "../../src/exceptions/InternalError.ts";
+import { CsvHelper } from "../../src/index.ts";
 
 type ItemPackagingTypeEnum = "PALLET" | "CARDBOARD_BOX" | "EACH";
 type OrderTypeEnum = "ENTRY" | "EXIT";
@@ -88,25 +89,12 @@ export class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTask<
   }
 
   async parseRawData(fileContent: string): Promise<object[]> {
-    const parsedData: object[] = [];
-    return await new Promise<object[]>((resolve, reject) => {
-      const stream = csv
-        .parse({ headers: false, delimiter: ";" })
-        .on("error", (error) => {
-          Console.error(error);
-          reject(error);
-        })
-        .on("data", (row) => {
-          parsedData.push(row);
-        })
-        .on("finish", (rowCount: number) => {
-          Console.info(`Parsed ${rowCount} rows`);
-          parsedData.shift(); // remove headers line
-          return resolve(parsedData);
-        });
-      stream.write(fileContent);
-      stream.end();
-    });
+    return CsvHelper.parseRawDataWithDataSchema<OrderInterface | ExitOrderInterface>(
+      fileContent,
+      this.getDataSchema(),
+      ";",
+      1,
+    );
   }
 
   async dataProcessing(mappedData: OrderInterface[] | ExitOrderInterface[]): Promise<void> {
