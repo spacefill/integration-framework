@@ -91,6 +91,10 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
           Console.trace("Mapped data:", mappedData);
           Console.confirm("Data mapped");
 
+          Console.title("Data validation");
+          this.getDataSchema().validateFileData(mappedData as object[]);
+          Console.confirm("Data validated");
+
           Console.title("Data processing");
           await this.dataProcessing(mappedData);
           Console.confirm("Data processed");
