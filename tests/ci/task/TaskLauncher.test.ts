@@ -21,7 +21,7 @@ describe("TaskLauncher", () => {
     process.argv.push("-m");
     process.argv.push("default");
 
-    const testTastLauncher = new TaskLauncher({
+    const testTaskLauncher = new TaskLauncher({
       "test-command": {
         mode: {
           default: TesGenFile,
@@ -29,6 +29,6 @@ describe("TaskLauncher", () => {
       },
     });
 
-    assert.instanceOf(testTastLauncher.getTask(), AbstractTask);
+    assert.instanceOf(testTaskLauncher.getTask(), AbstractTask);
   });
 });
