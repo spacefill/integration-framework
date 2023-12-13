@@ -111,7 +111,7 @@ export abstract class BaseCommand {
     }
 
     if (this.argv?.["print-config"]) {
-      Console.log(Config);
+      Console.log(Config.get());
       process.exit(0);
     }
   }
