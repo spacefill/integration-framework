@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.2] - 2023-12-13
+
+### Fixed
+
+- [#22](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/22) Missing data validation before processing it in `AbstractLoadFileTask.ts`.
+- [#21](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/21) Sending events did not use the Axios logger.
+- [#20](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/20) `--print-config` wasn't correctly display the configuration.
+- [!52](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/50) AxiosLogger was printing messages twice.
+
 ## [0.5.1] - 2023-12-12
 
 ### Fixed
