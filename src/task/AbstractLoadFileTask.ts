@@ -89,15 +89,15 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
           Console.trace("Prepared data:", preparedData);
           Console.confirm("Data prepared");
 
+          Console.title("Data validation");
+          this.getDataSchema().validateFileData(preparedData as object[]);
+          Console.confirm("Data validated");
+
           Console.title("Data mapping");
           Console.debug(`${preparedData?.length} items to map.`);
           const mappedData = this.getDataSchema().mapInputFileData(preparedData);
           Console.trace("Mapped data:", mappedData);
           Console.confirm("Data mapped");
-
-          Console.title("Data validation");
-          this.getDataSchema().validateFileData(mappedData as object[]);
-          Console.confirm("Data validated");
 
           Console.title("Data processing");
           await this.dataProcessing(mappedData);

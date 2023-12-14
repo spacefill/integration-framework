@@ -18,7 +18,7 @@ export abstract class AbstractSchema implements CommonSchemaInterface {
       items: this.itemSchemaValidation,
     };
 
-    const ajv = new Ajv();
+    const ajv = new Ajv({ coerceTypes: true });
     addFormats(ajv);
 
     const validate = ajv.compile(schema);
