@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2023-12-14
+
+### Added
+
+- [!54](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/54) Add a `CsvHelper` to help to map file data with data schema.
+
+### Fixed
+
+- [!42](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/54) Add missing Configuration validation in `AbstractLoadFileTask`.
+- [!42](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/54) Add missing `SUCCESS` event sending in `AbstractLoadFileTask`.
+- [!54](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/54) Wrong order for file data validation in `AbstractLoadFileTask`.
+
 ## [0.5.2] - 2023-12-13
 
 ### Fixed
