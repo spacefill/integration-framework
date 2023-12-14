@@ -109,7 +109,7 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
 
           await this.sdk.ediEvent.send(
             EventTypeEnumString.SUCCESS,
-            `File generation ended. Type=${this.getWorkflowType()}`,
+            `File correctly loaded. Type=${this.getWorkflowType()}`,
           );
         } catch (processFileException) {
           Console.error(processFileException);
