@@ -1,4 +1,5 @@
 import gradient from "gradient-string";
+import format from "format-duration";
 //import prompts from 'prompts';
 import { Config } from "../configs/Config.ts";
 
@@ -30,8 +31,15 @@ export {
   logLevelOrder,
 };
 
+const consoleStartTime = new Date().getTime();
 
 export class Console {
+  static getDuration(): string {
+    const consoleEndTime = new Date().getTime();
+    const duration = consoleEndTime - consoleStartTime;
+    return format(duration);
+  }
+
   static log(...message) {
     const firstMessage = message?.[0];
     const otherMessages = message.slice(1);
@@ -114,7 +122,11 @@ export class Console {
   static printGradient(gradientObj, prefix, ...message) {
     const coloredPrefix = gradientObj(prefix);
 
-    const firstMessage = message?.[0];
+    let firstMessage = `[${Console.getDuration()}] ${message?.[0]}`;
+    if (!Config.get().console.printDuration) {
+      firstMessage = message?.[0];
+    }
+
     const otherMessages = message.slice(1);
 
     Config.get().console.color

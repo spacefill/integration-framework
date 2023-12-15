@@ -1,7 +1,7 @@
 {
   "name": "@spacefill/integration-framework",
   "type": "module",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -19,6 +19,7 @@
     "eslint-config-prettier": "9.0.0",
     "fast-csv": "4.3.6",
     "form-data": "4.0.0",
+    "format-duration": "3.0.2",
     "gradient-string": "2.0.2",
     "json-pointer": "0.6.2",
     "luxon": "3.4.3",

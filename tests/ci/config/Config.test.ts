@@ -52,7 +52,7 @@ describe("Config", () => {
       "runId",
     );
 
-    expect(config.console).to.have.all.keys("color", "interactiveMode");
+    expect(config.console).to.have.all.keys("color", "interactiveMode", "printDuration");
 
     expect(config.log).to.have.all.keys("level", "defaultLogLevel");
   });

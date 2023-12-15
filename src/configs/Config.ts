@@ -63,6 +63,7 @@ export class Config {
       console: {
         color: process.env?.CONSOLE_COLOR_ENABLED == "1" ? true : false,
         interactiveMode: process.env?.CONSOLE_INTERACTIVE_MODE == "1" ? true : false,
+        printDuration: process.env?.CONSOLE_PRINT_DURATION == "1" ? true : false,
       },
       log: {
         level: process.env?.LOG_LEVEL ?? "info",
@@ -238,8 +239,11 @@ export class Config {
         interactiveMode: {
           type: "boolean",
         },
+        printDuration: {
+          type: "boolean",
+        },
       },
-      required: ["color", "interactiveMode"],
+      required: ["color", "interactiveMode", "printDuration"],
     };
     const validateConsole = ajv.compile(schemaConsole);
     if (!validateConsole(Config.get().console)) {
