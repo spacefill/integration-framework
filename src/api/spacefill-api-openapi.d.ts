@@ -1,5 +1,10 @@
-import { AxiosRequestConfig } from "axios";
-import type { OpenAPIClient, Parameters, UnknownParamsObject, OperationResponse } from "openapi-client-axios";
+import type {
+  OpenAPIClient,
+  Parameters,
+  UnknownParamsObject,
+  OperationResponse,
+  AxiosRequestConfig,
+} from "openapi-client-axios";
 
 declare namespace Components {
   namespace Schemas {
@@ -2845,6 +2850,9 @@ declare namespace Components {
      *   "edi_erp_shipper_id": "string",
      *   "edi_wms_shipper_id": "string",
      *   "edi_tms_shipper_id": "string",
+     *   "transfered_to_erp_at": "2022-05-11T10:00:00.000Z",
+     *   "transfered_to_wms_at": "2022-05-11T10:00:00.000Z",
+     *   "transfered_to_tms_at": "2022-05-11T10:00:00.000Z",
      *   "entry_expeditor": "Name 0001",
      *   "entry_expeditor_address_line1": "29 rue poissonière",
      *   "entry_expeditor_address_zip": "75009",
@@ -3025,6 +3033,21 @@ declare namespace Components {
        * Order identifier used in the TMS software.
        */
       edi_tms_id?: string;
+      /**
+       * Transfered To Erp At
+       * Date of the transfer of the order in the ERP software.
+       */
+      transfered_to_erp_at?: string; // date-time
+      /**
+       * Transfered To Wms At
+       * Date of the transfer of the order in the WMS software.
+       */
+      transfered_to_wms_at?: string; // date-time
+      /**
+       * Transfered To Tms At
+       * Date of the transfer of the order in the TMS software.
+       */
+      transfered_to_tms_at?: string; // date-time
       /**
        * Entry Expeditor
        * Address name for the sender.
@@ -5254,6 +5277,16 @@ declare namespace Components {
        */
       entry_expeditor_address_lng?: string;
       /**
+       * Entry Expeditor Email
+       * Email of the sender's address.
+       */
+      entry_expeditor_email?: string;
+      /**
+       * Entry Expeditor Phone Number
+       * Phone number of the sender's address.
+       */
+      entry_expeditor_phone_number?: string;
+      /**
        * Entry Expeditor Planned Datetime Range
        * Sender's collection date range.
        * example:
@@ -5321,6 +5354,16 @@ declare namespace Components {
        * Longitude of the recipient's address.
        */
       exit_final_recipient_address_lng?: string;
+      /**
+       * Exit Final Recipient Email
+       * Email of the recipient's address.
+       */
+      exit_final_recipient_email?: string;
+      /**
+       * Exit Final Recipient Phone Number
+       * Phone number of the recipient's address.
+       */
+      exit_final_recipient_phone_number?: string;
       /**
        * Exit Final Recipient Planned Datetime Range
        * Recipient's reception date range.
@@ -5842,6 +5885,16 @@ declare namespace Components {
        */
       entry_expeditor_address_lng?: string;
       /**
+       * Entry Expeditor Email
+       * Email of the sender's address.
+       */
+      entry_expeditor_email?: string;
+      /**
+       * Entry Expeditor Phone Number
+       * Phone number of the sender's address.
+       */
+      entry_expeditor_phone_number?: string;
+      /**
        * Entry Expeditor Planned Datetime Range
        * Sender's collection date range.
        * example:
@@ -5909,6 +5962,16 @@ declare namespace Components {
        * Longitude of the recipient's address.
        */
       exit_final_recipient_address_lng?: string;
+      /**
+       * Exit Final Recipient Email
+       * Email of the recipient's address.
+       */
+      exit_final_recipient_email?: string;
+      /**
+       * Exit Final Recipient Phone Number
+       * Phone number of the recipient's address.
+       */
+      exit_final_recipient_phone_number?: string;
       /**
        * Exit Final Recipient Planned Datetime Range
        * Recipient's reception date range.
@@ -12674,6 +12737,9 @@ declare namespace Paths {
        *   "edi_erp_shipper_id": "string",
        *   "edi_wms_shipper_id": "string",
        *   "edi_tms_shipper_id": "string",
+       *   "transfered_to_erp_at": "2022-05-11T10:00:00.000Z",
+       *   "transfered_to_wms_at": "2022-05-11T10:00:00.000Z",
+       *   "transfered_to_tms_at": "2022-05-11T10:00:00.000Z",
        *   "entry_expeditor": "Name 0001",
        *   "entry_expeditor_address_line1": "29 rue poissonière",
        *   "entry_expeditor_address_zip": "75009",
@@ -13920,7 +13986,7 @@ export interface OperationMethods {
    * post_v1_logistic_management_shipper_creates_order_exit_action - Create an exit order
    *
    * Create an <<glossary:exit order>>.
-   * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
+   * A new address is created in your [address-book](https://app.spacefill.fr/settings/address-book/) if the following fields do not match an existing address.
    *
    * ```
    * exit_final_recipient
@@ -13931,7 +13997,7 @@ export interface OperationMethods {
    * exit_final_recipient_address_country_code
    * ```
    *
-   * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
+   * For some integrations, address is mandatory. You will then receive an error message if you do not fill at least one of the fields listed below.
    */
   "post_v1_logistic_management_shipper_creates_order_exit_action"(
     parameters?: Parameters<UnknownParamsObject> | null,
@@ -14068,6 +14134,7 @@ export interface OperationMethods {
    * Create an <<glossary:order>>. The accepted fields depend on the `order_type` field:
    * - If you need to create an <<glossary:entry order>>, you need to use the fields that start with `entry_expeditor_` to specify the sender information.
    * - If you need to create an <<glossary:exit order>>, you need to use the fields that start with `exit_final_recipient_` to specify the final recipient information.
+   * At least one of these fields is mandatory if the `is_delivery_address_mandatory_for_exit_orders` field is enabled by Spacefill.
    *
    * If the following fields correspond to an existing address in the shipper [address-book](https://app.spacefill.fr/settings/address-book/):
    *
@@ -14499,7 +14566,7 @@ export interface PathsDictionary {
      * post_v1_logistic_management_shipper_creates_order_exit_action - Create an exit order
      *
      * Create an <<glossary:exit order>>.
-     * If the following fields correspond to an existing address in your [address-book](https://app.spacefill.fr/settings/address-book/):
+     * A new address is created in your [address-book](https://app.spacefill.fr/settings/address-book/) if the following fields do not match an existing address.
      *
      * ```
      * exit_final_recipient
@@ -14510,7 +14577,7 @@ export interface PathsDictionary {
      * exit_final_recipient_address_country_code
      * ```
      *
-     * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
+     * For some integrations, address is mandatory. You will then receive an error message if you do not fill at least one of the fields listed below.
      */
     "post"(
       parameters?: Parameters<UnknownParamsObject> | null,
@@ -14671,6 +14738,7 @@ export interface PathsDictionary {
      * Create an <<glossary:order>>. The accepted fields depend on the `order_type` field:
      * - If you need to create an <<glossary:entry order>>, you need to use the fields that start with `entry_expeditor_` to specify the sender information.
      * - If you need to create an <<glossary:exit order>>, you need to use the fields that start with `exit_final_recipient_` to specify the final recipient information.
+     * At least one of these fields is mandatory if the `is_delivery_address_mandatory_for_exit_orders` field is enabled by Spacefill.
      *
      * If the following fields correspond to an existing address in the shipper [address-book](https://app.spacefill.fr/settings/address-book/):
      *
