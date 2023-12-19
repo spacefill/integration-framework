@@ -19,7 +19,7 @@ export abstract class AbstractGenerateFileTask<T>
 {
   protected currentFileConfiguration: InitialDataItem<T> | undefined;
 
-  initFilesGeneration(): InitialDataItem<T>[] {
+  async initFilesGeneration(): Promise<InitialDataItem<T>[]> {
     throw new Error("Method not implemented.");
   }
 
@@ -75,7 +75,7 @@ export abstract class AbstractGenerateFileTask<T>
         EventTypeEnumString.STARTED,
         `File generation started. Type=${this.getWorkflowType()}`,
       );
-      const filesConfiguration = this.initFilesGeneration();
+      const filesConfiguration = await this.initFilesGeneration();
 
       for (const fileConfiguration of filesConfiguration) {
         try {

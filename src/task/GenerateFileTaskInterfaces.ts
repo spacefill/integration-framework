@@ -2,7 +2,7 @@ import { WorkflowType } from "../api/APIContext.ts";
 
 interface GenerateFileTaskInterface<T> {
   initApiClient(workflowType: WorkflowType): void;
-  initFilesGeneration(): InitialDataItem<T>[];
+  initFilesGeneration(): Promise<InitialDataItem<T>[]>;
   prepareFileData(): Promise<T[]>;
   generateFile(mappedData: object[], tempFilePath: string): Promise<void>;
   sendFile(tempFilePath: string): Promise<string>;
