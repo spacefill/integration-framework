@@ -15,7 +15,7 @@ export class LocalClient implements TransferInterface {
     fs.mkdirSync(remotePath, { recursive: true });
   }
 
-  async isExists(remotePath: string): Promise<string | boolean> {
+  async isExists(remotePath: string): Promise<boolean> {
     return fs.existsSync(remotePath);
   }
 

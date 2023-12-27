@@ -4,6 +4,7 @@ import { SftpClient } from "./SftpClient.ts";
 import { LocalClient } from "./LocalClient.ts";
 import { Config } from "../configs/Config.ts";
 import { Console } from "../utils/Console.ts";
+import { FtpClient } from "./FtpClient.ts";
 
 enum TransferProtocol {
   sftp = "sftp",
@@ -28,6 +29,9 @@ class Transfer implements TransferInterface {
     switch (this.protocol) {
       case TransferProtocol.sftp:
         this.client = new SftpClient(this.configuration);
+        break;
+      case TransferProtocol.ftp:
+        this.client = new FtpClient(this.configuration);
         break;
       case TransferProtocol.local:
         this.client = new LocalClient();
@@ -57,7 +61,7 @@ class Transfer implements TransferInterface {
     }
   }
 
-  async isExists(remotePath: string): Promise<string | boolean> {
+  async isExists(remotePath: string): Promise<boolean> {
     try {
       await this.open();
       return await this.client.isExists(remotePath);
@@ -131,7 +135,7 @@ class Transfer implements TransferInterface {
 
       await this.client.mkdirIfNotExists(targetFilePath);
 
-      if ((await this.client.isExists(targetPath)) === "-") {
+      if ((await this.client.isExists(targetPath))) {
         throw `File name ${targetFileName} already exists in ${targetFilePath} folder.`;
       } else {
         await this.client.moveFile(sourcePath, targetPath);

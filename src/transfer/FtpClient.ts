@@ -1,62 +1,75 @@
 import { TransferConfiguration, TransferInterface } from "./TransferInterfaces.ts";
-import sftp from "ssh2-sftp-client";
+import * as ftp from "basic-ftp"
 import { Console } from "../utils/Console.ts";
+import path from "path";
+import { fs } from "zx";
+import { temporaryFileTask } from "tempy";
 
-interface SSH2TransferConfiguration {
-  hostname: string;
+interface FTPTransferConfiguration {
+  host: string;
   port: number;
-  username: string;
+  user: string;
   password: string;
   retries?: number;
   retry_minTimeout?: number;
 }
 
-export class SftpClient implements TransferInterface {
-  private configuration: SSH2TransferConfiguration;
-  private client: sftp;
+export class FtpClient implements TransferInterface {
+  private configuration: FTPTransferConfiguration;
+  private client: ftp.Client;
 
   constructor(configuration: TransferConfiguration) {
     this.configuration = {
-      hostname: configuration.hostname,
+      host: configuration.hostname,
       port: configuration.port,
-      username: configuration.username,
+      user: configuration.username,
       password: configuration.password,
       retries: configuration.retries,
       retry_minTimeout: configuration.delay,
     };
-    this.client = new sftp();
+    this.client = new ftp.Client();
   }
 
   async open(): Promise<void> {
-    this.client = new sftp();
-    await this.client.connect(this.configuration);
+    this.client = new ftp.Client();
+    await this.client.access(this.configuration);
   }
 
   async close(): Promise<void> {
-    this.client.end();
+    this.client.close();
   }
 
   async mkdirIfNotExists(remotePath: string): Promise<void> {
-    await this.client.mkdir(remotePath, true);
+    await this.client.ensureDir(remotePath);
   }
 
   async isExists(remotePath: string): Promise<boolean> {
-    return (await this.client.exists(remotePath) !== false)
+    const targetFilePath = path.dirname(remotePath);
+    const targetFileName = path.basename(remotePath);
+
+    const list = await this.client.list(targetFilePath);
+
+    return list.length > 0 && list.some(item => item.name === targetFileName);
   }
 
   async upload(localPath: string, remotePath: string): Promise<void> {
     Console.debug(`Uploading ${localPath} to ${remotePath} ...`);
-    await this.client.put(localPath, remotePath);
+    await this.client.uploadFrom(localPath, remotePath);
   }
 
   async downloadAndReadFile(remotePath: string, encoding: BufferEncoding): Promise<string> {
     Console.debug(`Downloading ${remotePath} ...`);
-    const options = {
-      readStreamOptions: {
-        encoding: encoding,
-      },
-    };
-    return (await this.client.get(remotePath, undefined, options)) as string; // remotePath is path to the remote file to download
+
+    let fileContent: string = '';
+
+    await temporaryFileTask(async (tempFilePath) => {
+      const writableStream = fs.createWriteStream(tempFilePath);
+      await this.client.downloadTo(writableStream, remotePath);
+
+      fileContent = await fs.readFile(tempFilePath, encoding);
+    })
+
+    return fileContent;
   }
 
   async listDirWithFilter(remotePath: string): Promise<string[]> {
@@ -65,11 +78,11 @@ export class SftpClient implements TransferInterface {
 
   async moveFile(sourcePath: string, targetPath: string): Promise<void> {
     Console.debug(`Moving file ${sourcePath} to ${targetPath} ...`);
-    await this.client.rename(sourcePath, targetPath);
+    await this.client.rename(path.join('/', sourcePath), path.join('/', targetPath)); // For ftp we need to add '/' before the path
   }
 
   async deleteFile(remotePath: string): Promise<void> {
     Console.debug(`Deleting ${remotePath}`);
-    await this.client.delete(remotePath);
+    await this.client.remove(remotePath);
   }
 }

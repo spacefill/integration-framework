@@ -2,7 +2,7 @@ interface TransferInterface {
   open(): Promise<void>;
   close(): Promise<void>;
   mkdirIfNotExists(remotePath: string): Promise<void>;
-  isExists(remotePath: string): Promise<string | boolean>;
+  isExists(remotePath: string): Promise<boolean>;
   upload(localPath: string, remotePath: string): Promise<void>;
   downloadAndReadFile(remotePath: string, encoding: BufferEncoding): Promise<string>;
   listDirWithFilter(filepathPattern: string): Promise<string[]>;

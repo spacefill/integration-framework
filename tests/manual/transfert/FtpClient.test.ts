@@ -5,12 +5,12 @@ import chaiAsPromised from "chai-as-promised";
 import chai, { expect } from "chai";
 chai.use(chaiAsPromised);
 
-import { SftpClient } from "../../../src/transfer/SftpClient.ts";
 import { Transfer, TransferProtocol } from "../../../src/transfer/Transfer.ts";
 import { initTestEnv } from "../../testUtils/initTestEnv.ts";
 import { Config } from "../../../src/configs/Config.ts";
+import { FtpClient } from "../../../src/transfer/FtpClient.ts";
 
-describe("SftpTransfer", () => {
+describe("FtpClient", () => {
   const rootDir = `folder-test`;
   const folderWorkDir = path.join(rootDir, "folder-process");
   const fileName = "remote-test1.txt";
@@ -21,8 +21,8 @@ describe("SftpTransfer", () => {
   const remoteArchivesPath = `${rootDir}/archives/remote-test1.txt`;
   const fileContent = "Contenu du fichier";
 
-  const config = { hostname: "127.0.0.1", port: 2222, username: "alice", password: "password" };
-  const transfer = new Transfer(TransferProtocol.sftp, config);
+  const config = { hostname: "127.0.0.1", port: 21, username: "bob", password: "password" };
+  const transfer = new Transfer(TransferProtocol.ftp, config);
 
   before(async () => {
     initTestEnv();
@@ -32,8 +32,8 @@ describe("SftpTransfer", () => {
   });
 
   it("should get configuration", async () => {
-    const instance = new SftpClient(config);
-    expect(instance).to.be.an.instanceof(SftpClient);
+    const instance = new FtpClient(config);
+    expect(instance).to.be.an.instanceof(FtpClient);
   });
 
   it("create new directory", async () => {
@@ -73,6 +73,10 @@ describe("SftpTransfer", () => {
 
         const isExists = await transfer.isExists(remoteFilePath);
         expect(isExists).equal(true);
+      });
+
+      after(async () => {
+        await transfer.deleteFile(remoteFilePath);
       });
 
       it("download file", async () => {
@@ -128,27 +132,25 @@ describe("SftpTransfer", () => {
       it("error to check if folder exists with wrong config but good hostname", async () => {
         const wrongConfig = {
           hostname: "127.0.0.1",
-          port: 2229,
-          username: "alice",
+          port: 21,
+          username: "bob",
           password: "passwordd",
         };
 
-        const transfer = new Transfer(TransferProtocol.sftp, wrongConfig);
-
-        await expect(transfer.isExists("")).to.be.rejectedWith(Error, 'connect: Remote host refused connection');
+        const transfer = new Transfer(TransferProtocol.ftp, wrongConfig);
+        await expect(transfer.isExists("")).to.be.rejectedWith(Error, '530 Login authentication failed');
       });
 
       it("error to check if folder exists with wrong hostname config", async () => {
         const wrongConfig = {
           hostname: "127.0.60.1",
-          port: 2222,
-          username: "alice",
+          port: 21,
+          username: "bob",
           password: "password",
         };
 
-        const transfer = new Transfer(TransferProtocol.sftp, wrongConfig);
-
-        await expect(transfer.isExists("")).to.be.rejectedWith(Error, 'connect: getConnection: Timed out while waiting for handshake');
+        const transfer = new Transfer(TransferProtocol.ftp, wrongConfig);
+        await expect(transfer.isExists("")).to.be.rejectedWith(Error, 'Timeout (control socket)');
       }).timeout(100000);
     });
   });

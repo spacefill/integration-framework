@@ -1,7 +1,8 @@
-import { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import chai, { expect } from "chai";
+chai.use(chaiAsPromised);
 
 import { Transfer, TransferProtocol } from "../../../src/transfer/Transfer.ts";
-import { TestHelpers } from "../../../src/utils/TestHelpers.ts";
 
 describe("Transfer", () => {
   it("create a transfer with unknown protocol", async () => {
@@ -14,22 +15,16 @@ describe("Transfer", () => {
 
   it("create directory with no path", async () => {
     const transfer = new Transfer(TransferProtocol.local);
-    await TestHelpers.expectThrowsAsync(
-      () => transfer.mkdirIfNotExists(""),
-      `ENOENT: no such file or directory, mkdir`,
-    );
+    await expect(transfer.mkdirIfNotExists("")).to.be.rejectedWith(Error, 'ENOENT: no such file or directory, mkdir');
   });
 
   it("error to upload with no path", async () => {
     const transfer = new Transfer(TransferProtocol.local);
-    await TestHelpers.expectThrowsAsync(() => transfer.upload("", ""), `ENOENT: no such file or directory`);
+    await expect(transfer.upload("", "")).to.be.rejectedWith(Error, 'ENOENT: no such file or directory');
   });
 
   it("error to download with no path", async () => {
     const transfer = new Transfer(TransferProtocol.local);
-    await TestHelpers.expectThrowsAsync(
-      () => transfer.downloadAndReadFile(""),
-      `ENOENT: no such file or directory`,
-    );
+    await expect(transfer.downloadAndReadFile("")).to.be.rejectedWith(Error, 'ENOENT: no such file or directory');
   });
 });

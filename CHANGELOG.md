@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2024-01-11
+
+### Added
+
+- [#24](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/24) Add transfer class Ftp Client.
+
 ## [0.8.4] - 2024-01-09
 
 ### Improve
