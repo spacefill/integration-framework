@@ -67,14 +67,17 @@ export class TaskLauncher extends BaseCommand {
     }
 
     this.mode = this.argv?.mode ?? this.argv?.m;
+
+    if (!this.mode) {
+      this.mode = "default";
+    }
+
     if (this.mode && !this.tasksList[taskName].mode?.[this.mode]) {
       Console.error(
         `Unknown task mode ${this.mode}. Available task mode for ${taskName}:`,
         Object.keys(this.tasksList[taskName]),
       );
       process.exit(1);
-    } else {
-      this.mode = "default";
     }
 
     if (this.displayHelp) {
