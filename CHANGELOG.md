@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.3] - 2024-01-05
+
+### Fixed
+
+- [#25](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/25) Wrong SUCCESS event sending for generate files task.
+
 ## [0.8.2] - 2024-01-03
 
 ### Fixed

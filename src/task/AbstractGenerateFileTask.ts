@@ -103,6 +103,7 @@ export abstract class AbstractGenerateFileTask<T>
           this.getDataSchema().validateFileData(mappedData);
           Console.confirm("Data validated");
 
+          let sentFile = "unknown";
           await temporaryFileTask(async (tempFilePath) => {
             Console.info(`Temporary file: ${tempFilePath}`);
             Console.title("File generation");
@@ -116,7 +117,7 @@ export abstract class AbstractGenerateFileTask<T>
 
             Console.title("File sending");
             try {
-              const sentFile = await this.sendFile(tempFilePath);
+              sentFile = await this.sendFile(tempFilePath);
               Console.confirm(`File ${sentFile} well sent.`);
             } catch (networkException) {
               Console.error(networkException);
@@ -127,6 +128,11 @@ export abstract class AbstractGenerateFileTask<T>
           Console.title("Post file sending");
           await this.postFileSending();
           Console.confirm("Post file sending action done");
+
+          await this.sdk.ediEvent.send(
+            EventTypeEnumString.SUCCESS,
+            `File generation ended. Type=${this.getWorkflowType()}, File=${sentFile}`,
+          );
         } catch (processFileException) {
           Console.error(processFileException);
           errorFound = true;
@@ -137,14 +143,8 @@ export abstract class AbstractGenerateFileTask<T>
           );
         }
       }
-
       if (errorFound) {
         throw new UnknownError("One or more errors found during the execution");
-      } else {
-        await this.sdk.ediEvent.send(
-          EventTypeEnumString.SUCCESS,
-          `File generation ended. Type=${this.getWorkflowType()}`,
-        );
       }
     } catch (exception) {
       Console.error(exception);
