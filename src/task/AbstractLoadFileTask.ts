@@ -121,6 +121,7 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
           );
           await this.onProcessingFileError(targetFileItem);
         }
+        Console.printLine();
       }
     } catch (exception) {
       Console.error(exception);

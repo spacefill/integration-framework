@@ -150,6 +150,7 @@ export abstract class AbstractGenerateFileTask<T>
             `File generation failed. Type=${this.getWorkflowType()}`,
           );
         }
+        Console.printLine();
       }
       if (errorFound) {
         throw new UnknownError("One or more errors found during the execution");

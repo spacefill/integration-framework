@@ -6,6 +6,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [0.8.3] - 2024-01-05
 
+### Improve
+
+- [#26](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/25) Console -add separation line between treated files.
+
 ### Fixed
 
 - [#25](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/25) `AbstractGenerateFileTask`: Wrong `SUCCESS` event sending.

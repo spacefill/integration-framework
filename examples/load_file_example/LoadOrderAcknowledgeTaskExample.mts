@@ -2,7 +2,6 @@
 
 import path from "path";
 import { temporaryFileTask } from "tempy";
-import * as csv from "fast-csv";
 import * as XLSX from "xlsx";
 import FormData from "form-data";
 import { fs } from "zx";

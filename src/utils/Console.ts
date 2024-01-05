@@ -81,13 +81,31 @@ export class Console {
     }
     const infoGradient = gradient(["#084C61", "#177E89", "#084C61"]);
     const cliWidth = process.stdout.columns;
-    const prefixWidth = 12;
+    let prefixWidth = 10;
+    if (Config.get().console.printDuration) {
+      prefixWidth += 7;
+    }
     let maxColumns = 80;
     if (cliWidth && cliWidth < 80) {
-      maxColumns = cliWidth - prefixWidth;
+      maxColumns = cliWidth;
     }
+    maxColumns -= prefixWidth;
     const delta = maxColumns - message.length > 0 ? maxColumns - message.length : 0;
     Console.printGradient(infoGradient, "[Info]", `${message} ${".".repeat(delta)}`);
+  }
+
+  static printLine() {
+    if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_INFO) {
+      return;
+    }
+
+    const cliWidth = process.stdout.columns;
+    let maxColumns = 80;
+    if (cliWidth && cliWidth < 80) {
+      maxColumns = cliWidth;
+    }
+
+    console.log(`${"-".repeat(maxColumns)}`);
   }
 
   static warn(...message) {
