@@ -1,3 +1,5 @@
+import { path } from "zx";
+
 import { EventTypeEnumString } from "../api/EdiEvent.ts";
 import { LoadFileSchemaInterface } from "../data_mapping/SchemaInterfaces.ts";
 import { ApiNetWorkError } from "../exceptions/ApiNetWorkError.ts";
@@ -7,7 +9,6 @@ import { ExceptionUtils } from "../utils/ExceptionUtils.ts";
 import { AbstractTask } from "./AbstractTask.ts";
 import { LoadFileTaskInterface, FileItemInterface } from "./LoadFileTaskInterfaces.ts";
 import { Config } from "../index.ts";
-import { path } from "zx";
 
 export abstract class AbstractLoadFileTask<T> extends AbstractTask implements LoadFileTaskInterface<T> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

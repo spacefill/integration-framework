@@ -63,7 +63,7 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
     return new DefaultGenerateMasterItemsSchema();
   }
 
-  initFilesGeneration(): InitialDataItem<MasterItemInterface>[] {
+  async initFilesGeneration(): Promise<InitialDataItem<MasterItemInterface>[]> {
     return [
       // Only one file to be generated, so only one object returned.
       {
