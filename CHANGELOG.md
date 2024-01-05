@@ -8,7 +8,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixed
 
-- [#25](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/25) Wrong SUCCESS event sending for generate files task.
+- [#25](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/25) `AbstractGenerateFileTask`: Wrong `SUCCESS` event sending.
+- [!67](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/67) `AbstractGenerateFileTask`: missing `NO_CONTENT_SUCCESS` event emit.
 
 ## [0.8.2] - 2024-01-03
 

@@ -77,6 +77,14 @@ export abstract class AbstractGenerateFileTask<T>
       );
       const filesConfiguration = await this.initFilesGeneration();
 
+      if (filesConfiguration.length === 0) {
+        Console.confirm("No file to generate. Exit.");
+        await this.sdk.ediEvent.send(
+          EventTypeEnumString.NO_CONTENT_SUCCESS,
+          `File generation - no file to generate. Type=${this.getWorkflowType()}`,
+        );
+      }
+
       for (const fileConfiguration of filesConfiguration) {
         try {
           this.currentFileConfiguration = fileConfiguration;
