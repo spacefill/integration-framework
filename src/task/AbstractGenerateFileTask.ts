@@ -2,8 +2,6 @@ import { temporaryFileTask } from "tempy";
 
 import { Config } from "../configs/Config.ts";
 import { Console } from "../utils/Console.ts";
-import { AbstractTask } from "./AbstractTask.ts";
-import { GenerateFileTaskInterface, InitialDataItem } from "./GenerateFileTaskInterfaces.ts";
 import { EventTypeEnumString } from "../api/EdiEvent.ts";
 import { ExceptionUtils } from "../utils/ExceptionUtils.ts";
 import { NetWorkError } from "../exceptions/NetWorkError.ts";
@@ -12,6 +10,9 @@ import { ApiNetWorkError } from "../exceptions/ApiNetWorkError.ts";
 import { UnknownError } from "../exceptions/UnknownError.ts";
 import { GenerateFileSchemaInterface } from "../data_mapping/SchemaInterfaces.ts";
 import { InternalError } from "../exceptions/InternalError.ts";
+
+import { GenerateFileTaskInterface, InitialDataItem } from "./GenerateFileTaskInterfaces.ts";
+import { AbstractTask } from "./AbstractTask.ts";
 
 export abstract class AbstractGenerateFileTask<T>
   extends AbstractTask

@@ -1,4 +1,5 @@
 import { expect, assert } from "chai";
+
 import { InvalidRequestDataError } from "../../../src/exceptions/InvalidRequestDataError.ts";
 import { ApiNetWorkError } from "../../../src/exceptions/ApiNetWorkError.ts";
 import { InternalError } from "../../../src/exceptions/InternalError.ts";

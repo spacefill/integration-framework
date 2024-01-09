@@ -1,8 +1,10 @@
+import { cpuUsage } from "node:process";
+
 import minimist from "minimist";
 import bytes from "bytes";
+
 import { Console } from "../utils/Console.ts";
 import { Config } from "../configs/Config.ts";
-import { cpuUsage } from "node:process";
 
 interface CommandStatistic {
   startTimeMs?: number;

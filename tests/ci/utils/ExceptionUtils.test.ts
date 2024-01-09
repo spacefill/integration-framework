@@ -1,4 +1,5 @@
 import { assert } from "chai";
+
 import { ExceptionUtils } from "../../../src/utils/ExceptionUtils.ts";
 import { InvalidRequestDataError } from "../../../src/exceptions/InvalidRequestDataError.ts";
 import { EventTypeEnumString } from "../../../src/api/EdiEvent.ts";

@@ -1,8 +1,9 @@
+import path from "path";
+
 import { expect, assert } from "chai";
 
 import { Config } from "../../../src/configs/Config.ts";
 import { initTestEnv } from "../../testUtils/initTestEnv.ts";
-import path from "path";
 
 describe("Config", () => {
   before(() => initTestEnv());

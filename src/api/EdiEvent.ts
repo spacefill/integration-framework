@@ -1,5 +1,6 @@
 import { Config } from "../configs/Config.ts";
 import { Console } from "../utils/Console.ts";
+
 import type { Client as SpacefillAPIClient } from "./spacefill-api-openapi.d.ts";
 
 enum EventTypeEnumString {

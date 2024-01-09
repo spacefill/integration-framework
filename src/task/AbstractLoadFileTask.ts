@@ -6,9 +6,10 @@ import { ApiNetWorkError } from "../exceptions/ApiNetWorkError.ts";
 import { InternalError } from "../exceptions/InternalError.ts";
 import { Console } from "../utils/Console.ts";
 import { ExceptionUtils } from "../utils/ExceptionUtils.ts";
+import { Config } from "../index.ts";
+
 import { AbstractTask } from "./AbstractTask.ts";
 import { LoadFileTaskInterface, FileItemInterface } from "./LoadFileTaskInterfaces.ts";
-import { Config } from "../index.ts";
 
 export abstract class AbstractLoadFileTask<T> extends AbstractTask implements LoadFileTaskInterface<T> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

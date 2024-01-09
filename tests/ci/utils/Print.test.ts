@@ -1,5 +1,6 @@
 import chai, { expect } from "chai";
 import spies from "chai-spies";
+
 import { Console } from "../../../src/utils/Console.ts";
 import { initTestEnv } from "../../testUtils/initTestEnv.ts";
 

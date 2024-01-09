@@ -1,9 +1,12 @@
-import { TransferConfiguration, TransferInterface } from "./TransferInterfaces.ts";
-import * as ftp from "basic-ftp"
-import { Console } from "../utils/Console.ts";
 import path from "path";
+
+import * as ftp from "basic-ftp"
 import { fs } from "zx";
 import { temporaryFileTask } from "tempy";
+
+import { Console } from "../utils/Console.ts";
+
+import { TransferConfiguration, TransferInterface } from "./TransferInterfaces.ts";
 
 interface FTPTransferConfiguration {
   host: string;

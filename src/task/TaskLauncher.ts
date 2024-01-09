@@ -1,4 +1,5 @@
 import { Console } from "../index.ts";
+
 import { AbstractTask } from "./AbstractTask.ts";
 import { Argument, BaseCommand } from "./BaseCommand.ts";
 

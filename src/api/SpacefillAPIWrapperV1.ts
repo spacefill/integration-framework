@@ -3,12 +3,12 @@ import axios, { AxiosInstance } from "axios";
 import FormData from "form-data";
 import * as axiosDebug from "axios-debug-log";
 
-import type { Client as SpacefillAPIClient } from "./spacefill-api-openapi.d.ts";
-import { APIContext, WorkflowType } from "./APIContext.ts";
 import { Console } from "../utils/Console.ts";
-import { EdiEvent } from "./EdiEvent.ts";
 import { InternalError } from "../exceptions/InternalError.ts";
 
+import type { Client as SpacefillAPIClient } from "./spacefill-api-openapi.d.ts";
+import { APIContext, WorkflowType } from "./APIContext.ts";
+import { EdiEvent } from "./EdiEvent.ts";
 import definition from "./openapi.json" assert { type: "json" };
 
 /**

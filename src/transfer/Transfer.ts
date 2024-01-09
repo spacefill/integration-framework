@@ -1,9 +1,11 @@
 import path from "path";
+
+import { Config } from "../configs/Config.ts";
+import { Console } from "../utils/Console.ts";
+
 import { TransferConfiguration, TransferInterface } from "./TransferInterfaces.ts";
 import { SftpClient } from "./SftpClient.ts";
 import { LocalClient } from "./LocalClient.ts";
-import { Config } from "../configs/Config.ts";
-import { Console } from "../utils/Console.ts";
 import { FtpClient } from "./FtpClient.ts";
 
 enum TransferProtocol {

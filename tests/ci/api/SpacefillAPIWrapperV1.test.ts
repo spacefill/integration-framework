@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import MockAdapter from "axios-mock-adapter";
+import { beforeEach } from "mocha";
 
 import { SpacefillAPIWrapperV1 } from "../../../src/api/SpacefillAPIWrapperV1.ts";
 import { WorkflowType } from "../../../src/api/APIContext.ts";
-import { beforeEach } from "mocha";
 import { initTestEnv } from "../../testUtils/initTestEnv.ts";
 import { Console } from "../../../src/utils/Console.ts";
 

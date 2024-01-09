@@ -6,6 +6,7 @@ const Ajv = AjvModule.default;
 const addFormats = addFormatsModule.default;
 
 import { Console } from "../utils/Console.ts";
+
 import { CommonSchemaInterface, ExportFileDescriptor } from "./SchemaInterfaces.ts";
 
 export abstract class AbstractSchema implements CommonSchemaInterface {
