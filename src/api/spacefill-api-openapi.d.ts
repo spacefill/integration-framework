@@ -283,6 +283,10 @@ declare namespace Components {
      *   "metadata": {
      *     "key": "value"
      *   },
+     *   "custom_fields": {
+     *     "key1": "Order value",
+     *     "key2": "Order value"
+     *   },
      *   "order_items": [
      *     {
      *       "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
@@ -521,6 +525,16 @@ declare namespace Components {
        */
       entry_expeditor_customer_address_id?: string;
       /**
+       * Entry Expeditor Email
+       * Email of the sender's address.
+       */
+      entry_expeditor_email?: string;
+      /**
+       * Entry Expeditor Phone Number
+       * Phone number of the sender's address.
+       */
+      entry_expeditor_phone_number?: string; // ^\+[1-9]\d{1,14}$
+      /**
        * Exit Final Recipient
        * Address name for the recipient.
        */
@@ -566,6 +580,16 @@ declare namespace Components {
        */
       exit_final_recipient_address_lng?: string;
       /**
+       * Exit Final Recipient Email
+       * Email of the recipient's address.
+       */
+      exit_final_recipient_email?: string;
+      /**
+       * Exit Final Recipient Phone Number
+       * Phone number of the recipient's address.
+       */
+      exit_final_recipient_phone_number?: string; // ^\+[1-9]\d{1,14}$
+      /**
        * Exit Final Recipient Planned Datetime Range
        * Recipient's reception date range.
        * example:
@@ -608,6 +632,13 @@ declare namespace Components {
        * Deprecated, use transport_carrier_id instead
        */
       transport_management_owner?: "PROVIDER" | "SHIPPER";
+      /**
+       * Custom Fields
+       * Custom fields on orders are used to store additional information. Custom fields are passed in a JSON key:value format.
+       */
+      custom_fields?: {
+        [key: string]: any;
+      };
     }
     /**
      * InputOrderEntry
@@ -645,6 +676,10 @@ declare namespace Components {
      *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
      *   "metadata": {
      *     "key": "value"
+     *   },
+     *   "custom_fields": {
+     *     "key1": "Order value",
+     *     "key2": "Order value"
      *   },
      *   "order_items": [
      *     {
@@ -780,6 +815,16 @@ declare namespace Components {
        */
       entry_expeditor_address_lng?: string;
       /**
+       * Entry Expeditor Email
+       * Email of the sender's address.
+       */
+      entry_expeditor_email?: string;
+      /**
+       * Entry Expeditor Phone Number
+       * Phone number of the sender's address.
+       */
+      entry_expeditor_phone_number?: string; // ^\+[1-9]\d{1,14}$
+      /**
        * Entry Expeditor Planned Datetime Range
        * Sender's collection date range.
        * example:
@@ -880,6 +925,13 @@ declare namespace Components {
        * Deprecated, use transport_carrier_id instead
        */
       transport_management_owner?: "PROVIDER" | "SHIPPER";
+      /**
+       * Custom Fields
+       * Custom fields on orders are used to store additional information. Custom fields are passed in a JSON key:value format.
+       */
+      custom_fields?: {
+        [key: string]: any;
+      };
     }
     /**
      * InputOrderExit
@@ -917,6 +969,10 @@ declare namespace Components {
      *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
      *   "metadata": {
      *     "key": "value"
+     *   },
+     *   "custom_fields": {
+     *     "key1": "Order value",
+     *     "key2": "Order value"
      *   },
      *   "order_items": [
      *     {
@@ -1059,6 +1115,16 @@ declare namespace Components {
        */
       exit_final_recipient_address_lng?: string;
       /**
+       * Exit Final Recipient Email
+       * Email of the recipient's address.
+       */
+      exit_final_recipient_email?: string;
+      /**
+       * Exit Final Recipient Phone Number
+       * Phone number of the recipient's address.
+       */
+      exit_final_recipient_phone_number?: string; // ^\+[1-9]\d{1,14}$
+      /**
        * Exit Final Recipient Planned Datetime Range
        * Recipient's reception date range.
        * example:
@@ -1159,6 +1225,13 @@ declare namespace Components {
        * Deprecated, use transport_carrier_id instead
        */
       transport_management_owner?: "PROVIDER" | "SHIPPER";
+      /**
+       * Custom Fields
+       * Custom fields on orders are used to store additional information. Custom fields are passed in a JSON key:value format.
+       */
+      custom_fields?: {
+        [key: string]: any;
+      };
     }
     /**
      * InputOrderItem
@@ -2492,6 +2565,16 @@ declare namespace Components {
        */
       entry_expeditor_address_lng?: string;
       /**
+       * Entry Expeditor Email
+       * Email of the sender's address.
+       */
+      entry_expeditor_email?: string;
+      /**
+       * Entry Expeditor Phone Number
+       * Phone number of the sender's address.
+       */
+      entry_expeditor_phone_number?: string; // ^\+[1-9]\d{1,14}$
+      /**
        * Entry Expeditor Planned Datetime Range
        * Sender's collection date range.
        * example:
@@ -2555,6 +2638,16 @@ declare namespace Components {
        * Longitude of the recipient's address.
        */
       exit_final_recipient_address_lng?: string;
+      /**
+       * Exit Final Recipient Email
+       * Email of the recipient's address.
+       */
+      exit_final_recipient_email?: string;
+      /**
+       * Exit Final Recipient Phone Number
+       * Phone number of the recipient's address.
+       */
+      exit_final_recipient_phone_number?: string; // ^\+[1-9]\d{1,14}$
       /**
        * Exit Final Recipient Planned Datetime Range
        * Recipient's reception date range.
@@ -3099,6 +3192,16 @@ declare namespace Components {
        */
       entry_expeditor_customer_address_id?: string; // uuid
       /**
+       * Entry Expeditor Email
+       * Email of the sender's address.
+       */
+      entry_expeditor_email?: string;
+      /**
+       * Entry Expeditor Phone Number
+       * Phone number of the sender's address.
+       */
+      entry_expeditor_phone_number?: string; // ^\+[1-9]\d{1,14}$
+      /**
        * Exit Final Recipient
        * Address name for the recipient.
        */
@@ -3148,6 +3251,16 @@ declare namespace Components {
        * Recipient's address main identifier.
        */
       exit_final_recipient_customer_address_id?: string; // uuid
+      /**
+       * Exit Final Recipient Email
+       * Email of the recipient's address.
+       */
+      exit_final_recipient_email?: string;
+      /**
+       * Exit Final Recipient Phone Number
+       * Phone number of the recipient's address.
+       */
+      exit_final_recipient_phone_number?: string; // ^\+[1-9]\d{1,14}$
       /**
        * Entry Expeditor Planned Datetime Range
        * Sender's collection date range.
@@ -11604,6 +11717,10 @@ declare namespace Paths {
        *   "metadata": {
        *     "key": "value"
        *   },
+       *   "custom_fields": {
+       *     "key1": "Order value",
+       *     "key2": "Order value"
+       *   },
        *   "order_items": [
        *     {
        *       "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
@@ -11789,6 +11906,10 @@ declare namespace Paths {
        *   "metadata": {
        *     "key": "value"
        *   },
+       *   "custom_fields": {
+       *     "key1": "Order value",
+       *     "key2": "Order value"
+       *   },
        *   "order_items": [
        *     {
        *       "master_item_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
@@ -11968,6 +12089,10 @@ declare namespace Paths {
        *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
        *   "metadata": {
        *     "key": "value"
+       *   },
+       *   "custom_fields": {
+       *     "key1": "Order value",
+       *     "key2": "Order value"
        *   },
        *   "order_items": [
        *     {
