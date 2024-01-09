@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.4] - 2024-01-09
+
+### Improve
+
+- [#27](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/25) Use `encodeURI` to manage special characters on EDI context.
+- [!70](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/70) Update the SDK with the Spacefill REST API version [2024-01-08](https://developer.spacefill.fr/changelog/2024-01-08).
+
 ## [0.8.3] - 2024-01-05
 
 ### Improve
