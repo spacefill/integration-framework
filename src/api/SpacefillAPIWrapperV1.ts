@@ -65,7 +65,9 @@ export class SpacefillAPIWrapperV1 {
           ...APIContext.getWorkflowHeader(this.workflowType),
         },
         transformRequest: (data, headers) => {
-          headers["Spacefill-Ctx-Data-Source"] = this.dataSource?.substring(0, 100) ?? "unknown";
+          headers["Spacefill-Ctx-Data-Source"] = this.dataSource?.substring(0, 100)
+            ? encodeURI(this.dataSource.substring(0, 100))
+            : "unknown";
           if (!headers["Content-Type"]) {
             headers["Content-Type"] = "application/json";
           }

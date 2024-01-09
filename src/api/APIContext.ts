@@ -26,17 +26,19 @@ export { ClientTransport, ClientType, WorkflowType };
 export class APIContext {
   public static getMainHeaders(): object {
     return {
-      "Spacefill-Ctx-Service-Source": Config.get().spacefillApi.context.serviceSource,
-      "Spacefill-Ctx-Service-Version": Config.get().spacefillApi.context.serviceVersion,
-      "Spacefill-Ctx-Client-Type": Config.get().spacefillApi.context.clientType,
-      "Spacefill-Ctx-Transport": Config.get().spacefillApi.context.transport,
-      "Spacefill-Ctx-Session-Id": `${Config.get().spacefillApi.context.serviceSource}_${randomUUID()}`, // @todo: remplacer par le job id de windmill, conserver la valeur actuelle par défaut.
+      "Spacefill-Ctx-Service-Source": encodeURI(Config.get().spacefillApi.context.serviceSource as string),
+      "Spacefill-Ctx-Service-Version": encodeURI(Config.get().spacefillApi.context.serviceVersion as string),
+      "Spacefill-Ctx-Client-Type": encodeURI(Config.get().spacefillApi.context.clientType as string),
+      "Spacefill-Ctx-Transport": encodeURI(Config.get().spacefillApi.context.transport as string),
+      "Spacefill-Ctx-Session-Id": encodeURI(
+        Config.get().edi.runId ?? `${Config.get().spacefillApi.context.serviceSource}_${randomUUID()}`,
+      ),
     };
   }
   public static getWorkflowHeader(workflowType: WorkflowType): object {
-    return { "Spacefill-Ctx-Workflow": workflowType };
+    return { "Spacefill-Ctx-Workflow": encodeURI(workflowType) };
   }
   public static getDataSourceHeader(dataSourceReference: string): object {
-    return { "Spacefill-Ctx-Data-Source": dataSourceReference };
+    return { "Spacefill-Ctx-Data-Source": encodeURI(dataSourceReference) };
   }
 }
