@@ -1,6 +1,7 @@
 #!/usr/bin/env -S npx ts-node --esm --transpile-only
 
 import { Console } from "../../src/utils/Console.ts";
+
 import { DefaultFileTaskExample } from "./DefaultFileTaskExample.mts";
 
 export class SpeFileTaskExample1 extends DefaultFileTaskExample {
