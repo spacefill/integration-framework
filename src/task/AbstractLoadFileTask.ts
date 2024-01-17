@@ -69,7 +69,20 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
           throw new ApiNetWorkError("Unable to reach the api. Exit.");
         });
 
+      await this.sdk.ediEvent.send(
+        EventTypeEnumString.STARTED,
+        `File load started. Type=${this.getWorkflowType()}`,
+      );
+
       const filesList = await this.getFilesList();
+
+      if (filesList.length === 0) {
+        Console.confirm("No file to load. Exit.");
+        await this.sdk.ediEvent.send(
+          EventTypeEnumString.NO_CONTENT_SUCCESS,
+          `File load - no file to load. Type=${this.getWorkflowType()}`,
+        );
+      }
 
       for (const targetFileItem of filesList) {
         try {

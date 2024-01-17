@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.1] - 2024-01-17
+
+### Improve
+
+- [#29](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/29) Add event STARTED and NO_CONTENT_SUCCESS in AbstractLoadFileTask file.
+
 ## [0.9.0] - 2024-01-11
 
 ### Added
