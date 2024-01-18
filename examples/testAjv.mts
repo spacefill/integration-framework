@@ -1,7 +1,7 @@
-#!/usr/bin/env -S npx ts-node --esm --transpile-only --compilerOptions '{"moduleResolution":"nodenext","module":"NodeNext","target":"esnext", "allowImportingTsExtensions": true}'
+#!/usr/bin/env -S npx ts-node --esm --transpile-only
 
 import AjvModule from "ajv";
-import addFormatsModule from 'ajv-formats';
+import addFormatsModule from "ajv-formats";
 const Ajv = AjvModule.default;
 const addFormats = addFormatsModule.default;
 

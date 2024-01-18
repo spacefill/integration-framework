@@ -8,8 +8,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Improve
 
-- [#29](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/29) Add event STARTED and NO_CONTENT_SUCCESS in AbstractLoadFileTask file.
-- [#32](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/32) Load files - remove empty lines in csvHelper.ts.
+- [#29](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/29) Add event `STARTED` and `NO_CONTENT_SUCCESS` in `AbstractLoadFileTask` file.
+- [#32](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/32) Load files - remove empty lines in `CsvHelper.ts`.
+- [#31](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/31) Improve `AxiosError` print.
 
 ## [0.9.0] - 2024-01-11
 

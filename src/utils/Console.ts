@@ -117,6 +117,31 @@ export class Console {
     Console.printGradient(infoGradient, "[Warn]", ...message);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static printException(exception: any) {
+    if (exception?.constructor?.name === "AxiosError") {
+      Console.error(exception?.message, {
+        code: exception?.code,
+        errno: exception?.errno,
+        request: {
+          headers: exception?.request?._header,
+          method: exception?.config?.method,
+          url: exception?.config?.url,
+          data: exception?.config?.data,
+          params: exception?.config?.params,
+        },
+        response: {
+          status: exception?.response?.status,
+          statusText: exception?.response?.statusText,
+          headers: exception?.response?.headers,
+          data: exception?.response?.data,
+        },
+      });
+    } else {
+      Console.error(exception);
+    }
+  }
+
   static error(...message) {
     if (logLevelOrder[Config.get().log.level ?? DEFAULT_LOG_LEVEL] < LOG_LEVEL_ERROR) {
       return;

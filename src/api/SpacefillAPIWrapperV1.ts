@@ -100,14 +100,7 @@ export class SpacefillAPIWrapperV1 {
         Console.trace("Response data", JSON.stringify(config.data));
       },
       error(_debug, error) {
-        if (error?.config) {
-          Console.error(
-            `Axios: ${error.message} (${error.config.method} ${error.config.url})`,
-            JSON.stringify(error.response?.data),
-          );
-        } else {
-          Console.error(`Axios: ${error.message}`, JSON.stringify(error.response?.data));
-        }
+        Console.printException(error);
       },
     });
     this.ediEvent = new EdiEvent(this.client as SpacefillAPIClient);
