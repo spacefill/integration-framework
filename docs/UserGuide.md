@@ -148,13 +148,11 @@ stateDiagram-v2
 |  9  | **Parse raw Data**                      | Converts raw string data into a basic column->value object.                                                                                                                                                                                                                                                      |
 | 10  |  **Validate file data**                 | Validates the mapped data against the file specifications, to ensure that the loaded file can be consumed by the Spacefill API.                                                                                                                                                                                  |
 |     |
-
-| 11 | **Map input file data to api fields** | Map basic column-value object to the api fields. |
-
-| 12 | **Data processing** | Process mapped data (call the api, etc...). |
-| 13 | **onProcessingFileSuccess** | This method is triggered when a file has been successfully processed. <br />It can be used to move the file to the archive directory or for other clean-up actions. |
-| | **onProcessingFileError** | In case of error during file processing, this method is triggered. <br />It can be use to move file to error directory or for other clean-up actions. |
-| 14 | **afterRun** | `BaseCommand` uses this method to compute the metrics required for the `--print-statistics`. It can be overloaded to implement actions triggered after the task is completed. |
+| 11  | **Map input file data to api fields**   | Map basic column-value object to the api fields.                                                                                                                                                                                                                                                                 |
+| 12  | **Data processing**                     | Process mapped data (call the api, etc...).                                                                                                                                                                                                                                                                      |
+| 13  | **onProcessingFileSuccess**             | This method is triggered when a file has been successfully processed. <br />It can be used to move the file to the archive directory or for other clean-up actions.                                                                                                                                              |
+|     | **onProcessingFileError**               | In case of error during file processing, this method is triggered. <br />It can be use to move file to error directory or for other clean-up actions.                                                                                                                                                            |
+| 14  | **afterRun**                            | `BaseCommand` uses this method to compute the metrics required for the `--print-statistics`. It can be overloaded to implement actions triggered after the task is completed.                                                                                                                                    |
 
 <p  align="right" style="text-align:right;">(<a href="#top">back to top</a>)</p>
 
@@ -235,10 +233,7 @@ It's composed of:
   - Example of event sending:
 
   ```javascript
-  await this.sdk.ediEvent.send(
-    EventTypeEnumString.SUCCESS,
-    `File generation ended. Type=${this.getWorkflowType()}`,
-  );
+  await this.sdk.ediEvent.send(EventTypeEnumString.SUCCESS, `File generation ended.`);
   ```
 
   - :blue_book: Notice that the framework implements some custom exceptions. Each time one of these exceptions is triggered, an event is automatically sent to the API. It is therefore not necessary to send an event for errors.
