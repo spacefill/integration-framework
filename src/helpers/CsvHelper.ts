@@ -10,6 +10,7 @@ export class CsvHelper {
     skipLines: number = 1,
   ): Promise<object[]> {
     const parsedData: object[] = [];
+    fileContent = fileContent.trim();
 
     return await new Promise<object[]>((resolve, reject) => {
       const stream = csv
