@@ -61,7 +61,6 @@ export abstract class AbstractGenerateFileTask<T>
       if (!this.sdk.client || !this.sdk.ediEvent) {
         throw new InternalError("SDK is not well initialized - client or ediEvent missing");
       }
-      this.sdk.dataSource = "API";
 
       await this.sdk.client
         .get_v1_ping()
@@ -72,17 +71,14 @@ export abstract class AbstractGenerateFileTask<T>
           throw new ApiNetWorkError("Unable to reach the api. Exit.");
         });
 
-      await this.sdk.ediEvent.send(
-        EventTypeEnumString.STARTED,
-        `File generation started. Type=${this.getWorkflowType()}`,
-      );
+      await this.sdk.ediEvent.send(EventTypeEnumString.STARTED, `File generation started.`);
       const filesConfiguration = await this.initFilesGeneration();
 
       if (filesConfiguration.length === 0) {
         Console.confirm("No file to generate. Exit.");
         await this.sdk.ediEvent.send(
           EventTypeEnumString.NO_CONTENT_SUCCESS,
-          `File generation - no file to generate. Type=${this.getWorkflowType()}`,
+          `File generation - no file to generate.`,
         );
       }
 
@@ -98,7 +94,7 @@ export abstract class AbstractGenerateFileTask<T>
             Console.confirm("No data to export. Exit.");
             await this.sdk.ediEvent.send(
               EventTypeEnumString.NO_CONTENT_SUCCESS,
-              `File generation - nothing to export. Type=${this.getWorkflowType()}`,
+              `File generation - nothing to export.`,
             );
             continue;
           }
@@ -138,17 +134,15 @@ export abstract class AbstractGenerateFileTask<T>
           await this.postFileSending();
           Console.confirm("Post file sending action done");
 
-          await this.sdk.ediEvent.send(
-            EventTypeEnumString.SUCCESS,
-            `File generation ended. Type=${this.getWorkflowType()}, File=${sentFile}`,
-          );
+          this.sdk.dataSource = sentFile;
+          await this.sdk.ediEvent.send(EventTypeEnumString.SUCCESS, `File generation ended.`);
         } catch (processFileException) {
           Console.error(processFileException);
           errorFound = true;
 
           await this.sdk.ediEvent.send(
             ExceptionUtils.getEventTypeFromException(processFileException as Error),
-            `File generation failed. Type=${this.getWorkflowType()}`,
+            `File generation failed.`,
           );
         }
         Console.printLine();
@@ -166,7 +160,7 @@ export abstract class AbstractGenerateFileTask<T>
       if (this.sdk.ediEvent) {
         await this.sdk.ediEvent.send(
           EventTypeEnumString.PRECONDITION_FAILED_ERROR,
-          `File generation failed. Type=${this.getWorkflowType()}`,
+          `File generation failed.`,
         );
       }
 

@@ -69,19 +69,13 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
           throw new ApiNetWorkError("Unable to reach the api. Exit.");
         });
 
-      await this.sdk.ediEvent.send(
-        EventTypeEnumString.STARTED,
-        `File load started. Type=${this.getWorkflowType()}`,
-      );
+      await this.sdk.ediEvent.send(EventTypeEnumString.STARTED, `File load started.`);
 
       const filesList = await this.getFilesList();
 
       if (filesList.length === 0) {
         Console.confirm("No file to load. Exit.");
-        await this.sdk.ediEvent.send(
-          EventTypeEnumString.NO_CONTENT_SUCCESS,
-          `File load - no file to load. Type=${this.getWorkflowType()}`,
-        );
+        await this.sdk.ediEvent.send(EventTypeEnumString.NO_CONTENT_SUCCESS, `File load - no file to load.`);
       }
 
       for (const targetFileItem of filesList) {
@@ -122,16 +116,13 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
           await this.onProcessingFileSuccess(targetFileItem, preparedData, mappedData);
           Console.confirm("Post data processing action completed");
 
-          await this.sdk.ediEvent.send(
-            EventTypeEnumString.SUCCESS,
-            `File correctly loaded. Type=${this.getWorkflowType()}`,
-          );
+          await this.sdk.ediEvent.send(EventTypeEnumString.SUCCESS, `File correctly loaded.`);
         } catch (processFileException) {
           Console.error(processFileException);
           errorFound = true;
           await this.sdk.ediEvent.send(
             ExceptionUtils.getEventTypeFromException(processFileException as Error),
-            `File loading failed. Type=${this.getWorkflowType()}`,
+            `File loading failed.`,
           );
           await this.onProcessingFileError(targetFileItem);
         }
@@ -147,7 +138,7 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
       if (this.sdk.ediEvent) {
         await this.sdk.ediEvent.send(
           EventTypeEnumString.PRECONDITION_FAILED_ERROR,
-          `File generation failed. Type=${this.getWorkflowType()}`,
+          `File generation failed.`,
         );
       }
       process.exit(1);
