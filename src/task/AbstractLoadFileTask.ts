@@ -118,7 +118,7 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
 
           await this.sdk.ediEvent.send(EventTypeEnumString.SUCCESS, `File correctly loaded.`);
         } catch (processFileException) {
-          Console.error(processFileException);
+          Console.printException(processFileException);
           errorFound = true;
           await this.sdk.ediEvent.send(
             ExceptionUtils.getEventTypeFromException(processFileException as Error),
@@ -129,7 +129,7 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
         Console.printLine();
       }
     } catch (exception) {
-      Console.error(exception);
+      Console.printException(exception);
       this.afterRun();
 
       if (exception instanceof ApiNetWorkError) {

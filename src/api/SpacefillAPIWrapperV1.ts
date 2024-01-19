@@ -100,7 +100,7 @@ export class SpacefillAPIWrapperV1 {
         Console.trace("Response data", JSON.stringify(config.data));
       },
       error(_debug, error) {
-        Console.printException(error);
+        Console.trace(error);
       },
     });
     this.ediEvent = new EdiEvent(this.client as SpacefillAPIClient);

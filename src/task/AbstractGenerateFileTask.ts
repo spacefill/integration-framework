@@ -116,7 +116,7 @@ export abstract class AbstractGenerateFileTask<T>
               await this.generateFile(mappedData, tempFilePath);
               Console.confirm("File generated");
             } catch (ioException) {
-              Console.error(ioException);
+              Console.printException(ioException);
               throw new IoError(`Error during generating file ${tempFilePath}`);
             }
 
@@ -137,7 +137,7 @@ export abstract class AbstractGenerateFileTask<T>
           this.sdk.dataSource = sentFile;
           await this.sdk.ediEvent.send(EventTypeEnumString.SUCCESS, `File generation ended.`);
         } catch (processFileException) {
-          Console.error(processFileException);
+          Console.printException(processFileException);
           errorFound = true;
 
           await this.sdk.ediEvent.send(
@@ -151,7 +151,7 @@ export abstract class AbstractGenerateFileTask<T>
         throw new UnknownError("One or more errors found during the execution");
       }
     } catch (exception) {
-      Console.error(exception);
+      Console.printException(exception);
       this.afterRun();
 
       if (exception instanceof ApiNetWorkError) {
