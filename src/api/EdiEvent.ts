@@ -19,7 +19,12 @@ enum EventTypeEnumString {
   TEST = "TEST",
 }
 
-export { EventTypeEnumString };
+enum EntityTypeEnum {
+  ORDER = "ORDER",
+  MASTER_ITEM = "MASTER_ITEM",
+}
+
+export { EventTypeEnumString, EntityTypeEnum };
 
 export class EdiEvent {
   private apiClient: SpacefillAPIClient;
@@ -28,7 +33,7 @@ export class EdiEvent {
     this.apiClient = apiClient;
   }
 
-  public async send(type: EventTypeEnumString, message: string, meta: object = {}): Promise<void> {
+  public async send(type: EventTypeEnumString, message: string, meta: object = {}, entityId?: string, entityType?: EntityTypeEnum): Promise<void> {
     Console.info(`Sending event ${type}: ${message}`);
     if (type === EventTypeEnumString.API_NETWORK_ERROR) {
       Console.info("Ignore sending event, because is a network error event");
@@ -45,6 +50,8 @@ export class EdiEvent {
         data: {
           shipper_account_id: Config.get().edi.wmsShipperAccountId as string,
           warehouse_id: Config.get().edi.wmsWarehouseId as string,
+          entity_id: entityId as string,
+          entity_type: entityType
         },
         meta: meta,
       })

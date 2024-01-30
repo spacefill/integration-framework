@@ -1,9 +1,9 @@
-import { assert, expect } from "chai";
+import { expect } from "chai";
 import MockAdapter from "axios-mock-adapter";
 import { beforeEach } from "mocha";
 import { AxiosInstance } from "axios";
 
-import { EdiEvent, EventTypeEnumString } from "../../../src/api/EdiEvent.ts";
+import { EdiEvent, EntityTypeEnum, EventTypeEnumString } from "../../../src/api/EdiEvent.ts";
 import { SpacefillAPIWrapperV1 } from "../../../src/api/SpacefillAPIWrapperV1.ts";
 import { WorkflowType } from "../../../src/api/APIContext.ts";
 import { initTestEnv } from "../../testUtils/initTestEnv.ts";
@@ -31,6 +31,45 @@ describe("EdiEvent", () => {
     mock.onPost("/v1/logistic_management/events/").reply(200, { data: "mocked response" });
 
     const meta = { test: "hello" };
+    const entityId = "14acc10a-a6ab-4099-b600-fb33fa6c0001";
+    expect(sdk.ediEvent).to.be.an.instanceof(EdiEvent);
+
+    if (!sdk.ediEvent) {
+      Console.error("sdk.ediEvent not initialized");
+      return;
+    }
+
+    await sdk.ediEvent.send(
+      EventTypeEnumString.STARTED,
+      "Test started event message",
+      meta,
+      entityId,
+      EntityTypeEnum.ORDER,
+    );
+
+    expect(mock.history.post.length).to.equals(1);
+    expect(mock.history.post[0].data).to.equals(
+      JSON.stringify({
+        type: "STARTED",
+        message: "Test started event message",
+        data: {
+          shipper_account_id: "fake-shipper-id",
+          warehouse_id: "fake-warehouse-id",
+          entity_id: "14acc10a-a6ab-4099-b600-fb33fa6c0001",
+          entity_type: EntityTypeEnum.ORDER,
+        },
+        meta: { test: "hello" },
+      }),
+    );
+  });
+
+  it("should send event whithout entityId and entityType", async () => {
+    const axiosInstance = sdk.getAxiosInstance();
+
+    const mock = new MockAdapter(axiosInstance as AxiosInstance, { onNoMatch: "throwException" });
+    mock.onPost("/v1/logistic_management/events/").reply(200, { data: "mocked response" });
+
+    const meta = { test: "hello" };
     expect(sdk.ediEvent).to.be.an.instanceof(EdiEvent);
 
     if (!sdk.ediEvent) {
@@ -41,8 +80,7 @@ describe("EdiEvent", () => {
     await sdk.ediEvent.send(EventTypeEnumString.STARTED, "Test started event message", meta);
 
     expect(mock.history.post.length).to.equals(1);
-    assert(
-      mock.history.post[0].data,
+    expect(mock.history.post[0].data).to.equals(
       JSON.stringify({
         type: "STARTED",
         message: "Test started event message",

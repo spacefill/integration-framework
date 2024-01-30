@@ -3,8 +3,8 @@ import type {
   Parameters,
   UnknownParamsObject,
   OperationResponse,
-  AxiosRequestConfig,
-} from "openapi-client-axios";
+  AxiosRequestConfig
+} from 'openapi-client-axios';
 
 declare namespace Components {
   namespace Schemas {
@@ -12,7 +12,7 @@ declare namespace Components {
      * ArchivedFilterEnum
      * An enumeration.
      */
-    export type ArchivedFilterEnum = "yes" | "all" | "no";
+    export type ArchivedFilterEnum = 'yes' | 'all' | 'no';
     /**
      * AsyncResponse
      */
@@ -26,7 +26,7 @@ declare namespace Components {
      * BarcodeTypeEnum
      * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
      */
-    export type BarcodeTypeEnum = "EAN" | "UPC";
+    export type BarcodeTypeEnum = 'EAN' | 'UPC';
     /**
      * Body_post_v1_logistic_management_order_upload_document_v1_logistic_management_orders__order_id__documents__post
      */
@@ -97,6 +97,11 @@ declare namespace Components {
       datetime_to?: string; // date-time
     }
     /**
+     * EntityTypeEnum
+     * An enumeration.
+     */
+    export type EntityTypeEnum = 'ORDER' | 'MASTER_ITEM';
+    /**
      * EventData
      */
     export interface EventData {
@@ -110,24 +115,34 @@ declare namespace Components {
        * Main identifier of the associated warehouse.
        */
       warehouse_id: string; // uuid
+      /**
+       * Entity Id
+       * Entity identifier.
+       */
+      entity_id?: string; // uuid
+      /**
+       * EntityTypeEnum
+       * Entity type.
+       */
+      entity_type?: 'ORDER' | 'MASTER_ITEM';
     }
     /**
      * EventTypeEnum
      * Type of event
      */
     export type EventTypeEnum =
-      | "STARTED"
-      | "SUCCESS"
-      | "NO_CONTENT_SUCCESS"
-      | "PARTIAL_SUCCESS"
-      | "PRECONDITION_FAILED_ERROR"
-      | "INVALID_REQUEST_DATA_ERROR"
-      | "INVALID_REQUEST_FORMAT_ERROR"
-      | "UNKNOWN_ERROR"
-      | "NETWORK_ERROR"
-      | "IO_ERROR"
-      | "INTERNAL_ERROR"
-      | "TEST";
+      | 'STARTED'
+      | 'SUCCESS'
+      | 'NO_CONTENT_SUCCESS'
+      | 'PARTIAL_SUCCESS'
+      | 'PRECONDITION_FAILED_ERROR'
+      | 'INVALID_REQUEST_DATA_ERROR'
+      | 'INVALID_REQUEST_FORMAT_ERROR'
+      | 'UNKNOWN_ERROR'
+      | 'NETWORK_ERROR'
+      | 'IO_ERROR'
+      | 'INTERNAL_ERROR'
+      | 'TEST';
     /**
      * HTTPValidationError
      */
@@ -231,7 +246,7 @@ declare namespace Components {
        * ItemPackagingTypeEnum
        * Packaging type used for the quantity.
        */
-      item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+      item_packaging_type: 'PALLET' | 'CARDBOARD_BOX' | 'EACH';
       /**
        * Actual Quantity In Stock
        * Actual quantity in stock inside the warehouse,if current Spacefill actual quantity in stock equal the actual_quantity_in_stock field value then inventory adjustement item will not be created
@@ -313,7 +328,7 @@ declare namespace Components {
        * OrderTypeEnum
        * Type of the order.
        */
-      order_type: "ENTRY" | "EXIT";
+      order_type: 'ENTRY' | 'EXIT';
       /**
        * Shipper Order Reference
        * Unique reference code.
@@ -631,7 +646,7 @@ declare namespace Components {
        * OrderTransportManagementOwnerEnum
        * Deprecated, use transport_carrier_id instead
        */
-      transport_management_owner?: "PROVIDER" | "SHIPPER";
+      transport_management_owner?: 'PROVIDER' | 'SHIPPER';
       /**
        * Custom Fields
        * Custom fields on orders are used to store additional information. Custom fields are passed in a JSON key:value format.
@@ -924,7 +939,7 @@ declare namespace Components {
        * OrderTransportManagementOwnerEnum
        * Deprecated, use transport_carrier_id instead
        */
-      transport_management_owner?: "PROVIDER" | "SHIPPER";
+      transport_management_owner?: 'PROVIDER' | 'SHIPPER';
       /**
        * Custom Fields
        * Custom fields on orders are used to store additional information. Custom fields are passed in a JSON key:value format.
@@ -1224,7 +1239,7 @@ declare namespace Components {
        * OrderTransportManagementOwnerEnum
        * Deprecated, use transport_carrier_id instead
        */
-      transport_management_owner?: "PROVIDER" | "SHIPPER";
+      transport_management_owner?: 'PROVIDER' | 'SHIPPER';
       /**
        * Custom Fields
        * Custom fields on orders are used to store additional information. Custom fields are passed in a JSON key:value format.
@@ -1265,7 +1280,7 @@ declare namespace Components {
        * ItemPackagingTypeEnum
        * Packaging type used for the quantity.
        */
-      item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+      item_packaging_type: 'PALLET' | 'CARDBOARD_BOX' | 'EACH';
       /**
        * Expected Quantity
        * Expected quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed the quantity in pallet.
@@ -1374,7 +1389,7 @@ declare namespace Components {
        * ItemPackagingTypeEnum
        * Packaging type used for the quantity.
        */
-      item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+      item_packaging_type: 'PALLET' | 'CARDBOARD_BOX' | 'EACH';
       /**
        * Order Id
        * Order main identifier.
@@ -1466,7 +1481,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      each_barcode_type?: "EAN" | "UPC";
+      each_barcode_type?: 'EAN' | 'UPC';
       /**
        * Each Barcode
        * Unit barcode.
@@ -1476,7 +1491,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      cardboard_box_barcode_type?: "EAN" | "UPC";
+      cardboard_box_barcode_type?: 'EAN' | 'UPC';
       /**
        * Cardboard Box Barcode
        * Box barcode.
@@ -1486,7 +1501,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      pallet_barcode_type?: "EAN" | "UPC";
+      pallet_barcode_type?: 'EAN' | 'UPC';
       /**
        * Pallet Barcode
        * Pallet barcode.
@@ -1723,18 +1738,18 @@ declare namespace Components {
        * Type of the event.
        */
       type?:
-        | "STARTED"
-        | "SUCCESS"
-        | "NO_CONTENT_SUCCESS"
-        | "PARTIAL_SUCCESS"
-        | "PRECONDITION_FAILED_ERROR"
-        | "INVALID_REQUEST_DATA_ERROR"
-        | "INVALID_REQUEST_FORMAT_ERROR"
-        | "UNKNOWN_ERROR"
-        | "NETWORK_ERROR"
-        | "IO_ERROR"
-        | "INTERNAL_ERROR"
-        | "TEST";
+        | 'STARTED'
+        | 'SUCCESS'
+        | 'NO_CONTENT_SUCCESS'
+        | 'PARTIAL_SUCCESS'
+        | 'PRECONDITION_FAILED_ERROR'
+        | 'INVALID_REQUEST_DATA_ERROR'
+        | 'INVALID_REQUEST_FORMAT_ERROR'
+        | 'UNKNOWN_ERROR'
+        | 'NETWORK_ERROR'
+        | 'IO_ERROR'
+        | 'INTERNAL_ERROR'
+        | 'TEST';
       /**
        * Message
        * Message of the event.
@@ -1755,6 +1770,16 @@ declare namespace Components {
          * Main identifier of the associated warehouse.
          */
         warehouse_id: string; // uuid
+        /**
+         * Entity Id
+         * Entity identifier.
+         */
+        entity_id?: string; // uuid
+        /**
+         * EntityTypeEnum
+         * Entity type.
+         */
+        entity_type?: 'ORDER' | 'MASTER_ITEM';
       };
       /**
        * Meta
@@ -1971,7 +1996,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      each_barcode_type?: "EAN" | "UPC";
+      each_barcode_type?: 'EAN' | 'UPC';
       /**
        * Each Barcode
        * Unit barcode.
@@ -1981,7 +2006,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      cardboard_box_barcode_type?: "EAN" | "UPC";
+      cardboard_box_barcode_type?: 'EAN' | 'UPC';
       /**
        * Cardboard Box Barcode
        * Box barcode.
@@ -1991,7 +2016,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      pallet_barcode_type?: "EAN" | "UPC";
+      pallet_barcode_type?: 'EAN' | 'UPC';
       /**
        * Pallet Barcode
        * Pallet barcode.
@@ -2257,7 +2282,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      each_barcode_type?: "EAN" | "UPC";
+      each_barcode_type?: 'EAN' | 'UPC';
       /**
        * Each Barcode
        * Unit barcode.
@@ -2267,7 +2292,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      cardboard_box_barcode_type?: "EAN" | "UPC";
+      cardboard_box_barcode_type?: 'EAN' | 'UPC';
       /**
        * Cardboard Box Barcode
        * Box barcode.
@@ -2277,7 +2302,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      pallet_barcode_type?: "EAN" | "UPC";
+      pallet_barcode_type?: 'EAN' | 'UPC';
       /**
        * Pallet Barcode
        * Pallet barcode.
@@ -2725,7 +2750,7 @@ declare namespace Components {
        * OrderTransportManagementOwnerEnum
        * Deprecated, use transport_carrier_id instead
        */
-      transport_management_owner?: "PROVIDER" | "SHIPPER";
+      transport_management_owner?: 'PROVIDER' | 'SHIPPER';
     }
     /**
      * InputShipperUpdateOrderActionOrderItem
@@ -2781,7 +2806,7 @@ declare namespace Components {
        * ItemPackagingTypeEnum
        * Packaging type used for the quantity.
        */
-      item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+      item_packaging_type: 'PALLET' | 'CARDBOARD_BOX' | 'EACH';
       /**
        * Expected Quantity
        * Expected quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed the quantity in pallet.
@@ -2891,7 +2916,7 @@ declare namespace Components {
        * ItemPackagingTypeEnum
        * Packaging type used for the quantity.
        */
-      item_packaging_type?: "PALLET" | "CARDBOARD_BOX" | "EACH";
+      item_packaging_type?: 'PALLET' | 'CARDBOARD_BOX' | 'EACH';
       /**
        * Actual Quantity
        * Actual quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed in pallets.
@@ -3066,7 +3091,7 @@ declare namespace Components {
        * OrderTypeEnum
        * Type of the order.
        */
-      order_type: "ENTRY" | "EXIT";
+      order_type: 'ENTRY' | 'EXIT';
       /**
        * Comment
        * Any comment regarding the order.
@@ -3323,7 +3348,7 @@ declare namespace Components {
        * OrderTransportManagementOwnerEnum
        * Deprecated, use transport_carrier_id instead
        */
-      transport_management_owner?: "PROVIDER" | "SHIPPER";
+      transport_management_owner?: 'PROVIDER' | 'SHIPPER';
     }
     /**
      * InputWarehouseCreatesOrderActionOrderItem
@@ -3383,7 +3408,7 @@ declare namespace Components {
        * ItemPackagingTypeEnum
        * Packaging type used for the quantity.
        */
-      item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+      item_packaging_type: 'PALLET' | 'CARDBOARD_BOX' | 'EACH';
       /**
        * Expected Quantity
        * Expected quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed the quantity in pallet.
@@ -3416,38 +3441,38 @@ declare namespace Components {
      * ItemPackagingTypeEnum
      * An enumeration.
      */
-    export type ItemPackagingTypeEnum = "PALLET" | "CARDBOARD_BOX" | "EACH";
+    export type ItemPackagingTypeEnum = 'PALLET' | 'CARDBOARD_BOX' | 'EACH';
     /**
      * ItemSelectionMethodEnum
      * An enumeration.
      */
-    export type ItemSelectionMethodEnum = "WHATEVER_THE_BATCH";
+    export type ItemSelectionMethodEnum = 'WHATEVER_THE_BATCH';
     /**
      * OrderStatusEnum
      * An enumeration.
      */
     export type OrderStatusEnum =
-      | "WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE"
-      | "SHIPPER_NEEDS_TO_SUGGEST_NEW_PLANNED_EXECUTION_DATE_STATE"
-      | "ORDER_IS_READY_TO_BE_EXECUTED_STATE"
-      | "UNLOADING_STARTED_STATE"
-      | "UNLOADING_FINISHED_STATE"
-      | "PREPARATION_STARTED_STATE"
-      | "PREPARATION_FINISHED_STATE"
-      | "CANCELED_ORDER_STATE"
-      | "COMPLETED_ORDER_STATE"
-      | "FAILED_ORDER_STATE"
-      | "DRAFT_ORDER_STATE";
+      | 'WAREHOUSE_NEEDS_TO_CONFIRM_PLANNED_EXECUTION_DATE_STATE'
+      | 'SHIPPER_NEEDS_TO_SUGGEST_NEW_PLANNED_EXECUTION_DATE_STATE'
+      | 'ORDER_IS_READY_TO_BE_EXECUTED_STATE'
+      | 'UNLOADING_STARTED_STATE'
+      | 'UNLOADING_FINISHED_STATE'
+      | 'PREPARATION_STARTED_STATE'
+      | 'PREPARATION_FINISHED_STATE'
+      | 'CANCELED_ORDER_STATE'
+      | 'COMPLETED_ORDER_STATE'
+      | 'FAILED_ORDER_STATE'
+      | 'DRAFT_ORDER_STATE';
     /**
      * OrderTransportManagementOwnerEnum
      * An enumeration.
      */
-    export type OrderTransportManagementOwnerEnum = "PROVIDER" | "SHIPPER";
+    export type OrderTransportManagementOwnerEnum = 'PROVIDER' | 'SHIPPER';
     /**
      * OrderTypeEnum
      * An enumeration.
      */
-    export type OrderTypeEnum = "ENTRY" | "EXIT";
+    export type OrderTypeEnum = 'ENTRY' | 'EXIT';
     /**
      * OutputBatch
      * example:
@@ -4077,7 +4102,7 @@ declare namespace Components {
        * ItemPackagingTypeEnum
        * Packaging type used for the quantity.
        */
-      item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+      item_packaging_type: 'PALLET' | 'CARDBOARD_BOX' | 'EACH';
       /**
        * Initial Quantity
        * Initial quantity before adjustment.
@@ -4175,7 +4200,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      each_barcode_type?: "EAN" | "UPC";
+      each_barcode_type?: 'EAN' | 'UPC';
       /**
        * Each Barcode
        * Unit barcode.
@@ -4185,7 +4210,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      cardboard_box_barcode_type?: "EAN" | "UPC";
+      cardboard_box_barcode_type?: 'EAN' | 'UPC';
       /**
        * Cardboard Box Barcode
        * Box barcode.
@@ -4195,7 +4220,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      pallet_barcode_type?: "EAN" | "UPC";
+      pallet_barcode_type?: 'EAN' | 'UPC';
       /**
        * Pallet Barcode
        * Pallet barcode.
@@ -4518,7 +4543,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      each_barcode_type?: "EAN" | "UPC";
+      each_barcode_type?: 'EAN' | 'UPC';
       /**
        * Each Barcode
        * Unit barcode.
@@ -4528,7 +4553,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      cardboard_box_barcode_type?: "EAN" | "UPC";
+      cardboard_box_barcode_type?: 'EAN' | 'UPC';
       /**
        * Cardboard Box Barcode
        * Box barcode.
@@ -4538,7 +4563,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      pallet_barcode_type?: "EAN" | "UPC";
+      pallet_barcode_type?: 'EAN' | 'UPC';
       /**
        * Pallet Barcode
        * Pallet barcode.
@@ -5248,7 +5273,7 @@ declare namespace Components {
        * OrderTypeEnum
        * Type of the order.
        */
-      order_type: "ENTRY" | "EXIT";
+      order_type: 'ENTRY' | 'EXIT';
       status: /**
        * OrderStatusEnum
        * An enumeration.
@@ -5308,17 +5333,17 @@ declare namespace Components {
        * Status of transport unit associated with this order
        */
       transport_status?:
-        | "NOT_MANAGED_BY_SPACEFILL"
-        | "DRAFT"
-        | "SCHEDULED"
-        | "DELIVERED"
-        | "AT_PICKUP_LOCATION"
-        | "PICKUP_COMPLETED"
-        | "DELIVERY_IN_PROGRESS"
-        | "AT_DELIVERY_LOCATION"
-        | "PICKUP_MISSED"
-        | "DELIVERY_MISSED"
-        | "CANCELED";
+        | 'NOT_MANAGED_BY_SPACEFILL'
+        | 'DRAFT'
+        | 'SCHEDULED'
+        | 'DELIVERED'
+        | 'AT_PICKUP_LOCATION'
+        | 'PICKUP_COMPLETED'
+        | 'DELIVERY_IN_PROGRESS'
+        | 'AT_DELIVERY_LOCATION'
+        | 'PICKUP_MISSED'
+        | 'DELIVERY_MISSED'
+        | 'CANCELED';
       /**
        * Transport Carrier Id
        * Identifier of carrier company in charge of transport
@@ -5530,7 +5555,7 @@ declare namespace Components {
        * OrderTransportManagementOwnerEnum
        * Deprecated, use transport_carrier_id instead
        */
-      transport_management_owner?: "PROVIDER" | "SHIPPER";
+      transport_management_owner?: 'PROVIDER' | 'SHIPPER';
       /**
        * Carrier Id
        * Deprecated, use transport_carrier_id instead
@@ -5856,7 +5881,7 @@ declare namespace Components {
        * OrderTypeEnum
        * Type of the order.
        */
-      order_type: "ENTRY" | "EXIT";
+      order_type: 'ENTRY' | 'EXIT';
       status: /**
        * OrderStatusEnum
        * An enumeration.
@@ -5916,17 +5941,17 @@ declare namespace Components {
        * Status of transport unit associated with this order
        */
       transport_status?:
-        | "NOT_MANAGED_BY_SPACEFILL"
-        | "DRAFT"
-        | "SCHEDULED"
-        | "DELIVERED"
-        | "AT_PICKUP_LOCATION"
-        | "PICKUP_COMPLETED"
-        | "DELIVERY_IN_PROGRESS"
-        | "AT_DELIVERY_LOCATION"
-        | "PICKUP_MISSED"
-        | "DELIVERY_MISSED"
-        | "CANCELED";
+        | 'NOT_MANAGED_BY_SPACEFILL'
+        | 'DRAFT'
+        | 'SCHEDULED'
+        | 'DELIVERED'
+        | 'AT_PICKUP_LOCATION'
+        | 'PICKUP_COMPLETED'
+        | 'DELIVERY_IN_PROGRESS'
+        | 'AT_DELIVERY_LOCATION'
+        | 'PICKUP_MISSED'
+        | 'DELIVERY_MISSED'
+        | 'CANCELED';
       /**
        * Transport Carrier Id
        * Identifier of carrier company in charge of transport
@@ -6168,7 +6193,7 @@ declare namespace Components {
        * OrderTransportManagementOwnerEnum
        * Deprecated, use transport_carrier_id instead
        */
-      transport_management_owner?: "PROVIDER" | "SHIPPER";
+      transport_management_owner?: 'PROVIDER' | 'SHIPPER';
       /**
        * Carrier Id
        * Deprecated, use transport_carrier_id instead
@@ -6286,7 +6311,7 @@ declare namespace Components {
        * ItemSelectionMethodEnum
        * Selection method chosen by the shipper when creating the order.<br />`WHATEVER_THE_BATCH` if the sender lets the warehouse choose the batch, null otherwise.
        */
-      item_selection_method?: "WHATEVER_THE_BATCH";
+      item_selection_method?: 'WHATEVER_THE_BATCH';
       /**
        * Pallet Sscc
        * Deprecated, serial Shipping Container Code. More info [here](https://www.gs1.org/standards/id-keys/sscc).
@@ -6301,7 +6326,7 @@ declare namespace Components {
        * ItemPackagingTypeEnum
        * Packaging type used for the quantity.
        */
-      item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+      item_packaging_type: 'PALLET' | 'CARDBOARD_BOX' | 'EACH';
       /**
        * Expected Quantity
        * Expected quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed the quantity in pallet.
@@ -6373,7 +6398,7 @@ declare namespace Components {
        * ItemSelectionMethodEnum
        * Selection method chosen by the shipper when creating the order.<br />`WHATEVER_THE_BATCH` if the sender lets the warehouse choose the batch, null otherwise.
        */
-      item_selection_method?: "WHATEVER_THE_BATCH";
+      item_selection_method?: 'WHATEVER_THE_BATCH';
       /**
        * Batch Edi Erp Id
        * Batch identifier used in the ERP software.
@@ -6403,7 +6428,7 @@ declare namespace Components {
        * ItemPackagingTypeEnum
        * Packaging type used for the quantity.
        */
-      item_packaging_type: "PALLET" | "CARDBOARD_BOX" | "EACH";
+      item_packaging_type: 'PALLET' | 'CARDBOARD_BOX' | 'EACH';
       /**
        * Expected Quantity
        * Expected quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed the quantity in pallet.
@@ -6626,7 +6651,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      each_barcode_type?: "EAN" | "UPC";
+      each_barcode_type?: 'EAN' | 'UPC';
       /**
        * Each Barcode
        * Unit barcode.
@@ -6636,7 +6661,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      cardboard_box_barcode_type?: "EAN" | "UPC";
+      cardboard_box_barcode_type?: 'EAN' | 'UPC';
       /**
        * Cardboard Box Barcode
        * Box barcode.
@@ -6646,7 +6671,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      pallet_barcode_type?: "EAN" | "UPC";
+      pallet_barcode_type?: 'EAN' | 'UPC';
       /**
        * Pallet Barcode
        * Pallet barcode.
@@ -6892,7 +6917,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      each_barcode_type?: "EAN" | "UPC";
+      each_barcode_type?: 'EAN' | 'UPC';
       /**
        * Each Barcode
        * Unit barcode.
@@ -6902,7 +6927,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      cardboard_box_barcode_type?: "EAN" | "UPC";
+      cardboard_box_barcode_type?: 'EAN' | 'UPC';
       /**
        * Cardboard Box Barcode
        * Box barcode.
@@ -6912,7 +6937,7 @@ declare namespace Components {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      pallet_barcode_type?: "EAN" | "UPC";
+      pallet_barcode_type?: 'EAN' | 'UPC';
       /**
        * Pallet Barcode
        * Pallet barcode.
@@ -7274,7 +7299,7 @@ declare namespace Components {
          * BarcodeTypeEnum
          * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
          */
-        each_barcode_type?: "EAN" | "UPC";
+        each_barcode_type?: 'EAN' | 'UPC';
         /**
          * Each Barcode
          * Unit barcode.
@@ -7284,7 +7309,7 @@ declare namespace Components {
          * BarcodeTypeEnum
          * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
          */
-        cardboard_box_barcode_type?: "EAN" | "UPC";
+        cardboard_box_barcode_type?: 'EAN' | 'UPC';
         /**
          * Cardboard Box Barcode
          * Box barcode.
@@ -7294,7 +7319,7 @@ declare namespace Components {
          * BarcodeTypeEnum
          * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
          */
-        pallet_barcode_type?: "EAN" | "UPC";
+        pallet_barcode_type?: 'EAN' | 'UPC';
         /**
          * Pallet Barcode
          * Pallet barcode.
@@ -8537,33 +8562,33 @@ declare namespace Components {
      * Transport status enum.
      */
     export type RessourcesSharedTransportStatusEnum =
-      | "NOT_MANAGED_BY_SPACEFILL"
-      | "DRAFT"
-      | "SCHEDULED"
-      | "DELIVERED"
-      | "AT_PICKUP_LOCATION"
-      | "PICKUP_COMPLETED"
-      | "DELIVERY_IN_PROGRESS"
-      | "AT_DELIVERY_LOCATION"
-      | "PICKUP_MISSED"
-      | "DELIVERY_MISSED"
-      | "CANCELED";
+      | 'NOT_MANAGED_BY_SPACEFILL'
+      | 'DRAFT'
+      | 'SCHEDULED'
+      | 'DELIVERED'
+      | 'AT_PICKUP_LOCATION'
+      | 'PICKUP_COMPLETED'
+      | 'DELIVERY_IN_PROGRESS'
+      | 'AT_DELIVERY_LOCATION'
+      | 'PICKUP_MISSED'
+      | 'DELIVERY_MISSED'
+      | 'CANCELED';
     /**
      * TransportStatusEnum
      * Transport status enum.
      */
     export type RessourcesTransportsModelsTransportStatusEnum =
-      | "NOT_MANAGED_BY_SPACEFILL"
-      | "DRAFT"
-      | "SCHEDULED"
-      | "DELIVERED"
-      | "AT_PICKUP_LOCATION"
-      | "PICKUP_COMPLETED"
-      | "DELIVERY_IN_PROGRESS"
-      | "AT_DELIVERY_LOCATION"
-      | "PICKUP_MISSED"
-      | "DELIVERY_MISSED"
-      | "CANCELED";
+      | 'NOT_MANAGED_BY_SPACEFILL'
+      | 'DRAFT'
+      | 'SCHEDULED'
+      | 'DELIVERED'
+      | 'AT_PICKUP_LOCATION'
+      | 'PICKUP_COMPLETED'
+      | 'DELIVERY_IN_PROGRESS'
+      | 'AT_DELIVERY_LOCATION'
+      | 'PICKUP_MISSED'
+      | 'DELIVERY_MISSED'
+      | 'CANCELED';
     /**
      * ValidationError
      */
@@ -8697,7 +8722,7 @@ declare namespace Paths {
        * ArchivedFilterEnum
        * An enumeration.
        */
-      export type Archived = "yes" | "all" | "no";
+      export type Archived = 'yes' | 'all' | 'no';
       /**
        * Archived After
        * Use this parameter to filter orders archived after date time
@@ -9074,7 +9099,7 @@ declare namespace Paths {
        * ArchivedFilterEnum
        * An enumeration.
        */
-      export type Archived = "yes" | "all" | "no";
+      export type Archived = 'yes' | 'all' | 'no';
       /**
        * Cardboard Box Barcode
        * Box barcode.
@@ -9084,7 +9109,7 @@ declare namespace Paths {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      export type CardboardBoxBarcodeType = "EAN" | "UPC";
+      export type CardboardBoxBarcodeType = 'EAN' | 'UPC';
       /**
        * Created After
        * Use this parameter to filter master items created after date time
@@ -9154,7 +9179,7 @@ declare namespace Paths {
        * BarcodeTypeEnum
        * Type of the barcode on the cardboard box. [More information about EAN](https://en.wikipedia.org/wiki/International_Article_Number)
        */
-      export type PalletBarcodeType = "EAN" | "UPC";
+      export type PalletBarcodeType = 'EAN' | 'UPC';
       /**
        * Shipper Account Id
        * Main identifier of the associated shipper.
@@ -9647,7 +9672,7 @@ declare namespace Paths {
        * OrderTypeEnum
        * Type of the order.
        */
-      export type OrderType = "ENTRY" | "EXIT";
+      export type OrderType = 'ENTRY' | 'EXIT';
       /**
        * Shipper Account Id
        * Main identifier of the associated shipper.
@@ -13946,20 +13971,20 @@ export interface OperationMethods {
   /**
    * get_v1_ping - Ping API Rest
    */
-  "get_v1_ping"(
+  'get_v1_ping'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1Ping.Responses.$200>;
   /**
    * get_v1_logistic_management_master_item_list - List references
    *
    * List and filter <<glossary:reference>>s.
    */
-  "get_v1_logistic_management_master_item_list"(
+  'get_v1_logistic_management_master_item_list'(
     parameters?: Parameters<Paths.GetV1LogisticManagementMasterItemList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementMasterItemList.Responses.$200>;
   /**
    * post_v1_logistic_management_master_item - Create a reference
@@ -13973,23 +13998,23 @@ export interface OperationMethods {
    *
    * > Reference creation is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly to prevent anomalies.
    */
-  "post_v1_logistic_management_master_item"(
+  'post_v1_logistic_management_master_item'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementMasterItem.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementMasterItem.Responses.$200>;
   /**
    * get_v1_logistic_management_master_item - View a reference
    *
    * View the details of a <<glossary:reference>> with current and forecasted stock quantities.
    */
-  "get_v1_logistic_management_master_item"(
+  'get_v1_logistic_management_master_item'(
     parameters?: Parameters<
       Paths.GetV1LogisticManagementMasterItem.PathParameters &
         Paths.GetV1LogisticManagementMasterItem.QueryParameters
     > | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementMasterItem.Responses.$200>;
   /**
    * put_v1_logistic_management_master_item - Replace a reference
@@ -13998,10 +14023,10 @@ export interface OperationMethods {
    *
    * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
    */
-  "put_v1_logistic_management_master_item"(
+  'put_v1_logistic_management_master_item'(
     parameters?: Parameters<Paths.PutV1LogisticManagementMasterItem.PathParameters> | null,
     data?: Paths.PutV1LogisticManagementMasterItem.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PutV1LogisticManagementMasterItem.Responses.$200>;
   /**
    * patch_v1_logistic_management_master_item - Update a reference
@@ -14010,80 +14035,80 @@ export interface OperationMethods {
    *
    * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
    */
-  "patch_v1_logistic_management_master_item"(
+  'patch_v1_logistic_management_master_item'(
     parameters?: Parameters<Paths.PatchV1LogisticManagementMasterItem.PathParameters> | null,
     data?: Paths.PatchV1LogisticManagementMasterItem.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PatchV1LogisticManagementMasterItem.Responses.$200>;
   /**
    * get_v1_logistic_management_batch_list - List batches
    *
    * List and filter <<glossary:batch>>es.
    */
-  "get_v1_logistic_management_batch_list"(
+  'get_v1_logistic_management_batch_list'(
     parameters?: Parameters<Paths.GetV1LogisticManagementBatchList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementBatchList.Responses.$200>;
   /**
    * post_v1_logistic_management_batch - Create a batch
    */
-  "post_v1_logistic_management_batch"(
+  'post_v1_logistic_management_batch'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementBatch.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementBatch.Responses.$200>;
   /**
    * get_v1_logistic_management_batch - View a batch
    *
    * View the details of a <<glossary:batch>> with current stock quantities.
    */
-  "get_v1_logistic_management_batch"(
+  'get_v1_logistic_management_batch'(
     parameters?: Parameters<
       Paths.GetV1LogisticManagementBatch.PathParameters & Paths.GetV1LogisticManagementBatch.QueryParameters
     > | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementBatch.Responses.$200>;
   /**
    * put_v1_logistic_management_batch - Replace Batch resource
    */
-  "put_v1_logistic_management_batch"(
+  'put_v1_logistic_management_batch'(
     parameters?: Parameters<Paths.PutV1LogisticManagementBatch.PathParameters> | null,
     data?: Paths.PutV1LogisticManagementBatch.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PutV1LogisticManagementBatch.Responses.$200>;
   /**
    * get_v1_logistic_management_order_list - List orders
    *
    * List and filter <<glossary:order>>s.
    */
-  "get_v1_logistic_management_order_list"(
+  'get_v1_logistic_management_order_list'(
     parameters?: Parameters<Paths.GetV1LogisticManagementOrderList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementOrderList.Responses.$200>;
   /**
    * get_v1_logistic_management_order - View an order
    *
    * View the details of an order and all order items associated.
    */
-  "get_v1_logistic_management_order"(
+  'get_v1_logistic_management_order'(
     parameters?: Parameters<
       Paths.GetV1LogisticManagementOrder.PathParameters & Paths.GetV1LogisticManagementOrder.QueryParameters
     > | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementOrder.Responses.$200>;
   /**
    * patch_v1_logistic_management_order - Update an order
    *
    * Update one or several fields of <<glossary:order>>.
    */
-  "patch_v1_logistic_management_order"(
+  'patch_v1_logistic_management_order'(
     parameters?: Parameters<Paths.PatchV1LogisticManagementOrder.PathParameters> | null,
     data?: Paths.PatchV1LogisticManagementOrder.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PatchV1LogisticManagementOrder.Responses.$200>;
   /**
    * post_v1_logistic_management_shipper_create_entry_order_action - Create an entry order
@@ -14102,10 +14127,10 @@ export interface OperationMethods {
    *
    * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
    */
-  "post_v1_logistic_management_shipper_create_entry_order_action"(
+  'post_v1_logistic_management_shipper_create_entry_order_action'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.Responses.$200>;
   /**
    * post_v1_logistic_management_shipper_creates_order_exit_action - Create an exit order
@@ -14124,87 +14149,87 @@ export interface OperationMethods {
    *
    * For some integrations, address is mandatory. You will then receive an error message if you do not fill at least one of the fields listed below.
    */
-  "post_v1_logistic_management_shipper_creates_order_exit_action"(
+  'post_v1_logistic_management_shipper_creates_order_exit_action'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.Responses.$200>;
   /**
    * get_v1_logistic_management_order_documents_list - List order documents
    */
-  "get_v1_logistic_management_order_documents_list"(
+  'get_v1_logistic_management_order_documents_list'(
     parameters?: Parameters<
       Paths.GetV1LogisticManagementOrderDocumentsList.PathParameters &
         Paths.GetV1LogisticManagementOrderDocumentsList.QueryParameters
     > | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementOrderDocumentsList.Responses.$200>;
   /**
    * get_v1_logistic_management_order_download_document - Download a document
    */
-  "get_v1_logistic_management_order_download_document"(
+  'get_v1_logistic_management_order_download_document'(
     parameters?: Parameters<Paths.GetV1LogisticManagementOrderDownloadDocument.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementOrderDownloadDocument.Responses.$200>;
   /**
    * post_v1_logistic_management_order_upload_document - Attach document to an order
    */
-  "post_v1_logistic_management_order_upload_document"(
+  'post_v1_logistic_management_order_upload_document'(
     parameters?: Parameters<Paths.PostV1LogisticManagementOrderUploadDocument.PathParameters> | null,
     data?: Paths.PostV1LogisticManagementOrderUploadDocument.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementOrderUploadDocument.Responses.$200>;
   /**
    * get_v1_logistic_management_warehouse_confirms_planned_execution_date_action - With this endpoint, the warehouse/logistic-provider user can confirm the planned execution date proposed by the shipper user
    */
-  "get_v1_logistic_management_warehouse_confirms_planned_execution_date_action"(
+  'get_v1_logistic_management_warehouse_confirms_planned_execution_date_action'(
     parameters?: Parameters<Paths.GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateAction.Responses.$200>;
   /**
    * post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action - Acknowledge reception of an order
    *
    * Confirm receipt or exit of the <<glossary:order>> to the <<glossary:Shipper>>.
    */
-  "post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action"(
+  'post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.PathParameters> | null,
     data?: Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.Responses.$200>;
   /**
    * get_v1_logistic_management_shipper_acknowledges_receipt_of_adjustment_action - With this endpoint, a shipper-user can acknowledge that the order items have been updated by the warehouse after order completion
    */
-  "get_v1_logistic_management_shipper_acknowledges_receipt_of_adjustment_action"(
+  'get_v1_logistic_management_shipper_acknowledges_receipt_of_adjustment_action'(
     parameters?: Parameters<Paths.GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentAction.Responses.$200>;
   /**
    * post_v1_logistic_management_shipper_cancels_order_action - Cancel an order
    */
-  "post_v1_logistic_management_shipper_cancels_order_action"(
+  'post_v1_logistic_management_shipper_cancels_order_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementShipperCancelsOrderAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementShipperCancelsOrderAction.Responses.$200>;
   /**
    * get_v1_logistic_management_shipper_reschedule_order_action - With this endpoint, a shipper-user can reschedule a planned order
    */
-  "get_v1_logistic_management_shipper_reschedule_order_action"(
+  'get_v1_logistic_management_shipper_reschedule_order_action'(
     parameters?: Parameters<Paths.GetV1LogisticManagementShipperRescheduleOrderAction.PathParameters> | null,
     data?: Paths.GetV1LogisticManagementShipperRescheduleOrderAction.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementShipperRescheduleOrderAction.Responses.$200>;
   /**
    * get_v1_logistic_management_shipper_suggests_planned_execution_date_action - With this endpoint, a shipper-user can reschedule an order whose previous planned execution date has been refused by the warehouse/logistic-provider-user
    */
-  "get_v1_logistic_management_shipper_suggests_planned_execution_date_action"(
+  'get_v1_logistic_management_shipper_suggests_planned_execution_date_action'(
     parameters?: Parameters<Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateAction.PathParameters> | null,
     data?: Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateAction.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateAction.Responses.$200>;
   /**
    * post_v1_logistic_management_shipper_updates_order_action - Update an order
@@ -14240,18 +14265,18 @@ export interface OperationMethods {
    *
    * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
    */
-  "post_v1_logistic_management_shipper_updates_order_action"(
+  'post_v1_logistic_management_shipper_updates_order_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementShipperUpdatesOrderAction.PathParameters> | null,
     data?: Paths.PostV1LogisticManagementShipperUpdatesOrderAction.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementShipperUpdatesOrderAction.Responses.$200>;
   /**
    * post_v1_logistic_management_warehouse_adjust_stock_after_order_is_completed_action - Adjust stock after order completion
    */
-  "post_v1_logistic_management_warehouse_adjust_stock_after_order_is_completed_action"(
+  'post_v1_logistic_management_warehouse_adjust_stock_after_order_is_completed_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedAction.PathParameters> | null,
     data?: Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedAction.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedAction.Responses.$200>;
   /**
    * post_v1_logistic_management_warehouse_creates_order_action - Create an order
@@ -14283,82 +14308,82 @@ export interface OperationMethods {
    *
    * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
    */
-  "post_v1_logistic_management_warehouse_creates_order_action"(
+  'post_v1_logistic_management_warehouse_creates_order_action'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementWarehouseCreatesOrderAction.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseCreatesOrderAction.Responses.$200>;
   /**
    * get_v1_logistic_management_warehouse_declines_planned_execution_date_action - With this endpoint, the warehouse/logistic-provider user can notify the shipper-user that the planned execution date is not available
    */
-  "get_v1_logistic_management_warehouse_declines_planned_execution_date_action"(
+  'get_v1_logistic_management_warehouse_declines_planned_execution_date_action'(
     parameters?: Parameters<
       Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateAction.PathParameters &
         Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateAction.QueryParameters
     > | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateAction.Responses.$200>;
   /**
    * post_v1_logistic_management_warehouse_emits_order_receipt_error_action - Order not received
    *
    * Inform the <<glossary:shipper>> that the <<glossary:order>> has not been received.
    */
-  "post_v1_logistic_management_warehouse_emits_order_receipt_error_action"(
+  'post_v1_logistic_management_warehouse_emits_order_receipt_error_action'(
     parameters?: Parameters<
       Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorAction.PathParameters &
         Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorAction.QueryParameters
     > | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorAction.Responses.$200>;
   /**
    * post_v1_logistic_management_create_webhook_webhook - Create a order webhook
    */
-  "post_v1_logistic_management_create_webhook_webhook"(
+  'post_v1_logistic_management_create_webhook_webhook'(
     parameters?: Parameters<Paths.PostV1LogisticManagementCreateWebhookWebhook.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementCreateWebhookWebhook.Responses.$200>;
   /**
    * post_v1_logistic_management_warehouse_starts_unloading_action - Order unloading has begun
    *
    * Inform the <<glossary:shipper>> that the <<glossary:order>> unloading has begun.
    */
-  "post_v1_logistic_management_warehouse_starts_unloading_action"(
+  'post_v1_logistic_management_warehouse_starts_unloading_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseStartsUnloadingAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseStartsUnloadingAction.Responses.$200>;
   /**
    * post_v1_logistic_management_warehouse_finishes_unloading_action - Order unloading has ended
    *
    * Inform the <<glossary:shipper>> that the <<glossary:order>> unloading has ended.
    */
-  "post_v1_logistic_management_warehouse_finishes_unloading_action"(
+  'post_v1_logistic_management_warehouse_finishes_unloading_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesUnloadingAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesUnloadingAction.Responses.$200>;
   /**
    * post_v1_logistic_management_warehouse_starts_preparation_action - Order preparation has begun
    *
    * Inform the <<glossary:shipper>> that the <<glossary:order>> preparation has begun.
    */
-  "post_v1_logistic_management_warehouse_starts_preparation_action"(
+  'post_v1_logistic_management_warehouse_starts_preparation_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseStartsPreparationAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseStartsPreparationAction.Responses.$200>;
   /**
    * post_v1_logistic_management_warehouse_finishes_preparation_action - Order preparation has ended
    *
    * Inform the <<glossary:shipper>> that the <<glossary:order>> preparation has ended.
    */
-  "post_v1_logistic_management_warehouse_finishes_preparation_action"(
+  'post_v1_logistic_management_warehouse_finishes_preparation_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.Responses.$200>;
   /**
    * post_v1_logistic_management_shipper_create_or_update_draft_order_action - Create/update a draft order
@@ -14395,137 +14420,137 @@ export interface OperationMethods {
    *
    * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
    */
-  "post_v1_logistic_management_shipper_create_or_update_draft_order_action"(
+  'post_v1_logistic_management_shipper_create_or_update_draft_order_action'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.Responses.$200>;
   /**
    * post_v1_logistic_management_shipper_validate_draft_order_action - Validate a draft order
    */
-  "post_v1_logistic_management_shipper_validate_draft_order_action"(
+  'post_v1_logistic_management_shipper_validate_draft_order_action'(
     parameters?: Parameters<Paths.PostV1LogisticManagementShipperValidateDraftOrderAction.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementShipperValidateDraftOrderAction.Responses.$200>;
   /**
    * get_v1_logistic_management_inventory_adjustement_list - List inventory adjustments
    */
-  "get_v1_logistic_management_inventory_adjustement_list"(
+  'get_v1_logistic_management_inventory_adjustement_list'(
     parameters?: Parameters<Paths.GetV1LogisticManagementInventoryAdjustementList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementInventoryAdjustementList.Responses.$200>;
   /**
    * post_v1_logistic_management_inventory_adjustement - Create an inventory adjustment
    */
-  "post_v1_logistic_management_inventory_adjustement"(
+  'post_v1_logistic_management_inventory_adjustement'(
     parameters?: Parameters<Paths.PostV1LogisticManagementInventoryAdjustement.QueryParameters> | null,
     data?: Paths.PostV1LogisticManagementInventoryAdjustement.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementInventoryAdjustement.Responses.$200>;
   /**
    * post_v1_async_logistic_management_inventory_adjustement - Create an inventory adjustment (asynchronously)
    */
-  "post_v1_async_logistic_management_inventory_adjustement"(
+  'post_v1_async_logistic_management_inventory_adjustement'(
     parameters?: Parameters<Paths.PostV1AsyncLogisticManagementInventoryAdjustement.QueryParameters> | null,
     data?: Paths.PostV1AsyncLogisticManagementInventoryAdjustement.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1AsyncLogisticManagementInventoryAdjustement.Responses.$200>;
   /**
    * get_v1_logistic_management_inventory_adjustement - View an inventory adjustment
    */
-  "get_v1_logistic_management_inventory_adjustement"(
+  'get_v1_logistic_management_inventory_adjustement'(
     parameters?: Parameters<Paths.GetV1LogisticManagementInventoryAdjustement.PathParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementInventoryAdjustement.Responses.$200>;
   /**
    * get_v1_logistic_management_sscc_list - List SSCC informations and stock
    */
-  "get_v1_logistic_management_sscc_list"(
+  'get_v1_logistic_management_sscc_list'(
     parameters?: Parameters<Paths.GetV1LogisticManagementSsccList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementSsccList.Responses.$200>;
   /**
    * get_v1_logistic_management_sscc_total_in_stock - Get total of SSCC currently in stock
    */
-  "get_v1_logistic_management_sscc_total_in_stock"(
+  'get_v1_logistic_management_sscc_total_in_stock'(
     parameters?: Parameters<Paths.GetV1LogisticManagementSsccTotalInStock.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1LogisticManagementSsccTotalInStock.Responses.$200>;
   /**
    * get_v1_carrier_list - List carriers from carriers book and from LSP
    */
-  "get_v1_carrier_list"(
+  'get_v1_carrier_list'(
     parameters?: Parameters<Paths.GetV1CarrierList.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1CarrierList.Responses.$200>;
   /**
    * post_v1_carrier - Create a carrier
    */
-  "post_v1_carrier"(
+  'post_v1_carrier'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1Carrier.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1Carrier.Responses.$200>;
   /**
    * get_v1_transports - Get V1 Transports
    *
    * Return all transports for a given carrier
    */
-  "get_v1_transports"(
+  'get_v1_transports'(
     parameters?: Parameters<Paths.GetV1Transports.QueryParameters> | null,
     data?: any,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.GetV1Transports.Responses.$200>;
   /**
    * patch_v1_transport_status - Patch V1 Transport Status
    *
    * Update a transport
    */
-  "patch_v1_transport_status"(
+  'patch_v1_transport_status'(
     parameters?: Parameters<Paths.PatchV1TransportStatus.PathParameters> | null,
     data?: Paths.PatchV1TransportStatus.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PatchV1TransportStatus.Responses.$200>;
   /**
    * post_v1_logistic_management_event - Post an event
    *
    * Post an event.
    */
-  "post_v1_logistic_management_event"(
+  'post_v1_logistic_management_event'(
     parameters?: Parameters<UnknownParamsObject> | null,
     data?: Paths.PostV1LogisticManagementEvent.RequestBody,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig
   ): OperationResponse<Paths.PostV1LogisticManagementEvent.Responses.$200>;
 }
 
 export interface PathsDictionary {
-  ["/"]: {};
-  ["/v1/ping"]: {
+  ['/']: {};
+  ['/v1/ping']: {
     /**
      * get_v1_ping - Ping API Rest
      */
-    "get"(
+    'get'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1Ping.Responses.$200>;
   };
-  ["/v1/logistic_management/master_items/"]: {
+  ['/v1/logistic_management/master_items/']: {
     /**
      * get_v1_logistic_management_master_item_list - List references
      *
      * List and filter <<glossary:reference>>s.
      */
-    "get"(
+    'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementMasterItemList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementMasterItemList.Responses.$200>;
     /**
      * post_v1_logistic_management_master_item - Create a reference
@@ -14539,25 +14564,25 @@ export interface PathsDictionary {
      *
      * > Reference creation is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly to prevent anomalies.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementMasterItem.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementMasterItem.Responses.$200>;
   };
-  ["/v1/logistic_management/master_items/{master_item_id}/"]: {
+  ['/v1/logistic_management/master_items/{master_item_id}/']: {
     /**
      * get_v1_logistic_management_master_item - View a reference
      *
      * View the details of a <<glossary:reference>> with current and forecasted stock quantities.
      */
-    "get"(
+    'get'(
       parameters?: Parameters<
         Paths.GetV1LogisticManagementMasterItem.PathParameters &
           Paths.GetV1LogisticManagementMasterItem.QueryParameters
       > | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementMasterItem.Responses.$200>;
     /**
      * put_v1_logistic_management_master_item - Replace a reference
@@ -14566,10 +14591,10 @@ export interface PathsDictionary {
      *
      * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
      */
-    "put"(
+    'put'(
       parameters?: Parameters<Paths.PutV1LogisticManagementMasterItem.PathParameters> | null,
       data?: Paths.PutV1LogisticManagementMasterItem.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PutV1LogisticManagementMasterItem.Responses.$200>;
     /**
      * patch_v1_logistic_management_master_item - Update a reference
@@ -14578,91 +14603,91 @@ export interface PathsDictionary {
      *
      * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
      */
-    "patch"(
+    'patch'(
       parameters?: Parameters<Paths.PatchV1LogisticManagementMasterItem.PathParameters> | null,
       data?: Paths.PatchV1LogisticManagementMasterItem.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PatchV1LogisticManagementMasterItem.Responses.$200>;
   };
-  ["/v1/logistic_management/batches/"]: {
+  ['/v1/logistic_management/batches/']: {
     /**
      * get_v1_logistic_management_batch_list - List batches
      *
      * List and filter <<glossary:batch>>es.
      */
-    "get"(
+    'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementBatchList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementBatchList.Responses.$200>;
     /**
      * post_v1_logistic_management_batch - Create a batch
      */
-    "post"(
+    'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementBatch.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementBatch.Responses.$200>;
   };
-  ["/v1/logistic_management/batches/{batch_id}/"]: {
+  ['/v1/logistic_management/batches/{batch_id}/']: {
     /**
      * get_v1_logistic_management_batch - View a batch
      *
      * View the details of a <<glossary:batch>> with current stock quantities.
      */
-    "get"(
+    'get'(
       parameters?: Parameters<
         Paths.GetV1LogisticManagementBatch.PathParameters & Paths.GetV1LogisticManagementBatch.QueryParameters
       > | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementBatch.Responses.$200>;
     /**
      * put_v1_logistic_management_batch - Replace Batch resource
      */
-    "put"(
+    'put'(
       parameters?: Parameters<Paths.PutV1LogisticManagementBatch.PathParameters> | null,
       data?: Paths.PutV1LogisticManagementBatch.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PutV1LogisticManagementBatch.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/"]: {
+  ['/v1/logistic_management/orders/']: {
     /**
      * get_v1_logistic_management_order_list - List orders
      *
      * List and filter <<glossary:order>>s.
      */
-    "get"(
+    'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementOrderList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementOrderList.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/"]: {
+  ['/v1/logistic_management/orders/{order_id}/']: {
     /**
      * get_v1_logistic_management_order - View an order
      *
      * View the details of an order and all order items associated.
      */
-    "get"(
+    'get'(
       parameters?: Parameters<
         Paths.GetV1LogisticManagementOrder.PathParameters & Paths.GetV1LogisticManagementOrder.QueryParameters
       > | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementOrder.Responses.$200>;
     /**
      * patch_v1_logistic_management_order - Update an order
      *
      * Update one or several fields of <<glossary:order>>.
      */
-    "patch"(
+    'patch'(
       parameters?: Parameters<Paths.PatchV1LogisticManagementOrder.PathParameters> | null,
       data?: Paths.PatchV1LogisticManagementOrder.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PatchV1LogisticManagementOrder.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/entry/"]: {
+  ['/v1/logistic_management/orders/entry/']: {
     /**
      * post_v1_logistic_management_shipper_create_entry_order_action - Create an entry order
      *
@@ -14680,13 +14705,13 @@ export interface PathsDictionary {
      *
      * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/exit/"]: {
+  ['/v1/logistic_management/orders/exit/']: {
     /**
      * post_v1_logistic_management_shipper_creates_order_exit_action - Create an exit order
      *
@@ -14704,108 +14729,108 @@ export interface PathsDictionary {
      *
      * For some integrations, address is mandatory. You will then receive an error message if you do not fill at least one of the fields listed below.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/documents"]: {
+  ['/v1/logistic_management/orders/{order_id}/documents']: {
     /**
      * get_v1_logistic_management_order_documents_list - List order documents
      */
-    "get"(
+    'get'(
       parameters?: Parameters<
         Paths.GetV1LogisticManagementOrderDocumentsList.PathParameters &
           Paths.GetV1LogisticManagementOrderDocumentsList.QueryParameters
       > | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementOrderDocumentsList.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/documents/{document_id}/download"]: {
+  ['/v1/logistic_management/orders/{order_id}/documents/{document_id}/download']: {
     /**
      * get_v1_logistic_management_order_download_document - Download a document
      */
-    "get"(
+    'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementOrderDownloadDocument.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementOrderDownloadDocument.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/documents/"]: {
+  ['/v1/logistic_management/orders/{order_id}/documents/']: {
     /**
      * post_v1_logistic_management_order_upload_document - Attach document to an order
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementOrderUploadDocument.PathParameters> | null,
       data?: Paths.PostV1LogisticManagementOrderUploadDocument.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementOrderUploadDocument.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/warehouse_confirms_planned_execution_date"]: {
+  ['/v1/logistic_management/orders/{order_id}/warehouse_confirms_planned_execution_date']: {
     /**
      * get_v1_logistic_management_warehouse_confirms_planned_execution_date_action - With this endpoint, the warehouse/logistic-provider user can confirm the planned execution date proposed by the shipper user
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementWarehouseConfirmsPlannedExecutionDateAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/warehouse_acknowledges_receipt_of_order_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/warehouse_acknowledges_receipt_of_order_action']: {
     /**
      * post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action - Acknowledge reception of an order
      *
      * Confirm receipt or exit of the <<glossary:order>> to the <<glossary:Shipper>>.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.PathParameters> | null,
       data?: Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/shipper_acknowledges_receipt_of_adjustment_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/shipper_acknowledges_receipt_of_adjustment_action']: {
     /**
      * get_v1_logistic_management_shipper_acknowledges_receipt_of_adjustment_action - With this endpoint, a shipper-user can acknowledge that the order items have been updated by the warehouse after order completion
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementShipperAcknowledgesReceiptOfAdjustmentAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/shipper_cancels_order_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/shipper_cancels_order_action']: {
     /**
      * post_v1_logistic_management_shipper_cancels_order_action - Cancel an order
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementShipperCancelsOrderAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementShipperCancelsOrderAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/shipper_reschedule_order_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/shipper_reschedule_order_action']: {
     /**
      * get_v1_logistic_management_shipper_reschedule_order_action - With this endpoint, a shipper-user can reschedule a planned order
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.GetV1LogisticManagementShipperRescheduleOrderAction.PathParameters> | null,
       data?: Paths.GetV1LogisticManagementShipperRescheduleOrderAction.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementShipperRescheduleOrderAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/shipper_suggests_planned_execution_date_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/shipper_suggests_planned_execution_date_action']: {
     /**
      * get_v1_logistic_management_shipper_suggests_planned_execution_date_action - With this endpoint, a shipper-user can reschedule an order whose previous planned execution date has been refused by the warehouse/logistic-provider-user
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateAction.PathParameters> | null,
       data?: Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateAction.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementShipperSuggestsPlannedExecutionDateAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/shipper_updates_order_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/shipper_updates_order_action']: {
     /**
      * post_v1_logistic_management_shipper_updates_order_action - Update an order
      *
@@ -14840,23 +14865,23 @@ export interface PathsDictionary {
      *
      * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementShipperUpdatesOrderAction.PathParameters> | null,
       data?: Paths.PostV1LogisticManagementShipperUpdatesOrderAction.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementShipperUpdatesOrderAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/warehouse_adjust_stock_after_order_is_completed_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/warehouse_adjust_stock_after_order_is_completed_action']: {
     /**
      * post_v1_logistic_management_warehouse_adjust_stock_after_order_is_completed_action - Adjust stock after order completion
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedAction.PathParameters> | null,
       data?: Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedAction.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseAdjustStockAfterOrderIsCompletedAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/warehouse_creates_order_action"]: {
+  ['/v1/logistic_management/orders/warehouse_creates_order_action']: {
     /**
      * post_v1_logistic_management_warehouse_creates_order_action - Create an order
      *
@@ -14887,99 +14912,99 @@ export interface PathsDictionary {
      *
      * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementWarehouseCreatesOrderAction.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseCreatesOrderAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/warehouse_declines_planned_execution_date_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/warehouse_declines_planned_execution_date_action']: {
     /**
      * get_v1_logistic_management_warehouse_declines_planned_execution_date_action - With this endpoint, the warehouse/logistic-provider user can notify the shipper-user that the planned execution date is not available
      */
-    "post"(
+    'post'(
       parameters?: Parameters<
         Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateAction.PathParameters &
           Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateAction.QueryParameters
       > | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementWarehouseDeclinesPlannedExecutionDateAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/warehouse_emits_order_receipt_error_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/warehouse_emits_order_receipt_error_action']: {
     /**
      * post_v1_logistic_management_warehouse_emits_order_receipt_error_action - Order not received
      *
      * Inform the <<glossary:shipper>> that the <<glossary:order>> has not been received.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<
         Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorAction.PathParameters &
           Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorAction.QueryParameters
       > | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseEmitsOrderReceiptErrorAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/hooks"]: {
+  ['/v1/logistic_management/orders/hooks']: {
     /**
      * post_v1_logistic_management_create_webhook_webhook - Create a order webhook
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementCreateWebhookWebhook.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementCreateWebhookWebhook.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/warehouse_starts_unloading_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/warehouse_starts_unloading_action']: {
     /**
      * post_v1_logistic_management_warehouse_starts_unloading_action - Order unloading has begun
      *
      * Inform the <<glossary:shipper>> that the <<glossary:order>> unloading has begun.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseStartsUnloadingAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseStartsUnloadingAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/warehouse_finishes_unloading_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/warehouse_finishes_unloading_action']: {
     /**
      * post_v1_logistic_management_warehouse_finishes_unloading_action - Order unloading has ended
      *
      * Inform the <<glossary:shipper>> that the <<glossary:order>> unloading has ended.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesUnloadingAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesUnloadingAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/warehouse_starts_preparation_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/warehouse_starts_preparation_action']: {
     /**
      * post_v1_logistic_management_warehouse_starts_preparation_action - Order preparation has begun
      *
      * Inform the <<glossary:shipper>> that the <<glossary:order>> preparation has begun.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseStartsPreparationAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseStartsPreparationAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/warehouse_finishes_preparation_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/warehouse_finishes_preparation_action']: {
     /**
      * post_v1_logistic_management_warehouse_finishes_preparation_action - Order preparation has ended
      *
      * Inform the <<glossary:shipper>> that the <<glossary:order>> preparation has ended.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/shipper_create_or_update_draft_order_action"]: {
+  ['/v1/logistic_management/orders/shipper_create_or_update_draft_order_action']: {
     /**
      * post_v1_logistic_management_shipper_create_or_update_draft_order_action - Create/update a draft order
      *
@@ -15015,132 +15040,132 @@ export interface PathsDictionary {
      *
      * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.Responses.$200>;
   };
-  ["/v1/logistic_management/orders/{order_id}/shipper_validate_draft_order_action"]: {
+  ['/v1/logistic_management/orders/{order_id}/shipper_validate_draft_order_action']: {
     /**
      * post_v1_logistic_management_shipper_validate_draft_order_action - Validate a draft order
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementShipperValidateDraftOrderAction.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementShipperValidateDraftOrderAction.Responses.$200>;
   };
-  ["/v1/logistic_management/inventory_adjustments/"]: {
+  ['/v1/logistic_management/inventory_adjustments/']: {
     /**
      * get_v1_logistic_management_inventory_adjustement_list - List inventory adjustments
      */
-    "get"(
+    'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementInventoryAdjustementList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementInventoryAdjustementList.Responses.$200>;
     /**
      * post_v1_logistic_management_inventory_adjustement - Create an inventory adjustment
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1LogisticManagementInventoryAdjustement.QueryParameters> | null,
       data?: Paths.PostV1LogisticManagementInventoryAdjustement.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementInventoryAdjustement.Responses.$200>;
   };
-  ["/v1/async/logistic_management/inventory_adjustments/"]: {
+  ['/v1/async/logistic_management/inventory_adjustments/']: {
     /**
      * post_v1_async_logistic_management_inventory_adjustement - Create an inventory adjustment (asynchronously)
      */
-    "post"(
+    'post'(
       parameters?: Parameters<Paths.PostV1AsyncLogisticManagementInventoryAdjustement.QueryParameters> | null,
       data?: Paths.PostV1AsyncLogisticManagementInventoryAdjustement.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1AsyncLogisticManagementInventoryAdjustement.Responses.$200>;
   };
-  ["/v1/logistic_management/inventory_adjustments/{inventory_adjustment_id}/"]: {
+  ['/v1/logistic_management/inventory_adjustments/{inventory_adjustment_id}/']: {
     /**
      * get_v1_logistic_management_inventory_adjustement - View an inventory adjustment
      */
-    "get"(
+    'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementInventoryAdjustement.PathParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementInventoryAdjustement.Responses.$200>;
   };
-  ["/v1/logistic_management/serial_shipping_container_codes/"]: {
+  ['/v1/logistic_management/serial_shipping_container_codes/']: {
     /**
      * get_v1_logistic_management_sscc_list - List SSCC informations and stock
      */
-    "get"(
+    'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementSsccList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementSsccList.Responses.$200>;
   };
-  ["/v1/logistic_management/sscc_total_in_stock/"]: {
+  ['/v1/logistic_management/sscc_total_in_stock/']: {
     /**
      * get_v1_logistic_management_sscc_total_in_stock - Get total of SSCC currently in stock
      */
-    "get"(
+    'get'(
       parameters?: Parameters<Paths.GetV1LogisticManagementSsccTotalInStock.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1LogisticManagementSsccTotalInStock.Responses.$200>;
   };
-  ["/v1/transport_management/carriers/"]: {
+  ['/v1/transport_management/carriers/']: {
     /**
      * get_v1_carrier_list - List carriers from carriers book and from LSP
      */
-    "get"(
+    'get'(
       parameters?: Parameters<Paths.GetV1CarrierList.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1CarrierList.Responses.$200>;
     /**
      * post_v1_carrier - Create a carrier
      */
-    "post"(
+    'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1Carrier.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1Carrier.Responses.$200>;
   };
-  ["/v1/transport_management/transports"]: {
+  ['/v1/transport_management/transports']: {
     /**
      * get_v1_transports - Get V1 Transports
      *
      * Return all transports for a given carrier
      */
-    "get"(
+    'get'(
       parameters?: Parameters<Paths.GetV1Transports.QueryParameters> | null,
       data?: any,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.GetV1Transports.Responses.$200>;
   };
-  ["/v1/transport_management/transports/{transport_id}"]: {
+  ['/v1/transport_management/transports/{transport_id}']: {
     /**
      * patch_v1_transport_status - Patch V1 Transport Status
      *
      * Update a transport
      */
-    "patch"(
+    'patch'(
       parameters?: Parameters<Paths.PatchV1TransportStatus.PathParameters> | null,
       data?: Paths.PatchV1TransportStatus.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PatchV1TransportStatus.Responses.$200>;
   };
-  ["/v1/logistic_management/events/"]: {
+  ['/v1/logistic_management/events/']: {
     /**
      * post_v1_logistic_management_event - Post an event
      *
      * Post an event.
      */
-    "post"(
+    'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
       data?: Paths.PostV1LogisticManagementEvent.RequestBody,
-      config?: AxiosRequestConfig,
+      config?: AxiosRequestConfig
     ): OperationResponse<Paths.PostV1LogisticManagementEvent.Responses.$200>;
   };
 }

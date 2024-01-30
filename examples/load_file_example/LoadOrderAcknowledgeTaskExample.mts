@@ -13,7 +13,7 @@ import { AbstractLoadFileTask } from "../../src/task/AbstractLoadFileTask.ts";
 import { Console } from "../../src/utils/Console.ts";
 import { FileItemInterface } from "../../src/task/LoadFileTaskInterfaces.ts";
 import { LoadFileSchemaInterface } from "../../src/data_mapping/SchemaInterfaces.ts";
-import { EventTypeEnumString } from "../../src/api/EdiEvent.ts";
+import { EntityTypeEnum, EventTypeEnumString } from "../../src/api/EdiEvent.ts";
 import { InternalError } from "../../src/exceptions/InternalError.ts";
 import { CsvHelper } from "../../src/index.ts";
 
@@ -135,9 +135,11 @@ export class LoadOrderAcknowledgeTaskExample extends AbstractLoadFileTask<
 
           this.sdk.ediEvent.send(
             EventTypeEnumString.PRECONDITION_FAILED_ERROR,
-            `Order [${currentOrder.shipper_order_reference}] is in status ${
-              firstElement.status
+            `Order [${currentOrder.shipper_order_reference}] is in status ${firstElement.status
             } which is not an allowed status (${allowedStatuses.join(",")}).`,
+            {},
+            orderId,
+            EntityTypeEnum.ORDER
           );
           continue;
         }
