@@ -129,13 +129,11 @@ export abstract class AbstractGenerateFileTask<T>
               throw new NetWorkError(`Error during sending file`);
             }
           });
+          this.sdk.dataSource = sentFile;
 
           Console.title("Post file sending");
           await this.postFileSending();
           Console.confirm("Post file sending action done");
-
-          this.sdk.dataSource = sentFile;
-          await this.sdk.ediEvent.send(EventTypeEnumString.SUCCESS, `File generation ended.`);
         } catch (processFileException) {
           Console.printException(processFileException);
           errorFound = true;

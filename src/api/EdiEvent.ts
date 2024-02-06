@@ -33,8 +33,15 @@ export class EdiEvent {
     this.apiClient = apiClient;
   }
 
-  public async send(type: EventTypeEnumString, message: string, meta: object = {}, entityId?: string, entityType?: EntityTypeEnum): Promise<void> {
+  public async send(
+    type: EventTypeEnumString,
+    message: string,
+    meta: object = {},
+    entityId?: string,
+    entityType?: EntityTypeEnum,
+  ): Promise<void> {
     Console.info(`Sending event ${type}: ${message}`);
+
     if (type === EventTypeEnumString.API_NETWORK_ERROR) {
       Console.info("Ignore sending event, because is a network error event");
       return;
@@ -43,6 +50,7 @@ export class EdiEvent {
       Console.info("Event sending disabled in configuration");
       return;
     }
+
     await this.apiClient
       .post_v1_logistic_management_event(null, {
         type: type,
@@ -51,7 +59,7 @@ export class EdiEvent {
           shipper_account_id: Config.get().edi.wmsShipperAccountId as string,
           warehouse_id: Config.get().edi.wmsWarehouseId as string,
           entity_id: entityId as string,
-          entity_type: entityType
+          entity_type: entityType,
         },
         meta: meta,
       })

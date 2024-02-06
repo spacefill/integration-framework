@@ -228,23 +228,7 @@ It's composed of:
     - e.g: `await this.sdk.client.get_v1_ping()`
   - All routes and methods are automatically typed in the client, so you can easily use autocompletion from your IDE.
 
-- An **EdiEvent** class managing the events sending to the API. To know more about EDI events, please check the [documentation](https://developer.spacefill.fr/reference/spacefill-api-event-logging).
-
-  - Example of event sending:
-
-  ```javascript
-  await this.sdk.ediEvent.send(EventTypeEnumString.SUCCESS, `File generation ended.`);
-  ```
-
-  - :blue_book: Notice that the framework implements some custom exceptions. Each time one of these exceptions is triggered, an event is automatically sent to the API. It is therefore not necessary to send an event for errors.
-    - [`ApiNetWorkError`](../src/exceptions/ApiNetWorkError.ts)
-    - [`InternalError`](../src/exceptions/InternalError.ts)
-    - [`InvalidRequestDataError`](../src/exceptions/InvalidRequestDataError.ts)
-    - [`InvalidRequestFormatError`](../src/exceptions/InvalidRequestFormatError.ts)
-    - [`IoError`](../src/exceptions/IoError.ts)
-    - [`NetWorkError`](../src/exceptions/NetWorkError.ts)
-    - [`PreconditionFailedError`](../src//exceptions/PreconditionFailedError.ts)
-    - [`UnknownError`](../src/exceptions/UnknownError.ts)
+- An **EdiEvent** class managing the events sending to the API. See the [Event mangament](#event-management) section.
 
 - The attribute `dataSource` is used to fill [Spacefill API HTTP headers](https://developer.spacefill.fr/reference/spacefill-api-event-logging#headers-list) with the data source (the file consumed or the file to be generated) to indicate the context in which a call is made to the API.
 
@@ -269,6 +253,44 @@ It's composed of:
     ```
 
 - The `upload()` method is a separated method from the client, to manage upload calls. It allows to manage specific HTTP headers and body for it.
+
+<p  align="right" style="text-align:right;">(<a href="#top">back to top</a>)</p>
+
+## Event management
+
+All integrations using the integration framework must implement event sending to give Spacefill full observability over connector flows (find all available events on the [developer portal](https://developer.spacefill.fr/reference/spacefill-api-event-logging)).
+
+The framework implements some custom exceptions. Each time one of these exceptions is triggered, an event is automatically sent to the API. It is therefore not necessary to send an event for errors.
+
+- [`ApiNetWorkError`](../src/exceptions/ApiNetWorkError.ts)
+- [`InternalError`](../src/exceptions/InternalError.ts)
+- [`InvalidRequestDataError`](../src/exceptions/InvalidRequestDataError.ts)
+- [`InvalidRequestFormatError`](../src/exceptions/InvalidRequestFormatError.ts)
+- [`IoError`](../src/exceptions/IoError.ts)
+- [`NetWorkError`](../src/exceptions/NetWorkError.ts)
+- [`PreconditionFailedError`](../src//exceptions/PreconditionFailedError.ts)
+- [`UnknownError`](../src/exceptions/UnknownError.ts)
+
+The event `STARTED` is managed by the framework and should not be used on the connector.
+
+Example of event sending:
+
+```javascript
+await this.sdk.ediEvent.send(EventTypeEnumString.SUCCESS, "File generation ended.");
+```
+
+In case you are able to retrieve the Spacefill entity id you must fill the value and type in parameter of the method:
+
+```javascript
+await this.sdk.ediEvent.send(
+  EventTypeEnumString.SUCCESS,
+  "File generation ended.",
+  "45a1d586-2615-4137-a59b-e2bf1ac6db12",
+  EntityTypeEnum.ORDER,
+);
+```
+
+> :warning: For master items, please only fill entity id and entity type in case of errors (to avoid high amount of data).
 
 <p  align="right" style="text-align:right;">(<a href="#top">back to top</a>)</p>
 
