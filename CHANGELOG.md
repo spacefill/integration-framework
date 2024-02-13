@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.1] - 2024-02-13
+
+### Improve
+
+- [#39](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/39)
+  - remove `SUCCESS` event sending in the framework, now this should be managed within each connector.
+  - improve documentation about event management.
+
 ## [0.11.0] - 2024-01-30
 
 ### Added
