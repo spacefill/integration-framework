@@ -26,11 +26,11 @@ export abstract class AbstractTask extends BaseCommand {
    * This method allows to enrich api call context headers
    */
   getWorkflowType(): WorkflowType {
-    throw new Error("Method not implemented.");
+    throw new Error("Method getWorkflowType() not implemented.");
   }
 
   async run(): Promise<void> {
-    throw new Error("Method not implemented.");
+    throw new Error("Method run() not implemented.");
   }
 
   async initApiClient(workflowType: WorkflowType) {

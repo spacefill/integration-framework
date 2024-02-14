@@ -1,14 +1,18 @@
-interface LoadFileSchemaInterface<T> extends CommonSchemaInterface {
+// EDI
+interface LoadFileSchemaInterface<T> extends CommonFileSchemaInterface {
   mapInputFileData(rawData: object[]): T[];
 }
 
-interface GenerateFileSchemaInterface<T> extends CommonSchemaInterface {
+interface GenerateFileSchemaInterface<T> extends CommonFileSchemaInterface {
   mapOutputFileData(rawData: T[]): object[];
+}
+
+interface CommonFileSchemaInterface extends CommonSchemaInterface {
+  fileDescriptor: ExportFileDescriptor | undefined;
 }
 
 interface CommonSchemaInterface {
   itemSchemaValidation: object;
-  fileDescriptor: ExportFileDescriptor | undefined;
   validateFileData(rawData: object[]): void;
 }
 
@@ -17,4 +21,15 @@ interface ExportFileDescriptor {
   columnsPosition: object;
 }
 
-export { GenerateFileSchemaInterface, LoadFileSchemaInterface, ExportFileDescriptor, CommonSchemaInterface };
+// API-to-API
+interface DataExportSchemaInterface<T> extends CommonSchemaInterface {
+  mapDataToExport(rawData: T[]): object[];
+}
+
+export {
+  DataExportSchemaInterface,
+  GenerateFileSchemaInterface,
+  LoadFileSchemaInterface,
+  ExportFileDescriptor,
+  CommonSchemaInterface,
+};

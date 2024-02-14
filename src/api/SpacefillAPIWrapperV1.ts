@@ -82,12 +82,12 @@ export class SpacefillAPIWrapperV1 {
     axiosDebug.default({
       request: (_debug, config) => {
         if (!(config.data instanceof FormData)) {
-          Console.debug(`Axios: ${config.method} ${config.url}`, {
+          Console.debug(`Axios: ${config.method} ${config.baseURL}${config.url}`, {
             parameter: config.params,
             data: config.data,
           });
         } else {
-          Console.debug(`Axios upload: ${config.method} ${config.url}`, {
+          Console.debug(`Axios upload: ${config.method} ${config.baseURL}${config.url}`, {
             parameter: config.params,
           });
           Console.trace("FormData", config.data);

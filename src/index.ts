@@ -20,6 +20,7 @@ export * from "./exceptions/IoError.ts";
 export * from "./exceptions/NetWorkError.ts";
 export * from "./exceptions/PreconditionFailedError.ts";
 export * from "./exceptions/UnknownError.ts";
+export * from "./task/AbstractApiDataExchangeTask.ts";
 export * from "./task/AbstractGenerateFileTask.ts";
 export * from "./task/AbstractLoadFileTask.ts";
 export * from "./task/AbstractTask.ts";
