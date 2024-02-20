@@ -144,7 +144,6 @@ export class Config {
         },
         hostname: {
           type: "string",
-          oneOf: [{ format: "hostname" }, { format: "ipv4" }, { format: "ipv6" }],
         },
         port: {
           type: "number",
