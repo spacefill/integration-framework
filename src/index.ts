@@ -8,6 +8,7 @@ export * from "./api/EdiEvent.ts";
 export * from "./api/SpacefillAPIWrapperV1.ts";
 export type * from "./api/spacefill-api-openapi.d.ts";
 export * from "./configs/Config.ts";
+export * from "./data_mapping/AbstractDataExportSchema.ts";
 export * from "./data_mapping/AbstractGenerateFileSchema.ts";
 export * from "./data_mapping/AbstractLoadFileSchema.ts";
 export * from "./data_mapping/AbstractSchema.ts";

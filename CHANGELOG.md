@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.3] - 2024-02-21
+
+### Fixed
+
+- [!93](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/93) Add missing `AbstractDataExportSchema` class to structure data mapping for API-to-API connectors.
+
 ## [0.12.2] - 2024-02-21
 
 ### Fixed

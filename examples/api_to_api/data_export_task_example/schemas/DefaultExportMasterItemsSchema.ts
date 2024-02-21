@@ -1,9 +1,8 @@
-import { AbstractGenerateFileSchema } from "../../../../src/data_mapping/AbstractGenerateFileSchema.ts";
-import { DataExportSchemaInterface } from "../../../../src/index.ts";
+import { AbstractDataExportSchema, DataExportSchemaInterface } from "../../../../src/index.ts";
 import { MasterItemInterface, PulpoProductInterface } from "../MasterItemExportExampleTask.mts";
 
 export class DefaultExportMasterItemsSchema
-  extends AbstractGenerateFileSchema<MasterItemInterface>
+  extends AbstractDataExportSchema<MasterItemInterface>
   implements DataExportSchemaInterface<MasterItemInterface>
 {
   itemSchemaValidation: object = {
