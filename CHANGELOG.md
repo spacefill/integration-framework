@@ -4,11 +4,21 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.2] - 2024-02-21
+
+### Fixed
+
+- [!91](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/91) Add missing export in `src/index.ts`
+
 ## [0.12.1] - 2024-02-20
 
-- [!89](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/67) `Config.ts` - remove format validation for hostname.
+### Fixed
+
+- [!89](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/89) `Config.ts` - remove format validation for hostname.
 
 ## [0.12.0] - 2024-02-20
+
+### Added
 
 - [#37](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/37) Add class `AbstractApiDataExchangeTask` to manage API-to-API connectors.
 

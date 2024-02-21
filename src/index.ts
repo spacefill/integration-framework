@@ -34,3 +34,4 @@ export * from "./transfer/TransferInterfaces.ts";
 export * from "./utils/ExceptionUtils.ts";
 export * from "./task/TaskLauncher.ts";
 export * from "./helpers/CsvHelper.ts";
+export * from "./task/ExportDataToApiTaskInterface.ts";
