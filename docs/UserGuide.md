@@ -34,9 +34,9 @@
 
 ## Introduction
 
-The Spacefill's integration framework is an EDI integration framework.
+The Spacefill's integration framework is an integration framework.
 
-It provides a structure and entry points for creating EDI connectors, making it possible to standardize the way connectors are built and thus facilitate the overall maintainability of all connectors.
+It provides a structure and entry points for creating integration connectors, making it possible to standardize the way connectors are built and thus facilitate the overall maintainability of all connectors.
 
 <p  align="right" style="text-align:right;">(<a href="#top">back to top</a>)</p>
 
@@ -56,12 +56,12 @@ When referencing the Spacefill's integration framework from your application or 
 
 ## Fundamentals
 
-The main concept of the framework is to standardize EDI flows. 2 types are currently available::
+The main concept of the framework is to standardize integration flows. 2 types are currently available::
 
 - [Load file flow](#load-file-flow)
 - [Generate file flow](#generate-file-flow)
 
-Each of these flows structure the way of process files in a EDI connector and extend from a base structure:
+Each of these flows structure the way of process files in a integration connector and extend from a base structure:
 
 <div align="center">
 
@@ -81,9 +81,9 @@ classDiagram
     - `--print-statistics`: To print command statistics (duration, cpu & ram usages) at the end or the run.
     - `--debug`: To force the log level to `debug`.
 
-- `AbstractTask` is base class for all EDI task commands. It defines the common elements needed in the EDI task flows like the initialization of the [Spacefill API SDK](#spacefill-api-sdk) and the [transfer utils](#transfer-utils) class.
+- `AbstractTask` is base class for all integration task commands. It defines the common elements needed in the integration task flows like the initialization of the [Spacefill API SDK](#spacefill-api-sdk) and the [transfer utils](#transfer-utils) class.
   - The class defined a common argument to disable edi events: `--disable-events`.
-    To know more about EDI events please check the [documentation](https://developer.spacefill.fr/reference/spacefill-api-event-logging).
+    To know more about integration events please check the [documentation](https://developer.spacefill.fr/reference/spacefill-api-event-logging).
 
 <p  align="right" style="text-align:right;">(<a href="#top">back to top</a>)</p>
 
