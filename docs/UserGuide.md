@@ -56,10 +56,15 @@ When referencing the Spacefill's integration framework from your application or 
 
 ## Fundamentals
 
-The main concept of the framework is to standardize integration flows. 2 types are currently available::
+The main concept of the framework is to standardize integration flows.
 
-- [Load file flow](#load-file-flow)
-- [Generate file flow](#generate-file-flow)
+3 types are currently available:
+
+- Flat files exchanges:
+  - [Load file flow](#load-file-flow)
+  - [Generate file flow](#generate-file-flow)
+- API-to-API exchanges:
+  - [API-to-API flow](#api-to-api-flow)
 
 Each of these flows structure the way of process files in a integration connector and extend from a base structure:
 
@@ -90,6 +95,8 @@ classDiagram
 ### Flows
 
 #### Load file flow
+
+- Associated class: [`src/task/AbstractLoadFileTask.ts`](../src/task/AbstractLoadFileTask.ts)
 
 <div align="center">
 
@@ -158,6 +165,8 @@ stateDiagram-v2
 
 #### Generate file flow
 
+- Associated class: [`src/task/AbstractGenerateFileTask.ts`](../src/task/AbstractGenerateFileTask.ts)
+
 <div align="center">
 
 ```mermaid
@@ -213,6 +222,71 @@ stateDiagram-v2
 | 13  | **afterRun**                             | `BaseCommand` uses this method to compute the metrics required for the `--print-statistics`. It can be overloaded to implement actions triggered after the task is completed.                  |
 
 </div>
+
+<p  align="right" style="text-align:right;">(<a href="#top">back to top</a>)</p>
+
+#### API-to-API flow
+
+> :book: Note that this flow can be used in both directions for data exchange:
+>
+> - From Spacefill to an external API
+> - From an external API to Spacefill
+
+- Associated class: [`src/task/AbstractApiDataExchangeTask.ts`](../src/task/AbstractApiDataExchangeTask.ts)
+
+<div align="center">
+
+```mermaid
+stateDiagram-v2
+    state "1 - beforeRun" as beforeRun
+    state "2 - Configuration validation" as validateConf
+    state "3 - Init api client" as initApiClient
+    state "4 - Ping api" as pingApi
+    state "5 - Data export init" as initDataExport
+    state "6 - For each data export" as forEachDataExport
+    state "7 - Data export preparation" as prepareDataExport
+    state "8 - Map data" as mapDataToExport
+    state "9 - Mapped data validation" as validateFileData
+    state "10 - Call to the target API" as sendData
+    state "11 - onSendDataSuccess" as onSendDataSuccess
+    state "12 - onEnd" as onEnd
+    state "13 - afterRun" as afterRun
+
+    [*] --> beforeRun
+    beforeRun --> validateConf
+    validateConf --> initApiClient
+    initApiClient --> pingApi
+    pingApi --> initDataExport
+    initDataExport --> forEachDataExport
+    state forEachDataExport {
+        [*] --> prepareDataExport
+        prepareDataExport --> mapDataToExport
+        mapDataToExport --> validateFileData
+        validateFileData --> sendData
+        sendData --> onSendDataSuccess
+    }
+    forEachDataExport --> onEnd
+    onEnd --> afterRun
+    afterRun --> [*]
+```
+
+</div>
+
+|  #  | Steps                        | Descriptions                                                                                                                                                                                                               |
+| :-: | :--------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|  1  | **beforeRun**                | `BaseCommand` uses this method to retrieve the metrics required for the `--print-statistics` option. It can be overloaded to implement actions triggered before the task start.                                            |
+|  2  | **Configuration validation** | Validates configuration. (Required configuration, values format, etc...)                                                                                                                                                   |
+|  3  | **Init api client**          | Initializes the Spacefill api wrapper.                                                                                                                                                                                     |
+|  4  | **Ping api**                 | Ping the Spacefill api to check everything is alright before start processing files.                                                                                                                                       |
+|  5  | **Data export init**         | Defines the number of data synchronization to be emitted and the associated configuration.                                                                                                                                 |
+|  6  | **For each data export**     | For each data to be exported, performs a list of actions. If an exception is triggered during the processing, an error event will be triggered and the next data item will be processed.                                   |
+|  7  | **Data export preparation**  | Prepares data (from Spacefill or the external API).                                                                                                                                                                        |
+|  8  | **Map data**                 | Maps the data to match the target api fields.                                                                                                                                                                              |
+|  9  |  **Mapped data validation**  | Validates the mapped data against the target api specifications, to ensure that the data can be consumed by the target API.                                                                                                |
+| 10  | **Call to the target API**   | Calls the target API. For data export from Spacefill, set the data as exported.                                                                                                                                            |
+| 11  | **onSendDataSuccess**        | Opened method for implementing actions after a data export has been correctly submitted to the WMS/ERP.                                                                                                                    |
+| 12  | **onEnd**                    | Opened method triggered when all data exchanges have been processed. It's not depending of the success of the exchanges.<br /> The difference with `afterRun` is that here you can be sure that the sdk is up and running. |
+| 13  | **afterRun**                 | `BaseCommand` uses this method to compute the metrics required for the `--print-statistics`.<br />It can be overloaded to implement actions triggered after the task is completed.                                         |
 
 <p  align="right" style="text-align:right;">(<a href="#top">back to top</a>)</p>
 
@@ -296,7 +370,7 @@ await this.sdk.ediEvent.send(
 
 ## Transfer utils
 
-All classes inheriting from `AbstractTask` will benefit from an `transfer` attribute, enabling them to manage files download/uploading from local/sftp/ftp.
+All flat file exchange classes inheriting from `AbstractTask` will benefit from an `transfer` attribute, enabling them to manage files download/uploading from local/sftp/ftp.
 
 It includes a retry system in the event of an error. By default, there are 3 attempts, with a 5-second pause between each attempt.
 
