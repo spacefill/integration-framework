@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.13.0] - 2024-03-08
+
+- [#45](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/45) Update SDK to support Spacefill API version 2024-02-21.
+
 ## [0.12.3] - 2024-02-21
 
 ### Fixed
