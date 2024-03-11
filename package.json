@@ -1,7 +1,7 @@
 {
   "name": "@spacefill/integration-framework",
   "type": "module",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -70,6 +70,7 @@
     "yarn": "1.22.19"
   },
   "scripts": {
+    "prettier-fix": "prettier -w ",
     "prettier-watch": "onchange \"./(src|tests)/**/*.(ts|mts)\" -- prettier --write --ignore-unknown {{changed}}",
     "test": "ts-mocha --timeout 10000",
     "test:coverage": "c8 yarn run test",

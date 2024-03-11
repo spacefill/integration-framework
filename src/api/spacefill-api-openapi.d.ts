@@ -10883,6 +10883,16 @@ declare namespace Paths {
   namespace GetV1Transports {
     namespace Parameters {
       /**
+       * Created After
+       * Use this parameter to filter transports created after date time
+       */
+      export type CreatedAfter = string;
+      /**
+       * Created Before
+       * Use this parameter to filter transports created before date time
+       */
+      export type CreatedBefore = string;
+      /**
        * Limit
        * The number of records to retrieve.
        */
@@ -10892,6 +10902,20 @@ declare namespace Paths {
        * Starting position or index of the first record to be retrieved in a result.
        */
       export type Offset = number;
+      /**
+       * Order Iid
+       */
+      export type OrderIid = string[];
+      /**
+       * Updated After
+       * Use this parameter to filter transports updated after date time
+       */
+      export type UpdatedAfter = string;
+      /**
+       * Updated Before
+       * Use this parameter to filter transports updated before date time
+       */
+      export type UpdatedBefore = string;
     }
     export interface QueryParameters {
       offset?: /**
@@ -10904,6 +10928,27 @@ declare namespace Paths {
        * The number of records to retrieve.
        */
       Parameters.Limit;
+      created_before?: /**
+       * Created Before
+       * Use this parameter to filter transports created before date time
+       */
+      Parameters.CreatedBefore;
+      created_after?: /**
+       * Created After
+       * Use this parameter to filter transports created after date time
+       */
+      Parameters.CreatedAfter;
+      updated_before?: /**
+       * Updated Before
+       * Use this parameter to filter transports updated before date time
+       */
+      Parameters.UpdatedBefore;
+      updated_after?: /**
+       * Updated After
+       * Use this parameter to filter transports updated after date time
+       */
+      Parameters.UpdatedAfter;
+      order_iid?: /* Order Iid */ Parameters.OrderIid;
     }
     namespace Responses {
       export type $200 =

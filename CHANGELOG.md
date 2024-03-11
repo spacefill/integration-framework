@@ -4,9 +4,20 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.14.0] - 2024-03-08
+
+### Improved
+
+- [#47](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/47) Update SDK to support Spacefill API [version 2024-03-11](https://developer.spacefill.fr/changelog/2024-03-11).
+  - Add 2 new values for Spacefill integration contexte:
+    - `EXPORT_TRANSPORT_ACK`
+    - `IMPORT_TRANSPORT_ACK`
+
 ## [0.13.0] - 2024-03-08
 
-- [#45](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/45) Update SDK to support Spacefill API version 2024-02-21.
+### Improved
+
+- [#45](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/45) Update SDK to support Spacefill API [version 2024-02-21](https://developer.spacefill.fr/changelog/2024-02-21).
 
 ## [0.12.3] - 2024-02-21
 
@@ -34,7 +45,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [0.11.1] - 2024-02-13
 
-### Improve
+### Improved
 
 - [#39](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/39)
   - remove `SUCCESS` event sending in the framework, now this should be managed within each connector.
@@ -48,7 +59,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [0.10.2] - 2024-01-22
 
-### Improve
+### Improved
 
 - [#34](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/34) Change workflow value `IMPORT_INVENTORY_ADJUSTEMENT` -> `IMPORT_INVENTORY_ADJUSTMENT` in edi events context.
 
@@ -60,7 +71,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [0.10.0] - 2024-01-19
 
-### Improve
+### Improved
 
 - [#29](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/29) Add event `STARTED` and `NO_CONTENT_SUCCESS` in `AbstractLoadFileTask` file.
 - [#32](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/32) Load files - remove empty lines in `CsvHelper.ts`.
@@ -78,14 +89,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [0.8.4] - 2024-01-09
 
-### Improve
+### Improved
 
 - [#27](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/25) Use `encodeURI` to manage special characters on EDI context.
 - [!70](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/70) Update the SDK with the Spacefill REST API version [2024-01-08](https://developer.spacefill.fr/changelog/2024-01-08).
 
 ## [0.8.3] - 2024-01-05
 
-### Improve
+### Improved
 
 - [#26](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/25) Console -add separation line between treated files.
 

@@ -33,4 +33,5 @@ await temporaryFileTask(async (tempFilePath) => {
 
   await $`pwd`;
   await $`npx openapi-client-axios-typegen "src/api/openapi.json" > src/api/spacefill-api-openapi.d.ts`;
+  await $`yarn run prettier-fix src/api/spacefill-api-openapi.d.ts`;
 });
