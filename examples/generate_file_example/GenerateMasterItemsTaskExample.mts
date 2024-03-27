@@ -69,6 +69,9 @@ export class GenerateMasterItemsTaskExample extends AbstractGenerateFileTask<Mas
       // Only one file to be generated, so only one object returned.
       {
         initialData: [],
+        targetFileName:`${Config.get().edi.wmsPathSpacefillToWmsDir}/ARTICLE_${DateTime.now().toFormat(
+          "yyyyMMdd_HHmmss",
+        )}.txt`
       },
     ];
   }

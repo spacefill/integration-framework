@@ -1,4 +1,5 @@
 import { temporaryFileTask } from "tempy";
+import { path } from "zx";
 
 import { Config } from "../configs/Config.ts";
 import { Console } from "../utils/Console.ts";
@@ -127,6 +128,20 @@ export abstract class AbstractGenerateFileTask<T>
             } catch (networkException) {
               Console.error(networkException);
               throw new NetWorkError(`Error during sending file`);
+            }
+
+            try {
+              if (this.currentFileConfiguration?.targetFileName) {
+                const fileName = path.basename(this.currentFileConfiguration.targetFileName);
+                const targetFileName = `${Config.get().edi.wmsPathArchiveDir}/${fileName}`;
+                await this.transfer.upload(tempFilePath, targetFileName);
+                Console.confirm(`File ${sentFile} well sent to archives directory.`);
+              }
+              else {
+                Console.warn("The target file name is not initialized in the current file configuration.");
+              }
+            } catch (networkException) {
+              Console.error(`Error during sending file to archives directory ${networkException}`);
             }
           });
           this.sdk.dataSource = sentFile;

@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.14.2] - 2024-03-27
+
+### Added
+
+- [#51](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/51) add upload generated files into archives directory.
+
 ## [0.14.1] - 2024-03-27
 
 ### Added
