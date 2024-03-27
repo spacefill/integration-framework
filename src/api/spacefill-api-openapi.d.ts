@@ -10905,7 +10905,7 @@ declare namespace Paths {
       /**
        * Order Iid
        */
-      export type OrderIid = string[];
+      export type OrderIid = string;
       /**
        * Updated After
        * Use this parameter to filter transports updated after date time
@@ -11448,14 +11448,39 @@ declare namespace Paths {
   }
   namespace PostV1LogisticManagementEvent {
     export interface HeaderParameters {
+      "spacefill-ctx-service-source"?: /* Spacefill-Ctx-Service-Source */ Parameters.SpacefillCtxServiceSource;
+      "spacefill-ctx-service-version"?: /* Spacefill-Ctx-Service-Version */ Parameters.SpacefillCtxServiceVersion;
+      "spacefill-ctx-transport"?: /* Spacefill-Ctx-Transport */ Parameters.SpacefillCtxTransport;
       "spacefill-ctx-workflow"?: /* Spacefill-Ctx-Workflow */ Parameters.SpacefillCtxWorkflow;
+      "spacefill-ctx-client-type"?: /* Spacefill-Ctx-Client-Type */ Parameters.SpacefillCtxClientType;
+      "spacefill-ctx-session-id"?: /* Spacefill-Ctx-Session-Id */ Parameters.SpacefillCtxSessionId;
       "spacefill-ctx-data-source"?: /* Spacefill-Ctx-Data-Source */ Parameters.SpacefillCtxDataSource;
     }
     namespace Parameters {
       /**
+       * Spacefill-Ctx-Client-Type
+       */
+      export type SpacefillCtxClientType = string;
+      /**
        * Spacefill-Ctx-Data-Source
        */
       export type SpacefillCtxDataSource = string;
+      /**
+       * Spacefill-Ctx-Service-Source
+       */
+      export type SpacefillCtxServiceSource = string;
+      /**
+       * Spacefill-Ctx-Service-Version
+       */
+      export type SpacefillCtxServiceVersion = string;
+      /**
+       * Spacefill-Ctx-Session-Id
+       */
+      export type SpacefillCtxSessionId = string;
+      /**
+       * Spacefill-Ctx-Transport
+       */
+      export type SpacefillCtxTransport = string;
       /**
        * Spacefill-Ctx-Workflow
        */
@@ -14489,6 +14514,28 @@ export interface OperationMethods {
    * post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action - Acknowledge reception of an order
    *
    * Confirm receipt or exit of the <<glossary:order>> to the <<glossary:Shipper>>.
+   *
+   * When acknowledging an order item with only an `EACH` packaging type instead of the expected packaging types, the API will try to convert this quantity into the expected packaging types, by maximizing expected packaging (first with `PALLET`, then `CARDBOARD_BOX`).
+   *
+   * For example, if an order has `2 CARDBOARD_BOX` expected, for a master item with an `each_quantity_by_cardboard_box` of `10`:
+   * * if the order is acknowledged with `10 EACH`, it will convert it to `1 CARDBOARD_BOX`
+   * * if the order is acknowledged with `20 EACH`, it will convert it to `2 CARDBOARD_BOX`
+   * * if the order is acknowledged with `30 EACH`, it will convert it to `3 CARDBOARD_BOX`
+   * * if the order is acknowledged with `15 EACH`, it will convert it to `1 CARDBOARD_BOX + 5 EACH`
+   * * if the order is acknowledged with `8 EACH`, it will keep it as `8 EACH`
+   *
+   * The rationale behind this feature is that it would add complexity to the integrations if it had to make this conversion instead of the API.
+   *
+   * Specifically, it will regroup the actual order items that match these attributes for each expected order item:
+   * * `master_item_id`
+   * * `batch_id`
+   *     * if the expected `item_selection_method` is `WHATEVER_THE_BATCH`, it will match any actual `batch_id`
+   * * `sscc_id`
+   *     * if the expected `sscc_id` is null (which is expected in most cases), it will match any actual `sscc_id`.
+   *
+   * If more than one quantity type is given for an order item (for example, `CARDBOARD_BOX` and `EACH`), no conversion will be done.
+   *
+   * When converting an actual order item based on previously given rules, matched expected order items' identifiers (`id`) will be re-used when possible (except when the expected `item_selection_method` is `WHATEVER_THE_BATCH`, due to a technical limitation).
    */
   "post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action"(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.PathParameters> | null,
@@ -15087,6 +15134,28 @@ export interface PathsDictionary {
      * post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action - Acknowledge reception of an order
      *
      * Confirm receipt or exit of the <<glossary:order>> to the <<glossary:Shipper>>.
+     *
+     * When acknowledging an order item with only an `EACH` packaging type instead of the expected packaging types, the API will try to convert this quantity into the expected packaging types, by maximizing expected packaging (first with `PALLET`, then `CARDBOARD_BOX`).
+     *
+     * For example, if an order has `2 CARDBOARD_BOX` expected, for a master item with an `each_quantity_by_cardboard_box` of `10`:
+     * * if the order is acknowledged with `10 EACH`, it will convert it to `1 CARDBOARD_BOX`
+     * * if the order is acknowledged with `20 EACH`, it will convert it to `2 CARDBOARD_BOX`
+     * * if the order is acknowledged with `30 EACH`, it will convert it to `3 CARDBOARD_BOX`
+     * * if the order is acknowledged with `15 EACH`, it will convert it to `1 CARDBOARD_BOX + 5 EACH`
+     * * if the order is acknowledged with `8 EACH`, it will keep it as `8 EACH`
+     *
+     * The rationale behind this feature is that it would add complexity to the integrations if it had to make this conversion instead of the API.
+     *
+     * Specifically, it will regroup the actual order items that match these attributes for each expected order item:
+     * * `master_item_id`
+     * * `batch_id`
+     *     * if the expected `item_selection_method` is `WHATEVER_THE_BATCH`, it will match any actual `batch_id`
+     * * `sscc_id`
+     *     * if the expected `sscc_id` is null (which is expected in most cases), it will match any actual `sscc_id`.
+     *
+     * If more than one quantity type is given for an order item (for example, `CARDBOARD_BOX` and `EACH`), no conversion will be done.
+     *
+     * When converting an actual order item based on previously given rules, matched expected order items' identifiers (`id`) will be re-used when possible (except when the expected `item_selection_method` is `WHATEVER_THE_BATCH`, due to a technical limitation).
      */
     "post"(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.PathParameters> | null,
