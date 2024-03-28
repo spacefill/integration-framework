@@ -50,6 +50,8 @@ describe("Config", () => {
       "wmsPathArchiveDir",
       "wmsPathErrorDir",
       "fileEncoding",
+      "fileColumnDelimiter",
+      "fileRowDelimiter",
       "runId",
     );
 

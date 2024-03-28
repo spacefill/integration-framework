@@ -58,6 +58,8 @@ export class Config {
             ? path.join(process.env?.WMS_DEFAULT_DIR, process.env?.WMS_PATH_ERROR_DIR)
             : process.env?.WMS_PATH_ERROR_DIR,
         fileEncoding: process.env?.WMS_FILE_ENCODING ?? "utf-8",
+        fileColumnDelimiter: process.env?.WMS_FILE_COLUMN_DELIMITER ?? "\t",
+        fileRowDelimiter: process.env?.WMS_FILE_ROW_DELIMITER ?? "\n",
         runId: process.env?.RUN_ID ?? "LocalRun",
       },
       console: {

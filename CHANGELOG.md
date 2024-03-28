@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.0] - 2024-03-28
+
+### Added
+
+- [#46](https://gitlab.spacefill.fr/spacefill/integration-framework/-/issues/46) Add `writeLineAsync` function for writing csv files.
+
 ## [0.14.2] - 2024-03-27
 
 ### Added

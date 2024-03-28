@@ -1,8 +1,69 @@
+import * as stream from "stream";
+
 import * as csv from "fast-csv";
+import { fs } from "zx";
 
 import { Console, InternalError, LoadFileSchemaInterface } from "../index.ts";
+import { Config } from "../configs/Config.ts";
+
+export interface CsvOptionsInterface {
+  encoding: BufferEncoding;
+  delimiter: string;
+  rowDelimiter: string;
+  /**
+   * flags
+   * @link https://nodejs.org/api/fs.html#file-system-flags
+   */
+  flags: string;
+}
 
 export class CsvHelper {
+  private filePath: string;
+  private encoding: BufferEncoding;
+  private delimiter: string;
+  private rowDelimiter: string;
+  private flags: string;
+
+  constructor(
+    filePath: string,
+    options: CsvOptionsInterface = {
+      flags: "a",
+      encoding: Config.get().edi.fileEncoding as BufferEncoding,
+      delimiter: Config.get().edi.fileColumnDelimiter,
+      rowDelimiter: Config.get().edi.fileRowDelimiter,
+    },
+  ) {
+    this.filePath = filePath;
+    this.encoding = options.encoding;
+    this.flags = options.flags;
+    this.delimiter = options.delimiter;
+    this.rowDelimiter = options.rowDelimiter;
+  }
+
+  async writeLineAsync(data: Array<string | number>): Promise<void> {
+    return await new Promise<void>((resolve, reject) => {
+      const rawLine = `${data.join(this.delimiter)}${this.rowDelimiter}`;
+
+      // Stream in append mode.
+      const appendWs: fs.WriteStream = fs.createWriteStream(this.filePath, {
+        encoding: this.encoding,
+        flags: this.flags,
+      });
+
+      const readableStream: stream.Readable = stream.Readable.from([rawLine]);
+      readableStream.pipe(appendWs);
+
+      appendWs.on("finish", () => {
+        resolve();
+      });
+
+      appendWs.on("error", (error) => {
+        Console.error(error);
+        reject(error);
+      });
+    });
+  }
+
   static async parseRawDataWithDataSchema<T>(
     fileContent: string,
     dataSchema: LoadFileSchemaInterface<T>,
