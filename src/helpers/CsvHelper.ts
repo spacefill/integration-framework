@@ -36,8 +36,8 @@ export class CsvHelper {
     this.filePath = filePath;
     this.encoding = options.encoding;
     this.flags = options.flags;
-    this.delimiter = options.delimiter;
-    this.rowDelimiter = options.rowDelimiter;
+    this.delimiter = options.delimiter === "\\t" ? JSON.parse(`"${options.delimiter}"`) : options.delimiter;
+    this.rowDelimiter = options.rowDelimiter === "\\t" ? JSON.parse(`"${options.rowDelimiter}"`) : options.rowDelimiter;
   }
 
   async writeLineAsync(data: Array<string | number>): Promise<void> {
