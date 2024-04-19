@@ -69,13 +69,14 @@ export class CsvHelper {
     dataSchema: LoadFileSchemaInterface<T>,
     delimiter: string = ";",
     skipLines: number = 1,
+    otherParsingOptions: csv.ParserOptionsArgs = {},
   ): Promise<object[]> {
     const parsedData: object[] = [];
     fileContent = fileContent.trim();
 
     return await new Promise<object[]>((resolve, reject) => {
       const stream = csv
-        .parse({ headers: false, delimiter: delimiter, skipLines: skipLines })
+        .parse({ headers: false, delimiter: delimiter, skipLines: skipLines, ...otherParsingOptions })
         .on("error", (error) => {
           Console.error(error);
           reject(error);

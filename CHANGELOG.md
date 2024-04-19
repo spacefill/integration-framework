@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.2] - 2024-04-19
+
+### Improved
+
+- [!110](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/110) `CsvHelper` add a parameter `otherParsingOptions` to customize more parsing options.
+
 ## [0.15.1] - 2024-03-29
 
 ### Fixed
