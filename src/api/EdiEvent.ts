@@ -28,9 +28,16 @@ export { EventTypeEnumString, EntityTypeEnum };
 
 export class EdiEvent {
   private apiClient: SpacefillAPIClient;
+  private currentEntityId?: string;
+  private currentEntityType?: EntityTypeEnum;
 
   public constructor(apiClient: SpacefillAPIClient) {
     this.apiClient = apiClient;
+  }
+
+  public setCurrentEntity(entityId: string, entityType: EntityTypeEnum) {
+    this.currentEntityId = entityId;
+    this.currentEntityType = entityType;
   }
 
   public async send(
@@ -49,6 +56,13 @@ export class EdiEvent {
     if (!Config.get().spacefillApi.eventEnabled) {
       Console.info("Event sending disabled in configuration");
       return;
+    }
+
+    if (!entityId) {
+      entityId = this.currentEntityId;
+    }
+    if (!entityType) {
+      entityType = this.currentEntityType;
     }
 
     await this.apiClient

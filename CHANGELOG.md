@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.3] - 2024-04-23
+
+### Improved
+
+- [!112](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/112) `EdiEvent` - allows to defined current entity id and entity type once.
+
 ## [0.15.2] - 2024-04-19
 
 ### Improved
