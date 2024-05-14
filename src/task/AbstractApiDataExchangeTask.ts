@@ -73,6 +73,10 @@ export abstract class AbstractApiDataExchangeTask<T>
         this.inputPayload = JSON.parse(this.argv["input-json-payload"]);
         Console.trace("inputPayload", this.inputPayload);
       }
+      if (this.argv?.["input-json-payload-b64"]) {
+        this.inputPayload = JSON.parse(Buffer.from(this.argv["input-json-payload-b64"], "base64").toString());
+        Console.trace("inputPayload", this.inputPayload);
+      }
 
       Console.title("Api init");
       await this.initApiClient(this.getWorkflowType());

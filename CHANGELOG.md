@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.4] - 2024-05-14
+
+### Improved
+
+- [!114](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/114) `AbstractApiDataExchangeTask`: add a new argument `input-json-payload-b64`, to pass json payload in a base64 encoded format.
+
 ## [0.15.3] - 2024-04-23
 
 ### Improved
