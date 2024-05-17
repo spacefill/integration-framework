@@ -71,30 +71,21 @@ $ ./generateApiType.mts
 #### How to publish a new spacefill@integration-framework package version ?
 
 - Update the package version in [`package.json`](./package.json):
-
-> :warning: Please notice that the package version must respect [SemVer 2.0](https://semver.org/lang/fr/).
-
-```json
-{
-  "name": "@spacefill/integration-framework",
-  "type": "module",
-  "version": "0.13.0", // <-- version to update
-  "main": "dist/index.js",
- ...
-}
-```
+  > :warning: Please notice that the package version must respect [SemVer 2.0](https://semver.org/lang/fr/).
+  ```json
+  {
+    "name": "@spacefill/integration-framework",
+    "type": "module",
+    "version": "0.13.0", // <-- version to update
+    "main": "dist/index.js",
+   ...
+  }
+  ```
 
 - Update the [CHANGELOGS.md](./CHANGELOG.md).
 
-- Request approval and merge your MR.
+- Request approval and merge your PR.
 
-- Create merge request from develop to main. Use package version as title. (see version [0.13.0](https://gitlab.spacefill.fr/spacefill/integration-framework/-/merge_requests/98) example)
+- Create a tag and push it.
 
-- Merge the merge request.
-
-- Create a tag with the release version from main branch (see version [0.13.0](https://gitlab.spacefill.fr/spacefill/integration-framework/-/tags/0.13.0) example).
-  - Copy/Paste the content from the CHANGELOG.md in the tag description.
-
-- The CI will automatically publish the new package version. (see [CI](https://gitlab.spacefill.fr/spacefill/integration-framework/-/pipelines/91808) example)
-
-
+- The CI will automatically publish the new package version.

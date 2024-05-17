@@ -1,0 +1,22 @@
+name: "Run lint, tests and then publish package to npm"
+
+on:
+  push:
+    tags:
+    - "*"
+
+concurrency:
+  group: "publish-tag-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  run-lint:
+    uses: "./.github/workflows/run-lint.yml"
+  run-tests:
+    uses: "./.github/workflows/run-tests.yml"
+  build-and-publish-npm-package:
+    needs:
+    - "run-lint"
+    - "run-tests"
+    uses: "./.github/workflows/build-and-publish-npm-package.yml"
+    secrets: "inherit"

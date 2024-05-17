@@ -1,0 +1,27 @@
+name: "Run lint, tests and build package"
+
+on:
+  push:
+    tags-ignore:
+    - "**"
+  pull_request:
+    types:
+    - "opened"
+    - "reopened"
+    - "synchronize"
+  workflow_dispatch:
+
+concurrency:
+  group: "run-lint-tests-build-${{ github.event.number }}"
+  cancel-in-progress: true
+
+jobs:
+  run-lint:
+    uses: "./.github/workflows/run-lint.yml"
+  run-tests:
+    uses: "./.github/workflows/run-tests.yml"
+  run-build:
+    needs:
+    - "run-lint"
+    - "run-tests"
+    uses: "./.github/workflows/run-build.yml"
