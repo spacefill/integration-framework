@@ -404,20 +404,6 @@ It includes a retry system in the event of an error. By default, there are 3 att
 
   Install nodejs with `asdf install`.
 
-- Init the .npm_auth file:
-
-  ```sh
-  cp .npm_auth.example .npm_auth
-  ```
-
-- Edit `.npm_auth` with the `AUTH_TOKEN` provided by Spacefill. Spacefill should send to you the `AUTH_TOKEN` at the beginning of the development, if it's not the case please ask for it.
-
-- Export the token. You'll need to do this at least once in your shell if you want to use `yarn` commands.
-
-  ```sh
-  export $(cat .npm_auth | xargs)
-  ```
-
 - Install libraries
 
   ```sh
