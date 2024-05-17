@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.5] - 2024-05-17
+
+### Changed
+
+- The `@spacefill/integration-framework` package is now available on [npm](https://www.npmjs.com/package/@spacefill/integration-framework) publicly. Authentication is no longer needed to download this package. You will need to remove your `npmrc` configuration for the `@spacefill` scope.
+
 ## [0.15.4] - 2024-05-14
 
 ### Improved
