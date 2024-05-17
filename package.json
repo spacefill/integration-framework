@@ -2,6 +2,10 @@
   "name": "@spacefill/integration-framework",
   "type": "module",
   "version": "0.15.5",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spacefill/integration-framework"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
