@@ -8689,6 +8689,7 @@ declare namespace Components {
       | "PICKUP_COMPLETED"
       | "DELIVERY_IN_PROGRESS"
       | "AT_DELIVERY_LOCATION"
+      | "PARTIALLY_DELIVERED"
       | "PICKUP_MISSED"
       | "DELIVERY_MISSED"
       | "CANCELED";
@@ -8705,6 +8706,7 @@ declare namespace Components {
       | "PICKUP_COMPLETED"
       | "DELIVERY_IN_PROGRESS"
       | "AT_DELIVERY_LOCATION"
+      | "PARTIALLY_DELIVERED"
       | "PICKUP_MISSED"
       | "DELIVERY_MISSED"
       | "CANCELED";
