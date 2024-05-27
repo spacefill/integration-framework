@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.6] - 2024-05-27
+
+### Added
+
+- Added `PARTIALLY_DELIVERED` transport status enum
+
 ## [0.15.5] - 2024-05-17
 
 ### Changed
