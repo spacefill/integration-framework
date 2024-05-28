@@ -65,7 +65,8 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
         .then(() => {
           Console.confirm("Api initialized");
         })
-        .catch(() => {
+        .catch((exception) => {
+          Console.printException(exception);
           throw new ApiNetWorkError("Unable to reach the api. Exit.");
         });
 
