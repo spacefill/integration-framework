@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.7] - 2024-05-28
+
+### Improved
+
+- Improve logs when api ping failed.
+
 ## [0.15.6] - 2024-05-27
 
 ### Added

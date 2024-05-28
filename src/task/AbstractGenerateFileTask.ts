@@ -68,7 +68,8 @@ export abstract class AbstractGenerateFileTask<T>
         .then(() => {
           Console.confirm("Api initialized");
         })
-        .catch(() => {
+        .catch((exception) => {
+          Console.printException(exception);
           throw new ApiNetWorkError("Unable to reach the api. Exit.");
         });
 
@@ -136,8 +137,7 @@ export abstract class AbstractGenerateFileTask<T>
                 const targetFileName = `${Config.get().edi.wmsPathArchiveDir}/${fileName}`;
                 await this.transfer.upload(tempFilePath, targetFileName);
                 Console.confirm(`File ${sentFile} well sent to archives directory.`);
-              }
-              else {
+              } else {
                 Console.warn("The target file name is not initialized in the current file configuration.");
               }
             } catch (networkException) {
