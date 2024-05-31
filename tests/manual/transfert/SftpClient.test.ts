@@ -135,7 +135,10 @@ describe("SftpTransfer", () => {
 
         const transfer = new Transfer(TransferProtocol.sftp, wrongConfig);
 
-        await expect(transfer.isExists("")).to.be.rejectedWith(Error, 'connect: Remote host refused connection');
+        await expect(transfer.isExists("")).to.be.rejectedWith(
+          Error,
+          "connect: Remote host refused connection",
+        );
       });
 
       it("error to check if folder exists with wrong hostname config", async () => {
@@ -148,7 +151,10 @@ describe("SftpTransfer", () => {
 
         const transfer = new Transfer(TransferProtocol.sftp, wrongConfig);
 
-        await expect(transfer.isExists("")).to.be.rejectedWith(Error, 'connect: getConnection: Timed out while waiting for handshake');
+        await expect(transfer.isExists("")).to.be.rejectedWith(
+          Error,
+          "connect: getConnection: Timed out while waiting for handshake",
+        );
       }).timeout(100000);
     });
   });

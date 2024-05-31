@@ -3,7 +3,7 @@ name: "Run lint, tests and then publish package to npm"
 on:
   push:
     tags:
-    - "*"
+      - "*"
 
 concurrency:
   group: "publish-tag-${{ github.ref }}"
@@ -14,9 +14,13 @@ jobs:
     uses: "./.github/workflows/run-lint.yml"
   run-tests:
     uses: "./.github/workflows/run-tests.yml"
+  run-prettier:
+    uses: "./.github/workflows/run-prettier.yml"
+  run-type-check:
+    uses: "./.github/workflows/run-type-check.yml"
   build-and-publish-npm-package:
     needs:
-    - "run-lint"
-    - "run-tests"
+      - "run-lint"
+      - "run-tests"
     uses: "./.github/workflows/build-and-publish-npm-package.yml"
     secrets: "inherit"

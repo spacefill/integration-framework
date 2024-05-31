@@ -38,5 +38,3 @@ $ yarn run test tests/ci/api/EdiEvent.test.ts
 ```sh
 $ yarn run test tests/ci/api/EdiEvent.test.ts -g 'should send event'
 ```
-
-

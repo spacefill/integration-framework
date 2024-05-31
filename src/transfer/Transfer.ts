@@ -137,7 +137,7 @@ class Transfer implements TransferInterface {
 
       await this.client.mkdirIfNotExists(targetFilePath);
 
-      if ((await this.client.isExists(targetPath))) {
+      if (await this.client.isExists(targetPath)) {
         throw `File name ${targetFileName} already exists in ${targetFilePath} folder.`;
       } else {
         await this.client.moveFile(sourcePath, targetPath);

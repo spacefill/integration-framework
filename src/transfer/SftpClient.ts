@@ -43,7 +43,7 @@ export class SftpClient implements TransferInterface {
   }
 
   async isExists(remotePath: string): Promise<boolean> {
-    return (await this.client.exists(remotePath) !== false)
+    return (await this.client.exists(remotePath)) !== false;
   }
 
   async upload(localPath: string, remotePath: string): Promise<void> {
