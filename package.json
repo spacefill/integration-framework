@@ -75,7 +75,9 @@
     "yarn": "1.22.19"
   },
   "scripts": {
-    "prettier-fix": "prettier -w ",
+    "type-check": "tsc --project tsconfig.json",
+    "prettier-fix": "prettier -w ./src ./tests",
+    "prettier-check": "prettier -c ./src ./tests",
     "prettier-watch": "onchange \"./(src|tests)/**/*.(ts|mts)\" -- prettier --write --ignore-unknown {{changed}}",
     "test": "ts-mocha --timeout 10000",
     "test:coverage": "c8 yarn run test",

@@ -15,16 +15,22 @@ describe("Transfer", () => {
 
   it("create directory with no path", async () => {
     const transfer = new Transfer(TransferProtocol.local);
-    await expect(transfer.mkdirIfNotExists("")).to.be.rejectedWith(Error, 'ENOENT: no such file or directory, mkdir');
+    await expect(transfer.mkdirIfNotExists("")).to.be.rejectedWith(
+      Error,
+      "ENOENT: no such file or directory, mkdir",
+    );
   });
 
   it("error to upload with no path", async () => {
     const transfer = new Transfer(TransferProtocol.local);
-    await expect(transfer.upload("", "")).to.be.rejectedWith(Error, 'ENOENT: no such file or directory');
+    await expect(transfer.upload("", "")).to.be.rejectedWith(Error, "ENOENT: no such file or directory");
   });
 
   it("error to download with no path", async () => {
     const transfer = new Transfer(TransferProtocol.local);
-    await expect(transfer.downloadAndReadFile("")).to.be.rejectedWith(Error, 'ENOENT: no such file or directory');
+    await expect(transfer.downloadAndReadFile("")).to.be.rejectedWith(
+      Error,
+      "ENOENT: no such file or directory",
+    );
   });
 });

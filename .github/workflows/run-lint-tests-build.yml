@@ -3,12 +3,12 @@ name: "Run lint, tests and build package"
 on:
   push:
     tags-ignore:
-    - "**"
+      - "**"
   pull_request:
     types:
-    - "opened"
-    - "reopened"
-    - "synchronize"
+      - "opened"
+      - "reopened"
+      - "synchronize"
   workflow_dispatch:
 
 concurrency:
@@ -20,8 +20,12 @@ jobs:
     uses: "./.github/workflows/run-lint.yml"
   run-tests:
     uses: "./.github/workflows/run-tests.yml"
+  run-prettier:
+    uses: "./.github/workflows/run-prettier.yml"
+  run-type-check:
+    uses: "./.github/workflows/run-type-check.yml"
   run-build:
     needs:
-    - "run-lint"
-    - "run-tests"
+      - "run-lint"
+      - "run-tests"
     uses: "./.github/workflows/run-build.yml"

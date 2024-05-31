@@ -138,7 +138,7 @@ describe("FtpClient", () => {
         };
 
         const transfer = new Transfer(TransferProtocol.ftp, wrongConfig);
-        await expect(transfer.isExists("")).to.be.rejectedWith(Error, '530 Login authentication failed');
+        await expect(transfer.isExists("")).to.be.rejectedWith(Error, "530 Login authentication failed");
       });
 
       it("error to check if folder exists with wrong hostname config", async () => {
@@ -150,7 +150,7 @@ describe("FtpClient", () => {
         };
 
         const transfer = new Transfer(TransferProtocol.ftp, wrongConfig);
-        await expect(transfer.isExists("")).to.be.rejectedWith(Error, 'Timeout (control socket)');
+        await expect(transfer.isExists("")).to.be.rejectedWith(Error, "Timeout (control socket)");
       }).timeout(100000);
     });
   });

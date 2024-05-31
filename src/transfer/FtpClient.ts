@@ -1,6 +1,6 @@
 import path from "path";
 
-import * as ftp from "basic-ftp"
+import * as ftp from "basic-ftp";
 import { fs } from "zx";
 import { temporaryFileTask } from "tempy";
 
@@ -52,7 +52,7 @@ export class FtpClient implements TransferInterface {
 
     const list = await this.client.list(targetFilePath);
 
-    return list.length > 0 && list.some(item => item.name === targetFileName);
+    return list.length > 0 && list.some((item) => item.name === targetFileName);
   }
 
   async upload(localPath: string, remotePath: string): Promise<void> {
@@ -63,14 +63,14 @@ export class FtpClient implements TransferInterface {
   async downloadAndReadFile(remotePath: string, encoding: BufferEncoding): Promise<string> {
     Console.debug(`Downloading ${remotePath} ...`);
 
-    let fileContent: string = '';
+    let fileContent: string = "";
 
     await temporaryFileTask(async (tempFilePath) => {
       const writableStream = fs.createWriteStream(tempFilePath);
       await this.client.downloadTo(writableStream, remotePath);
 
       fileContent = await fs.readFile(tempFilePath, encoding);
-    })
+    });
 
     return fileContent;
   }
@@ -81,7 +81,7 @@ export class FtpClient implements TransferInterface {
 
   async moveFile(sourcePath: string, targetPath: string): Promise<void> {
     Console.debug(`Moving file ${sourcePath} to ${targetPath} ...`);
-    await this.client.rename(path.join('/', sourcePath), path.join('/', targetPath)); // For ftp we need to add '/' before the path
+    await this.client.rename(path.join("/", sourcePath), path.join("/", targetPath)); // For ftp we need to add '/' before the path
   }
 
   async deleteFile(remotePath: string): Promise<void> {

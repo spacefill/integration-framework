@@ -20,7 +20,13 @@ describe("Helper", () => {
 
       const csvHelper = new CsvHelper(filePath, options);
 
-      const testData = ["SPACEFILL1", "WMS1", "warehouse1@example.com\nSPACEFILL2", "WMS2", "warehouse2@example.com"];
+      const testData = [
+        "SPACEFILL1",
+        "WMS1",
+        "warehouse1@example.com\nSPACEFILL2",
+        "WMS2",
+        "warehouse2@example.com",
+      ];
 
       // Write the test data to the file
       await csvHelper.writeLineAsync(testData);
@@ -34,7 +40,10 @@ describe("Helper", () => {
       // delete the file after the test
       fs.unlinkSync(filePath);
 
-      const referenceFileContent = fs.readFileSync(path.join(currentDirName, "csv_files", "ref_test_helper.csv"), "utf-8");
+      const referenceFileContent = fs.readFileSync(
+        path.join(currentDirName, "csv_files", "ref_test_helper.csv"),
+        "utf-8",
+      );
       expect(generatedFileContent.trim()).to.be.equals(referenceFileContent.trim());
     });
 
@@ -43,7 +52,13 @@ describe("Helper", () => {
 
       const csvHelper = new CsvHelper(filePath);
 
-      const testData = ["SPACEFILL1", "WMS1", "warehouse1@example.com\nSPACEFILL2", "WMS2", "warehouse2@example.com"];
+      const testData = [
+        "SPACEFILL1",
+        "WMS1",
+        "warehouse1@example.com\nSPACEFILL2",
+        "WMS2",
+        "warehouse2@example.com",
+      ];
 
       // Write the test data to the file
       await csvHelper.writeLineAsync(testData);
@@ -57,7 +72,10 @@ describe("Helper", () => {
       // delete the file after the test
       fs.unlinkSync(filePath);
 
-      const referenceFileContent = fs.readFileSync(path.join(currentDirName, "csv_files", "ref_test_helper_tab_delimiter.csv"), "utf-8");
+      const referenceFileContent = fs.readFileSync(
+        path.join(currentDirName, "csv_files", "ref_test_helper_tab_delimiter.csv"),
+        "utf-8",
+      );
       expect(generatedFileContent.trim()).to.be.equals(referenceFileContent.trim());
     });
   });
