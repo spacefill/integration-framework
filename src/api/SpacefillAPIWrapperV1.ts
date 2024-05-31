@@ -2,6 +2,7 @@ import OpenAPIClientAxios, { Document } from "openapi-client-axios";
 import axios, { AxiosInstance } from "axios";
 import FormData from "form-data";
 import * as axiosDebug from "axios-debug-log";
+import axiosRetry, { isNetworkOrIdempotentRequestError } from "axios-retry";
 
 import { Console } from "../utils/Console.ts";
 import { InternalError } from "../exceptions/InternalError.ts";
@@ -78,6 +79,14 @@ export class SpacefillAPIWrapperV1 {
 
     this.client = await api.getClient<SpacefillAPIClient>();
     this.axiosInstance = api.instance;
+
+    axiosRetry(api.instance, {
+      retries: 3,
+      retryDelay: axiosRetry.exponentialDelay,
+      retryCondition: (e) => {
+        return isNetworkOrIdempotentRequestError(e) || e?.response?.status === 429;
+      },
+    });
 
     axiosDebug.default({
       request: (_debug, config) => {
