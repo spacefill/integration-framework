@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.9] - 2024-07-15
+
+### Improved
+
+- Update HTTP codes allowed for retry.
+
 ## [0.15.8] - 2024-05-28
 
 ### Improved
