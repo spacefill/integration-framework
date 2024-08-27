@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.16.0] - 2024-08-27
+
+### Added
+
+- Update sdk with spacefill api [version 2024-08-27](https://developer.spacefill.fr/changelog/2024-08-27).
+  - Allows to use the new `granularity_fields` on order endpoints
+
 ## [0.15.9] - 2024-07-15
 
 ### Improved
