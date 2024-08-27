@@ -79,6 +79,11 @@ declare namespace Components {
       comment?: string;
     }
     /**
+     * CustomerAddressTypeEnum
+     * Customer address type enum.
+     */
+    export type CustomerAddressTypeEnum = "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
+    /**
      * DateTimeRange
      * example:
      * {
@@ -171,12 +176,12 @@ declare namespace Components {
        * Phone Number
        * Transport unit phone number
        */
-      phone_number?: string; // ^\+[1-9]\d{1,14}$
+      phone_number?: string;
       /**
        * Email
        * Carrier company phone number
        */
-      email?: string; // ^[\w\.\_\%\-\+]+@[\w._%-]+\.[A-Za-z]{2,8}$
+      email?: string;
     }
     /**
      * InputInventoryAdjustementItem
@@ -284,10 +289,12 @@ declare namespace Components {
      *   "entry_expeditor_address_country_code": "string",
      *   "entry_expeditor_address_lat": "12.0001",
      *   "entry_expeditor_address_lng": "12.0001",
+     *   "entry_expeditor_address_type": "string",
      *   "entry_expeditor_planned_datetime_range": {
      *     "datetime_from": "2025-09-28T14:12:41.538Z",
      *     "datetime_to": "2025-09-28T15:12:41.538Z"
      *   },
+     *   "exit_final_recipient_address_type": "string",
      *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
      *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
      *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
@@ -552,6 +559,11 @@ declare namespace Components {
        */
       entry_expeditor_phone_number?: string; // ^\+[1-9]\d{1,14}$
       /**
+       * CustomerAddressTypeEnum
+       * Address type of the sender's address.
+       */
+      entry_expeditor_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
+      /**
        * Exit Final Recipient
        * Address name for the recipient.
        */
@@ -605,7 +617,12 @@ declare namespace Components {
        * Exit Final Recipient Phone Number
        * Phone number of the recipient's address.
        */
-      exit_final_recipient_phone_number?: string; // ^\+[1-9]\d{1,14}$
+      exit_final_recipient_phone_number?: string;
+      /**
+       * CustomerAddressTypeEnum
+       * Address type of the recipient's address.
+       */
+      exit_final_recipient_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
       /**
        * Exit Final Recipient Planned Datetime Range
        * Recipient's reception date range.
@@ -681,6 +698,7 @@ declare namespace Components {
      *   "entry_expeditor_address_country_code": "string",
      *   "entry_expeditor_address_lat": "12.0001",
      *   "entry_expeditor_address_lng": "12.0001",
+     *   "entry_expeditor_address_type": "string",
      *   "entry_expeditor_planned_datetime_range": {
      *     "datetime_from": "2025-09-28T14:12:41.538Z",
      *     "datetime_to": "2025-09-28T15:12:41.538Z"
@@ -726,7 +744,7 @@ declare namespace Components {
        * Shipper Order Reference
        * Unique reference code.
        */
-      shipper_order_reference?: string;
+      shipper_order_reference: string;
       /**
        * Warehouse Id
        * Main identifier of the associated warehouse.
@@ -747,6 +765,26 @@ declare namespace Components {
        * Warehouse identifier used in the TMS software.
        */
       edi_tms_warehouse_id?: string;
+      /**
+       * Ext Tms Carrier Id
+       * Carrier identifier used in the TMS software.
+       */
+      ext_tms_carrier_id?: string;
+      /**
+       * Ext Erp Carrier Id
+       * Carrier identifier used in the ERP software.
+       */
+      ext_erp_carrier_id?: string;
+      /**
+       * Ext Tms Service Id
+       * Service identifier used in the TMS software.
+       */
+      ext_tms_service_id?: string;
+      /**
+       * Ext Erp Service Id
+       * Service identifier used in the ERP software.
+       */
+      ext_erp_service_id?: string;
       /**
        * Comment
        * Any comment regarding the order.
@@ -786,6 +824,41 @@ declare namespace Components {
        * Identifier of carrier company in charge of transport
        */
       transport_carrier_id?: string; // uuid
+      /**
+       * Service Id
+       * Identifier of service of a carrier in charge of transport
+       */
+      service_id?: string; // uuid
+      /**
+       * Packing Unit
+       * Packing Unit.
+       */
+      packing_unit?: string;
+      /**
+       * Packing Quantity
+       * Packing Quantity.
+       */
+      packing_quantity?: number;
+      /**
+       * Gross Weight
+       * Gross Weight.
+       */
+      gross_weight?: number;
+      /**
+       * Volume
+       * Volume.
+       */
+      volume?: number;
+      /**
+       * Is Dangerous
+       * Is Dangerous.
+       */
+      is_dangerous?: boolean;
+      /**
+       * Is Refrigerated
+       * Is Refrigerated.
+       */
+      is_refrigerated?: boolean;
       /**
        * Entry Expeditor
        * Address name for the sender.
@@ -841,6 +914,11 @@ declare namespace Components {
        * Phone number of the sender's address.
        */
       entry_expeditor_phone_number?: string; // ^\+[1-9]\d{1,14}$
+      /**
+       * CustomerAddressTypeEnum
+       * Address type of the sender's address.
+       */
+      entry_expeditor_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
       /**
        * Entry Expeditor Planned Datetime Range
        * Sender's collection date range.
@@ -967,6 +1045,7 @@ declare namespace Components {
      *   },
      *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
      *   "exit_final_recipient": "string",
+     *   "exit_final_recipient_company": "string",
      *   "exit_final_recipient_address_line1": "string",
      *   "exit_final_recipient_address_zip": "string",
      *   "exit_final_recipient_address_details": "string",
@@ -974,6 +1053,7 @@ declare namespace Components {
      *   "exit_final_recipient_address_country_code": "string",
      *   "exit_final_recipient_address_lat": "12.34",
      *   "exit_final_recipient_address_lng": "2.34",
+     *   "exit_final_recipient_address_type": "string",
      *   "exit_final_recipient_planned_datetime_range": {
      *     "datetime_from": "2025-09-28T15:12:41.538Z",
      *     "datetime_to": "2025-09-28T15:12:41.538Z"
@@ -1021,7 +1101,7 @@ declare namespace Components {
        * Shipper Order Reference
        * Unique reference code.
        */
-      shipper_order_reference?: string;
+      shipper_order_reference: string;
       /**
        * Warehouse Id
        * Main identifier of the associated warehouse.
@@ -1032,6 +1112,26 @@ declare namespace Components {
        * Warehouse identifier used in the ERP software.
        */
       edi_erp_warehouse_id?: string;
+      /**
+       * Ext Tms Carrier Id
+       * Carrier identifier used in the TMS software.
+       */
+      ext_tms_carrier_id?: string;
+      /**
+       * Ext Erp Carrier Id
+       * Carrier identifier used in the ERP software.
+       */
+      ext_erp_carrier_id?: string;
+      /**
+       * Ext Tms Service Id
+       * Service identifier used in the TMS software.
+       */
+      ext_tms_service_id?: string;
+      /**
+       * Ext Erp Service Id
+       * Service identifier used in the ERP software.
+       */
+      ext_erp_service_id?: string;
       /**
        * Edi Wms Warehouse Id
        * Warehouse identifier used in the WMS software.
@@ -1057,7 +1157,8 @@ declare namespace Components {
         | "AT_DELIVERY_LOCATION"
         | "PICKUP_MISSED"
         | "DELIVERY_MISSED"
-        | "CANCELED";
+        | "CANCELED"
+        | "PARTIALLY_DELIVERED";
       /**
        * Comment
        * Any comment regarding the order.
@@ -1097,6 +1198,45 @@ declare namespace Components {
        * Identifier of carrier company in charge of transport
        */
       transport_carrier_id?: string; // uuid
+      /**
+       * Service Id
+       * Identifier of service of a carrier in charge of transport
+       */
+      service_id?: string; // uuid
+      /**
+       * Packing Unit
+       * Packing Unit.
+       */
+      packing_unit?: string;
+      /**
+       * Packing Quantity
+       * Packing Quantity.
+       */
+      packing_quantity?: number;
+      /**
+       * Gross Weight
+       * Gross Weight.
+       */
+      gross_weight?: number;
+      /**
+       * Volume
+       * Volume.
+       */
+      volume?: number;
+      /**
+       * Is Dangerous
+       * Is Dangerous.
+       */
+      is_dangerous?: boolean;
+      /**
+       * Is Refrigerated
+       * Is Refrigerated.
+       */
+      is_refrigerated?: boolean;
+      /**
+       * Exit Final Recipient Company
+       */
+      exit_final_recipient_company?: string;
       /**
        * Exit Final Recipient
        * Address name for the recipient.
@@ -1151,7 +1291,12 @@ declare namespace Components {
        * Exit Final Recipient Phone Number
        * Phone number of the recipient's address.
        */
-      exit_final_recipient_phone_number?: string; // ^\+[1-9]\d{1,14}$
+      exit_final_recipient_phone_number?: string;
+      /**
+       * CustomerAddressTypeEnum
+       * Address type of the recipient's address.
+       */
+      exit_final_recipient_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
       /**
        * Exit Final Recipient Planned Datetime Range
        * Recipient's reception date range.
@@ -1430,6 +1575,13 @@ declare namespace Components {
       custom_fields?: {
         [key: string]: any;
       };
+      /**
+       * Granularity Fields
+       * Granularity fields on order items are used to store additional information about the items in your orders. Granularity fields are passed in a JSON key:value format.
+       */
+      granularity_fields?: {
+        [key: string]: any;
+      };
     }
     /**
      * InputOrderPatch
@@ -1480,7 +1632,8 @@ declare namespace Components {
         | "AT_DELIVERY_LOCATION"
         | "PICKUP_MISSED"
         | "DELIVERY_MISSED"
-        | "CANCELED";
+        | "CANCELED"
+        | "PARTIALLY_DELIVERED";
       /**
        * Custom Fields
        * Custom fields on order items are used to store additional information about the items in your orders. Custom fields are passed in a JSON key:value format.
@@ -1648,6 +1801,21 @@ declare namespace Components {
        * Net weight of a unit in kg (packaging weight excluded).
        */
       each_net_weight_in_kg?: number;
+      /**
+       * Each Unit
+       * Unit label for unit of measure (UM).
+       */
+      each_unit?: string;
+      /**
+       * Cardboard Box Unit
+       * Unit label for packaging unit (PU).
+       */
+      cardboard_box_unit?: string;
+      /**
+       * Pallet Unit
+       * Unit label for handling unit (HU).
+       */
+      pallet_unit?: string;
       /**
        * Edi Erp Id
        * Order identifier used in the ERP software.
@@ -1946,6 +2114,9 @@ declare namespace Components {
      *   "each_is_stackable": "true",
      *   "cardboard_box_is_stackable": "false",
      *   "pallet_is_stackable": "false",
+     *   "each_unit": "EACH",
+     *   "cardboard_box_unit": "BOX",
+     *   "pallet_unit": "PALLET",
      *   "each_width_in_cm": 1.5,
      *   "each_length_in_cm": 1.5,
      *   "each_height_in_cm": 1.5,
@@ -2163,6 +2334,21 @@ declare namespace Components {
        * Net weight of a unit in kg (packaging weight excluded).
        */
       each_net_weight_in_kg?: number;
+      /**
+       * Each Unit
+       * Unit label for unit of measure (UM).
+       */
+      each_unit?: string;
+      /**
+       * Cardboard Box Unit
+       * Unit label for packaging unit (PU).
+       */
+      cardboard_box_unit?: string;
+      /**
+       * Pallet Unit
+       * Unit label for handling unit (HU).
+       */
+      pallet_unit?: string;
       /**
        * Edi Erp Id
        * Reference identifier used in the ERP software.
@@ -2450,6 +2636,21 @@ declare namespace Components {
        */
       each_net_weight_in_kg?: number;
       /**
+       * Each Unit
+       * Unit label for unit of measure (UM).
+       */
+      each_unit?: string;
+      /**
+       * Cardboard Box Unit
+       * Unit label for packaging unit (PU).
+       */
+      cardboard_box_unit?: string;
+      /**
+       * Pallet Unit
+       * Unit label for handling unit (HU).
+       */
+      pallet_unit?: string;
+      /**
        * Edi Erp Id
        * Order identifier used in the ERP software.
        */
@@ -2503,10 +2704,12 @@ declare namespace Components {
      * InputShipperUpdateOrderAction
      * example:
      * {
+     *   "entry_expeditor_address_type": "string",
      *   "entry_expeditor_planned_datetime_range": {
      *     "datetime_from": "2022-05-27T13:22:47.917Z",
      *     "datetime_to": "2022-05-27T13:22:47.917Z"
      *   },
+     *   "exit_final_recipient_address_type": "string",
      *   "exit_final_recipient_planned_datetime_range": {
      *     "datetime_from": "2022-04-28T15:05:55.935Z",
      *     "datetime_to": "2022-04-28T15:05:55.935Z"
@@ -2539,7 +2742,7 @@ declare namespace Components {
        * Shipper Order Reference
        * Unique reference code.
        */
-      shipper_order_reference?: string;
+      shipper_order_reference: string;
       /**
        * Comment
        * Any comment regarding the order.
@@ -2635,6 +2838,11 @@ declare namespace Components {
        */
       entry_expeditor_phone_number?: string; // ^\+[1-9]\d{1,14}$
       /**
+       * CustomerAddressTypeEnum
+       * Address type of the sender's address.
+       */
+      entry_expeditor_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
+      /**
        * Entry Expeditor Planned Datetime Range
        * Sender's collection date range.
        * example:
@@ -2707,7 +2915,12 @@ declare namespace Components {
        * Exit Final Recipient Phone Number
        * Phone number of the recipient's address.
        */
-      exit_final_recipient_phone_number?: string; // ^\+[1-9]\d{1,14}$
+      exit_final_recipient_phone_number?: string;
+      /**
+       * CustomerAddressTypeEnum
+       * Address type of the recipient's address.
+       */
+      exit_final_recipient_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
       /**
        * Exit Final Recipient Planned Datetime Range
        * Recipient's reception date range.
@@ -2776,7 +2989,8 @@ declare namespace Components {
         | "AT_DELIVERY_LOCATION"
         | "PICKUP_MISSED"
         | "DELIVERY_MISSED"
-        | "CANCELED";
+        | "CANCELED"
+        | "PARTIALLY_DELIVERED";
       /**
        * Custom Fields
        * Custom fields on orders are used to store additional information. Custom fields are passed in a JSON key:value format.
@@ -2882,6 +3096,13 @@ declare namespace Components {
       custom_fields?: {
         [key: string]: any;
       };
+      /**
+       * Granularity Fields
+       * Granularity fields on order items are used to store additional information about the stock in your orders. Granularity fields are passed in a JSON key:value format.
+       */
+      granularity_fields?: {
+        [key: string]: any;
+      };
     }
     /**
      * InputTransportModel
@@ -2979,7 +3200,7 @@ declare namespace Components {
        * Actual Quantity
        * Actual quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed in pallets.
        */
-      actual_quantity?: number;
+      actual_quantity: number;
       /**
        * Sscc Id
        * Technical sscc identifer.
@@ -2995,6 +3216,13 @@ declare namespace Components {
        * Custom fields on order items are used to store additional information about the items in your orders. Custom fields are passed in a JSON key:value format.
        */
       custom_fields?: {
+        [key: string]: any;
+      };
+      /**
+       * Granularity Fields
+       * Granularity fields on order items are used to store additional information about the stock in your orders. Granularity fields are passed in a JSON key:value format.
+       */
+      granularity_fields?: {
         [key: string]: any;
       };
     }
@@ -3037,6 +3265,7 @@ declare namespace Components {
      *   "entry_expeditor_address_country_code": "FR",
      *   "entry_expeditor_address_lat": "48.843900",
      *   "entry_expeditor_address_lng": "2.358800",
+     *   "entry_expeditor_address_type": "string",
      *   "entry_expeditor_customer_address_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
      *   "exit_final_recipient": "Name 0001",
      *   "exit_final_recipient_address_line1": "29 rue poissonière",
@@ -3046,6 +3275,7 @@ declare namespace Components {
      *   "exit_final_recipient_address_country_code": "FR",
      *   "exit_final_recipient_address_lat": "48.843900",
      *   "exit_final_recipient_address_lng": "2.358800",
+     *   "exit_final_recipient_address_type": "string",
      *   "exit_final_recipient_customer_address_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
      *   "custom_fields": {
      *     "key1": "Order value",
@@ -3289,6 +3519,11 @@ declare namespace Components {
        */
       entry_expeditor_phone_number?: string; // ^\+[1-9]\d{1,14}$
       /**
+       * CustomerAddressTypeEnum
+       * Address type of the sender's address.
+       */
+      entry_expeditor_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
+      /**
        * Exit Final Recipient
        * Address name for the recipient.
        */
@@ -3347,7 +3582,12 @@ declare namespace Components {
        * Exit Final Recipient Phone Number
        * Phone number of the recipient's address.
        */
-      exit_final_recipient_phone_number?: string; // ^\+[1-9]\d{1,14}$
+      exit_final_recipient_phone_number?: string;
+      /**
+       * CustomerAddressTypeEnum
+       * Address type of the recipient's address.
+       */
+      exit_final_recipient_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
       /**
        * Entry Expeditor Planned Datetime Range
        * Sender's collection date range.
@@ -3503,6 +3743,13 @@ declare namespace Components {
        * Custom fields on order items are used to store additional information about the items in your orders. Custom fields are passed in a JSON key:value format.
        */
       custom_fields?: {
+        [key: string]: any;
+      };
+      /**
+       * Granularity Fields
+       * Granularity fields on order items are used to store additional information about the stock in your orders. Granularity fields are passed in a JSON key:value format.
+       */
+      granularity_fields?: {
         [key: string]: any;
       };
     }
@@ -3882,12 +4129,12 @@ declare namespace Components {
        * Phone Number
        * Transport unit phone number
        */
-      phone_number?: string; // ^\+[1-9]\d{1,14}$
+      phone_number?: string;
       /**
        * Email
        * Carrier company phone number
        */
-      email?: string; // ^[\w\.\_\%\-\+]+@[\w._%-]+\.[A-Za-z]{2,8}$
+      email?: string;
       /**
        * Warehouses
        * Warehouse ids of service provider associated with the carrier
@@ -3909,6 +4156,21 @@ declare namespace Components {
        * Updated By
        */
       updated_by?: string; // uuid
+      /**
+       * Ext Shipper Tms Id
+       * Shipper identifier used in the TMS software.
+       */
+      ext_shipper_tms_id?: string;
+      /**
+       * Ext Shipper Erp Id
+       * Shipper identifier used in the ERP software.
+       */
+      ext_shipper_erp_id?: string;
+      /**
+       * Ext Shipper Wms Id
+       * Shipper identifier used in the WMS software.
+       */
+      ext_shipper_wms_id?: string;
     }
     /**
      * OutputGlobalStockByBatch
@@ -4215,6 +4477,9 @@ declare namespace Components {
      *   "cardboard_box_net_weight_in_kg": 1.5,
      *   "each_gross_weight_in_kg": 1.5,
      *   "each_net_weight_in_kg": 1.5,
+     *   "each_unit": "EACH",
+     *   "cardboard_box_unit": "BOX",
+     *   "pallet_unit": "PALLET",
      *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
      *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
      *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
@@ -4401,6 +4666,21 @@ declare namespace Components {
        */
       each_net_weight_in_kg?: number;
       /**
+       * Each Unit
+       * Unit label for unit of measure (UM).
+       */
+      each_unit?: string;
+      /**
+       * Cardboard Box Unit
+       * Unit label for packaging unit (PU).
+       */
+      cardboard_box_unit?: string;
+      /**
+       * Pallet Unit
+       * Unit label for handling unit (HU).
+       */
+      pallet_unit?: string;
+      /**
        * Edi Erp Id
        * Reference identifier used in the ERP software.
        */
@@ -4489,15 +4769,18 @@ declare namespace Components {
      *   "each_length_in_cm": 1.5,
      *   "each_height_in_cm": 1.5,
      *   "each_volume_in_cm3": 1.5,
+     *   "each_unit": "EACH",
      *   "cardboard_box_width_in_cm": 1.5,
      *   "cardboard_box_length_in_cm": 1.5,
      *   "cardboard_box_height_in_cm": 1.5,
      *   "cardboard_box_volume_in_cm3": 1.5,
+     *   "cardboard_box_unit": "BOX",
      *   "pallet_width_in_cm": 1.5,
      *   "pallet_length_in_cm": 1.5,
      *   "pallet_height_in_cm": 1.5,
      *   "pallet_gross_weight_in_kg": 1.5,
      *   "pallet_net_weight_in_kg": 1.5,
+     *   "pallet_unit": "PALLET",
      *   "cardboard_box_gross_weight_in_kg": 1.5,
      *   "cardboard_box_net_weight_in_kg": 1.5,
      *   "each_gross_weight_in_kg": 1.5,
@@ -4743,6 +5026,21 @@ declare namespace Components {
        * Net weight of a unit in kg (packaging weight excluded).
        */
       each_net_weight_in_kg?: number;
+      /**
+       * Each Unit
+       * Unit label for unit of measure (UM).
+       */
+      each_unit?: string;
+      /**
+       * Cardboard Box Unit
+       * Unit label for packaging unit (PU).
+       */
+      cardboard_box_unit?: string;
+      /**
+       * Pallet Unit
+       * Unit label for handling unit (HU).
+       */
+      pallet_unit?: string;
       /**
        * Edi Erp Id
        * Reference identifier used in the ERP software.
@@ -5199,6 +5497,7 @@ declare namespace Components {
      *   "entry_expeditor_address_country_code": "string",
      *   "entry_expeditor_address_lat": "string",
      *   "entry_expeditor_address_lng": "string",
+     *   "entry_expeditor_address_type": "string",
      *   "entry_expeditor_planned_datetime_range": {
      *     "datetime_from": "2022-05-17T09:37:15.337Z",
      *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -5212,6 +5511,7 @@ declare namespace Components {
      *   "exit_final_recipient_address_country_code": "string",
      *   "exit_final_recipient_address_lat": "string",
      *   "exit_final_recipient_address_lng": "string",
+     *   "exit_final_recipient_address_type": "string",
      *   "exit_final_recipient_planned_datetime_range": {
      *     "datetime_from": "2022-05-17T09:37:15.337Z",
      *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -5260,6 +5560,9 @@ declare namespace Components {
      *       "custom_fields": {
      *         "key1": "Value",
      *         "key2": "Value"
+     *       },
+     *       "granularity_fields": {
+     *         "key": "pair"
      *       }
      *     },
      *     {
@@ -5275,6 +5578,9 @@ declare namespace Components {
      *       "serial_shipping_container_code": "xxxxxxxx",
      *       "custom_fields": {
      *         "key2": "Value"
+     *       },
+     *       "granularity_fields": {
+     *         "key": "pair"
      *       }
      *     }
      *   ]
@@ -5361,7 +5667,8 @@ declare namespace Components {
         | "AT_DELIVERY_LOCATION"
         | "PICKUP_MISSED"
         | "DELIVERY_MISSED"
-        | "CANCELED";
+        | "CANCELED"
+        | "PARTIALLY_DELIVERED";
       /**
        * Comment
        * Any comment regarding the order.
@@ -5421,7 +5728,8 @@ declare namespace Components {
         | "AT_DELIVERY_LOCATION"
         | "PICKUP_MISSED"
         | "DELIVERY_MISSED"
-        | "CANCELED";
+        | "CANCELED"
+        | "PARTIALLY_DELIVERED";
       /**
        * Transport Carrier Id
        * Identifier of carrier company in charge of transport
@@ -5442,6 +5750,66 @@ declare namespace Components {
        * Carrier company phone number
        */
       transport_carrier_email?: string; // ^[\w\.\_\%\-\+]+@[\w._%-]+\.[A-Za-z]{2,8}$
+      /**
+       * Transport Unit
+       * Transport packing unit.
+       */
+      transport_unit?: string;
+      /**
+       * Transport Quantity
+       * Transport packing quantity.
+       */
+      transport_quantity?: number;
+      /**
+       * Transport Gross Weight
+       * Transport gross weight.
+       */
+      transport_gross_weight?: number;
+      /**
+       * Transport Volume
+       * Transport volume.
+       */
+      transport_volume?: number;
+      /**
+       * Transport Is Dangerous
+       * Transport is dangerous.
+       */
+      transport_is_dangerous?: boolean;
+      /**
+       * Transport Is Refrigerated
+       * Transport is refrigerated.
+       */
+      transport_is_refrigerated?: boolean;
+      /**
+       * Transport Service Name
+       * Name of transport service.
+       */
+      transport_service_name?: string;
+      /**
+       * Transport Ext Erp Service Id
+       * Transport Service identifier used in the TMS software.
+       */
+      transport_ext_erp_service_id?: string;
+      /**
+       * Transport Ext Tms Service Id
+       * Transport Service identifier used in the ERP software.
+       */
+      transport_ext_tms_service_id?: string;
+      /**
+       * Transport Ext Shipper Tms Id
+       * Transport shipper identifier used in the TMS software.
+       */
+      transport_ext_shipper_tms_id?: string;
+      /**
+       * Transport Ext Shipper Erp Id
+       * Transport shipper identifier used in the ERP software.
+       */
+      transport_ext_shipper_erp_id?: string;
+      /**
+       * Transport Ext Shipper Wms Id
+       * Transport shipper identifier used in the WMS software.
+       */
+      transport_ext_shipper_wms_id?: string;
       /**
        * Entry Expeditor
        * Address name for the sender.
@@ -5502,6 +5870,11 @@ declare namespace Components {
        * Phone number of the sender's address.
        */
       entry_expeditor_phone_number?: string;
+      /**
+       * CustomerAddressTypeEnum
+       * Address type of the sender's address.
+       */
+      entry_expeditor_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
       /**
        * Entry Expeditor Planned Datetime Range
        * Sender's collection date range.
@@ -5580,6 +5953,11 @@ declare namespace Components {
        * Phone number of the recipient's address.
        */
       exit_final_recipient_phone_number?: string;
+      /**
+       * CustomerAddressTypeEnum
+       * Address type of the recipient's address.
+       */
+      exit_final_recipient_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
       /**
        * Exit Final Recipient Planned Datetime Range
        * Recipient's reception date range.
@@ -5749,6 +6127,7 @@ declare namespace Components {
      *   "entry_expeditor_address_country_code": "string",
      *   "entry_expeditor_address_lat": "string",
      *   "entry_expeditor_address_lng": "string",
+     *   "entry_expeditor_address_type": "string",
      *   "entry_expeditor_planned_datetime_range": {
      *     "datetime_from": "2022-05-17T09:37:15.337Z",
      *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -5762,6 +6141,7 @@ declare namespace Components {
      *   "exit_final_recipient_address_country_code": "string",
      *   "exit_final_recipient_address_lat": "string",
      *   "exit_final_recipient_address_lng": "string",
+     *   "exit_final_recipient_address_type": "string",
      *   "exit_final_recipient_planned_datetime_range": {
      *     "datetime_from": "2022-05-17T09:37:15.337Z",
      *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -5916,6 +6296,9 @@ declare namespace Components {
      *       },
      *       "custom_fields": {
      *         "key": "pair"
+     *       },
+     *       "granularity_fields": {
+     *         "key": "pair"
      *       }
      *     },
      *     {
@@ -5928,6 +6311,9 @@ declare namespace Components {
      *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
      *       "serial_shipping_container_code": "xxxxxxxx",
      *       "custom_fields": {
+     *         "key": "pair"
+     *       },
+     *       "granularity_fields": {
      *         "key": "pair"
      *       }
      *     }
@@ -5949,7 +6335,7 @@ declare namespace Components {
        * Shipper Order Reference
        * Unique reference code.
        */
-      shipper_order_reference?: string;
+      shipper_order_reference: string;
       /**
        * Shipper Account Id
        * Main identifier of the associated shipper.
@@ -5985,7 +6371,8 @@ declare namespace Components {
         | "AT_DELIVERY_LOCATION"
         | "PICKUP_MISSED"
         | "DELIVERY_MISSED"
-        | "CANCELED";
+        | "CANCELED"
+        | "PARTIALLY_DELIVERED";
       /**
        * Comment
        * Any comment regarding the order.
@@ -6045,7 +6432,8 @@ declare namespace Components {
         | "AT_DELIVERY_LOCATION"
         | "PICKUP_MISSED"
         | "DELIVERY_MISSED"
-        | "CANCELED";
+        | "CANCELED"
+        | "PARTIALLY_DELIVERED";
       /**
        * Transport Carrier Id
        * Identifier of carrier company in charge of transport
@@ -6066,6 +6454,51 @@ declare namespace Components {
        * Carrier company phone number
        */
       transport_carrier_email?: string; // ^[\w\.\_\%\-\+]+@[\w._%-]+\.[A-Za-z]{2,8}$
+      /**
+       * Transport Unit
+       * Transport packing unit.
+       */
+      transport_unit?: string;
+      /**
+       * Transport Quantity
+       * Transport packing quantity.
+       */
+      transport_quantity?: number;
+      /**
+       * Transport Gross Weight
+       * Transport gross weight.
+       */
+      transport_gross_weight?: number;
+      /**
+       * Transport Volume
+       * Transport volume.
+       */
+      transport_volume?: number;
+      /**
+       * Transport Is Dangerous
+       * Transport is dangerous.
+       */
+      transport_is_dangerous?: boolean;
+      /**
+       * Transport Is Refrigerated
+       * Transport is refrigerated.
+       */
+      transport_is_refrigerated?: boolean;
+      /**
+       * Transport Service Name
+       * Name of transport service.
+       */
+      transport_service_name?: string;
+      /**
+       * Transport Ext Erp Service Id
+       * Transport Service identifier used in the TMS software.
+       */
+      transport_ext_erp_service_id?: string;
+      /**
+       * Transport Ext Tms Service Id
+       * Transport Service identifier used in the ERP software.
+       */
+      transport_ext_tms_service_id?: string;
       /**
        * Entry Expeditor
        * Address name for the sender.
@@ -6126,6 +6559,11 @@ declare namespace Components {
        * Phone number of the sender's address.
        */
       entry_expeditor_phone_number?: string;
+      /**
+       * CustomerAddressTypeEnum
+       * Address type of the sender's address.
+       */
+      entry_expeditor_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
       /**
        * Entry Expeditor Planned Datetime Range
        * Sender's collection date range.
@@ -6204,6 +6642,11 @@ declare namespace Components {
        * Phone number of the recipient's address.
        */
       exit_final_recipient_phone_number?: string;
+      /**
+       * CustomerAddressTypeEnum
+       * Address type of the recipient's address.
+       */
+      exit_final_recipient_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
       /**
        * Exit Final Recipient Planned Datetime Range
        * Recipient's reception date range.
@@ -6450,6 +6893,13 @@ declare namespace Components {
       custom_fields?: {
         [key: string]: any;
       };
+      /**
+       * Granularity Fields
+       * Used to segment stock into distinct subsets. For example, a granularity field like product type can divide stock into categories such as sellable and damaged products.
+       */
+      granularity_fields?: {
+        [key: string]: any;
+      };
     }
     /**
      * OutputOrderItemEmbedded
@@ -6559,15 +7009,18 @@ declare namespace Components {
        *   "each_length_in_cm": 1.5,
        *   "each_height_in_cm": 1.5,
        *   "each_volume_in_cm3": 1.5,
+       *   "each_unit": "EACH",
        *   "cardboard_box_width_in_cm": 1.5,
        *   "cardboard_box_length_in_cm": 1.5,
        *   "cardboard_box_height_in_cm": 1.5,
        *   "cardboard_box_volume_in_cm3": 1.5,
+       *   "cardboard_box_unit": "BOX",
        *   "pallet_width_in_cm": 1.5,
        *   "pallet_length_in_cm": 1.5,
        *   "pallet_height_in_cm": 1.5,
        *   "pallet_gross_weight_in_kg": 1.5,
        *   "pallet_net_weight_in_kg": 1.5,
+       *   "pallet_unit": "PALLET",
        *   "cardboard_box_gross_weight_in_kg": 1.5,
        *   "cardboard_box_net_weight_in_kg": 1.5,
        *   "each_gross_weight_in_kg": 1.5,
@@ -6663,6 +7116,13 @@ declare namespace Components {
        * Custom fields on order items are used to store additional information about the items in your orders. Custom fields are passed in a JSON key:value format.
        */
       custom_fields?: {
+        [key: string]: any;
+      };
+      /**
+       * Granularity Fields
+       * Used to segment stock into distinct subsets. For example, a granularity field like product type can divide stock into categories such as sellable and damaged products.
+       */
+      granularity_fields?: {
         [key: string]: any;
       };
     }
@@ -6883,6 +7343,21 @@ declare namespace Components {
        * Net weight of a unit in kg (packaging weight excluded).
        */
       each_net_weight_in_kg?: number;
+      /**
+       * Each Unit
+       * Unit label for unit of measure (UM).
+       */
+      each_unit?: string;
+      /**
+       * Cardboard Box Unit
+       * Unit label for packaging unit (PU).
+       */
+      cardboard_box_unit?: string;
+      /**
+       * Pallet Unit
+       * Unit label for handling unit (HU).
+       */
+      pallet_unit?: string;
       /**
        * Edi Erp Id
        * Reference identifier used in the ERP software.
@@ -7150,6 +7625,21 @@ declare namespace Components {
        */
       each_net_weight_in_kg?: number;
       /**
+       * Each Unit
+       * Unit label for unit of measure (UM).
+       */
+      each_unit?: string;
+      /**
+       * Cardboard Box Unit
+       * Unit label for packaging unit (PU).
+       */
+      cardboard_box_unit?: string;
+      /**
+       * Pallet Unit
+       * Unit label for handling unit (HU).
+       */
+      pallet_unit?: string;
+      /**
        * Edi Erp Id
        * Reference identifier used in the ERP software.
        */
@@ -7277,15 +7767,18 @@ declare namespace Components {
        *   "each_length_in_cm": 1.5,
        *   "each_height_in_cm": 1.5,
        *   "each_volume_in_cm3": 1.5,
+       *   "each_unit": "EACH",
        *   "cardboard_box_width_in_cm": 1.5,
        *   "cardboard_box_length_in_cm": 1.5,
        *   "cardboard_box_height_in_cm": 1.5,
        *   "cardboard_box_volume_in_cm3": 1.5,
+       *   "cardboard_box_unit": "BOX",
        *   "pallet_width_in_cm": 1.5,
        *   "pallet_length_in_cm": 1.5,
        *   "pallet_height_in_cm": 1.5,
        *   "pallet_gross_weight_in_kg": 1.5,
        *   "pallet_net_weight_in_kg": 1.5,
+       *   "pallet_unit": "PALLET",
        *   "cardboard_box_gross_weight_in_kg": 1.5,
        *   "cardboard_box_net_weight_in_kg": 1.5,
        *   "each_gross_weight_in_kg": 1.5,
@@ -7531,6 +8024,21 @@ declare namespace Components {
          * Net weight of a unit in kg (packaging weight excluded).
          */
         each_net_weight_in_kg?: number;
+        /**
+         * Each Unit
+         * Unit label for unit of measure (UM).
+         */
+        each_unit?: string;
+        /**
+         * Cardboard Box Unit
+         * Unit label for packaging unit (PU).
+         */
+        cardboard_box_unit?: string;
+        /**
+         * Pallet Unit
+         * Unit label for handling unit (HU).
+         */
+        pallet_unit?: string;
         /**
          * Edi Erp Id
          * Reference identifier used in the ERP software.
@@ -8004,6 +8512,71 @@ declare namespace Components {
        */
       delivery_effective_execution_date?: string; // date-time
       /**
+       * Ext Tms Carrier Id
+       * Carrier identifier used in the TMS software.
+       */
+      ext_tms_carrier_id?: string;
+      /**
+       * Ext Erp Carrier Id
+       * Carrier identifier used in the ERP software.
+       */
+      ext_erp_carrier_id?: string;
+      /**
+       * Ext Tms Service Id
+       * Service identifier used in the TMS software.
+       */
+      ext_tms_service_id?: string;
+      /**
+       * Ext Erp Service Id
+       * Service identifier used in the ERP software.
+       */
+      ext_erp_service_id?: string;
+      /**
+       * Ext Shipper Tms Id
+       * Shipper identifier used in the TMS software.
+       */
+      ext_shipper_tms_id?: string;
+      /**
+       * Ext Shipper Erp Id
+       * Shipper identifier used in the ERP software.
+       */
+      ext_shipper_erp_id?: string;
+      /**
+       * Ext Shipper Wms Id
+       * Shipper identifier used in the WMS software.
+       */
+      ext_shipper_wms_id?: string;
+      /**
+       * Packing Unit
+       * Packing Unit.
+       */
+      packing_unit?: string;
+      /**
+       * Packing Quantity
+       * Packing Quantity.
+       */
+      packing_quantity?: number;
+      /**
+       * Gross Weight
+       * Gross Weight.
+       */
+      gross_weight?: number;
+      /**
+       * Volume
+       * Volume.
+       */
+      volume?: number;
+      /**
+       * Is Dangerous
+       * Is Dangerous.
+       */
+      is_dangerous?: boolean;
+      /**
+       * Is Refrigerated
+       * Is Refrigerated.
+       */
+      is_refrigerated?: boolean;
+      /**
        * Created At
        * The transport creation date
        */
@@ -8028,6 +8601,13 @@ declare namespace Components {
        * Interface identifier in the Spacefill software.
        */
       iid?: string;
+      /**
+       * Custom Fields
+       * Custom fields on orders are used to store additional information. Custom fields are passed in a JSON key:value format.
+       */
+      custom_fields?: {
+        [key: string]: any;
+      };
     }
     /**
      * OutputWarehouseMasterItemStock
@@ -8374,6 +8954,9 @@ declare namespace Components {
        *   "cardboard_box_net_weight_in_kg": 1.5,
        *   "each_gross_weight_in_kg": 1.5,
        *   "each_net_weight_in_kg": 1.5,
+       *   "each_unit": "EACH",
+       *   "cardboard_box_unit": "BOX",
+       *   "pallet_unit": "PALLET",
        *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
        *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
        *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
@@ -8462,6 +9045,7 @@ declare namespace Components {
        *   "entry_expeditor_address_country_code": "string",
        *   "entry_expeditor_address_lat": "string",
        *   "entry_expeditor_address_lng": "string",
+       *   "entry_expeditor_address_type": "string",
        *   "entry_expeditor_planned_datetime_range": {
        *     "datetime_from": "2022-05-17T09:37:15.337Z",
        *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -8475,6 +9059,7 @@ declare namespace Components {
        *   "exit_final_recipient_address_country_code": "string",
        *   "exit_final_recipient_address_lat": "string",
        *   "exit_final_recipient_address_lng": "string",
+       *   "exit_final_recipient_address_type": "string",
        *   "exit_final_recipient_planned_datetime_range": {
        *     "datetime_from": "2022-05-17T09:37:15.337Z",
        *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -8523,6 +9108,9 @@ declare namespace Components {
        *       "custom_fields": {
        *         "key1": "Value",
        *         "key2": "Value"
+       *       },
+       *       "granularity_fields": {
+       *         "key": "pair"
        *       }
        *     },
        *     {
@@ -8538,6 +9126,9 @@ declare namespace Components {
        *       "serial_shipping_container_code": "xxxxxxxx",
        *       "custom_fields": {
        *         "key2": "Value"
+       *       },
+       *       "granularity_fields": {
+       *         "key": "pair"
        *       }
        *     }
        *   ]
@@ -8689,10 +9280,10 @@ declare namespace Components {
       | "PICKUP_COMPLETED"
       | "DELIVERY_IN_PROGRESS"
       | "AT_DELIVERY_LOCATION"
-      | "PARTIALLY_DELIVERED"
       | "PICKUP_MISSED"
       | "DELIVERY_MISSED"
-      | "CANCELED";
+      | "CANCELED"
+      | "PARTIALLY_DELIVERED";
     /**
      * TransportStatusEnum
      * Transport status enum.
@@ -8706,10 +9297,10 @@ declare namespace Components {
       | "PICKUP_COMPLETED"
       | "DELIVERY_IN_PROGRESS"
       | "AT_DELIVERY_LOCATION"
-      | "PARTIALLY_DELIVERED"
       | "PICKUP_MISSED"
       | "DELIVERY_MISSED"
-      | "CANCELED";
+      | "CANCELED"
+      | "PARTIALLY_DELIVERED";
     /**
      * ValidationError
      */
@@ -9122,15 +9713,18 @@ declare namespace Paths {
          *   "each_length_in_cm": 1.5,
          *   "each_height_in_cm": 1.5,
          *   "each_volume_in_cm3": 1.5,
+         *   "each_unit": "EACH",
          *   "cardboard_box_width_in_cm": 1.5,
          *   "cardboard_box_length_in_cm": 1.5,
          *   "cardboard_box_height_in_cm": 1.5,
          *   "cardboard_box_volume_in_cm3": 1.5,
+         *   "cardboard_box_unit": "BOX",
          *   "pallet_width_in_cm": 1.5,
          *   "pallet_length_in_cm": 1.5,
          *   "pallet_height_in_cm": 1.5,
          *   "pallet_gross_weight_in_kg": 1.5,
          *   "pallet_net_weight_in_kg": 1.5,
+         *   "pallet_unit": "PALLET",
          *   "cardboard_box_gross_weight_in_kg": 1.5,
          *   "cardboard_box_net_weight_in_kg": 1.5,
          *   "each_gross_weight_in_kg": 1.5,
@@ -9428,9 +10022,10 @@ declare namespace Paths {
   namespace GetV1LogisticManagementOrder {
     namespace Parameters {
       /**
-       * Embed
+       * Embed Master Items Data
+       * Boolean to specify if the response should include the full master item data.
        */
-      export type Embed = string[];
+      export type EmbedMasterItemsData = boolean;
       /**
        * Order Id
        * Order main identifier.
@@ -9445,7 +10040,11 @@ declare namespace Paths {
       Parameters.OrderId /* uuid */;
     }
     export interface QueryParameters {
-      embed?: /* Embed */ Parameters.Embed;
+      embed_master_items_data?: /**
+       * Embed Master Items Data
+       * Boolean to specify if the response should include the full master item data.
+       */
+      Parameters.EmbedMasterItemsData;
     }
     namespace Responses {
       export type $200 =
@@ -9483,6 +10082,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -9496,6 +10096,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -9650,6 +10251,9 @@ declare namespace Paths {
          *       },
          *       "custom_fields": {
          *         "key": "pair"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -9662,6 +10266,9 @@ declare namespace Paths {
          *       "sscc_id": "d5f2e82d-b7ab-48dd-b4f4-9ff32420be14",
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
+         *         "key": "pair"
+         *       },
+         *       "granularity_fields": {
          *         "key": "pair"
          *       }
          *     }
@@ -9828,7 +10435,8 @@ declare namespace Paths {
         | "AT_DELIVERY_LOCATION"
         | "PICKUP_MISSED"
         | "DELIVERY_MISSED"
-        | "CANCELED";
+        | "CANCELED"
+        | "PARTIALLY_DELIVERED";
       /**
        * Updated After
        * Use this parameter to filter orders updated after date time
@@ -10001,6 +10609,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10014,6 +10623,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10062,6 +10672,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -10077,6 +10690,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -10148,6 +10764,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10161,6 +10778,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10209,6 +10827,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -10224,6 +10845,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -10295,6 +10919,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10308,6 +10933,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10356,6 +10982,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -10371,6 +11000,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -10648,6 +11280,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10661,6 +11294,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10709,6 +11343,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -10724,6 +11361,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -10792,6 +11432,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10805,6 +11446,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10853,6 +11495,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -10868,6 +11513,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -11089,6 +11737,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -11102,6 +11751,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -11150,6 +11800,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -11165,6 +11818,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -11660,6 +12316,9 @@ declare namespace Paths {
        *   "each_is_stackable": "true",
        *   "cardboard_box_is_stackable": "false",
        *   "pallet_is_stackable": "false",
+       *   "each_unit": "EACH",
+       *   "cardboard_box_unit": "BOX",
+       *   "pallet_unit": "PALLET",
        *   "each_width_in_cm": 1.5,
        *   "each_length_in_cm": 1.5,
        *   "each_height_in_cm": 1.5,
@@ -11723,15 +12382,18 @@ declare namespace Paths {
          *   "each_length_in_cm": 1.5,
          *   "each_height_in_cm": 1.5,
          *   "each_volume_in_cm3": 1.5,
+         *   "each_unit": "EACH",
          *   "cardboard_box_width_in_cm": 1.5,
          *   "cardboard_box_length_in_cm": 1.5,
          *   "cardboard_box_height_in_cm": 1.5,
          *   "cardboard_box_volume_in_cm3": 1.5,
+         *   "cardboard_box_unit": "BOX",
          *   "pallet_width_in_cm": 1.5,
          *   "pallet_length_in_cm": 1.5,
          *   "pallet_height_in_cm": 1.5,
          *   "pallet_gross_weight_in_kg": 1.5,
          *   "pallet_net_weight_in_kg": 1.5,
+         *   "pallet_unit": "PALLET",
          *   "cardboard_box_gross_weight_in_kg": 1.5,
          *   "cardboard_box_net_weight_in_kg": 1.5,
          *   "each_gross_weight_in_kg": 1.5,
@@ -11894,6 +12556,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -11907,6 +12570,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -11955,6 +12619,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -11970,6 +12637,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -12005,6 +12675,7 @@ declare namespace Paths {
        *   "entry_expeditor_address_country_code": "string",
        *   "entry_expeditor_address_lat": "12.0001",
        *   "entry_expeditor_address_lng": "12.0001",
+       *   "entry_expeditor_address_type": "string",
        *   "entry_expeditor_planned_datetime_range": {
        *     "datetime_from": "2025-09-28T14:12:41.538Z",
        *     "datetime_to": "2025-09-28T15:12:41.538Z"
@@ -12083,6 +12754,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12096,6 +12768,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12144,6 +12817,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -12159,6 +12835,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -12194,10 +12873,12 @@ declare namespace Paths {
        *   "entry_expeditor_address_country_code": "string",
        *   "entry_expeditor_address_lat": "12.0001",
        *   "entry_expeditor_address_lng": "12.0001",
+       *   "entry_expeditor_address_type": "string",
        *   "entry_expeditor_planned_datetime_range": {
        *     "datetime_from": "2025-09-28T14:12:41.538Z",
        *     "datetime_to": "2025-09-28T15:12:41.538Z"
        *   },
+       *   "exit_final_recipient_address_type": "string",
        *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
        *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
        *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
@@ -12273,6 +12954,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12286,6 +12968,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12334,6 +13017,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -12349,6 +13035,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -12377,6 +13066,7 @@ declare namespace Paths {
        *   },
        *   "transport_carrier_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
        *   "exit_final_recipient": "string",
+       *   "exit_final_recipient_company": "string",
        *   "exit_final_recipient_address_line1": "string",
        *   "exit_final_recipient_address_zip": "string",
        *   "exit_final_recipient_address_details": "string",
@@ -12384,6 +13074,7 @@ declare namespace Paths {
        *   "exit_final_recipient_address_country_code": "string",
        *   "exit_final_recipient_address_lat": "12.34",
        *   "exit_final_recipient_address_lng": "2.34",
+       *   "exit_final_recipient_address_type": "string",
        *   "exit_final_recipient_planned_datetime_range": {
        *     "datetime_from": "2025-09-28T15:12:41.538Z",
        *     "datetime_to": "2025-09-28T15:12:41.538Z"
@@ -12464,6 +13155,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12477,6 +13169,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12525,6 +13218,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -12540,6 +13236,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -12569,10 +13268,12 @@ declare namespace Paths {
        * InputShipperUpdateOrderAction
        * example:
        * {
+       *   "entry_expeditor_address_type": "string",
        *   "entry_expeditor_planned_datetime_range": {
        *     "datetime_from": "2022-05-27T13:22:47.917Z",
        *     "datetime_to": "2022-05-27T13:22:47.917Z"
        *   },
+       *   "exit_final_recipient_address_type": "string",
        *   "exit_final_recipient_planned_datetime_range": {
        *     "datetime_from": "2022-04-28T15:05:55.935Z",
        *     "datetime_to": "2022-04-28T15:05:55.935Z"
@@ -12643,6 +13344,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12656,6 +13358,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12704,6 +13407,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -12719,6 +13425,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -12785,6 +13494,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12798,6 +13508,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12846,6 +13557,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -12861,6 +13575,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -12929,6 +13646,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12942,6 +13660,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12990,6 +13709,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -13005,6 +13727,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -13073,6 +13798,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13086,6 +13812,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13134,6 +13861,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -13149,6 +13879,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -13199,6 +13932,7 @@ declare namespace Paths {
        *   "entry_expeditor_address_country_code": "FR",
        *   "entry_expeditor_address_lat": "48.843900",
        *   "entry_expeditor_address_lng": "2.358800",
+       *   "entry_expeditor_address_type": "string",
        *   "entry_expeditor_customer_address_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
        *   "exit_final_recipient": "Name 0001",
        *   "exit_final_recipient_address_line1": "29 rue poissonière",
@@ -13208,6 +13942,7 @@ declare namespace Paths {
        *   "exit_final_recipient_address_country_code": "FR",
        *   "exit_final_recipient_address_lat": "48.843900",
        *   "exit_final_recipient_address_lng": "2.358800",
+       *   "exit_final_recipient_address_type": "string",
        *   "exit_final_recipient_customer_address_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
        *   "custom_fields": {
        *     "key1": "Order value",
@@ -13308,6 +14043,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13321,6 +14057,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13369,6 +14106,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -13384,6 +14124,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -13457,6 +14200,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13470,6 +14214,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13518,6 +14263,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -13533,6 +14281,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -13599,6 +14350,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13612,6 +14364,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13660,6 +14413,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -13675,6 +14431,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -13741,6 +14500,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13754,6 +14514,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13802,6 +14563,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -13817,6 +14581,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -13883,6 +14650,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13896,6 +14664,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13944,6 +14713,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -13959,6 +14731,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
@@ -14025,6 +14800,7 @@ declare namespace Paths {
          *   "entry_expeditor_address_country_code": "string",
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
+         *   "entry_expeditor_address_type": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14038,6 +14814,7 @@ declare namespace Paths {
          *   "exit_final_recipient_address_country_code": "string",
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
+         *   "exit_final_recipient_address_type": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14086,6 +14863,9 @@ declare namespace Paths {
          *       "custom_fields": {
          *         "key1": "Value",
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     },
          *     {
@@ -14101,6 +14881,9 @@ declare namespace Paths {
          *       "serial_shipping_container_code": "xxxxxxxx",
          *       "custom_fields": {
          *         "key2": "Value"
+         *       },
+         *       "granularity_fields": {
+         *         "key": "pair"
          *       }
          *     }
          *   ]
