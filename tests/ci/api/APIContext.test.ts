@@ -11,6 +11,9 @@ describe("APIContext", () => {
       "Spacefill-Ctx-Client-Type",
       "Spacefill-Ctx-Transport",
       "Spacefill-Ctx-Session-Id",
+      "Spacefill-Ctx-Integration-Key",
+      "Spacefill-Ctx-Warehouse-Id",
+      "Spacefill-Ctx-Shipper-Account-Id",
     );
   });
 
