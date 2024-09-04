@@ -19,6 +19,7 @@ describe("Config", () => {
       "defaultPaginationLimit",
       "context",
       "eventEnabled",
+      "integrationKey",
     );
 
     expect(config.spacefillApi.context).to.have.all.keys(
