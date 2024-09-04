@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.16.1] - 2024-09-04
+
+### Improve
+
+- Add Spacefill-Ctx-Integration-Key, Spacefill-Ctx-Warehouse-Id and Spacefill-Ctx-Shipper-Account-Id...
+
 ## [0.16.0] - 2024-08-27
 
 ### Added
