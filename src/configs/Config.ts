@@ -24,6 +24,7 @@ export class Config {
           clientType: process.env?.SPACEFILL_API_CONTEXT_CLIENT_TYPE,
         },
         eventEnabled: process.env?.SPACEFILL_API_EVENT_ENABLED == "1" ? true : false,
+        integrationKey: process.env?.SPACEFILL_API_INTEGRATION_KEY,
       },
       transfer: {
         protocol: process.env?.WMS_TRANSFER_PROTOCOL,
@@ -98,6 +99,9 @@ export class Config {
           format: "uri",
         },
         apiToken: {
+          type: "string",
+        },
+        integrationKey: {
           type: "string",
         },
         defaultPaginationLimit: {

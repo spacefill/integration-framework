@@ -37,6 +37,11 @@ export class APIContext {
       "Spacefill-Ctx-Session-Id": encodeURI(
         Config.get().edi.runId ?? `${Config.get().spacefillApi.context.serviceSource}_${randomUUID()}`,
       ),
+      "Spacefill-Ctx-Integration-Key": encodeURI(
+        Config.get().spacefillApi.integrationKey ? (Config.get().spacefillApi.integrationKey as string) : "",
+      ),
+      "Spacefill-Ctx-Warehouse-Id": encodeURI(Config.get().edi.wmsWarehouseId as string),
+      "Spacefill-Ctx-Shipper-Account-Id": encodeURI(Config.get().edi.wmsShipperAccountId as string),
     };
   }
   public static getWorkflowHeader(workflowType: WorkflowType): object {
