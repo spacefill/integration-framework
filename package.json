@@ -1,7 +1,7 @@
 {
   "name": "@spacefill/integration-framework",
   "type": "module",
-  "version": "0.16.1",
+  "version": "0.16.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/spacefill/integration-framework"

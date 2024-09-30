@@ -1,5 +1,3 @@
-import { cpuUsage } from "node:process";
-
 import minimist from "minimist";
 import bytes from "bytes";
 
@@ -83,7 +81,6 @@ export abstract class BaseCommand {
 
     Console.info("Statistics", {
       "Resource usage": {
-        "cpu time (µs)": this.statistics.finalCpuUsage,
         memory: {
           "Memory used": bytes.format(memoryUsage.rss),
           "Memory used by code": bytes.format(memoryUsage.heapTotal),
@@ -120,14 +117,12 @@ export abstract class BaseCommand {
 
   protected beforeRun(): void {
     if (this.argv?.["print-statistics"]) {
-      this.statistics.startCpuUsage = cpuUsage();
       this.statistics.startTimeMs = new Date().getTime();
     }
   }
 
   protected afterRun(): void {
     if (this.argv?.["print-statistics"] && this.statistics?.startCpuUsage) {
-      this.statistics.finalCpuUsage = cpuUsage(this.statistics.startCpuUsage);
       this.statistics.endTimeMs = new Date().getTime();
       this.displayStatistics();
     }

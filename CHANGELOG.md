@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.16.2] - 2024-09-30
+
+### Refactor
+
+- Remove useless statistic that can cause issues if the framework is used on a web environment.
+
 ## [0.16.1] - 2024-09-04
 
 ### Improve
