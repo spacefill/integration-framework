@@ -28,6 +28,35 @@ declare namespace Components {
      */
     export type BarcodeTypeEnum = "EAN" | "UPC";
     /**
+     * Body_post_v1_logistic_management_order_upload_document_v1_logistic_management_documents__post
+     */
+    export interface BodyPostV1LogisticManagementOrderUploadDocumentV1LogisticManagementDocumentsPost {
+      /**
+       * File
+       */
+      file: string; // binary
+      /**
+       * Types
+       * List of document types. If no `order_id` is provided, only the first type will be used. Also, if no `order_id` is provided and you want to create an Invoice, use the type INVOICE.
+       */
+      types?: string[];
+      /**
+       * Order Id
+       * Order main identifier.
+       */
+      order_id?: string; // uuid
+      /**
+       * Customer Id
+       * Customer main identifier. Used to link document to a customer.
+       */
+      customer_id?: string; // uuid
+      /**
+       * Warehouse Id
+       * Warehouse main identifier. Used to link document to a warehouse.
+       */
+      warehouse_id?: string; // uuid
+    }
+    /**
      * Body_post_v1_logistic_management_order_upload_document_v1_logistic_management_orders__order_id__documents__post
      */
     export interface BodyPostV1LogisticManagementOrderUploadDocumentV1LogisticManagementOrdersOrderIdDocumentsPost {
@@ -77,6 +106,60 @@ declare namespace Components {
        * Comment
        */
       comment?: string;
+    }
+    /**
+     * Body_post_v1_logistic_management_warehouse_finishes_preparation_action_v1_logistic_management_orders__order_id__warehouse_finishes_preparation_action_post
+     */
+    export interface BodyPostV1LogisticManagementWarehouseFinishesPreparationActionV1LogisticManagementOrdersOrderIdWarehouseFinishesPreparationActionPost {
+      /**
+       * Order Items
+       * List of order items with information (reference, batch, packaging type, expected quantity).
+       */
+      order_items?: /* InputWarehouseFinishesPreparationAction */ InputWarehouseFinishesPreparationAction[];
+    }
+    /**
+     * CreateSyncedItemRequest
+     */
+    export interface CreateSyncedItemRequest {
+      /**
+       * Integration Key
+       */
+      integration_key: string;
+      /**
+       * Date
+       */
+      date: string;
+      direction: /**
+       * SyncedItemDirection
+       * An enumeration.
+       */
+      SyncedItemDirection;
+      /**
+       * Items
+       */
+      items: /* CreateSyncedItemRequestItem */ CreateSyncedItemRequestItem[];
+      /**
+       * Warehouse Id
+       */
+      warehouse_id?: string;
+      /**
+       * Customer Id
+       */
+      customer_id?: string;
+    }
+    /**
+     * CreateSyncedItemRequestItem
+     */
+    export interface CreateSyncedItemRequestItem {
+      /**
+       * Item Id
+       */
+      item_id: string; // uuid4
+      type: /**
+       * SyncedItemType
+       * An enumeration.
+       */
+      SyncedItemType;
     }
     /**
      * CustomerAddressTypeEnum
@@ -559,6 +642,16 @@ declare namespace Components {
        */
       entry_expeditor_phone_number?: string; // ^\+[1-9]\d{1,14}$
       /**
+       * Entry Expeditor First Name
+       * First name of the sender's address.
+       */
+      entry_expeditor_first_name?: string;
+      /**
+       * Entry Expeditor Last Name
+       * Last name of the sender's address.
+       */
+      entry_expeditor_last_name?: string;
+      /**
        * CustomerAddressTypeEnum
        * Address type of the sender's address.
        */
@@ -618,6 +711,16 @@ declare namespace Components {
        * Phone number of the recipient's address.
        */
       exit_final_recipient_phone_number?: string;
+      /**
+       * Exit Final Recipient First Name
+       * First name of the recipient's address.
+       */
+      exit_final_recipient_first_name?: string;
+      /**
+       * Exit Final Recipient Last Name
+       * Last name of the recipient's address.
+       */
+      exit_final_recipient_last_name?: string;
       /**
        * CustomerAddressTypeEnum
        * Address type of the recipient's address.
@@ -699,6 +802,8 @@ declare namespace Components {
      *   "entry_expeditor_address_lat": "12.0001",
      *   "entry_expeditor_address_lng": "12.0001",
      *   "entry_expeditor_address_type": "string",
+     *   "entry_expeditor_first_name": "string",
+     *   "entry_expeditor_last_name": "string",
      *   "entry_expeditor_planned_datetime_range": {
      *     "datetime_from": "2025-09-28T14:12:41.538Z",
      *     "datetime_to": "2025-09-28T15:12:41.538Z"
@@ -706,9 +811,23 @@ declare namespace Components {
      *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
      *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
      *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+     *   "ext_erp_service_id": "string",
+     *   "ext_tms_service_id": "string",
+     *   "ext_wms_service_id": "string",
+     *   "ext_tms_carrier_id": "string",
+     *   "ext_erp_carrier_id": "string",
+     *   "ext_wms_carrier_id": "string",
      *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
      *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
      *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
+     *   "billing_address_name": "string",
+     *   "billing_address_first_name": "string",
+     *   "billing_address_last_name": "string",
+     *   "billing_address_address_line1": "string",
+     *   "billing_address_zip": "string",
+     *   "billing_address_city": "string",
+     *   "billing_address_country_code": "string",
+     *   "billing_address_details": "string",
      *   "metadata": {
      *     "key": "value"
      *   },
@@ -771,6 +890,11 @@ declare namespace Components {
        */
       ext_tms_carrier_id?: string;
       /**
+       * Ext Wms Carrier Id
+       * Carrier identifier used in the WMS software.
+       */
+      ext_wms_carrier_id?: string;
+      /**
        * Ext Erp Carrier Id
        * Carrier identifier used in the ERP software.
        */
@@ -780,6 +904,11 @@ declare namespace Components {
        * Service identifier used in the TMS software.
        */
       ext_tms_service_id?: string;
+      /**
+       * Ext Wms Service Id
+       * Service identifier used in the WMS software.
+       */
+      ext_wms_service_id?: string;
       /**
        * Ext Erp Service Id
        * Service identifier used in the ERP software.
@@ -824,6 +953,46 @@ declare namespace Components {
        * Identifier of carrier company in charge of transport
        */
       transport_carrier_id?: string; // uuid
+      /**
+       * Billing Address Name
+       * Address name for the billing.
+       */
+      billing_address_name?: string;
+      /**
+       * Billing Address First Name
+       * First name of the billing address.
+       */
+      billing_address_first_name?: string;
+      /**
+       * Billing Address Last Name
+       * Last name of the billing address.
+       */
+      billing_address_last_name?: string;
+      /**
+       * Billing Address Address Line1
+       * Line of the billing address.
+       */
+      billing_address_address_line1?: string;
+      /**
+       * Billing Address Zip
+       * Postal code of the billing address.
+       */
+      billing_address_zip?: string;
+      /**
+       * Billing Address City
+       * City of the billing address.
+       */
+      billing_address_city?: string;
+      /**
+       * Billing Address Country Code
+       * Country code (ISO 3166-1 alpha-2) of the billing address.
+       */
+      billing_address_country_code?: string;
+      /**
+       * Billing Address Details
+       * Billing contact information.
+       */
+      billing_address_details?: string;
       /**
        * Service Id
        * Identifier of service of a carrier in charge of transport
@@ -914,6 +1083,16 @@ declare namespace Components {
        * Phone number of the sender's address.
        */
       entry_expeditor_phone_number?: string; // ^\+[1-9]\d{1,14}$
+      /**
+       * Entry Expeditor First Name
+       * First name of the sender's address.
+       */
+      entry_expeditor_first_name?: string;
+      /**
+       * Entry Expeditor Last Name
+       * Last name of the sender's address.
+       */
+      entry_expeditor_last_name?: string;
       /**
        * CustomerAddressTypeEnum
        * Address type of the sender's address.
@@ -1038,6 +1217,12 @@ declare namespace Components {
      *   "edi_erp_warehouse_id": "string",
      *   "edi_wms_warehouse_id": "string",
      *   "edi_tms_warehouse_id": "string",
+     *   "ext_erp_service_id": "string",
+     *   "ext_tms_service_id": "string",
+     *   "ext_wms_service_id": "string",
+     *   "ext_tms_carrier_id": "string",
+     *   "ext_erp_carrier_id": "string",
+     *   "ext_wms_carrier_id": "string",
      *   "comment": "Additional comment",
      *   "planned_execution_datetime_range": {
      *     "datetime_from": "2025-09-28T15:12:41.538Z",
@@ -1054,6 +1239,8 @@ declare namespace Components {
      *   "exit_final_recipient_address_lat": "12.34",
      *   "exit_final_recipient_address_lng": "2.34",
      *   "exit_final_recipient_address_type": "string",
+     *   "exit_final_recipient_first_name": "string",
+     *   "exit_final_recipient_last_name": "string",
      *   "exit_final_recipient_planned_datetime_range": {
      *     "datetime_from": "2025-09-28T15:12:41.538Z",
      *     "datetime_to": "2025-09-28T15:12:41.538Z"
@@ -1064,6 +1251,14 @@ declare namespace Components {
      *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
      *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
      *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
+     *   "billing_address_name": "string",
+     *   "billing_address_first_name": "string",
+     *   "billing_address_last_name": "string",
+     *   "billing_address_address_line1": "string",
+     *   "billing_address_zip": "string",
+     *   "billing_address_city": "string",
+     *   "billing_address_country_code": "string",
+     *   "billing_address_details": "string",
      *   "metadata": {
      *     "key": "value"
      *   },
@@ -1118,6 +1313,11 @@ declare namespace Components {
        */
       ext_tms_carrier_id?: string;
       /**
+       * Ext Wms Carrier Id
+       * Carrier identifier used in the WMS software.
+       */
+      ext_wms_carrier_id?: string;
+      /**
        * Ext Erp Carrier Id
        * Carrier identifier used in the ERP software.
        */
@@ -1127,6 +1327,11 @@ declare namespace Components {
        * Service identifier used in the TMS software.
        */
       ext_tms_service_id?: string;
+      /**
+       * Ext Wms Service Id
+       * Service identifier used in the WMS software.
+       */
+      ext_wms_service_id?: string;
       /**
        * Ext Erp Service Id
        * Service identifier used in the ERP software.
@@ -1183,6 +1388,46 @@ declare namespace Components {
          */
         datetime_to?: string; // date-time
       };
+      /**
+       * Billing Address Name
+       * Address name for the billing.
+       */
+      billing_address_name?: string;
+      /**
+       * Billing Address First Name
+       * First name of the billing address.
+       */
+      billing_address_first_name?: string;
+      /**
+       * Billing Address Last Name
+       * Last name of the billing address.
+       */
+      billing_address_last_name?: string;
+      /**
+       * Billing Address Address Line1
+       * Line of the billing address.
+       */
+      billing_address_address_line1?: string;
+      /**
+       * Billing Address Zip
+       * Postal code of the billing address.
+       */
+      billing_address_zip?: string;
+      /**
+       * Billing Address City
+       * City of the billing address.
+       */
+      billing_address_city?: string;
+      /**
+       * Billing Address Country Code
+       * Country code (ISO 3166-1 alpha-2) of the billing address.
+       */
+      billing_address_country_code?: string;
+      /**
+       * Billing Address Details
+       * Billing contact information.
+       */
+      billing_address_details?: string;
       /**
        * Transport Phone Number
        * Transport unit phone number
@@ -1292,6 +1537,16 @@ declare namespace Components {
        * Phone number of the recipient's address.
        */
       exit_final_recipient_phone_number?: string;
+      /**
+       * Exit Final Recipient First Name
+       * First name of the recipient's address.
+       */
+      exit_final_recipient_first_name?: string;
+      /**
+       * Exit Final Recipient Last Name
+       * Last name of the recipient's address.
+       */
+      exit_final_recipient_last_name?: string;
       /**
        * CustomerAddressTypeEnum
        * Address type of the recipient's address.
@@ -2093,6 +2348,11 @@ declare namespace Components {
        * List of inventory adjustment items with information (reference, batch, SSCC, actual quantity, difference ).
        */
       inventory_adjustement_items?: /* InputInventoryAdjustementItem */ InputInventoryAdjustementItem[];
+      /**
+       * Inventory Date
+       * Date of the inventory
+       */
+      inventory_date?: string; // date-time
     }
     /**
      * InputPostMasterItem
@@ -2705,11 +2965,15 @@ declare namespace Components {
      * example:
      * {
      *   "entry_expeditor_address_type": "string",
+     *   "entry_expeditor_first_name": "string",
+     *   "entry_expeditor_last_name": "string",
      *   "entry_expeditor_planned_datetime_range": {
      *     "datetime_from": "2022-05-27T13:22:47.917Z",
      *     "datetime_to": "2022-05-27T13:22:47.917Z"
      *   },
      *   "exit_final_recipient_address_type": "string",
+     *   "exit_final_recipient_first_name": "string",
+     *   "exit_final_recipient_last_name": "string",
      *   "exit_final_recipient_planned_datetime_range": {
      *     "datetime_from": "2022-04-28T15:05:55.935Z",
      *     "datetime_to": "2022-04-28T15:05:55.935Z"
@@ -2838,6 +3102,16 @@ declare namespace Components {
        */
       entry_expeditor_phone_number?: string; // ^\+[1-9]\d{1,14}$
       /**
+       * Entry Expeditor First Name
+       * First name of the sender's address.
+       */
+      entry_expeditor_first_name?: string;
+      /**
+       * Entry Expeditor Last Name
+       * Last name of the sender's address.
+       */
+      entry_expeditor_last_name?: string;
+      /**
        * CustomerAddressTypeEnum
        * Address type of the sender's address.
        */
@@ -2916,6 +3190,16 @@ declare namespace Components {
        * Phone number of the recipient's address.
        */
       exit_final_recipient_phone_number?: string;
+      /**
+       * Exit Final Recipient First Name
+       * First name of the recipient's address.
+       */
+      exit_final_recipient_first_name?: string;
+      /**
+       * Exit Final Recipient Last Name
+       * Last name of the recipient's address.
+       */
+      exit_final_recipient_last_name?: string;
       /**
        * CustomerAddressTypeEnum
        * Address type of the recipient's address.
@@ -3018,6 +3302,41 @@ declare namespace Components {
        * Deprecated, use transport_carrier_id instead
        */
       transport_management_owner?: "PROVIDER" | "SHIPPER";
+      /**
+       * Ext Tms Carrier Id
+       * Carrier identifier used in the TMS software.
+       */
+      ext_tms_carrier_id?: string;
+      /**
+       * Ext Wms Carrier Id
+       * Carrier identifier used in the WMS software.
+       */
+      ext_wms_carrier_id?: string;
+      /**
+       * Ext Erp Carrier Id
+       * Carrier identifier used in the ERP software.
+       */
+      ext_erp_carrier_id?: string;
+      /**
+       * Ext Tms Service Id
+       * Service identifier used in the TMS software.
+       */
+      ext_tms_service_id?: string;
+      /**
+       * Ext Wms Service Id
+       * Service identifier used in the WMS software.
+       */
+      ext_wms_service_id?: string;
+      /**
+       * Ext Erp Service Id
+       * Service identifier used in the ERP software.
+       */
+      ext_erp_service_id?: string;
+      /**
+       * Customer Carrier Service Id
+       * Service identifier.
+       */
+      customer_carrier_service_id?: string;
     }
     /**
      * InputShipperUpdateOrderActionOrderItem
@@ -3245,6 +3564,14 @@ declare namespace Components {
      *     "datetime_from": "2022-05-11T06:00:00.000Z",
      *     "datetime_to": "2022-05-11T10:00:00.000Z"
      *   },
+     *   "billing_address_name": "string",
+     *   "billing_address_first_name": "string",
+     *   "billing_address_last_name": "string",
+     *   "billing_address_address_line1": "string",
+     *   "billing_address_zip": "string",
+     *   "billing_address_city": "string",
+     *   "billing_address_country_code": "string",
+     *   "billing_address_details": "string",
      *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
      *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
      *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
@@ -3254,6 +3581,12 @@ declare namespace Components {
      *   "edi_erp_shipper_id": "string",
      *   "edi_wms_shipper_id": "string",
      *   "edi_tms_shipper_id": "string",
+     *   "ext_erp_service_id": "string",
+     *   "ext_tms_service_id": "string",
+     *   "ext_wms_service_id": "string",
+     *   "ext_tms_carrier_id": "string",
+     *   "ext_erp_carrier_id": "string",
+     *   "ext_wms_carrier_id": "string",
      *   "transfered_to_erp_at": "2022-05-11T10:00:00.000Z",
      *   "transfered_to_wms_at": "2022-05-11T10:00:00.000Z",
      *   "transfered_to_tms_at": "2022-05-11T10:00:00.000Z",
@@ -3379,6 +3712,46 @@ declare namespace Components {
        * Warehouse identifier used in the TMS software.
        */
       edi_tms_warehouse_id?: string;
+      /**
+       * Billing Address Name
+       * Address name for the billing.
+       */
+      billing_address_name?: string;
+      /**
+       * Billing Address First Name
+       * First name of the billing address.
+       */
+      billing_address_first_name?: string;
+      /**
+       * Billing Address Last Name
+       * Last name of the billing address.
+       */
+      billing_address_last_name?: string;
+      /**
+       * Billing Address Address Line1
+       * Line of the billing address.
+       */
+      billing_address_address_line1?: string;
+      /**
+       * Billing Address Zip
+       * Postal code of the billing address.
+       */
+      billing_address_zip?: string;
+      /**
+       * Billing Address City
+       * City of the billing address.
+       */
+      billing_address_city?: string;
+      /**
+       * Billing Address Country Code
+       * Country code (ISO 3166-1 alpha-2) of the billing address.
+       */
+      billing_address_country_code?: string;
+      /**
+       * Billing Address Details
+       * Billing contact information.
+       */
+      billing_address_details?: string;
       /**
        * OrderTypeEnum
        * Type of the order.
@@ -3519,6 +3892,16 @@ declare namespace Components {
        */
       entry_expeditor_phone_number?: string; // ^\+[1-9]\d{1,14}$
       /**
+       * Entry Expeditor First Name
+       * First name of the sender's address.
+       */
+      entry_expeditor_first_name?: string;
+      /**
+       * Entry Expeditor Last Name
+       * Last name of the sender's address.
+       */
+      entry_expeditor_last_name?: string;
+      /**
        * CustomerAddressTypeEnum
        * Address type of the sender's address.
        */
@@ -3589,6 +3972,16 @@ declare namespace Components {
        */
       exit_final_recipient_address_type?: "STORE" | "WAREHOUSE" | "FACTORY" | "INDIVIDUAL" | "OTHER";
       /**
+       * Exit Final Recipient First Name
+       * First name of the recipient's address.
+       */
+      exit_final_recipient_first_name?: string;
+      /**
+       * Exit Final Recipient Last Name
+       * Last name of the recipient's address.
+       */
+      exit_final_recipient_last_name?: string;
+      /**
        * Entry Expeditor Planned Datetime Range
        * Sender's collection date range.
        * example:
@@ -3658,6 +4051,36 @@ declare namespace Components {
        * Deprecated, use transport_carrier_id instead
        */
       transport_management_owner?: "PROVIDER" | "SHIPPER";
+      /**
+       * Ext Erp Service Id
+       * Transport Service identifier used in the TMS software.
+       */
+      ext_erp_service_id?: string;
+      /**
+       * Ext Tms Service Id
+       * Transport Service identifier used in the ERP software.
+       */
+      ext_tms_service_id?: string;
+      /**
+       * Ext Wms Service Id
+       * Transport Service identifier used in the WMS software.
+       */
+      ext_wms_service_id?: string;
+      /**
+       * Ext Tms Carrier Id
+       * Transport carrier identifier used in the TMS software.
+       */
+      ext_tms_carrier_id?: string;
+      /**
+       * Ext Erp Carrier Id
+       * Transport carrier identifier used in the ERP software.
+       */
+      ext_erp_carrier_id?: string;
+      /**
+       * Ext Wms Carrier Id
+       * Transport carrier identifier used in the WMS software.
+       */
+      ext_wms_carrier_id?: string;
     }
     /**
      * InputWarehouseCreatesOrderActionOrderItem
@@ -3754,15 +4177,108 @@ declare namespace Components {
       };
     }
     /**
+     * InputWarehouseFinishesPreparationAction
+     */
+    export interface InputWarehouseFinishesPreparationAction {
+      /**
+       * Id
+       */
+      id?: string; // uuid
+      /**
+       * Master Item Id
+       * Technical reference identifier.
+       */
+      master_item_id?: string; // uuid
+      /**
+       * Item Reference
+       * Unique reference code.
+       */
+      item_reference?: string;
+      /**
+       * Edi Erp Id
+       * Reference identifier used in the ERP software.
+       */
+      edi_erp_id?: string;
+      /**
+       * Edi Wms Id
+       * Reference identifier used in the WMS software.
+       */
+      edi_wms_id?: string;
+      /**
+       * Edi Tms Id
+       * Reference identifier used in the TMS software.
+       */
+      edi_tms_id?: string;
+      /**
+       * Batch Id
+       * Technical batch identifer.
+       */
+      batch_id?: string; // uuid
+      /**
+       * Batch Name
+       * Name of the batch.
+       */
+      batch_name?: string;
+      /**
+       * Batch Edi Erp Id
+       * Batch identifier used in the ERP software.
+       */
+      batch_edi_erp_id?: string;
+      /**
+       * Batch Edi Wms Id
+       * Batch identifier used in the WMS software.
+       */
+      batch_edi_wms_id?: string;
+      /**
+       * Batch Edi Tms Id
+       * Batch identifier used in the TMS software.
+       */
+      batch_edi_tms_id?: string;
+      /**
+       * Pallet Sscc
+       * Deprecated, serial Shipping Container Code. More info [here](https://www.gs1.org/standards/id-keys/sscc).
+       */
+      pallet_sscc?: string;
+      /**
+       * ItemPackagingTypeEnum
+       * Packaging type used for the quantity.
+       */
+      item_packaging_type?: "PALLET" | "CARDBOARD_BOX" | "EACH";
+      /**
+       * Actual Quantity
+       * Actual quantity, i.e. if `item_packaging_type`="PALLET", the quantity is expressed in pallets.
+       */
+      actual_quantity: number;
+      /**
+       * Sscc Id
+       * Technical sscc identifer.
+       */
+      sscc_id?: string; // uuid
+      /**
+       * Serial Shipping Container Code
+       * Name of the sscc
+       */
+      serial_shipping_container_code?: string;
+      /**
+       * Custom Fields
+       * Custom fields on order items are used to store additional information about the items in your orders. Custom fields are passed in a JSON key:value format.
+       */
+      custom_fields?: {
+        [key: string]: any;
+      };
+      /**
+       * Granularity Fields
+       * Granularity fields on order items are used to store additional information about the stock in your orders. Granularity fields are passed in a JSON key:value format.
+       */
+      granularity_fields?: {
+        [key: string]: any;
+      };
+    }
+    /**
      * ItemPackagingTypeEnum
      * An enumeration.
      */
     export type ItemPackagingTypeEnum = "PALLET" | "CARDBOARD_BOX" | "EACH";
-    /**
-     * ItemSelectionMethodEnum
-     * An enumeration.
-     */
-    export type ItemSelectionMethodEnum = "WHATEVER_THE_BATCH";
     /**
      * OrderStatusEnum
      * An enumeration.
@@ -4171,6 +4687,46 @@ declare namespace Components {
        * Shipper identifier used in the WMS software.
        */
       ext_shipper_wms_id?: string;
+      /**
+       * Ext Tms Service Id
+       * Service identifier used in the TMS software.
+       */
+      ext_tms_service_id?: string;
+      /**
+       * Ext Wms Service Id
+       * Service identifier used in the WMS software.
+       */
+      ext_wms_service_id?: string;
+      /**
+       * Ext Erp Service Id
+       * Service identifier used in the ERP software.
+       */
+      ext_erp_service_id?: string;
+    }
+    /**
+     * OutputDocument
+     */
+    export interface OutputDocument {
+      /**
+       * Id
+       * Document main identifier.
+       */
+      id: string; // uuid
+      /**
+       * Name
+       * Name of the document.
+       */
+      name: string;
+      /**
+       * Type
+       * Type of the document.
+       */
+      type?: string[];
+      /**
+       * Created At
+       * Creation date of the document.
+       */
+      created_at: string; // date-time
     }
     /**
      * OutputGlobalStockByBatch
@@ -5195,7 +5751,7 @@ declare namespace Components {
          * Date
          * Date for which the forecasted quantities are provided.
          */
-        date: string; // date
+        date?: string; // date
         /**
          * Number Of Complete Pallet
          * Number of forecasted complete pallets.
@@ -5275,7 +5831,7 @@ declare namespace Components {
       /**
        * Date
        */
-      date: string; // date
+      date?: string; // date
       /**
        * Number Of Complete Pallet
        * Number of complete pallets.
@@ -5340,7 +5896,7 @@ declare namespace Components {
        * Date
        * Date for which the forecasted quantities are provided.
        */
-      date: string; // date
+      date?: string; // date
       /**
        * Number Of Complete Pallet
        * Number of forecasted complete pallets.
@@ -5498,6 +6054,8 @@ declare namespace Components {
      *   "entry_expeditor_address_lat": "string",
      *   "entry_expeditor_address_lng": "string",
      *   "entry_expeditor_address_type": "string",
+     *   "entry_expeditor_first_name": "string",
+     *   "entry_expeditor_last_name": "string",
      *   "entry_expeditor_planned_datetime_range": {
      *     "datetime_from": "2022-05-17T09:37:15.337Z",
      *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -5512,6 +6070,8 @@ declare namespace Components {
      *   "exit_final_recipient_address_lat": "string",
      *   "exit_final_recipient_address_lng": "string",
      *   "exit_final_recipient_address_type": "string",
+     *   "exit_final_recipient_first_name": "string",
+     *   "exit_final_recipient_last_name": "string",
      *   "exit_final_recipient_planned_datetime_range": {
      *     "datetime_from": "2022-05-17T09:37:15.337Z",
      *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -5519,6 +6079,12 @@ declare namespace Components {
      *   "edi_erp_id": "string",
      *   "edi_wms_id": "string",
      *   "edi_tms_id": "string",
+     *   "ext_erp_service_id": "string",
+     *   "ext_tms_service_id": "string",
+     *   "ext_wms_service_id": "string",
+     *   "ext_tms_carrier_id": "string",
+     *   "ext_erp_carrier_id": "string",
+     *   "ext_wms_carrier_id": "string",
      *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
      *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
      *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -5527,6 +6093,16 @@ declare namespace Components {
      *   "updated_at": "2022-05-17T09:37:15.337Z",
      *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
      *   "metadata": {},
+     *   "billing_address": {
+     *     "billing_address_name": "string",
+     *     "billing_address_first_name": "string",
+     *     "billing_address_last_name": "string",
+     *     "billing_address_address_line1": "string",
+     *     "billing_address_zip": "string",
+     *     "billing_address_city": "string",
+     *     "billing_address_country_code": "string",
+     *     "billing_address_details": "string"
+     *   },
      *   "custom_fields": {
      *     "key1": "Value",
      *     "key2": "Value"
@@ -5603,6 +6179,11 @@ declare namespace Components {
        */
       shipper_order_reference?: string;
       /**
+       * Documents
+       * List of documents linked to an order.
+       */
+      documents?: /* OutputOrderDocument */ OutputOrderDocument[];
+      /**
        * Shipper Account Id
        * Main identifier of the associated shipper.
        */
@@ -5674,6 +6255,13 @@ declare namespace Components {
        * Any comment regarding the order.
        */
       comment?: string;
+      /**
+       * Billing Address
+       * Billing address of the order.
+       */
+      billing_address?: {
+        [key: string]: any;
+      };
       /**
        * Planned Execution Datetime Range
        * Date range for the execution of the planned order.
@@ -5786,30 +6374,50 @@ declare namespace Components {
        */
       transport_service_name?: string;
       /**
-       * Transport Ext Erp Service Id
+       * Ext Erp Service Id
        * Transport Service identifier used in the TMS software.
        */
-      transport_ext_erp_service_id?: string;
+      ext_erp_service_id?: string;
       /**
-       * Transport Ext Tms Service Id
+       * Ext Tms Service Id
        * Transport Service identifier used in the ERP software.
        */
-      transport_ext_tms_service_id?: string;
+      ext_tms_service_id?: string;
       /**
-       * Transport Ext Shipper Tms Id
+       * Ext Wms Service Id
+       * Transport Service identifier used in the WMS software.
+       */
+      ext_wms_service_id?: string;
+      /**
+       * Ext Tms Shipper Id
        * Transport shipper identifier used in the TMS software.
        */
-      transport_ext_shipper_tms_id?: string;
+      ext_tms_shipper_id?: string;
       /**
-       * Transport Ext Shipper Erp Id
+       * Ext Erp Shipper Id
        * Transport shipper identifier used in the ERP software.
        */
-      transport_ext_shipper_erp_id?: string;
+      ext_erp_shipper_id?: string;
       /**
-       * Transport Ext Shipper Wms Id
+       * Ext Wms Shipper Id
        * Transport shipper identifier used in the WMS software.
        */
-      transport_ext_shipper_wms_id?: string;
+      ext_wms_shipper_id?: string;
+      /**
+       * Ext Tms Carrier Id
+       * Transport carrier identifier used in the TMS software.
+       */
+      ext_tms_carrier_id?: string;
+      /**
+       * Ext Erp Carrier Id
+       * Transport carrier identifier used in the ERP software.
+       */
+      ext_erp_carrier_id?: string;
+      /**
+       * Ext Wms Carrier Id
+       * Transport carrier identifier used in the WMS software.
+       */
+      ext_wms_carrier_id?: string;
       /**
        * Entry Expeditor
        * Address name for the sender.
@@ -5870,6 +6478,16 @@ declare namespace Components {
        * Phone number of the sender's address.
        */
       entry_expeditor_phone_number?: string;
+      /**
+       * Entry Expeditor First Name
+       * First name of the sender's address.
+       */
+      entry_expeditor_first_name?: string;
+      /**
+       * Entry Expeditor Last Name
+       * Last name of the sender's address.
+       */
+      entry_expeditor_last_name?: string;
       /**
        * CustomerAddressTypeEnum
        * Address type of the sender's address.
@@ -5953,6 +6571,16 @@ declare namespace Components {
        * Phone number of the recipient's address.
        */
       exit_final_recipient_phone_number?: string;
+      /**
+       * Exit Final Recipient First Name
+       * First name of the recipient's address.
+       */
+      exit_final_recipient_first_name?: string;
+      /**
+       * Exit Final Recipient Last Name
+       * Last name of the recipient's address.
+       */
+      exit_final_recipient_last_name?: string;
       /**
        * CustomerAddressTypeEnum
        * Address type of the recipient's address.
@@ -6051,11 +6679,6 @@ declare namespace Components {
         [key: string]: any;
       };
       /**
-       * Documents
-       * List of documents linked to an order.
-       */
-      documents?: /* OutputOrderDocument */ OutputOrderDocument[];
-      /**
        * Custom Fields
        * Custom fields on orders are used to store additional information. Custom fields are passed in a JSON key:value format.
        */
@@ -6128,6 +6751,8 @@ declare namespace Components {
      *   "entry_expeditor_address_lat": "string",
      *   "entry_expeditor_address_lng": "string",
      *   "entry_expeditor_address_type": "string",
+     *   "entry_expeditor_first_name": "string",
+     *   "entry_expeditor_last_name": "string",
      *   "entry_expeditor_planned_datetime_range": {
      *     "datetime_from": "2022-05-17T09:37:15.337Z",
      *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -6142,6 +6767,8 @@ declare namespace Components {
      *   "exit_final_recipient_address_lat": "string",
      *   "exit_final_recipient_address_lng": "string",
      *   "exit_final_recipient_address_type": "string",
+     *   "exit_final_recipient_first_name": "string",
+     *   "exit_final_recipient_last_name": "string",
      *   "exit_final_recipient_planned_datetime_range": {
      *     "datetime_from": "2022-05-17T09:37:15.337Z",
      *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -6155,6 +6782,12 @@ declare namespace Components {
      *   "edi_erp_shipper_id": "string",
      *   "edi_wms_shipper_id": "string",
      *   "edi_tms_shipper_id": "string",
+     *   "ext_erp_service_id": "string",
+     *   "ext_tms_service_id": "string",
+     *   "ext_wms_service_id": "string",
+     *   "ext_tms_carrier_id": "string",
+     *   "ext_erp_carrier_id": "string",
+     *   "ext_wms_carrier_id": "string",
      *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
      *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
      *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -6163,6 +6796,16 @@ declare namespace Components {
      *   "updated_at": "2022-05-17T09:37:15.337Z",
      *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
      *   "metadata": {},
+     *   "billing_address": {
+     *     "billing_address_name": "string",
+     *     "billing_address_first_name": "string",
+     *     "billing_address_last_name": "string",
+     *     "billing_address_address_line1": "string",
+     *     "billing_address_zip": "string",
+     *     "billing_address_city": "string",
+     *     "billing_address_country_code": "string",
+     *     "billing_address_details": "string"
+     *   },
      *   "custom_fields": {
      *     "key1": "Value",
      *     "key2": "Value"
@@ -6490,15 +7133,50 @@ declare namespace Components {
        */
       transport_service_name?: string;
       /**
-       * Transport Ext Erp Service Id
-       * Transport Service identifier used in the TMS software.
-       */
-      transport_ext_erp_service_id?: string;
-      /**
-       * Transport Ext Tms Service Id
+       * Ext Erp Service Id
        * Transport Service identifier used in the ERP software.
        */
-      transport_ext_tms_service_id?: string;
+      ext_erp_service_id?: string;
+      /**
+       * Ext Tms Service Id
+       * Transport Service identifier used in the TMS software.
+       */
+      ext_tms_service_id?: string;
+      /**
+       * Ext Wms Service Id
+       * Transport Service identifier used in the WMS software.
+       */
+      ext_wms_service_id?: string;
+      /**
+       * Ext Tms Shipper Id
+       * Transport shipper identifier used in the TMS software.
+       */
+      ext_tms_shipper_id?: string;
+      /**
+       * Ext Erp Shipper Id
+       * Transport shipper identifier used in the ERP software.
+       */
+      ext_erp_shipper_id?: string;
+      /**
+       * Ext Wms Shipper Id
+       * Transport shipper identifier used in the WMS software.
+       */
+      ext_wms_shipper_id?: string;
+      /**
+       * Ext Tms Carrier Id
+       * Transport carrier identifier used in the TMS software.
+       */
+      ext_tms_carrier_id?: string;
+      /**
+       * Ext Erp Carrier Id
+       * Transport carrier identifier used in the ERP software.
+       */
+      ext_erp_carrier_id?: string;
+      /**
+       * Ext Wms Carrier Id
+       * Transport carrier identifier used in the WMS software.
+       */
+      ext_wms_carrier_id?: string;
       /**
        * Entry Expeditor
        * Address name for the sender.
@@ -6559,6 +7237,16 @@ declare namespace Components {
        * Phone number of the sender's address.
        */
       entry_expeditor_phone_number?: string;
+      /**
+       * Entry Expeditor First Name
+       * First name of the sender's address.
+       */
+      entry_expeditor_first_name?: string;
+      /**
+       * Entry Expeditor Last Name
+       * Last name of the sender's address.
+       */
+      entry_expeditor_last_name?: string;
       /**
        * CustomerAddressTypeEnum
        * Address type of the sender's address.
@@ -6642,6 +7330,16 @@ declare namespace Components {
        * Phone number of the recipient's address.
        */
       exit_final_recipient_phone_number?: string;
+      /**
+       * Exit Final Recipient First Name
+       * First name of the recipient's address.
+       */
+      exit_final_recipient_first_name?: string;
+      /**
+       * Exit Final Recipient Last Name
+       * Last name of the recipient's address.
+       */
+      exit_final_recipient_last_name?: string;
       /**
        * CustomerAddressTypeEnum
        * Address type of the recipient's address.
@@ -6777,6 +7475,13 @@ declare namespace Components {
         [key: string]: any;
       };
       /**
+       * Billing Address
+       * Billing address of the order.
+       */
+      billing_address?: {
+        [key: string]: any;
+      };
+      /**
        * Documents
        * List of documents linked to an order.
        */
@@ -6847,11 +7552,6 @@ declare namespace Components {
        */
       batch_edi_tms_id?: string;
       /**
-       * ItemSelectionMethodEnum
-       * Selection method chosen by the shipper when creating the order.<br />`WHATEVER_THE_BATCH` if the sender lets the warehouse choose the batch, null otherwise.
-       */
-      item_selection_method?: "WHATEVER_THE_BATCH";
-      /**
        * Pallet Sscc
        * Deprecated, serial Shipping Container Code. More info [here](https://www.gs1.org/standards/id-keys/sscc).
        */
@@ -6900,6 +7600,11 @@ declare namespace Components {
       granularity_fields?: {
         [key: string]: any;
       };
+      /**
+       * Type
+       * Type of the order item.
+       */
+      type?: string;
     }
     /**
      * OutputOrderItemEmbedded
@@ -6940,11 +7645,6 @@ declare namespace Components {
        * Name of the batch.
        */
       batch_name?: string;
-      /**
-       * ItemSelectionMethodEnum
-       * Selection method chosen by the shipper when creating the order.<br />`WHATEVER_THE_BATCH` if the sender lets the warehouse choose the batch, null otherwise.
-       */
-      item_selection_method?: "WHATEVER_THE_BATCH";
       /**
        * Batch Edi Erp Id
        * Batch identifier used in the ERP software.
@@ -8193,7 +8893,7 @@ declare namespace Components {
            * Date
            * Date for which the forecasted quantities are provided.
            */
-          date: string; // date
+          date?: string; // date
           /**
            * Number Of Complete Pallet
            * Number of forecasted complete pallets.
@@ -8322,6 +9022,16 @@ declare namespace Components {
      *   "delivery_planned_datetime_range": {
      *     "datetime_from": "2021-01-01T00:00:00Z",
      *     "datetime_to": "2021-01-01T00:00:00Z"
+     *   },
+     *   "billing_address": {
+     *     "billing_address_name": "str",
+     *     "billing_address_first_name": "str",
+     *     "billing_address_last_name": "str",
+     *     "billing_address_address_line1": "str",
+     *     "billing_address_zip": "str",
+     *     "billing_address_city": "str",
+     *     "billing_address_country_code": "str",
+     *     "billing_address_details": "str"
      *   },
      *   "pickup_effective_execution_date": "2021-01-01T00:00:00Z",
      *   "delivery_effective_execution_date": "2021-01-01T00:00:00Z",
@@ -8517,6 +9227,11 @@ declare namespace Components {
        */
       ext_tms_carrier_id?: string;
       /**
+       * Ext Wms Carrier Id
+       * Carrier identifier used in the WMS software.
+       */
+      ext_wms_carrier_id?: string;
+      /**
        * Ext Erp Carrier Id
        * Carrier identifier used in the ERP software.
        */
@@ -8526,6 +9241,11 @@ declare namespace Components {
        * Service identifier used in the TMS software.
        */
       ext_tms_service_id?: string;
+      /**
+       * Ext Wms Service Id
+       * Service identifier used in the WMS software.
+       */
+      ext_wms_service_id?: string;
       /**
        * Ext Erp Service Id
        * Service identifier used in the ERP software.
@@ -8586,6 +9306,13 @@ declare namespace Components {
        * The transport last update date
        */
       updated_at?: string; // date-time
+      /**
+       * Billing Address
+       * Billing address of the order.
+       */
+      billing_address?: {
+        [key: string]: any;
+      };
     }
     /**
      * OutputTransportOrderIdentifiers
@@ -9046,6 +9773,8 @@ declare namespace Components {
        *   "entry_expeditor_address_lat": "string",
        *   "entry_expeditor_address_lng": "string",
        *   "entry_expeditor_address_type": "string",
+       *   "entry_expeditor_first_name": "string",
+       *   "entry_expeditor_last_name": "string",
        *   "entry_expeditor_planned_datetime_range": {
        *     "datetime_from": "2022-05-17T09:37:15.337Z",
        *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -9060,6 +9789,8 @@ declare namespace Components {
        *   "exit_final_recipient_address_lat": "string",
        *   "exit_final_recipient_address_lng": "string",
        *   "exit_final_recipient_address_type": "string",
+       *   "exit_final_recipient_first_name": "string",
+       *   "exit_final_recipient_last_name": "string",
        *   "exit_final_recipient_planned_datetime_range": {
        *     "datetime_from": "2022-05-17T09:37:15.337Z",
        *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -9067,6 +9798,12 @@ declare namespace Components {
        *   "edi_erp_id": "string",
        *   "edi_wms_id": "string",
        *   "edi_tms_id": "string",
+       *   "ext_erp_service_id": "string",
+       *   "ext_tms_service_id": "string",
+       *   "ext_wms_service_id": "string",
+       *   "ext_tms_carrier_id": "string",
+       *   "ext_erp_carrier_id": "string",
+       *   "ext_wms_carrier_id": "string",
        *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
        *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
        *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -9075,6 +9812,16 @@ declare namespace Components {
        *   "updated_at": "2022-05-17T09:37:15.337Z",
        *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
        *   "metadata": {},
+       *   "billing_address": {
+       *     "billing_address_name": "string",
+       *     "billing_address_first_name": "string",
+       *     "billing_address_last_name": "string",
+       *     "billing_address_address_line1": "string",
+       *     "billing_address_zip": "string",
+       *     "billing_address_city": "string",
+       *     "billing_address_country_code": "string",
+       *     "billing_address_details": "string"
+       *   },
        *   "custom_fields": {
        *     "key1": "Value",
        *     "key2": "Value"
@@ -9259,6 +10006,16 @@ declare namespace Components {
        *     "datetime_from": "2021-01-01T00:00:00Z",
        *     "datetime_to": "2021-01-01T00:00:00Z"
        *   },
+       *   "billing_address": {
+       *     "billing_address_name": "str",
+       *     "billing_address_first_name": "str",
+       *     "billing_address_last_name": "str",
+       *     "billing_address_address_line1": "str",
+       *     "billing_address_zip": "str",
+       *     "billing_address_city": "str",
+       *     "billing_address_country_code": "str",
+       *     "billing_address_details": "str"
+       *   },
        *   "pickup_effective_execution_date": "2021-01-01T00:00:00Z",
        *   "delivery_effective_execution_date": "2021-01-01T00:00:00Z",
        *   "created_at": "2021-01-01T00:00:00Z",
@@ -9266,6 +10023,25 @@ declare namespace Components {
        * }
        */
       OutputTransport[];
+    }
+    /**
+     * RequestModel
+     */
+    export interface RequestModel {
+      /**
+       * Split By
+       */
+      split_by?: string[];
+      /**
+       * Date
+       */
+      date?: string;
+      /**
+       * Filters
+       */
+      filters?: {
+        [name: string]: string[];
+      }[];
     }
     /**
      * TransportStatusEnum
@@ -9301,6 +10077,16 @@ declare namespace Components {
       | "DELIVERY_MISSED"
       | "CANCELED"
       | "PARTIALLY_DELIVERED";
+    /**
+     * SyncedItemDirection
+     * An enumeration.
+     */
+    export type SyncedItemDirection = "received" | "sent";
+    /**
+     * SyncedItemType
+     * An enumeration.
+     */
+    export type SyncedItemType = "master_item" | "order" | "batch";
     /**
      * ValidationError
      */
@@ -10083,6 +10869,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10097,6 +10885,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10110,6 +10900,12 @@ declare namespace Paths {
          *   "edi_erp_shipper_id": "string",
          *   "edi_wms_shipper_id": "string",
          *   "edi_tms_shipper_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -10118,6 +10914,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -10610,6 +11416,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10624,6 +11432,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10631,6 +11441,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -10639,6 +11455,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -10765,6 +11591,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10779,6 +11607,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10786,6 +11616,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -10794,6 +11630,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -10920,6 +11766,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10934,6 +11782,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -10941,6 +11791,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -10949,6 +11805,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -11024,10 +11890,6 @@ declare namespace Paths {
        * Name of the batch.
        */
       export type BatchName = string;
-      /**
-       * Embedded
-       */
-      export type Embedded = string[];
       /**
        * Include Stock At Zero
        * Include SSCC having stock at 0
@@ -11140,7 +12002,6 @@ declare namespace Paths {
        * The number of records to retrieve.
        */
       Parameters.Limit;
-      embedded?: /* Embedded */ Parameters.Embedded;
     }
     namespace Responses {
       export type $200 =
@@ -11281,6 +12142,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -11295,6 +12158,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -11302,6 +12167,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -11310,6 +12181,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -11433,6 +12314,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -11447,6 +12330,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -11454,6 +12339,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -11462,6 +12353,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -11607,12 +12508,34 @@ declare namespace Paths {
     }
   }
   namespace PatchV1LogisticManagementMasterItem {
+    export interface HeaderParameters {
+      "spacefill-ctx-workflow"?: /* Spacefill-Ctx-Workflow */ Parameters.SpacefillCtxWorkflow;
+      "spacefill-ctx-integration-key"?: /* Spacefill-Ctx-Integration-Key */ Parameters.SpacefillCtxIntegrationKey;
+      "spacefill-ctx-warehouse-id"?: /* Spacefill-Ctx-Warehouse-Id */ Parameters.SpacefillCtxWarehouseId;
+      "spacefill-ctx-shipper-account-id"?: /* Spacefill-Ctx-Shipper-Account-Id */ Parameters.SpacefillCtxShipperAccountId;
+    }
     namespace Parameters {
       /**
        * Master Item Id
        * Technical reference identifier.
        */
       export type MasterItemId = string; // uuid
+      /**
+       * Spacefill-Ctx-Integration-Key
+       */
+      export type SpacefillCtxIntegrationKey = string;
+      /**
+       * Spacefill-Ctx-Shipper-Account-Id
+       */
+      export type SpacefillCtxShipperAccountId = string;
+      /**
+       * Spacefill-Ctx-Warehouse-Id
+       */
+      export type SpacefillCtxWarehouseId = string;
+      /**
+       * Spacefill-Ctx-Workflow
+       */
+      export type SpacefillCtxWorkflow = string;
     }
     export interface PathParameters {
       master_item_id: /**
@@ -11680,12 +12603,34 @@ declare namespace Paths {
     }
   }
   namespace PatchV1LogisticManagementOrder {
+    export interface HeaderParameters {
+      "spacefill-ctx-workflow"?: /* Spacefill-Ctx-Workflow */ Parameters.SpacefillCtxWorkflow;
+      "spacefill-ctx-integration-key"?: /* Spacefill-Ctx-Integration-Key */ Parameters.SpacefillCtxIntegrationKey;
+      "spacefill-ctx-warehouse-id"?: /* Spacefill-Ctx-Warehouse-Id */ Parameters.SpacefillCtxWarehouseId;
+      "spacefill-ctx-shipper-account-id"?: /* Spacefill-Ctx-Shipper-Account-Id */ Parameters.SpacefillCtxShipperAccountId;
+    }
     namespace Parameters {
       /**
        * Order Id
        * Order main identifier.
        */
       export type OrderId = string; // uuid
+      /**
+       * Spacefill-Ctx-Integration-Key
+       */
+      export type SpacefillCtxIntegrationKey = string;
+      /**
+       * Spacefill-Ctx-Shipper-Account-Id
+       */
+      export type SpacefillCtxShipperAccountId = string;
+      /**
+       * Spacefill-Ctx-Warehouse-Id
+       */
+      export type SpacefillCtxWarehouseId = string;
+      /**
+       * Spacefill-Ctx-Workflow
+       */
+      export type SpacefillCtxWorkflow = string;
     }
     export interface PathParameters {
       order_id: /**
@@ -11738,6 +12683,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -11752,6 +12699,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -11759,6 +12708,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -11767,6 +12722,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -11896,6 +12861,16 @@ declare namespace Paths {
          *     "datetime_from": "2021-01-01T00:00:00Z",
          *     "datetime_to": "2021-01-01T00:00:00Z"
          *   },
+         *   "billing_address": {
+         *     "billing_address_name": "str",
+         *     "billing_address_first_name": "str",
+         *     "billing_address_last_name": "str",
+         *     "billing_address_address_line1": "str",
+         *     "billing_address_zip": "str",
+         *     "billing_address_city": "str",
+         *     "billing_address_country_code": "str",
+         *     "billing_address_details": "str"
+         *   },
          *   "pickup_effective_execution_date": "2021-01-01T00:00:00Z",
          *   "delivery_effective_execution_date": "2021-01-01T00:00:00Z",
          *   "created_at": "2021-01-01T00:00:00Z",
@@ -11903,6 +12878,13 @@ declare namespace Paths {
          * }
          */
         Components.Schemas.OutputTransport;
+      export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+    }
+  }
+  namespace PostSyncedItems {
+    export type RequestBody = /* CreateSyncedItemRequest */ Components.Schemas.CreateSyncedItemRequest;
+    namespace Responses {
+      export type $200 = any;
       export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
     }
   }
@@ -12046,6 +13028,16 @@ declare namespace Paths {
          * }
          */
         Components.Schemas.OutputCarrier;
+      export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
+    }
+  }
+  namespace PostV1GetStock {
+    export type RequestBody = /* RequestModel */ Components.Schemas.RequestModel;
+    namespace Responses {
+      /**
+       * Response Post V1 Get Stock V1 Logistic Management Get Stock Post
+       */
+      export interface $200 {}
       export type $422 = /* HTTPValidationError */ Components.Schemas.HTTPValidationError;
     }
   }
@@ -12557,6 +13549,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12571,6 +13565,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12578,6 +13574,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -12586,6 +13588,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -12650,6 +13662,30 @@ declare namespace Paths {
     }
   }
   namespace PostV1LogisticManagementShipperCreateEntryOrderAction {
+    export interface HeaderParameters {
+      "spacefill-ctx-workflow"?: /* Spacefill-Ctx-Workflow */ Parameters.SpacefillCtxWorkflow;
+      "spacefill-ctx-integration-key"?: /* Spacefill-Ctx-Integration-Key */ Parameters.SpacefillCtxIntegrationKey;
+      "spacefill-ctx-warehouse-id"?: /* Spacefill-Ctx-Warehouse-Id */ Parameters.SpacefillCtxWarehouseId;
+      "spacefill-ctx-shipper-account-id"?: /* Spacefill-Ctx-Shipper-Account-Id */ Parameters.SpacefillCtxShipperAccountId;
+    }
+    namespace Parameters {
+      /**
+       * Spacefill-Ctx-Integration-Key
+       */
+      export type SpacefillCtxIntegrationKey = string;
+      /**
+       * Spacefill-Ctx-Shipper-Account-Id
+       */
+      export type SpacefillCtxShipperAccountId = string;
+      /**
+       * Spacefill-Ctx-Warehouse-Id
+       */
+      export type SpacefillCtxWarehouseId = string;
+      /**
+       * Spacefill-Ctx-Workflow
+       */
+      export type SpacefillCtxWorkflow = string;
+    }
     export type RequestBody =
       /**
        * InputOrderEntry
@@ -12676,6 +13712,8 @@ declare namespace Paths {
        *   "entry_expeditor_address_lat": "12.0001",
        *   "entry_expeditor_address_lng": "12.0001",
        *   "entry_expeditor_address_type": "string",
+       *   "entry_expeditor_first_name": "string",
+       *   "entry_expeditor_last_name": "string",
        *   "entry_expeditor_planned_datetime_range": {
        *     "datetime_from": "2025-09-28T14:12:41.538Z",
        *     "datetime_to": "2025-09-28T15:12:41.538Z"
@@ -12683,9 +13721,23 @@ declare namespace Paths {
        *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
        *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
        *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
+       *   "ext_erp_service_id": "string",
+       *   "ext_tms_service_id": "string",
+       *   "ext_wms_service_id": "string",
+       *   "ext_tms_carrier_id": "string",
+       *   "ext_erp_carrier_id": "string",
+       *   "ext_wms_carrier_id": "string",
        *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
        *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
        *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
+       *   "billing_address_name": "string",
+       *   "billing_address_first_name": "string",
+       *   "billing_address_last_name": "string",
+       *   "billing_address_address_line1": "string",
+       *   "billing_address_zip": "string",
+       *   "billing_address_city": "string",
+       *   "billing_address_country_code": "string",
+       *   "billing_address_details": "string",
        *   "metadata": {
        *     "key": "value"
        *   },
@@ -12755,6 +13807,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12769,6 +13823,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12776,6 +13832,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -12784,6 +13846,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -12848,6 +13920,30 @@ declare namespace Paths {
     }
   }
   namespace PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction {
+    export interface HeaderParameters {
+      "spacefill-ctx-workflow"?: /* Spacefill-Ctx-Workflow */ Parameters.SpacefillCtxWorkflow;
+      "spacefill-ctx-integration-key"?: /* Spacefill-Ctx-Integration-Key */ Parameters.SpacefillCtxIntegrationKey;
+      "spacefill-ctx-warehouse-id"?: /* Spacefill-Ctx-Warehouse-Id */ Parameters.SpacefillCtxWarehouseId;
+      "spacefill-ctx-shipper-account-id"?: /* Spacefill-Ctx-Shipper-Account-Id */ Parameters.SpacefillCtxShipperAccountId;
+    }
+    namespace Parameters {
+      /**
+       * Spacefill-Ctx-Integration-Key
+       */
+      export type SpacefillCtxIntegrationKey = string;
+      /**
+       * Spacefill-Ctx-Shipper-Account-Id
+       */
+      export type SpacefillCtxShipperAccountId = string;
+      /**
+       * Spacefill-Ctx-Warehouse-Id
+       */
+      export type SpacefillCtxWarehouseId = string;
+      /**
+       * Spacefill-Ctx-Workflow
+       */
+      export type SpacefillCtxWorkflow = string;
+    }
     export type RequestBody =
       /**
        * InputOrderDraft
@@ -12955,6 +14051,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12969,6 +14067,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -12976,6 +14076,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -12984,6 +14090,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -13048,6 +14164,30 @@ declare namespace Paths {
     }
   }
   namespace PostV1LogisticManagementShipperCreatesOrderExitAction {
+    export interface HeaderParameters {
+      "spacefill-ctx-workflow"?: /* Spacefill-Ctx-Workflow */ Parameters.SpacefillCtxWorkflow;
+      "spacefill-ctx-integration-key"?: /* Spacefill-Ctx-Integration-Key */ Parameters.SpacefillCtxIntegrationKey;
+      "spacefill-ctx-warehouse-id"?: /* Spacefill-Ctx-Warehouse-Id */ Parameters.SpacefillCtxWarehouseId;
+      "spacefill-ctx-shipper-account-id"?: /* Spacefill-Ctx-Shipper-Account-Id */ Parameters.SpacefillCtxShipperAccountId;
+    }
+    namespace Parameters {
+      /**
+       * Spacefill-Ctx-Integration-Key
+       */
+      export type SpacefillCtxIntegrationKey = string;
+      /**
+       * Spacefill-Ctx-Shipper-Account-Id
+       */
+      export type SpacefillCtxShipperAccountId = string;
+      /**
+       * Spacefill-Ctx-Warehouse-Id
+       */
+      export type SpacefillCtxWarehouseId = string;
+      /**
+       * Spacefill-Ctx-Workflow
+       */
+      export type SpacefillCtxWorkflow = string;
+    }
     export type RequestBody =
       /**
        * InputOrderExit
@@ -13059,6 +14199,12 @@ declare namespace Paths {
        *   "edi_erp_warehouse_id": "string",
        *   "edi_wms_warehouse_id": "string",
        *   "edi_tms_warehouse_id": "string",
+       *   "ext_erp_service_id": "string",
+       *   "ext_tms_service_id": "string",
+       *   "ext_wms_service_id": "string",
+       *   "ext_tms_carrier_id": "string",
+       *   "ext_erp_carrier_id": "string",
+       *   "ext_wms_carrier_id": "string",
        *   "comment": "Additional comment",
        *   "planned_execution_datetime_range": {
        *     "datetime_from": "2025-09-28T15:12:41.538Z",
@@ -13075,6 +14221,8 @@ declare namespace Paths {
        *   "exit_final_recipient_address_lat": "12.34",
        *   "exit_final_recipient_address_lng": "2.34",
        *   "exit_final_recipient_address_type": "string",
+       *   "exit_final_recipient_first_name": "string",
+       *   "exit_final_recipient_last_name": "string",
        *   "exit_final_recipient_planned_datetime_range": {
        *     "datetime_from": "2025-09-28T15:12:41.538Z",
        *     "datetime_to": "2025-09-28T15:12:41.538Z"
@@ -13085,6 +14233,14 @@ declare namespace Paths {
        *   "transfered_to_erp_at": "2022-04-25T09:43:07.742Z",
        *   "transfered_to_wms_at": "2022-04-25T09:43:07.742Z",
        *   "transfered_to_tms_at": "2022-04-25T09:43:07.742Z",
+       *   "billing_address_name": "string",
+       *   "billing_address_first_name": "string",
+       *   "billing_address_last_name": "string",
+       *   "billing_address_address_line1": "string",
+       *   "billing_address_zip": "string",
+       *   "billing_address_city": "string",
+       *   "billing_address_country_code": "string",
+       *   "billing_address_details": "string",
        *   "metadata": {
        *     "key": "value"
        *   },
@@ -13156,6 +14312,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13170,6 +14328,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13177,6 +14337,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -13185,6 +14351,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -13249,12 +14425,34 @@ declare namespace Paths {
     }
   }
   namespace PostV1LogisticManagementShipperUpdatesOrderAction {
+    export interface HeaderParameters {
+      "spacefill-ctx-workflow"?: /* Spacefill-Ctx-Workflow */ Parameters.SpacefillCtxWorkflow;
+      "spacefill-ctx-integration-key"?: /* Spacefill-Ctx-Integration-Key */ Parameters.SpacefillCtxIntegrationKey;
+      "spacefill-ctx-warehouse-id"?: /* Spacefill-Ctx-Warehouse-Id */ Parameters.SpacefillCtxWarehouseId;
+      "spacefill-ctx-shipper-account-id"?: /* Spacefill-Ctx-Shipper-Account-Id */ Parameters.SpacefillCtxShipperAccountId;
+    }
     namespace Parameters {
       /**
        * Order Id
        * Order main identifier.
        */
       export type OrderId = string; // uuid
+      /**
+       * Spacefill-Ctx-Integration-Key
+       */
+      export type SpacefillCtxIntegrationKey = string;
+      /**
+       * Spacefill-Ctx-Shipper-Account-Id
+       */
+      export type SpacefillCtxShipperAccountId = string;
+      /**
+       * Spacefill-Ctx-Warehouse-Id
+       */
+      export type SpacefillCtxWarehouseId = string;
+      /**
+       * Spacefill-Ctx-Workflow
+       */
+      export type SpacefillCtxWorkflow = string;
     }
     export interface PathParameters {
       order_id: /**
@@ -13269,11 +14467,15 @@ declare namespace Paths {
        * example:
        * {
        *   "entry_expeditor_address_type": "string",
+       *   "entry_expeditor_first_name": "string",
+       *   "entry_expeditor_last_name": "string",
        *   "entry_expeditor_planned_datetime_range": {
        *     "datetime_from": "2022-05-27T13:22:47.917Z",
        *     "datetime_to": "2022-05-27T13:22:47.917Z"
        *   },
        *   "exit_final_recipient_address_type": "string",
+       *   "exit_final_recipient_first_name": "string",
+       *   "exit_final_recipient_last_name": "string",
        *   "exit_final_recipient_planned_datetime_range": {
        *     "datetime_from": "2022-04-28T15:05:55.935Z",
        *     "datetime_to": "2022-04-28T15:05:55.935Z"
@@ -13345,6 +14547,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13359,6 +14563,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13366,6 +14572,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -13374,6 +14586,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -13495,6 +14717,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13509,6 +14733,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13516,6 +14742,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -13524,6 +14756,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -13647,6 +14889,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13661,6 +14905,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13668,6 +14914,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -13676,6 +14928,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -13799,6 +15061,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13813,6 +15077,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -13820,6 +15086,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -13828,6 +15100,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -13912,6 +15194,14 @@ declare namespace Paths {
        *     "datetime_from": "2022-05-11T06:00:00.000Z",
        *     "datetime_to": "2022-05-11T10:00:00.000Z"
        *   },
+       *   "billing_address_name": "string",
+       *   "billing_address_first_name": "string",
+       *   "billing_address_last_name": "string",
+       *   "billing_address_address_line1": "string",
+       *   "billing_address_zip": "string",
+       *   "billing_address_city": "string",
+       *   "billing_address_country_code": "string",
+       *   "billing_address_details": "string",
        *   "edi_erp_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
        *   "edi_wms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
        *   "edi_tms_id": "1ddddddd-1ddd-1ddd-1ddd-1dddddddddd",
@@ -13921,6 +15211,12 @@ declare namespace Paths {
        *   "edi_erp_shipper_id": "string",
        *   "edi_wms_shipper_id": "string",
        *   "edi_tms_shipper_id": "string",
+       *   "ext_erp_service_id": "string",
+       *   "ext_tms_service_id": "string",
+       *   "ext_wms_service_id": "string",
+       *   "ext_tms_carrier_id": "string",
+       *   "ext_erp_carrier_id": "string",
+       *   "ext_wms_carrier_id": "string",
        *   "transfered_to_erp_at": "2022-05-11T10:00:00.000Z",
        *   "transfered_to_wms_at": "2022-05-11T10:00:00.000Z",
        *   "transfered_to_tms_at": "2022-05-11T10:00:00.000Z",
@@ -14044,6 +15340,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14058,6 +15356,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14065,6 +15365,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -14073,6 +15379,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -14201,6 +15517,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14215,6 +15533,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14222,6 +15542,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -14230,6 +15556,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -14308,6 +15644,8 @@ declare namespace Paths {
        */
       Parameters.OrderId /* uuid */;
     }
+    export type RequestBody =
+      /* Body_post_v1_logistic_management_warehouse_finishes_preparation_action_v1_logistic_management_orders__order_id__warehouse_finishes_preparation_action_post */ Components.Schemas.BodyPostV1LogisticManagementWarehouseFinishesPreparationActionV1LogisticManagementOrdersOrderIdWarehouseFinishesPreparationActionPost;
     namespace Responses {
       export type $200 =
         /**
@@ -14351,6 +15689,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14365,6 +15705,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14372,6 +15714,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -14380,6 +15728,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -14501,6 +15859,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14515,6 +15875,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14522,6 +15884,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -14530,6 +15898,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -14651,6 +16029,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14665,6 +16045,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14672,6 +16054,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -14680,6 +16068,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -14801,6 +16199,8 @@ declare namespace Paths {
          *   "entry_expeditor_address_lat": "string",
          *   "entry_expeditor_address_lng": "string",
          *   "entry_expeditor_address_type": "string",
+         *   "entry_expeditor_first_name": "string",
+         *   "entry_expeditor_last_name": "string",
          *   "entry_expeditor_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14815,6 +16215,8 @@ declare namespace Paths {
          *   "exit_final_recipient_address_lat": "string",
          *   "exit_final_recipient_address_lng": "string",
          *   "exit_final_recipient_address_type": "string",
+         *   "exit_final_recipient_first_name": "string",
+         *   "exit_final_recipient_last_name": "string",
          *   "exit_final_recipient_planned_datetime_range": {
          *     "datetime_from": "2022-05-17T09:37:15.337Z",
          *     "datetime_to": "2022-05-17T09:37:15.337Z"
@@ -14822,6 +16224,12 @@ declare namespace Paths {
          *   "edi_erp_id": "string",
          *   "edi_wms_id": "string",
          *   "edi_tms_id": "string",
+         *   "ext_erp_service_id": "string",
+         *   "ext_tms_service_id": "string",
+         *   "ext_wms_service_id": "string",
+         *   "ext_tms_carrier_id": "string",
+         *   "ext_erp_carrier_id": "string",
+         *   "ext_wms_carrier_id": "string",
          *   "transfered_to_erp_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_wms_at": "2022-05-17T09:37:15.337Z",
          *   "transfered_to_tms_at": "2022-05-17T09:37:15.337Z",
@@ -14830,6 +16238,16 @@ declare namespace Paths {
          *   "updated_at": "2022-05-17T09:37:15.337Z",
          *   "updated_by": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
          *   "metadata": {},
+         *   "billing_address": {
+         *     "billing_address_name": "string",
+         *     "billing_address_first_name": "string",
+         *     "billing_address_last_name": "string",
+         *     "billing_address_address_line1": "string",
+         *     "billing_address_zip": "string",
+         *     "billing_address_city": "string",
+         *     "billing_address_country_code": "string",
+         *     "billing_address_details": "string"
+         *   },
          *   "custom_fields": {
          *     "key1": "Value",
          *     "key2": "Value"
@@ -14938,12 +16356,34 @@ declare namespace Paths {
     }
   }
   namespace PutV1LogisticManagementMasterItem {
+    export interface HeaderParameters {
+      "spacefill-ctx-workflow"?: /* Spacefill-Ctx-Workflow */ Parameters.SpacefillCtxWorkflow;
+      "spacefill-ctx-integration-key"?: /* Spacefill-Ctx-Integration-Key */ Parameters.SpacefillCtxIntegrationKey;
+      "spacefill-ctx-warehouse-id"?: /* Spacefill-Ctx-Warehouse-Id */ Parameters.SpacefillCtxWarehouseId;
+      "spacefill-ctx-shipper-account-id"?: /* Spacefill-Ctx-Shipper-Account-Id */ Parameters.SpacefillCtxShipperAccountId;
+    }
     namespace Parameters {
       /**
        * Master Item Id
        * Technical reference identifier.
        */
       export type MasterItemId = string; // uuid
+      /**
+       * Spacefill-Ctx-Integration-Key
+       */
+      export type SpacefillCtxIntegrationKey = string;
+      /**
+       * Spacefill-Ctx-Shipper-Account-Id
+       */
+      export type SpacefillCtxShipperAccountId = string;
+      /**
+       * Spacefill-Ctx-Warehouse-Id
+       */
+      export type SpacefillCtxWarehouseId = string;
+      /**
+       * Spacefill-Ctx-Workflow
+       */
+      export type SpacefillCtxWorkflow = string;
     }
     export interface PathParameters {
       master_item_id: /**
@@ -15130,7 +16570,10 @@ export interface OperationMethods {
    * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
    */
   "put_v1_logistic_management_master_item"(
-    parameters?: Parameters<Paths.PutV1LogisticManagementMasterItem.PathParameters> | null,
+    parameters?: Parameters<
+      Paths.PutV1LogisticManagementMasterItem.PathParameters &
+        Paths.PutV1LogisticManagementMasterItem.HeaderParameters
+    > | null,
     data?: Paths.PutV1LogisticManagementMasterItem.RequestBody,
     config?: AxiosRequestConfig,
   ): OperationResponse<Paths.PutV1LogisticManagementMasterItem.Responses.$200>;
@@ -15142,7 +16585,10 @@ export interface OperationMethods {
    * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
    */
   "patch_v1_logistic_management_master_item"(
-    parameters?: Parameters<Paths.PatchV1LogisticManagementMasterItem.PathParameters> | null,
+    parameters?: Parameters<
+      Paths.PatchV1LogisticManagementMasterItem.PathParameters &
+        Paths.PatchV1LogisticManagementMasterItem.HeaderParameters
+    > | null,
     data?: Paths.PatchV1LogisticManagementMasterItem.RequestBody,
     config?: AxiosRequestConfig,
   ): OperationResponse<Paths.PatchV1LogisticManagementMasterItem.Responses.$200>;
@@ -15212,7 +16658,10 @@ export interface OperationMethods {
    * Update one or several fields of <<glossary:order>>.
    */
   "patch_v1_logistic_management_order"(
-    parameters?: Parameters<Paths.PatchV1LogisticManagementOrder.PathParameters> | null,
+    parameters?: Parameters<
+      Paths.PatchV1LogisticManagementOrder.PathParameters &
+        Paths.PatchV1LogisticManagementOrder.HeaderParameters
+    > | null,
     data?: Paths.PatchV1LogisticManagementOrder.RequestBody,
     config?: AxiosRequestConfig,
   ): OperationResponse<Paths.PatchV1LogisticManagementOrder.Responses.$200>;
@@ -15234,7 +16683,7 @@ export interface OperationMethods {
    * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
    */
   "post_v1_logistic_management_shipper_create_entry_order_action"(
-    parameters?: Parameters<UnknownParamsObject> | null,
+    parameters?: Parameters<Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.HeaderParameters> | null,
     data?: Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.RequestBody,
     config?: AxiosRequestConfig,
   ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.Responses.$200>;
@@ -15256,7 +16705,7 @@ export interface OperationMethods {
    * For some integrations, address is mandatory. You will then receive an error message if you do not fill at least one of the fields listed below.
    */
   "post_v1_logistic_management_shipper_creates_order_exit_action"(
-    parameters?: Parameters<UnknownParamsObject> | null,
+    parameters?: Parameters<Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.HeaderParameters> | null,
     data?: Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.RequestBody,
     config?: AxiosRequestConfig,
   ): OperationResponse<Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.Responses.$200>;
@@ -15314,13 +16763,10 @@ export interface OperationMethods {
    * Specifically, it will regroup the actual order items that match these attributes for each expected order item:
    * * `master_item_id`
    * * `batch_id`
-   *     * if the expected `item_selection_method` is `WHATEVER_THE_BATCH`, it will match any actual `batch_id`
    * * `sscc_id`
    *     * if the expected `sscc_id` is null (which is expected in most cases), it will match any actual `sscc_id`.
    *
    * If more than one quantity type is given for an order item (for example, `CARDBOARD_BOX` and `EACH`), no conversion will be done.
-   *
-   * When converting an actual order item based on previously given rules, matched expected order items' identifiers (`id`) will be re-used when possible (except when the expected `item_selection_method` is `WHATEVER_THE_BATCH`, due to a technical limitation).
    */
   "post_v1_logistic_management_warehouse_acknowledges_receipt_of_order_action"(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.PathParameters> | null,
@@ -15394,7 +16840,10 @@ export interface OperationMethods {
    * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
    */
   "post_v1_logistic_management_shipper_updates_order_action"(
-    parameters?: Parameters<Paths.PostV1LogisticManagementShipperUpdatesOrderAction.PathParameters> | null,
+    parameters?: Parameters<
+      Paths.PostV1LogisticManagementShipperUpdatesOrderAction.PathParameters &
+        Paths.PostV1LogisticManagementShipperUpdatesOrderAction.HeaderParameters
+    > | null,
     data?: Paths.PostV1LogisticManagementShipperUpdatesOrderAction.RequestBody,
     config?: AxiosRequestConfig,
   ): OperationResponse<Paths.PostV1LogisticManagementShipperUpdatesOrderAction.Responses.$200>;
@@ -15510,7 +16959,7 @@ export interface OperationMethods {
    */
   "post_v1_logistic_management_warehouse_finishes_preparation_action"(
     parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.PathParameters> | null,
-    data?: any,
+    data?: Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.RequestBody,
     config?: AxiosRequestConfig,
   ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.Responses.$200>;
   /**
@@ -15549,7 +16998,7 @@ export interface OperationMethods {
    * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
    */
   "post_v1_logistic_management_shipper_create_or_update_draft_order_action"(
-    parameters?: Parameters<UnknownParamsObject> | null,
+    parameters?: Parameters<Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.HeaderParameters> | null,
     data?: Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.RequestBody,
     config?: AxiosRequestConfig,
   ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.Responses.$200>;
@@ -15663,6 +17112,34 @@ export interface OperationMethods {
     data?: any,
     config?: AxiosRequestConfig,
   ): OperationResponse<Paths.PostV1AsyncIntegrationsIncomingWebhook.Responses.$200>;
+  /**
+   * post_synced_items - Create synced items
+   *
+   * Create synced items
+   */
+  "post_synced_items"(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: Paths.PostSyncedItems.RequestBody,
+    config?: AxiosRequestConfig,
+  ): OperationResponse<Paths.PostSyncedItems.Responses.$200>;
+  /**
+   * post_v1_get_stock - Get the stock
+   *
+   * Get the stock.
+   */
+  "post_v1_get_stock"(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: Paths.PostV1GetStock.RequestBody,
+    config?: AxiosRequestConfig,
+  ): OperationResponse<Paths.PostV1GetStock.Responses.$200>;
+  /**
+   * post_v1_logistic_management_order_upload_document - Create a new document / order document
+   */
+  "post_v1_logistic_management_order_upload_document"(
+    parameters?: Parameters<Paths.PostV1LogisticManagementOrderUploadDocument.PathParameters> | null,
+    data?: Paths.PostV1LogisticManagementOrderUploadDocument.RequestBody,
+    config?: AxiosRequestConfig,
+  ): OperationResponse<Paths.PostV1LogisticManagementOrderUploadDocument.Responses.$200>;
 }
 
 export interface PathsDictionary {
@@ -15728,7 +17205,10 @@ export interface PathsDictionary {
      * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
      */
     "put"(
-      parameters?: Parameters<Paths.PutV1LogisticManagementMasterItem.PathParameters> | null,
+      parameters?: Parameters<
+        Paths.PutV1LogisticManagementMasterItem.PathParameters &
+          Paths.PutV1LogisticManagementMasterItem.HeaderParameters
+      > | null,
       data?: Paths.PutV1LogisticManagementMasterItem.RequestBody,
       config?: AxiosRequestConfig,
     ): OperationResponse<Paths.PutV1LogisticManagementMasterItem.Responses.$200>;
@@ -15740,7 +17220,10 @@ export interface PathsDictionary {
      * > Reference edition is allowed even if the palettisation plan is not correct. However, the reference will be indicated as an anomaly.
      */
     "patch"(
-      parameters?: Parameters<Paths.PatchV1LogisticManagementMasterItem.PathParameters> | null,
+      parameters?: Parameters<
+        Paths.PatchV1LogisticManagementMasterItem.PathParameters &
+          Paths.PatchV1LogisticManagementMasterItem.HeaderParameters
+      > | null,
       data?: Paths.PatchV1LogisticManagementMasterItem.RequestBody,
       config?: AxiosRequestConfig,
     ): OperationResponse<Paths.PatchV1LogisticManagementMasterItem.Responses.$200>;
@@ -15818,7 +17301,10 @@ export interface PathsDictionary {
      * Update one or several fields of <<glossary:order>>.
      */
     "patch"(
-      parameters?: Parameters<Paths.PatchV1LogisticManagementOrder.PathParameters> | null,
+      parameters?: Parameters<
+        Paths.PatchV1LogisticManagementOrder.PathParameters &
+          Paths.PatchV1LogisticManagementOrder.HeaderParameters
+      > | null,
       data?: Paths.PatchV1LogisticManagementOrder.RequestBody,
       config?: AxiosRequestConfig,
     ): OperationResponse<Paths.PatchV1LogisticManagementOrder.Responses.$200>;
@@ -15842,7 +17328,7 @@ export interface PathsDictionary {
      * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
      */
     "post"(
-      parameters?: Parameters<UnknownParamsObject> | null,
+      parameters?: Parameters<Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.HeaderParameters> | null,
       data?: Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.RequestBody,
       config?: AxiosRequestConfig,
     ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateEntryOrderAction.Responses.$200>;
@@ -15866,7 +17352,7 @@ export interface PathsDictionary {
      * For some integrations, address is mandatory. You will then receive an error message if you do not fill at least one of the fields listed below.
      */
     "post"(
-      parameters?: Parameters<UnknownParamsObject> | null,
+      parameters?: Parameters<Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.HeaderParameters> | null,
       data?: Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.RequestBody,
       config?: AxiosRequestConfig,
     ): OperationResponse<Paths.PostV1LogisticManagementShipperCreatesOrderExitAction.Responses.$200>;
@@ -15934,13 +17420,10 @@ export interface PathsDictionary {
      * Specifically, it will regroup the actual order items that match these attributes for each expected order item:
      * * `master_item_id`
      * * `batch_id`
-     *     * if the expected `item_selection_method` is `WHATEVER_THE_BATCH`, it will match any actual `batch_id`
      * * `sscc_id`
      *     * if the expected `sscc_id` is null (which is expected in most cases), it will match any actual `sscc_id`.
      *
      * If more than one quantity type is given for an order item (for example, `CARDBOARD_BOX` and `EACH`), no conversion will be done.
-     *
-     * When converting an actual order item based on previously given rules, matched expected order items' identifiers (`id`) will be re-used when possible (except when the expected `item_selection_method` is `WHATEVER_THE_BATCH`, due to a technical limitation).
      */
     "post"(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseAcknowledgesReceiptOfOrderAction.PathParameters> | null,
@@ -16024,7 +17507,10 @@ export interface PathsDictionary {
      * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
      */
     "post"(
-      parameters?: Parameters<Paths.PostV1LogisticManagementShipperUpdatesOrderAction.PathParameters> | null,
+      parameters?: Parameters<
+        Paths.PostV1LogisticManagementShipperUpdatesOrderAction.PathParameters &
+          Paths.PostV1LogisticManagementShipperUpdatesOrderAction.HeaderParameters
+      > | null,
       data?: Paths.PostV1LogisticManagementShipperUpdatesOrderAction.RequestBody,
       config?: AxiosRequestConfig,
     ): OperationResponse<Paths.PostV1LogisticManagementShipperUpdatesOrderAction.Responses.$200>;
@@ -16158,7 +17644,7 @@ export interface PathsDictionary {
      */
     "post"(
       parameters?: Parameters<Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.PathParameters> | null,
-      data?: any,
+      data?: Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.RequestBody,
       config?: AxiosRequestConfig,
     ): OperationResponse<Paths.PostV1LogisticManagementWarehouseFinishesPreparationAction.Responses.$200>;
   };
@@ -16199,7 +17685,7 @@ export interface PathsDictionary {
      * Then it is reused, otherwise, a new address is created when validating the draft order and can be reused next time.
      */
     "post"(
-      parameters?: Parameters<UnknownParamsObject> | null,
+      parameters?: Parameters<Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.HeaderParameters> | null,
       data?: Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.RequestBody,
       config?: AxiosRequestConfig,
     ): OperationResponse<Paths.PostV1LogisticManagementShipperCreateOrUpdateDraftOrderAction.Responses.$200>;
@@ -16335,6 +17821,40 @@ export interface PathsDictionary {
       data?: any,
       config?: AxiosRequestConfig,
     ): OperationResponse<Paths.PostV1AsyncIntegrationsIncomingWebhook.Responses.$200>;
+  };
+  ["/v1/integrations/acknowledge_event"]: {
+    /**
+     * post_synced_items - Create synced items
+     *
+     * Create synced items
+     */
+    "post"(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: Paths.PostSyncedItems.RequestBody,
+      config?: AxiosRequestConfig,
+    ): OperationResponse<Paths.PostSyncedItems.Responses.$200>;
+  };
+  ["/v1/logistic_management/get_stock"]: {
+    /**
+     * post_v1_get_stock - Get the stock
+     *
+     * Get the stock.
+     */
+    "post"(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: Paths.PostV1GetStock.RequestBody,
+      config?: AxiosRequestConfig,
+    ): OperationResponse<Paths.PostV1GetStock.Responses.$200>;
+  };
+  ["/v1/logistic_management/documents/"]: {
+    /**
+     * post_v1_logistic_management_order_upload_document - Create a new document / order document
+     */
+    "post"(
+      parameters?: Parameters<Paths.PostV1LogisticManagementOrderUploadDocument.PathParameters> | null,
+      data?: Paths.PostV1LogisticManagementOrderUploadDocument.RequestBody,
+      config?: AxiosRequestConfig,
+    ): OperationResponse<Paths.PostV1LogisticManagementOrderUploadDocument.Responses.$200>;
   };
 }
 
