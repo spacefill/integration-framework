@@ -2,7 +2,7 @@ import { constants } from "fs";
 
 import { fs } from "zx";
 
-import { TransferInterface } from "./TransferInterfaces.ts";
+import { FileMetadata, TransferInterface } from "./TransferInterfaces.ts";
 
 export class LocalClient implements TransferInterface {
   async open(): Promise<void> {
@@ -32,6 +32,17 @@ export class LocalClient implements TransferInterface {
 
   async listDirWithFilter(remotePath: string): Promise<string[]> {
     return fs.readdirSync(remotePath);
+  }
+
+  async listDirWithMetadataWithFilter(remotePath: string): Promise<FileMetadata[]> {
+    // list all files in the directory with date
+    return fs.readdirSync(remotePath).map((file) => {
+      const stats = fs.statSync(file);
+      return {
+        name: file,
+        date: stats.mtime,
+      };
+    });
   }
 
   async deleteFile(filepath: string): Promise<void> {

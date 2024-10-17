@@ -6,7 +6,7 @@ import { temporaryFileTask } from "tempy";
 
 import { Console } from "../utils/Console.ts";
 
-import { TransferConfiguration, TransferInterface } from "./TransferInterfaces.ts";
+import { FileMetadata, TransferConfiguration, TransferInterface } from "./TransferInterfaces.ts";
 
 interface FTPTransferConfiguration {
   host: string;
@@ -76,7 +76,16 @@ export class FtpClient implements TransferInterface {
   }
 
   async listDirWithFilter(remotePath: string): Promise<string[]> {
-    return (await this.client.list(remotePath)).map((file) => file.name) as unknown as string[];
+    const files = await this.client.list(remotePath);
+    return files.map((file) => file.name as unknown as string);
+  }
+
+  async listDirWithMetadataWithFilter(remotePath: string): Promise<FileMetadata[]> {
+    const files = await this.client.list(remotePath);
+    return files.map((file) => ({
+      name: file.name as unknown as string,
+      date: file.modifiedAt,
+    }));
   }
 
   async moveFile(sourcePath: string, targetPath: string): Promise<void> {

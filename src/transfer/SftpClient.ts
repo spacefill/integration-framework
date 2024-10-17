@@ -2,7 +2,7 @@ import sftp from "ssh2-sftp-client";
 
 import { Console } from "../utils/Console.ts";
 
-import { TransferConfiguration, TransferInterface } from "./TransferInterfaces.ts";
+import { FileMetadata, TransferConfiguration, TransferInterface } from "./TransferInterfaces.ts";
 
 interface SSH2TransferConfiguration {
   hostname: string;
@@ -63,6 +63,14 @@ export class SftpClient implements TransferInterface {
 
   async listDirWithFilter(remotePath: string): Promise<string[]> {
     return (await this.client.list(remotePath)).map((file) => file.name) as unknown as string[];
+  }
+
+  async listDirWithMetadataWithFilter(remotePath: string): Promise<FileMetadata[]> {
+    const fileds = await this.client.list(remotePath);
+    return fileds.map((file) => ({
+      name: file.name as unknown as string,
+      date: file.modifyTime ? new Date(file.modifyTime) : undefined,
+    }));
   }
 
   async moveFile(sourcePath: string, targetPath: string): Promise<void> {

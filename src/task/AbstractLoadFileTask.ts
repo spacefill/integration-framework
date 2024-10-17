@@ -25,7 +25,7 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
     throw new Error("Method not implemented.");
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async dataProcessing(_mappedData: T[]): Promise<void> {
+  async dataProcessing(_mappedData: T[], _fileItem?: FileItemInterface): Promise<void> {
     throw new Error("Method not implemented.");
   }
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -110,7 +110,7 @@ export abstract class AbstractLoadFileTask<T> extends AbstractTask implements Lo
           Console.confirm("Data mapped");
 
           Console.title("Data processing");
-          await this.dataProcessing(mappedData);
+          await this.dataProcessing(mappedData, targetFileItem);
           Console.confirm("Data processed");
 
           Console.title("Post data processing");

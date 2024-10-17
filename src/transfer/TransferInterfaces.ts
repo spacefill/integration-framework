@@ -6,8 +6,14 @@ interface TransferInterface {
   upload(localPath: string, remotePath: string): Promise<void>;
   downloadAndReadFile(remotePath: string, encoding: BufferEncoding): Promise<string>;
   listDirWithFilter(filepathPattern: string): Promise<string[]>;
+  listDirWithMetadataWithFilter(filepathPattern: string): Promise<FileMetadata[]>;
   deleteFile(filepath: string): Promise<void>;
   moveFile(sourceFilePath: string, targetFilePath: string): Promise<void>;
+}
+
+interface FileMetadata {
+  name: string;
+  date: Date | undefined;
 }
 
 interface TransferConfiguration {
@@ -19,4 +25,4 @@ interface TransferConfiguration {
   delay?: number;
 }
 
-export { TransferConfiguration, TransferInterface };
+export { TransferConfiguration, TransferInterface, FileMetadata };
