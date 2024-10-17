@@ -3,7 +3,7 @@
 import { temporaryFileTask } from "tempy";
 import { $, cd, fs, path } from "zx";
 
-const openapiDef = "http://localhost:5004/openapi.json";
+const openapiDef = "https://api.spacefill.fr/openapi.json";
 
 const currentDir = path.resolve();
 cd(path.join(currentDir, ".."));
