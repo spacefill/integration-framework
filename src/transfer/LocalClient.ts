@@ -1,4 +1,5 @@
 import { constants } from "fs";
+import path from "path";
 
 import { fs } from "zx";
 
@@ -37,7 +38,7 @@ export class LocalClient implements TransferInterface {
   async listDirWithMetadataWithFilter(remotePath: string): Promise<FileMetadata[]> {
     // list all files in the directory with date
     return fs.readdirSync(remotePath).map((file) => {
-      const stats = fs.statSync(file);
+      const stats = fs.statSync(path.join(remotePath, file));
       return {
         name: file,
         date: stats.mtime,
