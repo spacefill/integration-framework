@@ -3,7 +3,7 @@ import path from "path";
 import { Config } from "../configs/Config.ts";
 import { Console } from "../utils/Console.ts";
 
-import { TransferConfiguration, TransferInterface } from "./TransferInterfaces.ts";
+import { FileMetadata, TransferConfiguration, TransferInterface } from "./TransferInterfaces.ts";
 import { SftpClient } from "./SftpClient.ts";
 import { LocalClient } from "./LocalClient.ts";
 import { FtpClient } from "./FtpClient.ts";
@@ -116,6 +116,33 @@ class Transfer implements TransferInterface {
         })
         .map((file) => {
           return path.join(remotePath, file);
+        });
+
+      Console.debug(`Files list: ${result}`);
+      return result;
+      // eslint-disable-next-line no-useless-catch
+    } catch (error) {
+      throw error;
+    } finally {
+      this.close();
+    }
+  }
+
+  async listDirWithMetadataWithFilter(filepathPattern: string): Promise<FileMetadata[]> {
+    try {
+      const remotePath = path.dirname(filepathPattern);
+      const fileNamePattern = path.basename(filepathPattern);
+      Console.debug(`Listing ${remotePath} with pattern ${fileNamePattern} ...`);
+
+      await this.open();
+      const rawResult = await this.client.listDirWithMetadataWithFilter(remotePath);
+
+      const result = rawResult
+        .filter(({ name }) => {
+          return name.match(new RegExp(fileNamePattern));
+        })
+        .map(({ name, date }) => {
+          return { name: path.join(remotePath, name), date };
         });
 
       Console.debug(`Files list: ${result}`);
