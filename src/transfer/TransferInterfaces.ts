@@ -13,7 +13,7 @@ interface TransferInterface {
 
 interface FileMetadata {
   name: string;
-  date: Date | undefined;
+  modifiedDate?: Date;
 }
 
 interface TransferConfiguration {

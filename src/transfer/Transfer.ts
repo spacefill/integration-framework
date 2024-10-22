@@ -141,8 +141,8 @@ class Transfer implements TransferInterface {
         .filter(({ name }) => {
           return name.match(new RegExp(fileNamePattern));
         })
-        .map(({ name, date }) => {
-          return { name: path.join(remotePath, name), date };
+        .map(({ name, modifiedDate }) => {
+          return { name: path.join(remotePath, name), modifiedDate };
         });
 
       Console.debug(`Files list: ${result}`);

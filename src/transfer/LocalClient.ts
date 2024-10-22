@@ -41,7 +41,7 @@ export class LocalClient implements TransferInterface {
       const stats = fs.statSync(path.join(remotePath, file));
       return {
         name: file,
-        date: stats.mtime,
+        modifiedDate: stats.mtime,
       };
     });
   }
