@@ -69,7 +69,7 @@ export class SftpClient implements TransferInterface {
     const fileds = await this.client.list(remotePath);
     return fileds.map((file) => ({
       name: file.name as unknown as string,
-      date: file.modifyTime ? new Date(file.modifyTime) : undefined,
+      modifiedDate: file.modifyTime ? new Date(file.modifyTime) : undefined,
     }));
   }
 

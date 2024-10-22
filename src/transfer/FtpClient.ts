@@ -84,7 +84,7 @@ export class FtpClient implements TransferInterface {
     const files = await this.client.list(remotePath);
     return files.map((file) => ({
       name: file.name as unknown as string,
-      date: file.modifiedAt,
+      modifiedDate: file.modifiedAt,
     }));
   }
 

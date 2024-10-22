@@ -1,6 +1,6 @@
 export interface FileItemInterface {
   file: string;
-  modifiedDate: Date | undefined;
+  modifiedDate?: Date;
 }
 
 export interface LoadFileTaskInterface<T> {
