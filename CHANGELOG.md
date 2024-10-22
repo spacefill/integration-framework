@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.17.2] - 2024-10-20
+
+### Fixed
+
+- Change FileItemInterface (make date optional)
+
 ## [0.17.0] - 2024-10-17
 
 ### Added
